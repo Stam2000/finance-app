@@ -1,0 +1,76 @@
+"[
+    {
+      id: 'jj0zqgfe3c2p2loh0gmmsz1u',
+      name: 'tef',
+      projects: 'r',
+      budget: 400000,
+      spent: 200000,
+      project: 400,
+      transactions: [
+        {
+          id: 'idpti6oy51puuu4lt8klx3r2',
+          amount: 200,
+          account: 'revolut',
+          category: 'utilities',
+          payee: 'fgg',
+          notes: null,
+          date: '2024-09-19T22:00:00.000Z',
+          projectId: 'jj0zqgfe3c2p2loh0gmmsz1u',
+          accountId: 'tfujzbe1v92we7bu94xu1rpn',
+          categoryId: 'xrw4h1741lw9f8l91snuf2g0',
+          detailsTransactions: []
+        },
+        {
+          id: 'n21j5shxyrw1d4qrh1hchvq9',
+          amount: 155,
+          account: 'revolut',
+          category: 'education',
+          payee: 'j',
+          notes: null,
+          date: '2024-09-19T22:00:00.000Z',
+          projectId: 'jptfovaxpuo3hlfo3d0ucf9z',
+          accountId: 'tfujzbe1v92we7bu94xu1rpn',
+          categoryId: 'eq8vrov6efxuxzo9aes78i2r',
+          detailsTransactions: []
+        }
+      ],
+      detailsTransactions: []
+    },
+    {
+      id: 'jptfovaxpuo3hlfo3d0ucf9z',
+      name: 'x',
+      projects: null,
+      budget: 200000,
+      spent: 155000,
+      project: 200,
+      transactions: [
+        {
+          id: 'idpti6oy51puuu4lt8klx3r2',
+          amount: 200,
+          account: 'revolut',
+          category: 'utilities',
+          payee: 'fgg',
+          notes: null,
+          date: '2024-09-19T22:00:00.000Z',
+          projectId: 'jj0zqgfe3c2p2loh0gmmsz1u',
+          accountId: 'tfujzbe1v92we7bu94xu1rpn',
+          categoryId: 'xrw4h1741lw9f8l91snuf2g0',
+          detailsTransactions: []
+        },
+        {
+          id: 'n21j5shxyrw1d4qrh1hchvq9',
+          amount: 155,
+          account: 'revolut',
+          category: 'education',
+          payee: 'j',
+          notes: null,
+          date: '2024-09-19T22:00:00.000Z',
+          projectId: 'jptfovaxpuo3hlfo3d0ucf9z',
+          accountId: 'tfujzbe1v92we7bu94xu1rpn',
+          categoryId: 'eq8vrov6efxuxzo9aes78i2r',
+          detailsTransactions: []
+        }
+      ],
+      detailsTransactions: []
+    }
+  ]"

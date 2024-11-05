@@ -1,0 +1,1 @@
+ALTER TABLE "project" ADD COLUMN "user_id" text NOT NULL;
