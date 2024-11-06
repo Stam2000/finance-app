@@ -32,7 +32,8 @@ export type ResponseType = InferResponseType<typeof client.api.projects.$get,200
 export const ReturnColumns = ()=>{
   
   const filters = ["payee","category","account"]
-  
+  const [showTransactions, setShowTransactions] = useState(false)
+  const [showDetailsTransactions, setShowDetailsTransactions] = useState(false)
 
 
 return  [
@@ -63,10 +64,7 @@ return  [
     },cell:({row})=>
         {
           const percentageSpent = (row.original?.spent / row.original?.budget) * 100
-          const [key,setKey]=useState(0)
-            console.log(key)
-          const [showTransactions, setShowTransactions] = useState(false)
-          const [showDetailsTransactions, setShowDetailsTransactions] = useState(false)
+
 
           return (
             <div className="mr-4" >
@@ -126,7 +124,7 @@ return  [
                 <div className="flex flex-col lg:flex-row justify-between  gap-2 m-2">
                   <Button
                     onClick={() => {
-                      setKey(prev=>prev+1)
+                     
                       if(showDetailsTransactions)setShowDetailsTransactions(!showDetailsTransactions)
                       setShowTransactions(!showTransactions)}}
                     variant="outline"
@@ -137,7 +135,7 @@ return  [
                   </Button>
                   <Button
                     onClick={() =>{
-                      setKey(prev=>prev+1)
+                     
                       setShowDetailsTransactions(!showDetailsTransactions)
                       if(showTransactions)setShowTransactions(!showTransactions)}}
                     variant="outline"

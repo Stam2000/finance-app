@@ -12,7 +12,7 @@ type BaseTransactionRequest = InferRequestType<typeof client.api.transactions["$
 type TransactionRequest = (BaseTransactionRequest & ({
     detailsTransactions?: detailsTransactionsRequest[]
     })
-)[][]s
+)[][]
 
 export const json = [
     [

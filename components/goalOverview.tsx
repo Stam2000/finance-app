@@ -24,7 +24,7 @@ const GoalOverview = ()=>{
             /* console.log(percentage) */
             
                 return(
-                    <div className="w-[90%] py-2 px-4  mx-auto border-[1px] rounded-sm shadow-sm bg-slate-50">
+                    <div key={c.id} className="w-[90%] py-2 px-4  mx-auto border-[1px] rounded-sm shadow-sm bg-slate-50">
                     <div className="flex w-full justify-between items-center mb-2">
                         <h2 className="text-sm border-2 px-2   rounded-xl font-light flex gap-1 items-center capitalize justify-center  text-black"><AudioLines className="size-3 text-slate-500" />{c.name}</h2>
                         <div className="flex w-full justify-end gap-1  items-center">
