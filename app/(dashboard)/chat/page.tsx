@@ -1,10 +1,8 @@
 "use client"
-import { CirclePlus } from "lucide-react"
+
 import { Send } from "lucide-react"
-import { Card,CardContent,CardDescription,CardFooter,CardHeader,CardTitle } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
 import { CircleX } from "lucide-react"
-import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Mic } from "lucide-react"
 import { Paperclip } from "lucide-react"
@@ -58,7 +56,7 @@ const Chat = () =>{
         }
     }, [formData.question])
 
-    const formatText = (text)=>{
+    const formatText = (text:string)=>{
         text = text.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>');
         text = text.replace(/_(.*?)_/g,'<em>$1</em>')
 
