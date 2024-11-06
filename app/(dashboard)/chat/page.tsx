@@ -26,7 +26,7 @@ interface Message {
 }
 
 
-export const Chat = () =>{
+const Chat = () =>{
     
     const {ip} = useContext(ThemeContext)
     const [threadId,setThreadId]=useState("")
