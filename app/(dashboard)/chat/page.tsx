@@ -63,15 +63,15 @@ const Chat = () =>{
         return text
     }
    
-    const handleSubmit = (e)=>{
+    const handleSubmit = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>)=>{
             e.preventDefault()
             const formD = new FormData()
             console.log(formData.question)
             formD.append("question",formData.question)
             formData.Files.forEach(file=>formD.append("file",file))
-            for (let entry of formD.entries()) {
+/*             for (let entry of formD.entries()) {
                 console.log(entry[0] + ': ' + entry[1]);
-            }
+            } */
             formD.append("threadId",threadId)
             const newMessage:Message ={
                 sender:"user",
