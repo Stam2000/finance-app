@@ -320,7 +320,7 @@ const Page = ()=>{
                 </Button>
               </motion.div>
                 <motion.div variants={childrenVariants} className=" h-[90%] mb-3" >
-                    <PersonaForm isDisabled={isDisabled} onDisable={()=>setIsDisabled(prev => !prev)} setGeneratedData={(data)=>setGeneratedData(data)} generatedData={generatedData} />
+                    <PersonaForm  onDisable={()=>setIsDisabled(prev => !prev)} setGeneratedData={(data)=>setGeneratedData(data)} generatedData={generatedData} />
                 </motion.div>
                 {generatedData && 
                     <motion.div initial={{height:0}} animate={{height:"100%"}}  transition={{duration:0.8}} className="bg-slate-50 mx-6 border-[1px] w-full text-md border-slate-500 h-full rounded-md font-light overflow-y-auto">
@@ -401,7 +401,7 @@ const Page = ()=>{
               style={{ backgroundImage: "url('/pattern.png')" }}
             >
                 <motion.div initial="hidden" animate="visible" variants={parentVariantRight} className=" h-[90%] p-4" >
-                    <PersonaForm isDisabled={isDisabled} onDisable={()=>setIsDisabled(prev => !prev)} setGeneratedData={(data)=>setGeneratedData(data)} generatedData={generatedData} />
+                    <PersonaForm onDisable={()=>setIsDisabled(prev => !prev)} setGeneratedData={(data)=>setGeneratedData(data)} generatedData={generatedData} />
                 </motion.div>
             </div>
         </div>

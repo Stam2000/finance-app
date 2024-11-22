@@ -87,7 +87,7 @@ const formSchema = z.object({
 
 
 
-export const PersonaForm = ({setGeneratedData,isDisabled,onDisable}:{isDisabled:boolean,onDisable:()=>void,setGeneratedData?:(data:string)=>void,generatedData:string}) => {
+export const PersonaForm = ({setGeneratedData,onDisable}:{onDisable?:()=>void,setGeneratedData?:(data:string)=>void,generatedData:string}) => {
   const router = useRouter()
   const generateData = useGenerateData()
   const {setPersonaInfo} = useUpdateChat()
@@ -201,7 +201,7 @@ export const PersonaForm = ({setGeneratedData,isDisabled,onDisable}:{isDisabled:
         setPersonaId(personaId)
       },
       onExecution:()=>{setisExecuting(prev=>!prev)},
-      onStarted:()=>{onDisable()}
+      onStarted:()=>{ if(onDisable) onDisable()}
     })
     
     
