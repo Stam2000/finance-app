@@ -1,4 +1,5 @@
 "use client"
+
 import { useDeleteProject } from "@/features/projects/api/use-delete-project"
 import { useOpenProject } from "@/features/projects/hooks/use-open-project"
 import { Button } from "@/components/ui/button"

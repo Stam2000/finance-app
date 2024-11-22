@@ -1,3 +1,5 @@
+"use client"
+
 import {useCSVReader} from "react-papaparse";
 import { Upload } from "lucide-react";
 import { Button } from "@/components/ui/button";

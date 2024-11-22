@@ -1,3 +1,5 @@
+"use client"
+
 import { ColumnDef } from "@tanstack/react-table";
 import { InferResponseType } from "hono";
 import {client} from "@/lib/hono"

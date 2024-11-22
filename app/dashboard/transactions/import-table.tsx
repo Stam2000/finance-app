@@ -1,3 +1,5 @@
+"use client"
+
 import { Table,TableCell,TableHead,TableHeader,TableRow,TableBody } from "@/components/ui/table";
 import { TableHeadSelect } from "./table-head-select";
 

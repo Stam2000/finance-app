@@ -1,3 +1,5 @@
+"use client"
+
 import { useGetTransaction } from "@/features/transactions/api/use-get-transaction";
 import { DataTable } from "./Overviewtable";
 import { useOpenTransactionOverview } from "@/features/detailsTransactions/hooks/use-open-Overview";
