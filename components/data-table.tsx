@@ -33,7 +33,6 @@ interface DataTableProps<TData, TValue> {
   onDelete:(rows:Row<TData>[]) => void;
   disabled?:boolean
 }
-
 export function DataTable<TData, TValue>({
   columns,
   data,

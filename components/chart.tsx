@@ -10,8 +10,6 @@ import { Skeleton } from "./ui/skeleton"
 import { AreaVariant } from "./area-variant"
 import {LineVariant} from "./line-variant"
 import { BarVariant } from "./bar-variant"
-
-
 import {
     Select,
     SelectTrigger,

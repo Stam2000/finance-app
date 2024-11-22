@@ -1,16 +1,15 @@
 import { Hono } from "hono";
 import { db } from "@/db/drizzle";
-import { projects } from "@/db/schema";
+import { DetailsTransactionsType, projects } from "@/db/schema";
 import {createId} from "@paralleldrive/cuid2"
 import { zValidator } from "@hono/zod-validator";
-import { clerkMiddleware,getAuth } from "@hono/clerk-auth";
 import { and,eq,inArray } from "drizzle-orm";
 import { sum,desc } from "drizzle-orm";
 import { insertProjectSchema } from "@/db/schema";
-import { insertTransactionSchema } from "@/db/schema";
 import {z} from "zod"
 import { convertAmountFormMiliunits } from "@/lib/utils";
 import { transactions,detailsTransactions,accounts,categories } from "@/db/schema";
+import { TransactionsType } from "@/db/schema";
 
 
 const app = new Hono()
@@ -19,22 +18,42 @@ const app = new Hono()
     })),async (c)=>{
 
         const {accountId} = c.req.valid("query")
-        const auth = {userId:"testData"}
-        
+        const personaId = c.req.header('X-Persona-ID') || "testData"
+        const auth = {userId:personaId}
+       
 
     const Projectsdata = await db.select({
         id:projects.id,
         name:projects.name,
         projects:projects.description,
         budget:projects.budget,
-        spent:sum(transactions.amount).mapWith(Number)
+        spent:sum(detailsTransactions.amount).mapWith(Number)
     }).from(projects).where(eq(projects.userId,auth?.userId))
-    .leftJoin(transactions, eq(projects.id, transactions.projectId))
+    .leftJoin(detailsTransactions, eq(projects.id, detailsTransactions.projectId))
     .groupBy(projects.id,projects.name)
 
-    let transactionsData =[]
-    let detailsForTransactions=[]
-    let detailsProjects=[]
+    let transactionsData:{
+        date: Date;
+        id: string;
+        amount: number;
+        payee: string;
+        accountId: string;
+        notes?: string | null | undefined;
+        projectId?: string | null | undefined;
+        categoryId?: string | null | undefined;
+        detailsTransactions?: {
+            id: string;
+            amount: number;
+            transactionId: string;
+            name?: string | null | undefined;
+            quantity?: number | null | undefined;
+            unitPrice?: number | null | undefined;
+            projectId?: string | null | undefined;
+            categoryId?: string | null | undefined;
+        }[]
+    }[] = []
+    let detailsForTransactions : DetailsTransactionsType []=[]
+    let detailsProjects:Partial<DetailsTransactionsType>[]=[]
     if(Projectsdata.length > 0){
         const projectsId = Projectsdata.map(t=>t.id)
             transactionsData =  await db.select({
@@ -57,7 +76,7 @@ const app = new Hono()
                .orderBy(desc(transactions.date)
             )
 
-    let details =[]
+    let details : DetailsTransactionsType []  =[]
     if(transactionsData.length > 0){
         const transactionsId = transactionsData.map(t=>t.id)
             details = await db.select({
@@ -77,7 +96,7 @@ const app = new Hono()
            detailsForTransactions = details.map(detail=>({
                 ...detail,
                 amount:convertAmountFormMiliunits(detail.amount),
-                unitPrice:convertAmountFormMiliunits(detail.unitPrice)
+                unitPrice:convertAmountFormMiliunits(!detail.unitPrice ? 0 : detail.unitPrice )
             }))
 
             transactionsData = transactionsData.map(transaction=>({
@@ -88,36 +107,66 @@ const app = new Hono()
     
         
             detailsProjects = await db.select({
-            id: detailsTransactions.id,
-            name: detailsTransactions.name,
-            quantity: detailsTransactions.quantity,
-            unitPrice: detailsTransactions.unitPrice,
-            amount: detailsTransactions.amount,
-            transactionId: detailsTransactions.transactionId
+                id: detailsTransactions.id,
+                name: detailsTransactions.name,
+                quantity: detailsTransactions.quantity,
+                unitPrice: detailsTransactions.unitPrice,
+                amount: detailsTransactions.amount,
+                date:transactions.date,
+                transactionId: detailsTransactions.transactionId,
+                categoryId: detailsTransactions.categoryId,
+                category:categories.name
         })
             .from(detailsTransactions)
+            .innerJoin(transactions,eq(detailsTransactions.transactionId,transactions.id))
+            .innerJoin(accounts,eq(transactions.accountId,accounts.id))
             .leftJoin(projects, eq(detailsTransactions.projectId, projects.id)) 
             .leftJoin(categories,eq(detailsTransactions.categoryId,categories.id))
-            .where(eq(detailsTransactions.projectId,projects.id) )
+            .where(and(eq(detailsTransactions.projectId,projects.id)))
     }
+
+            const transactionsSpent = transactionsData.reduce((acc,p)=>{
+    
+                if (!p.detailsTransactions || p.detailsTransactions.length === 0) {
+                  acc += p.amount;
+                }
+                p.detailsTransactions?.forEach(dt=> acc +=dt.amount)
+              ;
+            
+            return acc;
+          }, 0);
+
+        
 
         const data = Projectsdata.map(project=>({
             ...project,
+            spent : project.spent + transactionsSpent*1000,
             project:convertAmountFormMiliunits(project.budget),
             transactions: transactionsData.filter(d => d.projectId === project.id),
-            detailsTransactions: detailsProjects.filter(d => d.projectId === project.id),
+            detailsTransactions: detailsProjects.map(d=>{
+                return{
+                    ...d,
+                    amount:convertAmountFormMiliunits(d.amount || 0),
+                    unitPrice:convertAmountFormMiliunits(d.unitPrice || 0)
+                }
+            }),
         }))
 
 
+
+
+        
+        console.log(data)
 
     return c.json({data})
 })
     .get("/:id",
         zValidator("param",z.object(
-            {id:z.string().optional()}
+            {id:z.string()}
         )),
         async(c)=>{
-            const auth = {userId:"testData"}
+            const personaId = c.req.header('X-Persona-ID') || "testData"
+            const auth = {userId:personaId}
             const {id}= c.req.valid("param")
 
             if(!auth?.userId){
@@ -160,9 +209,9 @@ const app = new Hono()
             endDate: z.string(),   // endDate must be a Date object
           })),
         async (c)=>{
-            const auth = {userId:"testData"}
+            const personaId = c.req.header('X-Persona-ID') || "testData"
+            const auth = {userId:personaId}
             const values = c.req.valid("json")
-            console.log(values)
 
             const [data] = await db.insert(projects).values({
                 id:createId(),
@@ -180,9 +229,9 @@ const app = new Hono()
             ids:z.array(z.string())
         })),
         async (c)=>{
-            const auth = {userId:"testData"}
+            const personaId = c.req.header('X-Persona-ID') || "testData"
+            const auth = {userId:personaId}
             const values = c.req.valid("json")
-            console.log(values)
 
             if(!auth?.userId){
                 return c.json({error:"Unauthorized"},401)
@@ -213,7 +262,8 @@ const app = new Hono()
             description:true,
             budget:true
         })) ,async (c)=>{
-            const auth = {userId:"testData"}
+            const personaId = c.req.header('X-Persona-ID') || "testData"
+            const auth = {userId:personaId}
             const {id} = c.req.valid("param")
             const values = c.req.valid("json")
 
@@ -248,7 +298,8 @@ const app = new Hono()
             }),
         ),
         async(c)=>{
-            const auth = {userId:"testData"}
+            const personaId = c.req.header('X-Persona-ID') || "testData"
+            const auth = {userId:personaId}
             const {id} = c.req.valid("param")
             
             if(!id){

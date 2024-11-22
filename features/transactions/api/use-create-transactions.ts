@@ -16,9 +16,15 @@ export const useCreateTransaction =()=>{
     
     >({
         mutationFn: async (json) =>{
-            console.log(json)
-            const response = await client.api.transactions.$post({json});
+
+            const personaId = localStorage.getItem('selectedPersona') || "testData"
+            const response = await client.api.transactions.$post({json},{
+                headers: {
+                    'X-Persona-ID': personaId,      
+                }
+            });
             return await  response.json();
+            
         },
         onSuccess : ()=>{
             toast.success("Transaction created")

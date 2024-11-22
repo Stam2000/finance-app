@@ -12,6 +12,7 @@ type OpenTransactionState = {
     onClose:() => void
 }
 
+
 export const useOpenDetailsTransaction = create<OpenTransactionState>((set)=>({
     id:undefined,
     isOpen:false,

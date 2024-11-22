@@ -16,8 +16,12 @@ export const useDeleteAccounts =()=>{
     
     >({
         mutationFn: async (json) =>{
-            console.log(json)
-            const response = await client.api.accounts["bulk-delete"]["$post"]({json});
+            const personaId = localStorage.getItem('selectedPersona') || "testData"
+            const response = await client.api.accounts["bulk-delete"]["$post"]({json},{
+                headers: {
+                    'X-Persona-ID': personaId,      
+                }
+            });
             const res = await response.json();
             console.log (res)
             return res;

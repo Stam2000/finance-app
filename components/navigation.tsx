@@ -12,28 +12,30 @@ import {
 } from "@/components/ui/sheet"
 import { useState } from "react"
 
-const routes =[{
-href:"/",
+const routes =[
+    {
+href:"/dashboard",
 label:"Overview"
 },{
-    href:"/transactions",
+    href:"/dashboard/transactions",
     label:"Transactions"
 },{
-    href:"/accounts",
+    href:"/dashboard/accounts",
     label:"Accounts"
 },{
-    href:"/categories",
+    href:"/dashboard/categories",
     label:"Categories"
 },
 {
-    href:"/details",
+    href:"/dashboard/details",
     label:"Details"
 },
 {
-    href:"/projects",
+    href:"/dashboard/projects",
     label:"Projects"
 }
 ]
+
 
 export const Navigation = ()=>{
     const [isOpen,setIsOpen] = useState(false)

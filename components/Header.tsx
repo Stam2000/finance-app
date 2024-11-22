@@ -3,13 +3,9 @@ import { HeaderLogo } from "./headerLogo"
 import { Navigation } from "./navigation"
 import { WelcomeMsg } from "./welcoe-msg"
 import { Filter } from "./filter" 
-import Chat from "@/components/chat"
-import { Input } from "./ui/input"
-import GoaldBoard from "./Goalboard"
+
 import WeekResult from "./week-resume"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { ArrowUpIcon, ArrowDownIcon, DollarSignIcon, PieChartIcon, TrendingUpIcon } from "lucide-react"
+
 import Carousel from "./caroussel"
 import GoalOverview from "./goalOverview"
 
@@ -17,10 +13,9 @@ import { useOpenChat } from "@/features/chat/hook/use-open-AIchat"
 
 export const Header=()=>{
 
-    const {chatOpen,toggleChatOpen} = useOpenChat()
 
     return(
-        <header className="relative bg-gradient-to-r from-indigo-700 from-10% via-sky-500 via-50% to-emerald-500 to-90% px-8 lg:px-16 py-8 pb-36">
+        <header className="relative  bg-gradient-to-br md:bg-gradient-to-r from-indigo-700 from-10% via-sky-500 via-50% to-emerald-500 to-90% px-8 lg:px-16 py-8 pb-36">
             <div className="max-w-screen-2xl mx-auto">
                 <div className="w-full  flex items-center justify-between mb-14">
                    <div className="flex items-center  justify-end lg:gap-x-32 " >

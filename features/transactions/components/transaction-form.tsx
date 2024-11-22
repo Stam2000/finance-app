@@ -82,7 +82,7 @@ onCreateCategory,
         onDelete?.()
     }
 
-    console.log(defaultValues)
+
     return(
         <Form {...form}>
             <form onSubmit={form.handleSubmit(handleSubmit)}
@@ -93,9 +93,12 @@ onCreateCategory,
             <FormField
             name="date"
             control={form.control}
-            render={({field})=>(
+            render={({field})=>{
+                
+                console.log(field.value)
+                return(
                 <FormItem>
-                    <FormControl>
+                    <FormControl className="z-50" >
                        <DatePicker 
                         value={field.value}
                         onChange={field.onChange}
@@ -103,7 +106,7 @@ onCreateCategory,
                        />
                     </FormControl>
                 </FormItem>
-            )}
+            )}}
             />
             <FormField 
             name="accountId"
@@ -214,8 +217,8 @@ onCreateCategory,
                             <Textarea 
                                 placeholder="Optional notes"
                                 disabled={disabled}
-                                value={ field.value ?? ""}
                                 {...field}
+                                value={ field.value ?? ""}
                             />
                         </FormControl>
                     </FormItem>

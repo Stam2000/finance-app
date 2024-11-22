@@ -16,16 +16,17 @@ export const useCreateProject =()=>{
     
     >({
         mutationFn: async (json) =>{
-        try{
-            console.log(json)
-            const response = await client.api.projects.$post({json});
+        
+            const personaId = localStorage.getItem('selectedPersona') || "testData"
+            const response = await client.api.projects.$post({json},{
+                headers: {
+                    'X-Persona-ID': personaId,      
+                }
+            });
             const data = await response.json();
             console.log(data)
             return data;
-        }catch(err){
-            console.error(err)
-        }
-            
+
         },
         onSuccess : ()=>{
             toast.success("Project created")

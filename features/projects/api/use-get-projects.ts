@@ -14,17 +14,24 @@ export const useGetProjects = ()=>{
     const query = useQuery({
         queryKey:["projects"],
         queryFn:async()=>{
+            const personaId = localStorage.getItem('selectedPersona') || "testData"
             const response = await client.api.projects.$get({
                 query:{
                     accountId
                 }
+            },{
+                headers: {
+                    'X-Persona-ID': personaId,      
+                }
             })
+            
 
             if(!response.ok){
                 throw new Error("Failed to fetch projects");
             }
 
             const {data} = await response.json();
+            console.log(data)
             return data
         }
     })

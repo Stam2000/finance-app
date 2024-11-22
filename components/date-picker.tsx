@@ -10,7 +10,6 @@ import { CalendarIcon } from "lucide-react"
 import { Button } from "./ui/button"
 import {format} from "date-fns"
 import {cn} from "@/lib/utils"
-
 type Props ={
     value?:Date,
     onChange?:SelectSingleEventHandler,
@@ -24,11 +23,15 @@ export const DatePicker = (
         disabled
     }:Props
 )=>{
+
+    console.log(value)
+    console.log(disabled)
     return(
         <Popover>
             <PopoverTrigger>
                 <Button
                     variant="outline"
+                    type="button"
                     disabled={disabled}
                     className={
                         cn(

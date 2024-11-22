@@ -103,12 +103,11 @@ export const EditTransactionDialog =()=>{
     const isLoading =
         categoryQuery.isLoading || accountQuery.isLoading || transactionQuery.isLoading
 
-    console.log(transactionQuery.data)
         const defaultValues = transactionQuery.data ? {
             accountId: transactionQuery.data[0].accountId,
             categoryId: transactionQuery.data[0].categoryId,
-            projectId: transactionQuery.data[0].categoryId,
-            amount: transactionQuery.data[0].amount,
+            projectId: transactionQuery.data[0].projectId,
+            amount: transactionQuery.data[0].amount.toString(),
             date: transactionQuery.data[0].date 
             ? new Date(transactionQuery.data[0].date)
             : new Date(),
@@ -124,8 +123,6 @@ export const EditTransactionDialog =()=>{
         };
 
         console.log(defaultValues)
-
-
     return(
         <>
             <ConfirmDialog />
@@ -156,8 +153,8 @@ export const EditTransactionDialog =()=>{
                         onCreateCategory={onCreateCategory}
                     />)}
                 <DialogFooter>
-                    <Button onClick={onClose}>
-                        Confirm
+                    <Button variant={"destructive"} onClick={onClose}>
+                        Cancel
                     </Button>
                 </DialogFooter>
             </DialogContent>

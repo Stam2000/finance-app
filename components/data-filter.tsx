@@ -10,7 +10,7 @@ import {
     Popover,
     PopoverContent,
     PopoverTrigger,
-    PopoverClose,
+   
   } from "@/components/ui/popover";
   import { Button } from "./ui/button";
   import { Calendar } from "./ui/calendar";
@@ -68,7 +68,7 @@ export const DataFilter = ()=>{
                 <Button
                     disabled={false}
                     size="sm"
-                    className="lg:w-auto mw-[200px] h-9 font-normal focus:ring-offset-0 focus:ring-transparent outline-none transition focus:bg-white/30 rounded-md px-3  text-white bg-white/10 hover:bg-white/20 border-none  hover:text-white  "
+                    className="lg:w-auto w-full h-9 font-normal focus:ring-offset-0 focus:ring-transparent outline-none transition focus:bg-white/30 rounded-md px-3  text-white bg-white/10 hover:bg-white/20 border-none  hover:text-white  "
                 >
                     <span>{formatDateRange(paramState)}</span>
                 <ChevronDown className="ml-2 size-4 opacity-50" />
@@ -88,7 +88,7 @@ export const DataFilter = ()=>{
                 />
 
                 <div className="p-4 w-full flex items-center gap-x-2">
-                    <PopoverClose asChild>
+                    <div >
                         <Button 
                             onClick={onReset}
                             disabled={!date?.from || !date?.to}
@@ -96,8 +96,8 @@ export const DataFilter = ()=>{
                         >
                          Reset
                         </Button>
-                    </PopoverClose>
-                    <PopoverClose asChild>
+                    </div>
+                    <div>
                         <Button
                             onClick={()=>pushToUrl(date)}
                             disabled={!date?.from || !date?.to}
@@ -105,7 +105,7 @@ export const DataFilter = ()=>{
                         >
                             Apply
                         </Button>
-                    </PopoverClose>   
+                    </div>   
                 </div>  
             </PopoverContent>   
         </Popover>

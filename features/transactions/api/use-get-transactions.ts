@@ -1,17 +1,20 @@
+"use client"
 import { useQuery } from "@tanstack/react-query";
 import {client} from "@/lib/hono"
 import { useSearchParams } from "next/navigation";
 import { convertAmountFormMiliunits } from "@/lib/utils";
 
-export const useGetTransactions = ()=>{
+
+export const useGetTransactions = ()=> {
+    
     
     const params = useSearchParams()
-    console.log(params)
     const from = params.get("from") || ""
+    console.log(from)
     const to = params.get("to")|| ""
     const accountId = params.get("accountId")||""
-
-
+    const personaId = localStorage.getItem('selectedPersona') || "testData"
+    
     const query = useQuery({
         queryKey:["transactions",{from,to,accountId}],
         queryFn:async()=>{
@@ -20,6 +23,13 @@ export const useGetTransactions = ()=>{
                     from,
                     to,
                     accountId
+                }, 
+            },{
+                headers: {
+                    // Add persona ID to request headers
+                    'X-Persona-ID': personaId,
+                    // You can add other persona-related headers if needed
+                    
                 }
             })
 

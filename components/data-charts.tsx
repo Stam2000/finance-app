@@ -7,7 +7,6 @@ import {SpendingPie, SpendingPieLoading} from "@/components/spending-pie"
 
 export const DataCharts = ()=>{
     const {data, isLoading} = useGetSummary();
-    console.log(data)
     if(isLoading){
         return (
             <div className="grid grid-cols-1 lg:grid-cols-6 gap-8 " >

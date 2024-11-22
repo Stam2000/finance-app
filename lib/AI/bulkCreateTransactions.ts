@@ -122,15 +122,16 @@ export const useBulkCreateTAndDfromJson =()=>{
 
     const {data:accounts} = useGetAccounts()
     const {data:categories}= useGetCategories()
-    let allCategories = categories || []
+    let allCategories:any = categories || []
     let allAccounts = accounts || []
-    let result =[]
+    let result:any =[]
     const queryClient = useQueryClient()
     const mutation =useMutation
-    <TransactionResponse,
+    <TransactionRequest,
         Error,
-    TransactionRequest>({
-        mutationFn:async(json)=>{
+        TransactionResponse
+    >({
+        mutationFn:async(json:any)=>{
 
         
       
@@ -139,7 +140,7 @@ export const useBulkCreateTAndDfromJson =()=>{
             
                 const detailsTransactions = transaction.detailsTransactions
                 delete transaction["detailsTransactions"]
-                const foundCategory = allCategories.find((category)=> category.name === transaction.categoryId)
+                const foundCategory = allCategories.find((category:any)=> category.name === transaction.categoryId)
                 if(!foundCategory){
             const resCreateCategory = await client.api.categories.$post({json:{name:transaction!.categoryId}})
             const resCategoryData =await resCreateCategory.json()
@@ -173,7 +174,7 @@ export const useBulkCreateTAndDfromJson =()=>{
                 if(detailsTransactions?.length !== 0){
                     for(const detail of detailsTransactions!){
                     console.log(detail)
-                    const foundCategory = allCategories.find((category)=> category.name === detail.categoryId)
+                    const foundCategory = allCategories.find((category:any)=> category.name === detail.categoryId)
                     if(!foundCategory){
                         const resCreateCategory = await client.api.categories.$post({json:{name:detail!.categoryId}})
                         const resCategoryData =await resCreateCategory.json()

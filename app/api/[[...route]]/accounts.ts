@@ -3,7 +3,6 @@ import { db } from "@/db/drizzle";
 import { accounts } from "@/db/schema";
 import {createId} from "@paralleldrive/cuid2"
 import { zValidator } from "@hono/zod-validator";
-import { clerkMiddleware,getAuth } from "@hono/clerk-auth";
 import { and,eq,inArray } from "drizzle-orm";
 import { insertAccountSchema } from "@/db/schema";
 import {z} from "zod"
@@ -11,8 +10,9 @@ import {z} from "zod"
 
 const app = new Hono()
     .get("/",async (c)=>{
-
-        const auth = {userId:"testData"}
+    const personaId = c.req.header('X-Persona-ID') || "testData"
+    console.log(personaId)
+    const auth = {userId:personaId}
 
     const data = await db.select({
         id:accounts.id,
@@ -22,10 +22,11 @@ const app = new Hono()
 })
     .get("/:id",
         zValidator("param",z.object(
-            {id:z.string().optional()}
+            {id:z.string()}
         )),
         async(c)=>{
-            const auth = {userId:"testData"}
+            const personaId = c.req.header('X-Persona-ID') || "testData"
+            const auth = {userId:personaId}
             const {id}= c.req.valid("param")
 
             if(!auth?.userId){
@@ -56,7 +57,8 @@ const app = new Hono()
             name:true
         })),
         async (c)=>{
-            const auth = {userId:"testData"}
+            const personaId = c.req.header('X-Persona-ID') || "testData"
+            const auth = {userId:personaId}
             const {name} = c.req.valid("json")
             console.log(name)
             if(!auth?.userId){
@@ -77,7 +79,8 @@ const app = new Hono()
             ids:z.array(z.string())
         })),
         async (c)=>{
-            const auth = {userId:"testData"}
+            const personaId = c.req.header('X-Persona-ID') || "testData"
+            const auth = {userId:personaId}
             const values = c.req.valid("json")
             console.log(values)
 
@@ -108,7 +111,8 @@ const app = new Hono()
         zValidator("json",insertAccountSchema.pick({
             name:true
         })) ,async (c)=>{
-            const auth = {userId:"testData"}
+            const personaId = c.req.header('X-Persona-ID') || "testData"
+            const auth = {userId:personaId}
             const {id} = c.req.valid("param")
             const values = c.req.valid("json")
 
@@ -143,7 +147,8 @@ const app = new Hono()
             }),
         ),
         async(c)=>{
-            const auth = {userId:"testData"}
+            const personaId = c.req.header('X-Persona-ID') || "testData"
+            const auth = {userId:personaId}
             const {id} = c.req.valid("param")
             
             if(!id){

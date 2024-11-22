@@ -3,102 +3,167 @@ import { InferRequestType } from "hono";
 import {client} from "@/lib/hono"
 import { AssistantTool } from "openai/resources/beta/assistants.mjs"
 
+
 type TransactionCreate = InferRequestType<typeof client.api.transactions.$post>["json"]
 type DetailsTransactionCreate = InferRequestType<typeof client.api.detailsTransactions.$post>["json"]
 type AccountCreate = InferRequestType<typeof client.api.accounts.$post>["json"]
 type CategoryCreate = InferRequestType<typeof client.api.categories.$post>["json"]
+type ProjectCreate = InferRequestType<typeof client.api.projects.$post>["json"]
+
 type TransactionRequest = (TransactionCreate & ({
     detailsTransactions?: DetailsTransactionCreate
     })
 )[]
 
+interface RunStatus {
+    success?: boolean;
+    data?: any; // Adjust this based on actual expected structure
+    error?: string;
+}
 
-
-const fetchCategories = async()=>{
+const fetchCategories = async({args,personaId}:{args?:any,personaId:string})=>{
 	 try{
-		  const response = await axios.get("http://localhost:3000/api/categories")
+		  const response = await axios.get("http://localhost:3000/api/categories/all",{headers: {
+			'X-Persona-ID': personaId,  
+		  }})
 		  const stringData = JSON.stringify(response.data)
 		  return stringData
 	 }catch(err){
-		  console.error("error fetching transactions",err)
+		  console.error("error fetching Categories",err)
 		  if (axios.isAxiosError(err)){
 				console.error("Axios details",err.response?.status,err.response?.data)
 		  }
 				console.error("Unexpected error",err)
-	 
-		  return null
+		return (`${err}`)
 	 }
 }
 
- const fetchAccounts = async()=>{
+ const fetchAccounts = async({args,personaId}:{args?:any,personaId:string})=>{
+	console.log(personaId)
 	 try{
-		  const response = await axios.get("http://localhost:3000/api/acounts")
+		  const response = await axios.get("http://localhost:3000/api/accounts",{headers: {
+			'X-Persona-ID': personaId,  
+		  }})
 		  const stringData = JSON.stringify(response.data)
 		  return stringData
 	 }catch(err){
-		  console.error("error fetching transactions",err)
+		  console.error("error fetching accounts",err)
 		  if (axios.isAxiosError(err)){
 				console.error("Axios details",err.response?.status,err.response?.data)
 		  }
 				console.error("Unexpected error",err)
 	 
-		  return null
+		  return (`${err}`)
 	 }
- }
+}
 
-const fetchDetailsTransaction = async ({id}:{id?:string})=>{
+ const fetchProjects = async({accountId,personaId}:{accountId?:string,personaId:string})=>{
+	try{
+		 const response = await axios.get("http://localhost:3000/api/projects",{params: {
+				accountId
+			  },headers: {
+		   'X-Persona-ID': personaId,  
+		 }})
+		 const stringData = JSON.stringify(response.data)
+		 return stringData
+	}catch(err){
+		 console.error("error fetching projects",err)
+		 if (axios.isAxiosError(err)){
+			   console.error("Axios details",err.response?.status,err.response?.data)
+		 }
+			   console.error("Unexpected error",err)
+	
+		 return (`${err}`)
+	}
+}
+
+const fetchDetailsTransaction = async ({id}:{id:string},personaId:string)=>{
+
 	 try{
 		  const response = await axios.get("http://localhost:3000/api/detailsTransactions",{
 				params:{
 					 id //transactionId
-				}
+				},
+				headers: {
+					'X-Persona-ID': personaId,  
+				  }
 		  })
 		  const stringData = JSON.stringify(response.data)
 		  return stringData
 	 }catch(err){
-		  console.error("error fetching transactions",err)
+		  console.error("error fetching details for transactions",err)
 		  if (axios.isAxiosError(err)){
 				console.error("Axios details",err.response?.status,err.response?.data)
 		  }
 				console.error("Unexpected error",err)
 	 
-		  return null
+		  return (`${err}`)
 	 }
 }
 
-const fetchDetailsTransactions= async({from,to}:{from?:string,to?:string})=>{
+const fetchTransaction = async ({id,personaId}:{id:string,personaId:string})=>{
+
+	try{
+		 const response = await axios.get("http://localhost:3000/api/transactions",{
+			   params:{
+					id //transactionId
+			   },
+			   headers: {
+				   'X-Persona-ID': personaId,  
+				 }
+		 })
+		 const stringData = JSON.stringify(response.data)
+		 return stringData
+	}catch(err){
+		 console.error("error fetching  for transaction ",err)
+		 if (axios.isAxiosError(err)){
+			   console.error("Axios details",err.response?.status,err.response?.data)
+		 }
+			   console.error("Unexpected error",err)
+	
+		 return (`${err}`)
+	}
+}
+
+const fetchDetailsTransactions= async({from,to,personaId}:{from?:string,to?:string,personaId:string})=>{
+	
 	 try{
 		  const response = await axios.get("http://localhost:3000/api/detailsTransactions",{
 				params:{
 					 from,
 					 to,
-				}
-		  })
+				},headers: {
+					'X-Persona-ID': personaId,  
+				  }
+		  }) //TODO Modify the input
 		  const stringData = JSON.stringify(response.data)
 		  return stringData
 	 }catch(err){
 		  console.error("error fetching transactions",err)
 		  if (axios.isAxiosError(err)){
-				console.error("Axios details",err.response?.status,err.response?.data)
+				console.error("Axios details for transactions",err.response?.status,err.response?.data)
 		  }
 				console.error("Unexpected error",err)
 	 
-		  return null
+		  return (`${err}`)
 	 }
 }
 
-const fetchSummary = async({from,to,accountId}:{
-	from?: string;
-	to?: string;
-	accountId?: string;
-  })=>{
+/* const fetchSummary = async(input:string,personaId:string)=>{
+	const {from,to,accountId}:{
+		from?: string;
+		to?: string;
+		accountId?: string;
+	  } = await JSON.parse(input)
 	 try{
 		  const response = await axios.get("http://localhost:3000/api/summary",{
 				params:{
 					 from,
 					 to,
 					 accountId
-				}
+				},headers: {
+					'X-Persona-ID': personaId,  
+				  }
 		  })
 		  const stringData = JSON.stringify(response.data)
 		  return stringData
@@ -109,15 +174,17 @@ const fetchSummary = async({from,to,accountId}:{
 		  }
 				console.error("Unexpected error",err)
 	 
-		  return null
+		  return (`${err}`)
 	 }
-}
+} */
 
-const fetchTransactions = async ({from,to,accountId}:{
+const fetchTransactions = async ({from,to,accountId,personaId}:{
 	from?: string;
 	to?: string;
 	accountId?: string;
+	personaId:string
   })=>{
+
 	 try{
 
 		  const response = await axios.get("http://localhost:3000/api/transactions",{
@@ -125,7 +192,9 @@ const fetchTransactions = async ({from,to,accountId}:{
 					 from,
 					 to,
 					 accountId
-				}
+				},headers: {
+					'X-Persona-ID': personaId,  
+				  }
 		  })
 		  const stringData = JSON.stringify(response.data)
 		  return stringData
@@ -137,102 +206,262 @@ const fetchTransactions = async ({from,to,accountId}:{
 		  }
 				console.error("Unexpected error",err)
 	 
-		  return null
+		  return (`${err}`)
 	 }
 }
-const getTodaysDate =  async () => {
+
+const getTodaysDate =  async ({personaId}:{personaId?:string}) => {
 		 const todayDate = new Date()
 		 return todayDate.toString()
-	}
+}
 
-	const createOneTransaction = async(input:string)=>{
-		let json:TransactionCreate = await JSON.parse(input)
+const createOneTransaction = async({
+	personaId,
+	...json
+  }: {
+	accountId: string;
+	date: Date;
+	amount: number;
+	payee: string;
+	notes?: string | null | undefined;
+	projectId?: string | null | undefined;
+	categoryId?: string | null | undefined;
+	personaId: string;
+  })=>{
 	 try {
-		 const response = await axios.post("http://localhost:3000/api/transactions", json);
-		 return { success: true, data: response.data };
-	   } catch (err) {
-		 return { success: false, error: err instanceof Error ? err.message : String(err) };
-	   }
-	 
+		 const response = await axios.post("http://localhost:3000/api/transactions", json,{
+			headers: {
+				'X-Persona-ID': personaId,  
+			  }
+		 });
+		 return JSON.stringify({success: true, data: response.data });
+		}catch(err){
+			console.error("error inserting transaction",err)
+	  if (axios.isAxiosError(err)){
+			console.error("Axios details",err.response?.status,err.response?.data)
+	  }
+			console.error("Unexpected error",err)
+ 
+	  return (`${err}`)
  }
+}
+
  
- 
- const createOneDetailsTransactions = async(input:string)=>{
-	 let json:DetailsTransactionCreate = await JSON.parse(input)
-	 try {
-		 const response = await axios.post("http://localhost:3000/api/detailsTransactions", json);
-		 return { success: true, data: response.data };
-	   } catch (err) {
-		 return { success: false, error: err instanceof Error ? err.message : String(err) };
-	   }
- }
- 
- 
- const createAccount = async(input:string)=>{
-	 let json:AccountCreate = await JSON.parse(input)
-	 try {
-		 const response = await axios.post("http://localhost:3000/api/accounts", json);
-		 return { success: true, data: response.data };
-	   } catch (err) {
-		 return { success: false, error: err instanceof Error ? err.message : String(err) };
-	   }
- }
- 
- const createCategory = async(input:string)=>{
-	 let json:CategoryCreate = await JSON.parse(input)
-	 try {
-		 const response = await axios.post("http://localhost:3000/api/categories", json);
-		 return { success: true, data: response.data };
-	   } catch (err) {
-		 return { success: false, error: err instanceof Error ? err.message : String(err) };
-	   }
- }
- 
- 
- const createTransactionsAndDetails = async (input:string)=>{
-	 let json:TransactionRequest = await JSON.parse(input)
- try{
-	 let response =[]
-		 
-				 for(const transaction of json){
-					 const detailsTransaction = transaction["detailsTransactions"]
-					 delete transaction["detailsTransactions"]
-					 const responseTransaction = await client.api.transactions.$post({json:transaction})
-					 const {data} = await responseTransaction.json()
-					 if(detailsTransaction){
-						 detailsTransaction.transactionId= data.id
-						 const responseDetail = await client.api.detailsTransactions.$post({json:detailsTransaction})
-						 response = [...response,{transaction:data,detailsTransaction:await responseDetail.json()}]
-						 continue
-					 }
-				 response = [...response,{data}]
-				 }
- 
-				 return response
-			 }catch(err){
-				 return { success: false, error: err instanceof Error ? err.message : String(err) }
-			 }
+const createOneDetailsTransactions = async({
+	personaId,
+	...json
+  }:{
+    amount: number;
+    transactionId: string;
+    name?: string | null | undefined;
+    projectId?: string | null | undefined;
+    categoryId?: string | null | undefined;
+    quantity?: number | null | undefined;
+    unitPrice?: number |  undefined;
+	personaId:string
+})=>{
 	
- }
+	 try {
+		 const response = await axios.post("http://localhost:3000/api/detailsTransactions", json,{
+			headers: {
+				'X-Persona-ID': personaId,  
+			  }
+		 });
+		 return JSON.stringify({ success: true, data: response.data });
+		}catch(err){
+			console.error("error creating detail for transaction",err)
+	  if (axios.isAxiosError(err)){
+			console.error("Axios details",err.response?.status,err.response?.data)
+	  }
+			console.error("Unexpected error",err)
  
+	  return (`${err}`)
+ }
+}
+ 
+ 
+const createAccount = async({
+	personaId,
+	...json
+  }:{
+    name: string;
+	personaId:string
+})=>{
+
+	 try {
+		 const response = await axios.post("http://localhost:3000/api/accounts", json,{
+			headers: {
+				'X-Persona-ID': personaId,  
+			  }
+		 });
+		 return JSON.stringify({ success: true, data: response.data });
+		}catch(err){
+			console.error("error creating account",err)
+	  if (axios.isAxiosError(err)){
+			console.error("Axios details",err.response?.status,err.response?.data)
+	  }
+			console.error("Unexpected error",err)
+ 
+	  return (`${err}`)
+ }
+}
+ 
+const createCategory = async({
+	personaId,
+	...json
+  }:{
+    name: string;
+    goal?: number | null | undefined;
+	personaId:string
+})=>{
+	 
+	 try {
+		 const response = await axios.post("http://localhost:3000/api/categories", json,{
+			headers: {
+				'X-Persona-ID': personaId,  
+			  }
+		 });
+		 return JSON.stringify({ success: true, data: response.data });
+		}catch(err){
+			console.error("error creating accounts",err)
+	  if (axios.isAxiosError(err)){
+			console.error("Axios details",err.response?.status,err.response?.data)
+	  }
+			console.error("Unexpected error",err)
+ 
+	  return (`${err}`)
+ }
+}
+ 
+ 
+const createTransactionsAndDetails = async ({
+	personaId,
+	...json
+  }:{
+	personaId:string;
+	transactions:{
+    date: Date;
+    accountId: string;
+    amount: number;
+    payee: string;
+    notes?: string | null | undefined;
+    projectId?: string | null | undefined;
+    categoryId?: string | null | undefined;
+	detailsTransactions:{
+    amount: number;
+    transactionId: string;
+    name: string 
+    projectId?: string | null | undefined;
+    categoryId?: string | null | undefined;
+    quantity: number 
+    unitPrice: number
+}[]
+}[]})=>{
+ try{
+	 let response:any =[]
+		 
+	 for(const transaction of json.transactions){
+		const detailsTransaction = transaction["detailsTransactions"]
+		const {detailsTransactions, ...transacToUp} = transaction
+		/* const timestamp = Date.parse(transacToUp.date); */
+		const responseTransaction = await client.api.transactions.$post({json:transaction},{
+		  headers: {
+			  'X-Persona-ID': personaId,  
+		  }
+	  })
+		const {data} = await responseTransaction.json()
+		console.log(data)
+		if(detailsTransaction){
+
+			let completeDetailsTransaction = await Promise.all(
+				detailsTransaction.map(async (d) => {
+					console.log(data.id)
+				  const responseDetail = await client.api.detailsTransactions.$post({
+					json: { ...d, transactionId: data.id }
+				  },{headers: {
+					'X-Persona-ID': personaId,  
+				}});
+
+				  const ress = await responseDetail.json()
+
+				  console.log(ress)
+				  return responseDetail;
+				})
+			  );
+
+			response.push({
+				transaction: data,
+				detailsTransactions: completeDetailsTransaction,
+			  })
+		}
+	}
+				return response
+
+				}catch(err){
+					console.error("error creating transactions and details transactions ",err)
+			  if (axios.isAxiosError(err)){
+					console.error("Axios details",err.response?.status,err.response?.data)
+			  }
+					console.error("Unexpected error",err)
+		 
+			  return (`${err}`)
+		 }
+}
+	
+
+const createProject = async({
+	personaId,
+	...json
+  }:{
+    name: string;
+    budget: number;
+    startDate: string;
+    endDate: string;
+    description?: string | undefined;
+	personaId:string
+})=>{
+
+	 try {
+		 const response = await axios.post("http://localhost:3000/api/projects", json,{
+			headers: {
+				'X-Persona-ID': personaId,  
+			  }
+		 });
+		 return JSON.stringify({ success: true, data: response.data });
+		}catch(err){
+			console.error("error fetching transactions",err)
+	  if (axios.isAxiosError(err)){
+			console.error("Axios details",err.response?.status,err.response?.data)
+	  }
+			console.error("Unexpected error",err)
+ 
+	  return (`${err}`)
+ }
+} 
 
 //TODO build function whitch get the actual Date
-export const functions = {
+export const functions : any = {
 	getTodaysDate,
 	fetchCategories,
+	fetchProjects,
 	fetchAccounts,
-	fetchSummary,
-	fetchoneDetailsTransaction:fetchDetailsTransaction,
+	fetchOneTransaction:fetchTransaction,
+	fetchOneDetailsTransaction:fetchDetailsTransaction,
 	fetchManyDetailsTransactions:fetchDetailsTransactions,
 	fetchTransactions,
 	createOneTransaction,
 	createOneDetailsTransactions,
 	createAccount,
 	createCategory,
+	createProject,
 	createTransactionsAndDetails
 }
 
-export const handleRequiresAction = async (run,openai,threadId)=>{
+export const handleRequiresAction = async ( run: any,
+    openai: any,
+    threadId: any,
+	personaId:string
+): Promise<RunStatus | null>=>{
 	
 	const runId = run.id
 	/* console.log(runId) */
@@ -241,33 +470,59 @@ export const handleRequiresAction = async (run,openai,threadId)=>{
 		run.required_action.submit_tool_outputs &&
 		run.required_action.submit_tool_outputs.tool_calls
 	  ) {
-		/* console.log(run) */
+		console.log(run)
 		const toolOutputs =[]
-		for(const tool of run.required_action.submit_tool_outputs.tool_calls){
-			if(tool.function.arguments){
-				const args = JSON.parse(tool.function.arguments)
-				/* console.log(args)
-				console.log(functions)
-				console.log(tool.function.name) */
-				const Output = await functions[tool.function.name](args)
-				/* console.log(`####----#####----#####----####----###### /n ${Output} /n + ####----#####----#####----####----######`) */
-				toolOutputs.push({
-					tool_call_id:tool.id,
-					output:Output.toString()
-				})
-			}else{
+		const toolCalls = run.required_action.submit_tool_outputs.tool_calls;
+		console.log(toolCalls)
 
-				const Output = await functions[tool.function.name]()
-				toolOutputs.push({
-					tool_call_id:tool.id,
-					output:Output.toString()
-				})
-			}
-		}
-		/* console.log(toolOutputs) */
+// Map each tool call to a Promise
+const promises = toolCalls.map(async (tool:any) => {
+    try {
+        let output;
+
+        if (tool.function.arguments) {
+            // Parse the arguments, handling date fields
+            const args = JSON.parse(tool.function.arguments, (key, value) =>
+                key === "date" ? new Date(value) : value
+            );
+
+            console.log('Arguments:', args);
+            console.log('Functions:', functions);
+            console.log('Function Name:', tool.function.name);
+
+            // Execute the function with arguments and personaId
+            output = await functions[tool.function.name]({ ...args, personaId });
+
+            console.log(`####----#####----#####----####----###### \n ${output} \n ####----#####----#####----####----######`);
+        } else {
+            // Execute the function without arguments
+            output = await functions[tool.function.name]();
+        }
+
+        // Return the formatted output object
+        return {
+            tool_call_id: tool.id,
+            output: output.toString(),
+        };
+    } catch (error:any) {
+        console.error(`Error executing tool ${tool.id}:`, error);
+        // Handle the error as needed, for example:
+        return {
+            tool_call_id: tool.id,
+            output: `Error: ${error.message}`,
+        };
+    }
+});
+
+// Await all Promises to complete
+const results = await Promise.all(promises);
+
+// Populate the toolOutputs array with the results
+toolOutputs.push(...results);
+
 		
 		if(toolOutputs.length > 0){
-			/* console.log(run.id) */
+
 			try{
 				run = await openai.beta.threads.runs.submitToolOutputsAndPoll(
 				threadId,
@@ -279,35 +534,51 @@ export const handleRequiresAction = async (run,openai,threadId)=>{
 			}
 			
 			}
-		/* console.log(run) */
+
 	  }
 
-	 /*  console.log(run) */
 
-	  return handleRunStatus(run,openai,threadId)
+	  return handleRunStatus(run,openai,threadId,personaId)
 }
 
 
-export const handleRunStatus = async (run,openai,threadId) => {
+export const handleRunStatus = async (run:any,openai:any,threadId:string,personaId:string) => {
 
 	  if (run.status === 'completed') {
-        const messages = await openai.beta.threads.messages.list(
-          run.thread_id
-        )
-        console.log(messages.data)
-		/* console.log(messages.data.reverse().content[0]?.text?.value) */
-		/* console.log(messages.data.content[0]?.text?.value) */
-        const aiResponse =  messages.data[0].content[0].text.value
-		/* console.log(`###---###---###---###---###---###---###---###---###---###---###---###---###---###---###---###--- 
-			  											${aiResponse}   
-		 			###---###---###---###---###---###---###---###---###---###---###---###---###---###---###---###---`) */
-        return aiResponse
+		const messages = await openai.beta.threads.messages.list(run.thread_id);
+
+		// Log the response to inspect its structure
+		console.log(messages.data);
+	
+		// Retrieve the most recent AI message
+		const latestMessage = messages.data.find(
+		  (message: any) => message.role === 'assistant'
+		);
+	
+		if (!latestMessage) {
+		  console.error('No assistant message found in the thread.');
+		  return null;
+		}
+	
+		// Extract the AI response text
+		const aiResponse =
+		  latestMessage.content?.[0]?.text?.value || 'No response content available';
+	
+		console.log(
+		  `###---###---###---###---###---###---###---###---###---###---###---###---###
+				${aiResponse}
+		  ###---###---###---###---###---###---###---###---###---###---###---###---###`
+		);
+	
+		return aiResponse;
       } else if (run.status === "requires_action") {
-	  /* console.log(run.status); */
-	  return await handleRequiresAction(run,openai,threadId);
+	  console.log(run.status);
+	  return await handleRequiresAction(run,openai,threadId,personaId);
 	} else {
+		console.log(run.status);
 	  console.error("Run did not complete:", run);
 	}
+
   };
 
 

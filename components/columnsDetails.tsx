@@ -52,7 +52,7 @@ export const DetailsTable:React.FC<{detailsTransactions:ApiValues[]}> =({
   const [rowSelection, setRowSelection] = React.useState({})
   const [expanded,setExpanded]= React.useState({})
 
-    const detailsColumns:ColumnDef<ResponseType>[]= [
+    const detailsColumns:ColumnDef<ApiValues>[]= [
         {
             id:"select",
             header:({table})=>(

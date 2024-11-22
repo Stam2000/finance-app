@@ -7,9 +7,13 @@ export const useGetDetailsTransaction = (id?:string)=>{
         enabled:!!id,
         queryKey:["detailsTransaction",{id}],
         queryFn:async()=>{
-            console.log(id)
+            const personaId = localStorage.getItem('selectedPersona') || "testData"
             const response = await client.api.detailsTransactions[":id"]["$get"]({
                 param:{id}
+            },{
+                headers: {
+                    'X-Persona-ID': personaId,      
+                }
             });
 
     

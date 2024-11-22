@@ -21,9 +21,8 @@ const app = new Hono()
     })),async (c)=>{
 
         const {from,to,accountId} = c.req.valid("query")
-        
-        
-        const auth = {userId:"testData"}
+        const personaId = c.req.header('X-Persona-ID') || "testData"
+        const auth = {userId:personaId}
 
         const defaultTo = new Date()
         const defaultFrom = subDays(defaultTo,30)
@@ -56,19 +55,20 @@ const app = new Hono()
         data = data.map(detail=>({
             ...detail,
             amount:convertAmountFormMiliunits(detail.amount),
-            unitPrice:convertAmountFormMiliunits(detail.unitPrice)
+            unitPrice:convertAmountFormMiliunits(!detail.unitPrice ? 0 : detail.unitPrice)
         }))
 
         return c.json({data})
 })
 .get("/:id",
     zValidator("param",z.object({
-        id:z.string().optional()
+        id:z.string()
     })),
     async(c)=>{
 
         const {id}=c.req.valid("param")
-        const auth = {userId:"testData"}
+        const personaId = c.req.header('X-Persona-ID') || "testData"
+        const auth = {userId:personaId}
 
         let [data] = await db.select({
             id: detailsTransactions.id,
@@ -76,6 +76,7 @@ const app = new Hono()
             quantity: detailsTransactions.quantity,
             unitPrice: detailsTransactions.unitPrice,
             amount: detailsTransactions.amount,
+            projectId:detailsTransactions.projectId,
             transactionId: detailsTransactions.transactionId,
             categoryId: detailsTransactions.categoryId,
         })
@@ -95,9 +96,10 @@ const app = new Hono()
         data = {
             ...data,
             amount:convertAmountFormMiliunits(data.amount),
-            unitPrice:convertAmountFormMiliunits(data.unitPrice)
+            unitPrice:convertAmountFormMiliunits(!data.unitPrice ? 0 : data.unitPrice)
         }
         
+        console.log(data)
         return c.json({data})
     }
 ).post("/",
@@ -105,7 +107,9 @@ const app = new Hono()
         insertdetailsTransactionsSchema.omit({id:true})
     ),
     async(c)=> {
-        const auth= {userId:"testData"}
+
+        const personaId = c.req.header('X-Persona-ID')
+        const auth = {userId:personaId}
         const values = c.req.valid("json")
 
         const [data] = await db.insert(detailsTransactions).values({
@@ -156,7 +160,7 @@ const app = new Hono()
 ).patch("/:id",
     zValidator("param",
         z.object({
-            id:z.string().optional()
+            id:z.string()
         })
     ),
     zValidator("json",
@@ -164,9 +168,11 @@ const app = new Hono()
             id:true
         })),async(c)=>{
             
-            const auth = {userId:"testData"}
+            const personaId = c.req.header('X-Persona-ID') || "testData"
+            const auth = {userId:personaId}
             const {id} = c.req.valid("param")
             const values = c.req.valid("json")
+            console.log(values)
 
             const transactionToUpdate = db.$with("deetailsTransactions_to_update")
                 .as(
@@ -174,7 +180,6 @@ const app = new Hono()
                     .from(detailsTransactions)
                     .innerJoin(transactions,eq(transactions.id,detailsTransactions.transactionId))
                     .innerJoin(accounts,eq(transactions.accountId,accounts.id))
-                    
                     .where(
                        and(
                         eq(detailsTransactions.id,id),
@@ -195,12 +200,13 @@ const app = new Hono()
 delete("/:id",
 
     zValidator("param",z.object({
-        id:z.string().optional()
+        id:z.string()
     }),
 ),
 
     async(c)=>{
-        const auth = {userId:"testData"}
+        const personaId = c.req.header('X-Persona-ID') || "testData"
+        const auth = {userId:personaId}
         const {id} = c.req.valid("param")
 
         if(!id){

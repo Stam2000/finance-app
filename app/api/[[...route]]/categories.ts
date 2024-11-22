@@ -2,10 +2,9 @@ import { Hono } from "hono";
 import { db } from "@/db/drizzle";
 import { categories,transactions } from "@/db/schema";
 import {createId} from "@paralleldrive/cuid2"
-import {parse,subDays,startOfMonth,differenceInDays} from "date-fns"
+import {parse,subDays,startOfMonth} from "date-fns"
 import { zValidator } from "@hono/zod-validator";
-import { clerkMiddleware,getAuth } from "@hono/clerk-auth";
-import { and,eq,inArray,sql,gte,lte,sum,isNotNull,gt} from "drizzle-orm";
+import { and,eq,inArray,gte,lte,sum,isNotNull,gt,desc} from "drizzle-orm";
 import { insertCategorySchema } from "@/db/schema";
 import {z} from "zod"
 import { convertAmountFromMiliunits } from "@/lib/utils";
@@ -20,7 +19,9 @@ const app = new Hono()
         }),
     ),
     async(c)=>{
-        const auth = {userId:"testData"}
+        const personaId = c.req.header('X-Persona-ID') || "testData"
+        const auth = {userId:personaId}
+        console.log(personaId)
         const {from,to,accountId}=c.req.valid("query")
 
 
@@ -48,7 +49,8 @@ const app = new Hono()
     return c.json({data})
 }).get("/all",
 async(c)=>{
-    const auth = {userId:"testData"}
+    const personaId = c.req.header('X-Persona-ID') || "testData"
+    const auth = {userId:personaId}
     const data = await db
       .select({
         id: categories.id,
@@ -65,7 +67,8 @@ async(c)=>{
     return c.json({ data });
 }).get("/tracking",
         async(c)=>{
-            const auth = {userId:"testData"}
+            const personaId = c.req.header('X-Persona-ID') || "testData"
+            const auth = {userId:personaId}
             const endDate = new Date()             
             const startDate= startOfMonth(endDate);
 
@@ -88,9 +91,9 @@ async(c)=>{
                 isNotNull(categories.goal),
                 gt(categories.goal, 0),
                 ))
-            .groupBy(categories.id, categories.name, categories.goal);
+            .groupBy(categories.id, categories.name, categories.goal).orderBy(desc(categories.goal));;
       
-        console.log(data)
+        
           return c.json({ data });
       })
     .get("/:id",
@@ -98,7 +101,8 @@ async(c)=>{
             {id:z.string().optional()}
         )),
         async(c)=>{
-            const auth = {userId:"testData"}
+            const personaId = c.req.header('X-Persona-ID') || "testData"
+            const auth = {userId:personaId}
             const {id}= c.req.valid("param")
 
             if(!id){
@@ -126,8 +130,6 @@ async(c)=>{
                 ...data,
                 goal:data.goal ? convertAmountFromMiliunits(data.goal) : 0
             }
-
-           /*  console.log(data) */
             return c.json({data})
         }
     )
@@ -138,9 +140,9 @@ async(c)=>{
             goal:true
         })),
         async (c)=>{
-            const auth = {userId:"testData"}
+            const personaId = c.req.header('X-Persona-ID') || "testData"
+            const auth = {userId:personaId}
             const {name,goal} = c.req.valid("json")
-            console.log(name)
             if(!auth?.userId){
                 return c.json({error:"Unauthorized"},401)
             }
@@ -161,7 +163,8 @@ async(c)=>{
             ids:z.array(z.string())
         })),
         async (c)=>{
-            const auth = {userId:"testData"}
+            const personaId = c.req.header('X-Persona-ID') || "testData"
+            const auth = {userId:personaId}
             const values = c.req.valid("json")
             console.log(values)
 
@@ -194,7 +197,8 @@ async(c)=>{
             name:true,
             goal:true
         })) ,async (c)=>{
-            const auth = {userId:"testData"}
+            const personaId = c.req.header('X-Persona-ID') || "testData"
+            const auth = {userId:personaId}
             const {id} = c.req.valid("param")
             const values = c.req.valid("json")
 
@@ -229,7 +233,8 @@ async(c)=>{
             }),
         ),
         async(c)=>{
-            const auth = {userId:"testData"}
+            const personaId = c.req.header('X-Persona-ID') || "testData"
+            const auth = {userId:personaId}
             const {id} = c.req.valid("param")
             
             if(!id){

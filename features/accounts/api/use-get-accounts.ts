@@ -9,13 +9,21 @@ export const useGetAccounts = ()=>{
     const query = useQuery({
         queryKey:["accounts"],
         queryFn:async()=>{
-            const response = await client.api.accounts.$get()
+            const personaId = localStorage.getItem('selectedPersona') || "testData"
+            
+            const response = await client.api.accounts.$get({},{
+                headers: {
+                    'X-Persona-ID': personaId,      
+                }
+            })
 
             if(!response.ok){
                 throw new Error("Failed to fetch accounts");
             }
 
+            
             const {data} = await response.json();
+            console.log(data)
             return data
         }
     })

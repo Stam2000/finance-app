@@ -6,8 +6,13 @@ export const useGetCategory = (id?:string)=>{
         enabled:!!id,
         queryKey:["account",{id}],
         queryFn:async()=>{
+            const personaId = localStorage.getItem('selectedPersona') || "testData"
             const response = await client.api.categories[":id"]["$get"]({
                 param:{id}
+            },{
+                headers: {
+                    'X-Persona-ID': personaId,      
+                }
             });
             console.log(response)
             if(!response.ok){

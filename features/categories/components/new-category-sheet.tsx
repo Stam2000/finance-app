@@ -32,7 +32,6 @@ export const NewCategorySheet =()=>{
         })
     }
 
-
     return(
         <Sheet open={isOpen} onOpenChange={onClose}>
             <SheetContent className="space-y-4">
@@ -41,7 +40,7 @@ export const NewCategorySheet =()=>{
                         New Category
                     </SheetTitle>
                     <SheetDescription>
-                        Create a new category to transaction 
+                    Create a new category to organize your transactions.
                     </SheetDescription>
                 </SheetHeader>
                 <CategoryForm 

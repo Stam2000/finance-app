@@ -11,11 +11,16 @@ export const useBulkCreateDetailsTransactions = () => {
 
     const queryClient = useQueryClient()
     const mutation = useMutation<
-    RequestType,
+    ResponseType,
     Error,
-    ResponseType>({
+    RequestType>({
         mutationFn: async (json)=>{
-            const response = await client.api.detailsTransactions["bulk-create"]["$post"]({json})
+            const personaId = localStorage.getItem('selectedPersona') || "testData"
+            const response = await client.api.detailsTransactions["bulk-create"]["$post"]({json},{
+                headers: {
+                    'X-Persona-ID': personaId,      
+                }
+            })
             return await response.json()
         },
         onSuccess: ()=>{

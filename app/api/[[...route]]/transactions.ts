@@ -6,11 +6,13 @@ import {createId} from "@paralleldrive/cuid2"
 import { zValidator } from "@hono/zod-validator";
 import { clerkMiddleware,getAuth } from "@hono/clerk-auth";
 import { and,eq,inArray,desc,lte,gte,sql } from "drizzle-orm";
-import { insertTransactionSchema } from "@/db/schema";
+import { insertTransactionSchema,insertdetailsTransactionsSchema } from "@/db/schema";
 import {z} from "zod"
 import { convertAmountFormMiliunits } from "@/lib/utils";
 import { detailsTransactions } from "@/db/schema";
 import { date } from "drizzle-orm/mysql-core";
+import { DetailsTransactionsType } from "@/db/schema";
+import {getCookie} from "hono/cookie"
 
 
 
@@ -22,12 +24,14 @@ const app = new Hono()
         accountId:z.string().optional()
     })),async (c)=>{
 
+        const personaId = c.req.header('X-Persona-ID') || "testData"
+        const auth = {userId:personaId}
         const {from,to,accountId} = c.req.valid("query")
-        const auth = {userId:"testData"}
+        console.log(from)
+        console.log(to)
 
         const defaultTo = new Date()
         const defaultFrom = subDays(defaultTo,30)
-        console.log(accountId)
         const startDate = from ? parse(from,"yyyy-MM-dd",new Date()):defaultFrom
         const endDate = to ? parse(to,"yyyy-MM-dd",new Date()):defaultTo
        
@@ -53,7 +57,7 @@ const app = new Hono()
        .orderBy(desc(transactions.date)
     )
 
-    let details =[]
+    let details:DetailsTransactionsType[] =[]
     if(transactionData.length > 0){
         const transactionsId = transactionData.map(t=>t.id)
             details = await db.select({
@@ -62,7 +66,8 @@ const app = new Hono()
             quantity: detailsTransactions.quantity,
             unitPrice: detailsTransactions.unitPrice,
             amount: detailsTransactions.amount,
-            transactionId: detailsTransactions.transactionId
+            transactionId: detailsTransactions.transactionId,
+            CategoryId:detailsTransactions.categoryId
         })
             .from(detailsTransactions)
             .leftJoin(categories,eq(detailsTransactions.categoryId,categories.id))
@@ -72,8 +77,8 @@ const app = new Hono()
         
             details = details.map(detail=>({
                 ...detail,
-                amount:convertAmountFormMiliunits(detail.amount),
-                unitPrice:convertAmountFormMiliunits(detail.unitPrice)
+                amount:convertAmountFormMiliunits(detail.amount ? detail.amount : 0 ),
+                unitPrice:convertAmountFormMiliunits(detail.unitPrice ? detail.unitPrice : 0)
             }))
 
         const data = transactionData.map(transaction=>({
@@ -87,10 +92,11 @@ const app = new Hono()
 })
     .get("/:id",
         zValidator("param",z.object(
-            {id:z.string().optional()}
+            {id:z.string()}
         )),
         async(c)=>{
-            const auth = {userId:"testData"}
+            const personaId = c.req.header('X-Persona-ID') || "testData"
+            const auth = {userId:personaId}
             const {id}= c.req.valid("param")
 
 
@@ -115,7 +121,14 @@ const app = new Hono()
                 )
             );
 
-            let details =[]
+            let details :{
+                id: string;
+                name?: string | null | undefined;
+                quantity?: number | null | undefined;
+                unitPrice: number | null;
+                amount: number;
+                transactionId: string;
+            }[] | undefined = []
     if(transactionData.length > 0){
         const transactionsId = transactionData.map(t=>t.id)
             details = await db.select({
@@ -132,10 +145,10 @@ const app = new Hono()
     }
     
         
-            details = details.map(detail=>({
+            details =  details.map(detail=>({
                 ...detail,
                 amount:convertAmountFormMiliunits(detail.amount),
-                unitPrice:convertAmountFormMiliunits(detail.unitPrice)
+                unitPrice:convertAmountFormMiliunits(!detail.unitPrice? 0 : detail.unitPrice)
             }))
 
         const data = transactionData.map(transaction=>({
@@ -160,10 +173,10 @@ const app = new Hono()
             id:true
         })),
         async (c)=>{
-            const auth = {userId:"testData"}
+            const personaId = c.req.header('X-Persona-ID')
+            const auth = {userId:personaId}
             const values = c.req.valid("json")
-            console.log(values)
-
+        
             const [data] = await db.insert(transactions).values({
                 id:createId(),
                ...values,
@@ -177,12 +190,10 @@ const app = new Hono()
             ids:z.array(z.string())
         })),
         async (c)=>{
-            const auth = {userId:"testData"}
+            const personaId = c.req.header('X-Persona-ID') || "testData"
+            const auth = {userId:personaId}
             const values = c.req.valid("json")
            
-            console.log(values)
-
-
             const transactionsToDelete = db.$with("transactions_to_delete").as(
                 db.select({
                     id:transactions.id
@@ -218,7 +229,8 @@ const app = new Hono()
             )
         ),
         async (c) => {
-            const auth = {userId:"testData"}
+            const personaId = c.req.header('X-Persona-ID') || "testData"
+            const auth = {userId:personaId}
             const values = c.req.valid("json")
 
 
@@ -240,7 +252,8 @@ const app = new Hono()
         zValidator("json",insertTransactionSchema.omit({
             id:true
         })) ,async (c)=>{
-            const auth = {userId:"testData"}
+            const personaId = c.req.header('X-Persona-ID') || "testData"
+            const auth = {userId:personaId}
             const {id} = c.req.valid("param")
             const values = c.req.valid("json")
 
@@ -277,7 +290,8 @@ const app = new Hono()
             }),
         ),
         async(c)=>{
-            const auth = {userId:"testData"}
+            const personaId = c.req.header('X-Persona-ID') || "testData"
+            const auth = {userId:personaId}
             const {id} = c.req.valid("param")
             
             if(!id){

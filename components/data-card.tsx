@@ -105,7 +105,6 @@ export const DataCard =({
         </motion.div>
     )
 }
-
 export const DataCardLoading = ()=>{
     return(
             <Card className="border-none drop-shadow-sm h-[192px]">

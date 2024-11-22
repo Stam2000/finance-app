@@ -5,6 +5,7 @@ type OpenTransactionState = {
     toggleChatOpen: () => void;
 }
 
+
 export const useOpenChat= create<OpenTransactionState>((set)=>({
         chatOpen:false,
         toggleChatOpen:()=>set((state)=>( {chatOpen:!state.chatOpen})),

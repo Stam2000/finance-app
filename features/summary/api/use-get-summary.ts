@@ -12,14 +12,21 @@ export const useGetSummary = () =>{
     const to = params.get("to")||""
     const accountId = params.get("accountId")||"";
 
+    
     const query = useQuery({
         queryKey:["summary",{from,to,accountId}],
         queryFn : async () =>{
+            const personaId = localStorage.getItem('selectedPersona') || "testData"
+            console.log(personaId)
             const response = await client.api.summary.$get({
                 query:
                 {from,
                 to,
                 accountId}
+            },{
+                headers: {
+                    'X-Persona-ID': personaId,      
+                }
             })
 
             if(!response.ok){

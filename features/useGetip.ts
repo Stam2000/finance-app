@@ -4,6 +4,7 @@ import {useQuery} from "@tanstack/react-query"
 
 export const useGetip = ()=>{
 
+    
     const query=useQuery({
         queryKey:["ip"],
         queryFn:async()=>{

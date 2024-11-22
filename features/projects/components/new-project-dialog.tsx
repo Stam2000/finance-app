@@ -25,13 +25,15 @@ export const NewProjectDialog =()=>{
     const {isOpen,onClose} = useNewProject()
     const createMutation = useCreateProject()
 
-    const onSubmit = (values:FormValues)=>{
+    const onSubmit = (values:any)=>{
         createMutation.mutate(values,{
             onSuccess:()=>{
                 onClose()
             }
         })
     }
+
+    
 
     const isPending = 
     createMutation.isPending

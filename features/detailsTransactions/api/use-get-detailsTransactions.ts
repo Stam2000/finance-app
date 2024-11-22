@@ -13,11 +13,16 @@ export const useGetDetailsTransactions = ()=>{
     const query = useQuery({
         queryKey:["detailsTransactions",{from,to,accountId}],
         queryFn:async()=>{
+            const personaId = localStorage.getItem('selectedPersona') || "testData"
             const response = await client.api.detailsTransactions.$get({
                 query:{
                     from,
                     to,
                     accountId
+                }
+            },{
+                headers: {
+                    'X-Persona-ID': personaId,      
                 }
             })
 

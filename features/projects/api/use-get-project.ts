@@ -6,8 +6,13 @@ export const useGetProject = (id?:string)=>{
         enabled:!!id,
         queryKey:["project",{id}],
         queryFn:async()=>{
+            const personaId = localStorage.getItem('selectedPersona') || "testData"
             const response = await client.api.projects[":id"]["$get"]({
                 param:{id}
+            },{
+                headers: {
+                    'X-Persona-ID': personaId,      
+                }
             });
 
             if(!response.ok){

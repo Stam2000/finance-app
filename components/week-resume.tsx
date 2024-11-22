@@ -1,24 +1,20 @@
-import axios from "axios"
-import {useState,useEffect} from "react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { ArrowUpIcon, ArrowDownIcon, DollarSignIcon, PieChartIcon, TrendingUpIcon } from "lucide-react"
-import { useGetWeeklyAnalyse } from "@/features/chat/hook/useGetWeekSummary" 
-import { ScrollArea } from "./ui/scroll-area"
+
 import { Button } from "./ui/button"
 import { useOpenWeeKOverview } from "@/features/chat/hook/use-open-weekOverview"
+import { useUpdateChat } from "@/features/chat/hook/useUpdateMessage"
 import { formatText } from "@/lib/utils"
+import { MarkdownFormatter } from "@/lib/utils"
 
 const WeekResult = ()=>{
+  const {WRshort,WRlong}= useUpdateChat()
     const {onOpen} = useOpenWeeKOverview()
 /*     const [htmlCode,setHtmlCode] = useState("")
     const [error, setError] = useState(null); */
-    const weekQuery = useGetWeeklyAnalyse()
-    let weekResume = weekQuery.data?.reducedText||[]
-    
+    let weekResume = MarkdownFormatter.toHtml(WRshort)
     console.log(weekResume)
+  
     
-    weekResume=`<div>
+/*     weekResume=`<div>
   <h1 style="font-weight: bold; font-size: 1.125rem; padding-bottom: 0.5rem;">📊Weekly Financial Review</h1>
   <div style="padding-bottom: 1rem;">
     <ul>
@@ -39,17 +35,14 @@ const WeekResult = ()=>{
       <li>Invest savings for future growth 💰</li>
     </ul>
   </div>
-</div>`
+</div>` */
 
     
-    if (weekQuery.isLoading) {
-        return <div>Loading...</div>;
-    }
 
     return(
         <div className="flex align-center p-4 bg-gray-50 flex-col justify-center">
             <div>
-                <div className="flex align-center justify-center  p-4 " dangerouslySetInnerHTML={{__html:weekResume}} />
+                <div className="" dangerouslySetInnerHTML={{__html:weekResume}} />
             </div>
             <div className="flex items-center justify-center" >
                 <Button className="bg-slate-300 hover:text-white w-[50%] wx-auto text-slate-700 border-2" onClick={onOpen} >
@@ -60,5 +53,6 @@ const WeekResult = ()=>{
         </div>
     )
 }
+
 
 export default WeekResult

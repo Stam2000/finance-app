@@ -11,6 +11,7 @@ type Props = {
         expenses:number
     }[]
 }
+
 export const LineVariant =({data}:Props)=>{
 
     return(

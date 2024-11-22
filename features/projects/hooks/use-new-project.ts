@@ -6,6 +6,7 @@ type newProjectState = {
     onClose:()=> void;
 };
 
+
 export const useNewProject = create<newProjectState>((set)=>({
     isOpen:false,
     onOpen:()=>set({isOpen:true}),

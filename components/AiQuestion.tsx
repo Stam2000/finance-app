@@ -6,10 +6,11 @@ import { useState } from "react"
 
 
 const QuestionChat = ()=>{
-    const {threadId,setThreadId, setIsLoading,updateLastMessage,updateMessage, setFormData, formData} = useUpdateChat();
+    const {threadId,setThreadId, setIsLoading,updateLastMessage,updateMessage, setFormData, formData,personaInfo} = useUpdateChat();
     const {toggleChatOpen} = useOpenChat()
     const [value,setInputValue] = useState('')
-    console.log(value)
+    const personaId = "gredzxwh7esmt1xvmnd9k283"
+    console.log(personaId)
     
     const handleOnChange = (e:React.ChangeEvent<HTMLInputElement>)=>{
         setInputValue(e.target.value)
@@ -22,7 +23,7 @@ const QuestionChat = ()=>{
         e.preventDefault()
             console.log(value)
             console.log(formData)
-            sendAiMessage({threadId,setIsLoading,setThreadId,updateLastMessage,updateMessage,formData,setFormData})
+            sendAiMessage({threadId,setIsLoading,setThreadId,updateLastMessage,updateMessage,formData,setFormData,personaId,personaInfo})
             toggleChatOpen()
             setInputValue("")
         

@@ -11,9 +11,9 @@ const app = new Hono()
             const data = await res.data
             return c.json(data)
 
-        }catch(error){
+        }catch(error:any){
             console.error('Error occurred while fetching IP:', error);
-            return c.text(`Error: ${error.message}`, 500);
+            return c.text(`Error: ${error}`, 500);
         }
 
     })

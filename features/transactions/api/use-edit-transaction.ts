@@ -15,18 +15,23 @@ export const useEditTransaction =(id?:string)=>{
         RequestType
     >({
         mutationFn: async (json) =>{
-            console.log(json)
-            const response = await client.api.transactions[":id"]["$patch"]({param:{id},json});
+            const personaId = localStorage.getItem('selectedPersona') || "testData"
+            const response = await client.api.transactions[":id"]["$patch"]({param:{id},json},{
+                headers: {
+                    'X-Persona-ID': personaId,      
+                }
+            });
             return await  response.json();
         },
         onSuccess : ()=>{
             toast.success("Transaction updated")
-            queryClient.invalidateQueries({ queryKey:["transactions",{id}]})
-            queryClient.invalidateQueries({queryKey:["transactions"]})
+            queryClient.invalidateQueries({ queryKey: ["transaction", { id }] });
+            queryClient.invalidateQueries({ queryKey: ["transactions"] });
+            queryClient.invalidateQueries({ queryKey: ["summary"] });
         },
         onError: ()=>{
             
-            toast.error("Failed to create transaction")
+            toast.error("Failed to edit transaction")
         }
     })
 

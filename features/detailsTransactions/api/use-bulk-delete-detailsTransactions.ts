@@ -14,7 +14,12 @@ export const useBulkDeleteDetailsTransactions = ()=>{
     Error,
     RequestType>({
         mutationFn: async (json)=>{
-            const response = await client.api.detailsTransactions["bulk-delete"]["$post"]({json})
+            const personaId = localStorage.getItem('selectedPersona') || "testData"
+            const response = await client.api.detailsTransactions["bulk-delete"]["$post"]({json},{
+                headers: {
+                    'X-Persona-ID': personaId,      
+                }
+            })
             return await response.json()
         },
         onSuccess:()=>{

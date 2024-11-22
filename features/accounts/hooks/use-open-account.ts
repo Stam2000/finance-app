@@ -7,6 +7,7 @@ type OpenAccountState = {
     onClose:() => void
 }
 
+
 export const useOpenAccount = create<OpenAccountState>((set)=>({
     id:undefined,
     isOpen:false,

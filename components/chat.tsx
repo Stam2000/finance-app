@@ -1,29 +1,25 @@
 "use client"
 
-import { CirclePlus } from "lucide-react"
+
 import { Send } from "lucide-react"
-import { Card,CardContent,CardDescription,CardFooter,CardHeader,CardTitle } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
-import { CircleX,Grip } from "lucide-react"
-import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { Mic } from "lucide-react"
-import { Paperclip,ChevronLast } from "lucide-react"
+import { Paperclip,CircleX,Grip } from "lucide-react"
 import {useState,useRef,useEffect} from "react"
 import { Avatar } from "@/components/ui/avatar"
 import { useLayoutEffect } from "react"
 /* import DOMPurify from "dompurify" */
-import axios from "axios"
+
 import { Bot } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useOpenChat } from "@/features/chat/hook/use-open-AIchat"
 import { useUpdateChat } from "@/features/chat/hook/useUpdateMessage"
 import { sendAiMessage } from "@/lib/utils"
-import { ScrollArea } from "@/components/ui/scroll-area"
 import { motion } from "framer-motion"
-import WeekResult from "./week-resume"
 import MessageLoading from "./MessageLoading"
-
+import MarkdownTypewriter from "./markdownTyper"
+import { ListRestart } from "lucide-react"
+import { useGenFollowUpQ } from "@/features/chat/api/use-follow-up"
 
 
 
@@ -38,9 +34,11 @@ interface Message {
 
 export const Chat = () =>{
     const {chatOpen,toggleChatOpen} = useOpenChat()
-    const {threadId,resetMessage,reset,setThreadId,updateLastMessage,isloading,setIsLoading, messages, updateMessage, setFormData, formData, removeFile } = useUpdateChat();
+    const personaId = 'gredzxwh7esmt1xvmnd9k283'
+    const {personaDes,setFollowQ,followUpQ,followHistory,threadId,resetMessage,reset,setThreadId,updateLastMessage,isloading,setIsLoading, messages, updateMessage, setFormData, formData, removeFile,personaInfo } = useUpdateChat();
     const [fileNames,setFilenames] = useState<string[]>([])
     const chat = useRef<HTMLDivElement>(null)
+    const genFollowUpQ = useGenFollowUpQ()
 
     const newChatCreate =()=>{
         setFilenames([])
@@ -71,17 +69,33 @@ export const Chat = () =>{
         }
     }, [formData.question])
 
-   
-    const handleSubmit = (e)=>{
+    const handleGenFollowU = ()=>{
+        genFollowUpQ.mutate(
+            {personaDes,followHistory},
+            {
+              onSuccess: (data) => {
+                // Handle the successful response
+                setFollowQ(data);
+              },
+              onError: (error) => {
+                // Handle any errors
+                console.error('Error occurred:', error);
+              },
+            }
+          );
+    }
 
-            e.preventDefault()
+   
+    const handleSubmit = (e?: React.FormEvent<HTMLFormElement>)=>{
+
+            if (e) e.preventDefault();
             setFilenames([])
-            sendAiMessage({threadId,setIsLoading,setThreadId,updateLastMessage,updateMessage,formData,setFormData})
+            sendAiMessage({threadId,setIsLoading,setThreadId,updateLastMessage,updateMessage,formData,setFormData,personaId,personaInfo})
             
         }
    
-    const handleOnchange = (e)=>{
-        if(e.target.files){
+    const handleOnchange = (e:React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>)=>{
+        if (e.target instanceof HTMLInputElement && e.target.files) {
             console.log(e.target.files)
             const {files:filesList} = e.target
             const files:File[] = Array.from(filesList);
@@ -100,16 +114,16 @@ export const Chat = () =>{
     }
 
 
-    const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>,) => {
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
         if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault()
             setFilenames([])
-            sendAiMessage({threadId,setIsLoading,setThreadId,updateLastMessage,updateMessage,formData,setFormData})
+            sendAiMessage({threadId,setIsLoading,setThreadId,updateLastMessage,updateMessage,formData,setFormData,personaId,personaInfo})
         }
     }
     const handleSubmitButton = (message:string)=>{
         
-            sendAiMessage({ threadId, setIsLoading, setThreadId, updateLastMessage, updateMessage, formData, message , setFormData });
+            sendAiMessage({ threadId,setIsLoading,setThreadId,updateLastMessage,updateMessage,formData,message,setFormData,personaId,personaInfo});
        
     }
 
@@ -134,7 +148,7 @@ export const Chat = () =>{
                             </button>
                         
                         </div>
-                        <ChevronLast className="text-slate-900 hover:text-slate-500 hover:cursor-pointer" onClick={toggleChatOpen} />  
+                        <CircleX className="text-slate-900 hover:text-slate-500 hover:cursor-pointer" onClick={toggleChatOpen} />  
                     </div>
                     
                {
@@ -153,7 +167,7 @@ export const Chat = () =>{
                                                 x:0
                                             }}
                                         >
-                                            <Avatar className="bg-slate-800 shadow-md mt-1 text-white flex items-center justify-center">AI</Avatar>
+                                            <Avatar className="bg-slate-800 shadow-md mt-1 text-white flex items-center justify-center"><img className="text-white" src="/ailog.webp" /></Avatar>
                                         </motion.div>}
                                         {isloading && message.content==="" ?
                                                 <motion.div 
@@ -172,10 +186,25 @@ export const Chat = () =>{
                                               <motion.div  
                                               initial={{ x: -20, opacity: 0, scale: 0 }}
                                               animate={{ x: 0, scale: 1, opacity: 1 }}
-                                              className={`word-break p-4 whitespace-pre-wrap break-words shadow-md text-sm border-slate-50 border-[1px] 
+                                              className={` font-oxygen  shadow-md text-md border-slate-50 border-[1px] 
                       ${sender === "user" ? "bg-gradient-to-r from-slate-900 from-10% to-slate-700 to-90% text-white" : "bg-gradient-to-tl from-white from-50% to-stone-50 to-90% border-[1px]"} 
                       rounded-xl overflow-hidden ml-2 mr-3 mb-3 max-w-full`} >
-                                               <div dangerouslySetInnerHTML={{__html:message.content}} />
+                                               {/* <div dangerouslySetInnerHTML={{__html:message.content}} /> */}
+                                               {
+                                                sender === "user" ? <div className="p-4" dangerouslySetInnerHTML={{__html:message.content}} /> :
+                                                <div className="w-full" >
+                                                    <MarkdownTypewriter
+                                                    content={message.content}
+                                                    typeSpeed={10}
+                                                    cursor={{
+                                                    shape: 'block',
+                                                    color: 'bg-black'
+                                                    }}
+                                                />
+                                                </div>
+                                                
+                                               }
+                                
                                             </motion.div>
                                         }
                                      
@@ -186,43 +215,30 @@ export const Chat = () =>{
                 </div>)
                
                 :
-                    ( <div className="flex-col gap-4 flex h-[calc(100%-150px)]   p-4 items-center justify-center ">
-                        <motion.button className="rounded-lg border-[2px] text-white shadow-lg flex items-center bg-gradient-to-r from-slate-900 from-10% to-slate-700 to-90% justify-center w-x-auto border-slate-800 p-4 "
-                            initial={{opacity:0,scale:0}}
-                            animate={{opacity:1,scale:1}}
-                             onClick={()=>{
-                                handleSubmitButton("How many dinner this Month ?")
-                             }}
-                            
-                        >
-                            How many dinner this Month ?
-                        </motion.button>
-                        <motion.button className="rounded-lg border-[2px] text-white flex items-center shadow-lg bg-gradient-to-r from-slate-900 from-10% to-slate-700 to-90%  justify-center w-x-auto border-slate-800 p-4 "
-                            initial={{opacity:0,scale:0}}
-                            animate={{opacity:1,scale:[1.2,1]}}
-                            transition={{
-                                delay:0.1
-                            }}
-                            onClick={()=>{
-                                handleSubmitButton("Can you do me a weekly review ?")
-                             }}
-                        >
-                            Can you do me a weekly review ?
-                        </motion.button>
-                        <motion.button className="rounded-lg border-[2px] text-white flex items-center shadow-lg bg-gradient-to-r from-slate-900 from-10% to-slate-700 to-90% justify-center w-x-auto border-slate-800 p-4 "
-                            initial={{opacity:0,scale:0}}
-                            animate={{opacity:1,scale:[1.2,1]}}
-                            transition={{
-                                delay:0.2
-                            }}
-                            onClick={()=>{
-                                handleSubmitButton("Can you do me a Yearly review ?")
-                             }}
-                        >
-                            Can you do me a Yearly review ?
-                        </motion.button>
-                       
-                    </div>)
+                    ( <motion.div initial="hidden"
+                        animate="visible"
+                        variants={{
+                          hidden: {},
+                          visible: {
+                            transition: {
+                              staggerChildren: 0.2, // Adjust the delay as needed
+                            },
+                          },
+                        }} className="flex-col gap-2 flex h-[calc(100%-150px)]   p-4 items-center justify-center ">
+                        {
+                            followUpQ.map((q,i)=>(<motion.button key={q} disabled={genFollowUpQ.isPending} className={` ${genFollowUpQ.isPending ? "bg-slate-400 border-slate-400 hover:cursor-wait":"bg-gradient-to-r from-slate-800 from-10% to-slate-700 to-90%  border-slate-800 "} text-sm md:text-md rounded-md border-[1px] font-oxygen h-14 w-full text-white shadow-lg flex items-center  justify-center w-x-auto  p-[5px]`}
+                                initial={{opacity:0,scale:0}}
+                                animate={{opacity:1,scale:1}}
+                                 onClick={()=>{
+                                    handleSubmitButton(q)
+                                 }}>
+                                {q}
+                        </motion.button>))
+                        }
+                        <button disabled={genFollowUpQ.isPending} onClick={()=>{handleGenFollowU()}} className="rounded-full text-slate-700" >
+                            {genFollowUpQ.isPending ? <MessageLoading/> : <ListRestart />}
+                        </button>              
+                    </motion.div>)
                }
                
             <form onSubmit={handleSubmit} action="">

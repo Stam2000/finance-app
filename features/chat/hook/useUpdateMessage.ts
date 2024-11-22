@@ -1,5 +1,7 @@
 import { create } from "zustand";
-import {formatText} from "@/lib/utils"
+import { persist,PersistOptions  } from "zustand/middleware";
+import { BaseMessage } from "@langchain/core/messages";
+import { AIMessage,HumanMessage } from "@langchain/core/messages";
 
 type user = "AI" | "user";
 interface Message {
@@ -11,10 +13,23 @@ interface FormData {
     Files: File[];
 }
 
+
 type OpenTransactionState = {
     messages: Message[];
+    WRshort:string,
+    WRlong:string,
+    setWRshort:(data:string)=>void,
+    setWRlong:(data:string)=>void,
     resetMessage:()=>void;
+    personaDes:string,
+    followUpQ:string[],
+    followHistory:BaseMessage[],
+    upDateFollowUpH:(data:BaseMessage)=>void,
+    setFollowQ:(data:string[])=>void,
+    setPersonaDes:(data:string)=>void,
     isloading:boolean;
+    setPersonaInfo:(data:string)=>void;
+    personaInfo:string;
     setIsLoading:()=>void;
     updateLastMessage: (content: string) => void;
     updateMessage: (message: Message) => void;
@@ -26,11 +41,34 @@ type OpenTransactionState = {
     setThreadId:(threadId:string)=>void
 }
 
-export const useUpdateChat = create<OpenTransactionState>((set) => ({
+type ChatPersist = Partial<OpenTransactionState>;
+
+const persistConfig: PersistOptions<OpenTransactionState, ChatPersist> = {
+    name: "update-chat-storage",
+    partialize: (state) => ({
+        personaDes: state.personaDes,
+        personaInfo:state.personaInfo
+
+    }),
+};
+
+export const useUpdateChat = create(persist((set) => ({
+    WRshort:"Loading...",
+    WRlong:"Loading...",
+    personaDes:`hello`,
+    followUpQ:[],
     isloading:false,
+    followHistory:[],
+    setWRlong:(data)=>set({WRlong:data}),
+    setWRshort:(data)=>set({WRshort:data}),
+    upDateFollowUpH:(message) => set((state) => {
+        return{ followHistory: [...state.followHistory,new AIMessage("generate a array of questions surprise me"), message] }}),
+    setPersonaDes:(data)=> set({personaDes:data}),
+    setFollowQ:(data)=>set({followUpQ:data}),
+    setPersonaInfo:(data)=>set({personaInfo:data}),
     setIsLoading:()=>set((state)=>({isloading:!state.isloading})),
     messages: [],
-    
+    personaInfo:'',
     resetMessage:()=>set({messages:[]}),
     threadId:"",
     formData: { question: "", Files: [] },
@@ -62,4 +100,4 @@ export const useUpdateChat = create<OpenTransactionState>((set) => ({
         }
     })),
     setThreadId:(id)=>set({threadId:id})
-}));
+}),persistConfig));

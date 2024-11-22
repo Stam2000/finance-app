@@ -21,6 +21,7 @@ const formSchema = insertCategorySchema.pick({
     name:true,
 })
 
+
 type FormValues = z.input<typeof formSchema>
 
 export const EditCategorySheet =()=>{

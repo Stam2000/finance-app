@@ -6,6 +6,7 @@ type NewTransactionState = {
     onClose:()=> void;
 };
 
+
 export const useNewTransaction = create<NewTransactionState>((set)=>({
     isOpen: false,
     onOpen:()=>set({isOpen:true}),

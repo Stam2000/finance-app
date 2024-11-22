@@ -15,8 +15,12 @@ export const useEditAccount =(id?:string)=>{
         RequestType
     >({
         mutationFn: async (json) =>{
-            console.log(json)
-            const response = await client.api.accounts[":id"]["$patch"]({param:{id},json});
+            const personaId = localStorage.getItem('selectedPersona') || "testData"
+            const response = await client.api.accounts[":id"]["$patch"]({param:{id},json},{
+                headers: {
+                    'X-Persona-ID': personaId,      
+                }
+            });
             return await  response.json();
         },
         onSuccess : ()=>{

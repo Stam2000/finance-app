@@ -15,10 +15,15 @@ export const useEditDetailsTransaction =(id?:string)=>{
         RequestType
     >({
         mutationFn: async (json) =>{
-            console.log(id)
-            console.log(json)
-            const response = await client.api.detailsTransactions[":id"]["$patch"]({param:{id},json});
+            const personaId = localStorage.getItem('selectedPersona') || "testData"
+            const response = await client.api.detailsTransactions[":id"]["$patch"]({param:{id},json},{
+                headers: {
+                    'X-Persona-ID': personaId,      
+                }
+            });
+            
             return await  response.json();
+            
         },
         onSuccess : ()=>{
             toast.success("details updated")

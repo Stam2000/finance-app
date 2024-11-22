@@ -6,8 +6,13 @@ export const useGetAccount = (id?:string)=>{
         enabled:!!id,
         queryKey:["transaction",{id}],
         queryFn:async()=>{
+            const personaId = localStorage.getItem('selectedPersona') || "testData"
             const response = await client.api.accounts[":id"]["$get"]({
                 param:{id}
+            },{
+                headers: {
+                    'X-Persona-ID': personaId,      
+                }
             });
 
             if(!response.ok){

@@ -5,10 +5,46 @@ import "./globals.css";
 import {ContextProvider} from "@/components/ContextProvider";
 import { QueryProviders } from "@/providers/query-provider";
 import { SheetProvider } from "@/providers/sheet-provider";
+import { Poiret_One, Roboto, Nunito, Teko, Oxygen, Yeseva_One } from 'next/font/google'
 import { cn } from "@/lib/utils";
 
 
 const inter = Inter({ subsets: ["latin"] });
+
+const poiretOne = Poiret_One({
+  weight: '400',
+  subsets: ['latin'],
+  variable: '--font-poiret-one',
+});
+
+const roboto = Roboto({
+  weight: ['400', '700'],
+  subsets: ['latin'],
+  variable: '--font-roboto',
+});
+
+const nunito = Nunito({
+  subsets: ['latin'],
+  variable: '--font-nunito',
+});
+
+const teko = Teko({
+  weight: ['300', '400', '500', '600', '700'],
+  subsets: ['latin'],
+  variable: '--font-teko',
+});
+
+const oxygen = Oxygen({
+  weight: ['300', '400', '700'],
+  subsets: ['latin'],
+  variable: '--font-oxygen',
+});
+
+const yesevaOne = Yeseva_One({
+  weight: '400',
+  subsets: ['latin'],
+  variable: '--font-yeseva-one',
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -23,7 +59,7 @@ export default function RootLayout({
   return (
       <ContextProvider>
       <html lang="en">
-        <body className={cn("",inter.className)}>
+        <body className={cn("",inter.className,yesevaOne.variable,roboto.variable,oxygen.variable,teko.variable,nunito.variable,roboto.variable,poiretOne.variable)}>
           <QueryProviders>
             <SheetProvider />
             <Toaster/>

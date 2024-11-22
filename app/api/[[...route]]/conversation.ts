@@ -1,14 +1,20 @@
 
-import OpenAI from "openai"
 import { handleRunStatus } from "@/lib/AI/functionsAiChat"
-import { functions } from "@/lib/AI/functionsAiChat"
 import {Hono} from "hono"
-import { openAiTools } from "@/lib/AI/functionsAiChat"
+import {z} from "zod"
 import { openai } from "@/lib/AI/createAiFunctions"
 import { GenTemplate } from "@/lib/AI/generateData"
-import { langChain } from "@/lib/AI/functionsLangChain"
 import { DataGenerator } from "@/lib/AI/generateData"
 import { zValidator } from "@hono/zod-validator"
+import {uploadEntitiesAndReplaceReferences} from "@/lib/utils"
+import { client } from "@/lib/hono"
+import { PersonaExtender } from "@/lib/AI/generateData"
+import { createId } from "@paralleldrive/cuid2"
+import pLimit from "p-limit"
+import { subMonths,startOfMonth,parse, format } from "date-fns"
+import { FollowUpQuestion } from "@/lib/AI/generateData"
+import { langChain } from "@/lib/AI/functionsLangChain"
+
 
 
 const SystemPrompt =`You are an AI assistant specialized in financial analysis, helping users manage transactions, accounts, and spending patterns.providing personalized financial management advice, and offering insights on budgeting, saving, and expense optimization.Refer to the 'moreInformationsForTheAssistant' function for additional details.`
@@ -19,24 +25,31 @@ const conversation = new Hono()
     .post(
     "/",
     async (c)=>{
-    let message:{[key:string]:any} = {role:"user"}
-     /* const emptyThread = await openai.beta.threads.create(); */ 
+    let message:any = {role:"user"}
+     const personaId = c.req.header('X-Persona-ID') || "testData"
      const f = await c.req.formData()
-     let threadId = f.get("threadId")!
+     const personaInfo = f.get("personaInfo") 
+     const threadIdEntry = f.get("threadId")
+      let threadId: string = ''
+
+      if (typeof threadIdEntry === 'string') {
+          threadId = threadIdEntry
+      } else {
+          // Handle the case where threadId is not provided or is a File
+          threadId = ''
+      }
      console.log(threadId)
      if (threadId===''){
         const emptyThread = await openai.beta.threads.create()
         threadId = emptyThread.id
-        console.log(threadId)
      }
      message["content"]=[{"type":"text","text":f.get("question")?.toString()!}]
     
-     console.log(f)
      for (let entry of f.entries()) {
-       /*  console.log(entry[0] + ': ' + entry[1]); */
+
         const [key,value] = entry
-        /* console.log(value.type + ":" + key) */
-        if(key==="file"){
+
+        if(key==="file" && value instanceof File){
             const [type,extention] = value.type.split("/")
             if (type === "image"){
                 // upload it and add it to the message array
@@ -60,21 +73,18 @@ const conversation = new Hono()
                         purpose:"assistants"
                     }
                 )
-            /* console.log(message)
-            console.log(file) */
+
             
             if(message.attachements){
                 message["attachments"] = [...message.attachments,{
                     file_id:file.id,
                     tools:[{type:"code_interpreter"}]
                     }]
-                /* console.log(message) */
             }else{
                  message["attachments"] = [{
                 file_id:file.id,
                 tools:[{type:"code_interpreter"}]
                 }]
-                /* console.log(message) */
             }
            
             
@@ -87,7 +97,6 @@ const conversation = new Hono()
             threadId!,
         message
     )
-        /* console.log(threadMessages) */
     }catch(err){
         console.error(err)
     }
@@ -96,83 +105,204 @@ const conversation = new Hono()
 
     try{let run = await openai.beta.threads.runs.createAndPoll(
         threadId!,
-        {assistant_id:"asst_6igPcJ0zc8Ge3S6Ea2moAIUC",
-            instructions:`all date are calculate from the actual Date ${new Date()}`
+        {assistant_id:"asst_x1O38JZm8yr6KApu0IkdMzQ4",
+            instructions:`all date are calculate from the actual Date ${new Date()}   address the user with his name user Info:${personaInfo}`
         }
     )
-    console.log(functions)
-     const output = await handleRunStatus(run,openai,threadId)
-     console.log(output)
+     const output = await handleRunStatus(run,openai,threadId,personaId)
      return c.json({response:{output,threadId}},200)
     }catch(err){
-        console.error(err)
         return c.text("error",500)
     }
 
 })
-.get("/",async(c)=>{
-    console.log(c.req)
-    
-        const aiAssistant = await openai.beta.assistants.create({
-       name:"Financial Assistant",
-        description:SystemPrompt,
-        model:"gpt-4o-mini",
-        tools:[...openAiTools,{type:"code_interpreter"}]
+.post("/followUpGestions",async(c)=>{
+
+        const {personaDes,followHistory} =await c.req.json()
+        const personaId = c.req.header('X-Persona-ID') || "testData"
+
+        
+        const currentDate = new Date();
+        const fourMonthsBefore = subMonths(currentDate, 4);
+
+        const from =format(fourMonthsBefore,"yyyy-MM-dd")
+        const to =format(currentDate,"yyyy-MM-dd");
+
+        console.log(from)
+        console.log(to)
          
-    })
-    /* console.log(aiAssistant.id) */
-    return c.json({aiAssistant:aiAssistant})
-})
-.get("/weeklyResume",async(c)=>{
-    try{
-    /* const {resume,reducedText} = await langChain() */
-    return c.json({res:"resume",reducedText:"yes"})
-    }catch(err){
-        console.log(err)
-    }
+        const res = await client.api.transactions.$get({
+              query:{
+                  from,
+                  to
+              }, 
+          },{
+              headers: {
+                  // Add persona ID to request headers
+                  'X-Persona-ID': personaId,
+                  // You can add other persona-related headers if needed
+                  
+              }
+          })
+
+        const {data} =await res.json()
+        const transactionsString = JSON.stringify(data)
+        const response =await FollowUpQuestion(transactionsString,personaDes,followHistory)
     
+    return c.json({data:response})
+})
+.post("/weeklyResume",async(c)=>{
+  const personaDes = await c.req.json()
+  const personaId = c.req.header('X-Persona-ID') ||"testData"
+  
+  try {
+     const {resume, reducedText} = await langChain(personaId, personaDes)
+     console.log(resume)
+    return c.json({
+      res: resume,
+      reducedText: reducedText
+    });
+  } catch (err) {
+    console.error(err);
+    return c.json({ 
+      error: "Failed to generate weekly resume" 
+    }, 500);
+  }
 })
 .get("/sampleDataChat",async(c)=>{
-    try {
+
         // Call your utility function
         const response = await GenTemplate();
       
         // Log the response from GenNewLg
-        console.log('Response from GenNewLg:', response);
-    
-        // Return the JSON response
         return c.json({data:response})
 
-      } catch (error) {
-        // Log the error for debugging
-        console.error('Error in POST /api/ai:', error);
-    
-        //TODO return the error when something don't work
-      }
 })
-.post("/",zValidator("json",
-    insertdetailsTransactionsSchema.omit({id:true})
-),
-async(c)=> {
-    try{
-    const auth= {userId:"testData"}
-    const data = c.req.valid("json")
-      
-        // Call your utility function
-        const response = await DataGenerator(data);
-        // Log the response from GenNewLg
-        console.log('Response from GenNewLg:', response);
+.post("/createProfil",zValidator("json",
+    z.object({
+        name: z
+          .string()
+          .min(2, { message: 'Name must be at least 2 characters' })
+          .max(50),
+        age: z
+          .number({
+            required_error: 'Age is required',
+          })
+          .min(18, { message: 'Age must be at least 18' })
+          .max(100, { message: 'Age must be at most 100' }),
+        occupation: z
+          .string()
+          .min(2, { message: 'Occupation must be at least 2 characters' })
+          .max(50),
+        familyStatus: z.enum(['single', 'married', 'married_with_children'], {
+          required_error: 'Family Status is required',
+        }),
+        incomeLevel: z.number().min(0).optional(),
+        locationType: z.enum(['urban', 'suburban', 'rural']).optional(),
+        spendingBehavior: z.enum(['frugal', 'balanced', 'spendthrift']).optional(),
+        additionalInfo: z.string().optional(), // Added field to schema
+        monthlyRent: z.number().min(0).optional(),
+        monthlySavings: z.number().min(0).optional(),
+        riskTolerance: z.enum(['conservative', 'moderate', 'aggressive']).optional(),
+        creditCards: z.enum(['rarely', 'moderate', 'frequent']).optional(),
+        workSchedule: z.enum(['regular', 'shift', 'flexible']).optional(),
+        transportation: z.enum(['car', 'public', 'mixed']).optional(),
+        diningPreference: z.enum(['homeCook', 'mixed', 'eatOut']).optional(),
+        shoppingHabits: z.enum(['planner', 'mixed', 'impulsive']).optional(),
+      })
+),async (c) => {
+    c.header('Content-Type', 'text/event-stream');
+    c.header('Cache-Control', 'no-cache');
+    c.header('Connection', 'keep-alive');
+    const limit = pLimit(5)
+  
+    const data = c.req.valid("json");
     
-        // Return the JSON response
-        return c.json({data})
+  
+    const stream = new ReadableStream({
+      async start(controller) {
+        try {
+          // Send initial status
+          controller.enqueue(`event: extendPersona\ndata: ${JSON.stringify({ step: 'extendPersona',status:"running",message: 'Extending persona...' })}\n\n`);
+  
+          // Perform operations and send updates
+          const guideLine = await PersonaExtender(data);
+          console.log(guideLine)
+  
+          controller.enqueue(`event: extendedPersona\ndata: ${JSON.stringify({ step: 'extendPersona',status:"completed",message: 'persona definition complete', data: guideLine })}\n\n`);
+  
+          // Continue sending SSE messages as needed...
+          controller.enqueue(`event: fiDataGenerationStart\ndata: ${JSON.stringify({ step: 'fiDataGeneration',status:"running",message: 'generating data...' })}\n\n`);
 
-      } catch (error) {
-        // Log the error for debugging
-        console.error('Error in POST /api/ai:', error);
-        // Return a 500 Internal Server Error response
-      }
-    
-})
+          const response  = await DataGenerator(guideLine);
+          
+
+          controller.enqueue(`event: fiDataGenerationEnd\ndata: ${JSON.stringify({ step: 'fiDataGeneration',status:"completed",message: 'generation complete'})}\n\n`);
+          controller.enqueue(`event: updatingFiDataStart\ndata: ${JSON.stringify({ step: 'updatingFiData',status:"running", message: 'updating transactions'})}\n\n`);
+
+          const personaId = createId()
+          
+          const d =  await uploadEntitiesAndReplaceReferences(response,personaId)
+          
+
+          if (typeof d ==="string"){
+
+            throw new Error(d)
+          }
+
+        for (const week of d){
+            for(const transaction of week.transactions){
+                const detailsTransaction = transaction["detailsTransactions"]
+                const {detailsTransactions, ...transacToUp} = transaction
+                const timestamp = Date.parse(transacToUp.date);
+                const responseTransaction = await client.api.transactions.$post({json:{...transacToUp,date:new Date(timestamp)}},{
+                  headers: {
+                      'X-Persona-ID': personaId,  
+                  }
+              })
+                const {data} = await responseTransaction.json()
+               
+                if(detailsTransaction){
+
+                    let completeDetailsTransaction = await Promise.all(
+                        detailsTransaction.map( (d) =>limit( async () => {
+                            
+                          const responseDetail = await client.api.detailsTransactions.$post({
+                            json: { ...d, transactionId: data.id }
+                          },{headers: {
+                            'X-Persona-ID': personaId,  
+                        }});
+
+                          const ress = await responseDetail.json()
+
+                          return responseDetail;
+                        }))
+                      );
+                    continue
+                }
+               
+            }
+
+        }
+
+        controller.enqueue(`event: updatingFiDataEnd\ndata: ${JSON.stringify({ step: 'updatingFiData',status:"completed", message: 'updating transactions'})}\n\n`);
+          // At the end, send the complete event
+          controller.enqueue(`event: complete\ndata: ${JSON.stringify({step:"complete",status:"completed",message:'Processing complete',data:personaId })}\n\n`);
+          controller.close();
+        } catch (err:any) {
+          controller.enqueue(`event: error\ndata: ${JSON.stringify({ message: err.message })}\n\n`);
+          controller.error(err);
+        }
+      },
+    });
+  
+    return new Response(stream, {
+      headers: {
+        'Content-Type': 'text/event-stream',
+      },
+    });
+  });
+
 
 export default conversation
 

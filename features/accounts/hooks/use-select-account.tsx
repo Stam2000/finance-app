@@ -17,7 +17,6 @@ export const useSelectAccount =():[()=>JSX.Element,()=>Promise<unknown>]=>{
 
     const onCreateAccount = (name:string)=> accountMutation.mutate({name})
     
-
     const [promise,setPromise] = useState<{resolve:(value:string|undefined)=>void}|null>(null)
     const setValue = useRef<string>()
 

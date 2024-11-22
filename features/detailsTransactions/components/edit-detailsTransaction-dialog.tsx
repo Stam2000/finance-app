@@ -24,6 +24,7 @@ import { useCreateCategory } from "@/features/categories/api/use-create-categori
 import { useGetDetailsTransaction } from "../api/use-get-detailsTransaction"
 import { useOpenDetailsTransaction } from "@/features/detailsTransactions/hooks/use-open-details"
 
+
 const apiSchema = insertdetailsTransactionsSchema.omit({
 })
 type ApiValues = z.input<typeof apiSchema>
@@ -39,6 +40,7 @@ export const EditDetailsTransactionDialog =()=>{
     const transactionQuery = useGetDetailsTransaction(id)
     const editMutation = useEditDetailsTransaction(id)
     const deleteMutation = useDeleteDetailsTransaction(id)
+    console.log(transactionQuery.data)
 
 
     const onDelete = async ()=>{
@@ -83,9 +85,9 @@ export const EditDetailsTransactionDialog =()=>{
 
     const createMutation = useCreateDetailsTransaction()
     
-    const onSubmit = (values:FormValues) =>{
-        console.log(values)
-        editMutation.mutate(values,{
+    const onSubmit = (values:ApiValues) =>{
+        const updatedValues = {...values,transactionId:transactionQuery.data!.transactionId}
+        editMutation.mutate(updatedValues,{
             onSuccess:()=>{
                 onClose();
             },
@@ -108,14 +110,14 @@ export const EditDetailsTransactionDialog =()=>{
         unitPrice: string;
         name?: string | undefined;
         categoryId?: string | null | undefined; */
-console.log(transactionQuery)
+
         const defaultValues = transactionQuery.data ? {
-            name:transactionQuery.data.name,
+            name:transactionQuery.data.name || undefined,
             categoryId: transactionQuery.data.categoryId,
-            projectId: transactionQuery.data.categoryId,
+            projectId: transactionQuery.data.projectId,
             amount: transactionQuery.data.amount.toString(),
-            unitPrice: transactionQuery.data.unitPrice.toString(),
-            quantity: transactionQuery.data.quantity.toString(),
+            unitPrice: transactionQuery.data.unitPrice?.toString() || "0",
+            quantity: transactionQuery.data.quantity?.toString()  || "0",
         } : {
             accountId: "",
             categoryId: "",
@@ -123,6 +125,8 @@ console.log(transactionQuery)
             date: new Date(),
             payee: "",
             notes: "",
+            unitPrice:"",
+            quantity:"",
         };
 
         console.log(defaultValues)

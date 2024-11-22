@@ -36,7 +36,7 @@ export const transactions = pgTable("transactions",{
     amount:integer("amount").notNull(),
     payee:text("payee").notNull(),
     notes:text("notes"),
-    date: timestamp("date",{mode:"date"}),
+    date: timestamp("date",{mode:"date"}).notNull(),
     accountId:text("account_id").references(()=>accounts.id,{
         onDelete:"cascade"
     }).notNull(),
@@ -62,6 +62,8 @@ export const transactionsRelations = relations(transactions,({one,many})=>({
     detailsTransaction:many(detailsTransactions),
     project:many(projects)
 }))
+
+export type TransactionsType = typeof transactions.$inferInsert
 
 export const insertTransactionSchema = createInsertSchema(transactions,{
     date:z.coerce.date(),
@@ -100,6 +102,8 @@ export const detailsTransactionRelations = relations(detailsTransactions,({one})
     }),
 }))
 
+export type DetailsTransactionsType = typeof detailsTransactions.$inferInsert
+
 export const insertdetailsTransactionsSchema = createInsertSchema(detailsTransactions)
 
 export const projects = pgTable("project",{
@@ -116,6 +120,8 @@ export const projectsRelations  = relations(projects,({many})=>({
     transactions:many(transactions),
     detailsTransaction:many(detailsTransactions),
 }))
+
+export type ProjectsType = typeof projects.$inferInsert
 
 
 export const insertProjectSchema = createInsertSchema(projects)

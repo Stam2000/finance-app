@@ -14,8 +14,13 @@ export const useDeleteCategory =(id?:string)=>{
         Error  
     >({
         mutationFn: async () =>{
+            const personaId = localStorage.getItem('selectedPersona') || "testData"
             const response = await client.api.categories[":id"]["$delete"]({
                 param:{id},
+            },{
+                headers: {
+                    'X-Persona-ID': personaId,      
+                }
             });
             return await response.json();
         },

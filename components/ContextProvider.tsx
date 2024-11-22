@@ -19,7 +19,7 @@ export const useThemeContext = () => {
     return context;
   };
 
-export const ContextProvider =({children})=>{
+export const ContextProvider =({children}:{children:any})=>{
 
 
     const [ip,setIp]= React.useState({"ip":"test"})

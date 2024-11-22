@@ -147,8 +147,8 @@ disabled
                             <Textarea 
                                 placeholder="Optional notes"
                                 disabled={disabled}
-                                value={ field.value ?? ""}
                                 {...field}
+                                value={ field.value ?? ""}
                             />
                         </FormControl>
                     </FormItem>
@@ -176,7 +176,7 @@ disabled
                 className="w-full"
                 disabled={disabled}
             >
-                {id ? "Save changes":"Create Project"}
+                {defaultValues ? "Save changes":"Create Project"}
             </Button>
             {!!id && (<Button
                 type="button"

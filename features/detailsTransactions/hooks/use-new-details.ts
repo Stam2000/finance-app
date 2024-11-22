@@ -7,6 +7,7 @@ type NewTransactionState = {
     onClose:()=> void;
 };
 
+
 export const useNewDetails = create<NewTransactionState>((set)=>({
     transactionId:undefined,
     isOpen: false,

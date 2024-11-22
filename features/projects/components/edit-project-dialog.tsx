@@ -1,6 +1,5 @@
 import {z} from "zod"
 
-import { insertTransactionSchema } from "@/db/schema"
 import { ProjectForm } from "./project-form"
 
 import { Dialog,
@@ -12,7 +11,7 @@ import { Dialog,
 } from "@/components/ui/dialog"
 import { Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
-
+import { addMonths } from "date-fns"
 import { useEditProject } from "../api/use-edit-project"
 import { useDeleteProject } from "../api/use-delete-project"
 import { useOpenProject } from "../hooks/use-open-project"
@@ -65,17 +64,21 @@ export const EditProjectDialog =()=>{
     const isLoading =
         projectQuery.isLoading
 
+    const threeMonthsBefore = addMonths(new Date(), 3);
+
     console.log(projectQuery.data)
         const defaultValues = projectQuery.data ? {
             name: projectQuery.data.name,
             description: projectQuery.data.description,
             budget: projectQuery.data.budget.toString(),
-            endDate:projectQuery.data.endDate,
-            startDate:projectQuery.data.startDate
+            endDate:new Date(projectQuery.data.endDate!),
+            startDate:new Date(projectQuery.data.startDate!) 
         } : {
             name: "",
             description:"",
             budget:"",
+            endDate:new Date(),
+            startDate:threeMonthsBefore
         };
 
         console.log(defaultValues)
@@ -88,11 +91,8 @@ export const EditProjectDialog =()=>{
             <DialogContent>
                 <DialogHeader>
                     <DialogTitle>
-                        New Transaction
+                       Edit Project
                     </DialogTitle>
-                    <DialogDescription>
-                        Create a new transaction to transaction
-                    </DialogDescription>
                 </DialogHeader>
                 {isLoading ? (
                    <div className="absolute inset-0 flex items-center justify-content" >
@@ -105,8 +105,8 @@ export const EditProjectDialog =()=>{
                         defaultValues={defaultValues}
                     />)}
                 <DialogFooter>
-                    <Button onClick={onClose}>
-                        Confirm
+                    <Button variant={"destructive"} onClick={onClose}>
+                        Cancel
                     </Button>
                 </DialogFooter>
             </DialogContent>

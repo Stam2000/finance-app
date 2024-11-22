@@ -19,13 +19,14 @@ const app = new Hono()
             }),
         ),
         async(c)=>{
-            const auth = {userId:"testData"}
+            const personaId = c.req.header('X-Persona-ID') || "testData"
+            const auth = {userId:personaId}
             const {from,to,accountId}=c.req.valid("query")
 
 
 
             const defaultTo = new Date();
-            const defaultFrom =  subDays(defaultTo,90);
+            const defaultFrom =  subDays(defaultTo,30);
 
             const startDate = from ? parse(from,"yyyy-MM-dd",new Date()):defaultFrom
             const endDate = to ? parse(to,"yyyy-MM-dd",new Date()):defaultTo
@@ -154,7 +155,7 @@ const app = new Hono()
             .orderBy(transactions.date)
 
             const days = fillMissingDays(
-                activeDays,
+                activeDays!,
                 startDate,
                 endDate
             )

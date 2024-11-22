@@ -90,8 +90,8 @@ export const NewTransactionDialog =()=>{
                         onCreateCategory={onCreateCategory}
                     />
                 <DialogFooter>
-                    <Button onClick={onClose}>
-                        Confirm
+                    <Button  variant={"destructive"} onClick={onClose}>
+                        Cancel
                     </Button>
                 </DialogFooter>
             </DialogContent>

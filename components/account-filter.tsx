@@ -22,18 +22,12 @@ type Option = {
     )
   }
 
-  const ClearIndicator = (props: ClearIndicatorProps<Option, false>) => {
-    return (
-      <components.ClearIndicator {...props}>
-        <X className="h-4 w-4 opacity-50" />
-      </components.ClearIndicator>
-    )
-  }
+
 
 export const AccountFilter = () => {
 
     const customStyles = {
-        control: (provided, state) => ({
+        control: (provided:any, state:any) => ({
           ...provided,
           width: '100%', // Full width
           minWidth: '190px',  // Auto width for `lg:w-auto` behavior
@@ -55,21 +49,21 @@ export const AccountFilter = () => {
             boxShadow: 'none',
           },
         }),
-        valueContainer: (provided) => ({
+        valueContainer: (provided:any) => ({
           ...provided,
           display: 'flex',
           alignItems: 'center',
           padding: '0',
         }),
-        placeholder: (provided) => ({
+        placeholder: (provided:any) => ({
           ...provided,
           color: 'white', // Matches `text-white`
         }),
-        singleValue: (provided) => ({
+        singleValue: (provided:any) => ({
           ...provided,
           color: 'white', // Selected value is white as well
         }),
-        dropdownIndicator: (provided) => ({
+        dropdownIndicator: (provided:any) => ({
           ...provided,
           padding: '0',
           color: 'white', // Dropdown icon matches `text-white`
@@ -77,7 +71,7 @@ export const AccountFilter = () => {
             color: 'white',
           },
         }),
-        clearIndicator: (provided) => ({
+        clearIndicator: (provided:any) => ({
           ...provided,
           padding: '0',
           color: 'white', // Clear icon matches `text-white`
@@ -85,7 +79,7 @@ export const AccountFilter = () => {
             color: 'white',
           },
         }),
-        menu: (provided) => ({
+        menu: (provided:any) => ({
           ...provided,
           width: 'auto', // Ensure the dropdown menu has a fixed width // Matches the control width
           backgroundColor: 'white', // Matches the dropdown background color
@@ -93,7 +87,7 @@ export const AccountFilter = () => {
           borderRadius: '0.375rem', // Rounded corners for dropdown menu
           boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)', // Subtle shadow for menu
         }),
-        option: (provided, state) => ({
+        option: (provided:any, state:any) => ({
           ...provided,
           backgroundColor: state.isFocused ? 'rgba(0, 0, 0, 0.1)' : 'transparent', // Light background on hover
           color: 'black', // Option text remains black
@@ -103,7 +97,7 @@ export const AccountFilter = () => {
             backgroundColor: 'rgba(0, 0, 0, 0.1)', // Light background on active state
           },
         }),
-        menuList: (provided) => ({
+        menuList: (provided:any) => ({
           ...provided,
           padding: '0',
         }),
@@ -132,7 +126,7 @@ const options = [
       : []),
   ];
 
-  const onChange = (selectedOption) => {
+  const onChange = (selectedOption:any) => {
     const newValue = selectedOption ? selectedOption.value : "";
 
     const query = {

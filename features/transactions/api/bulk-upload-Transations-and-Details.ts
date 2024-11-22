@@ -20,7 +20,7 @@ export const useBulkCreateTransactionsAndDetails = ()=>{
     TransactionRequest>({
         mutationFn: async (json)=>{
 
-            let response =[]
+            let response:any =[]
             for(const transaction of json){
                 const detailsTransaction = transaction["detailsTransactions"]
                 delete transaction["detailsTransactions"]

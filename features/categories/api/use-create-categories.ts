@@ -16,8 +16,12 @@ export const useCreateCategory =()=>{
     
     >({
         mutationFn: async (json) =>{
-            console.log(json)
-            const response = await client.api.categories.$post({json});
+            const personaId = localStorage.getItem('selectedPersona') || "testData"
+            const response = await client.api.categories.$post({json},{
+                headers: {
+                    'X-Persona-ID': personaId,      
+                }
+            });
             return await  response.json();
         },
         onSuccess : (data)=>{

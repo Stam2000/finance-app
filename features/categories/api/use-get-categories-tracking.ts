@@ -6,7 +6,12 @@ export const useGetCategoriesAllTracking = ()=>{
     const query = useQuery({
         queryKey:["categories",{key:"tracking"}],
         queryFn:async()=>{
-            const response = await client.api.categories["tracking"].$get()
+            const personaId = localStorage.getItem('selectedPersona') || "testData"
+            const response = await client.api.categories["tracking"].$get({},{
+                headers: {
+                    'X-Persona-ID': personaId,      
+                }
+            })
 
             if(!response.ok){
                 throw new Error("Failed to fetch categories");

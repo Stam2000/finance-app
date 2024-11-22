@@ -38,12 +38,6 @@ export const NewDetailsTransactionDialog =()=>{
     /* const [detailsTransactions,setDetailsTransactions] = React.useState<FormValues[]>([]) */  
     const accountQuery = useGetAccounts()
     const accountMutation = useCreateAccount()
-    const accountOptions = (accountQuery.data ?? []).map((account)=>({
-        label:account.name,
-        value:account.id
-    }))
-
-    const onCreateAccount =(name:string)=>accountMutation.mutate({name})
 
     const categoryQuery = useGetCategories()
     const categoryMutation = useCreateCategory()
@@ -62,19 +56,6 @@ export const NewDetailsTransactionDialog =()=>{
     
     const onCreateCategory = (name:string)=>categoryMutation.mutate({name})
     const createDetailsTransactions = useBulkCreateDetailsTransactions()
-
-    /* const onSubmit = (values:ApiValues)=>{
-       
-        const newDetails = values
-        newDetails.id = "add"
-        setDetailsTransactions((prev)=>{
-            const newPrev = prev
-            newPrev.push(values)
-
-            return newPrev
-        })
-        
-    } */
 
     const isPending = 
     createDetailsTransactions.isPending ||
@@ -115,9 +96,8 @@ export const NewDetailsTransactionDialog =()=>{
                 <TransactionForm 
                     onSubmit={updateDetail}
                     disabled={isPending}
-                    transactionId={transactionId}
+                    transactionId={transactionId!}
                     projectOptions={projectOptions}
-                    accountOptions={accountOptions}
                     categoryOptions={categoryOptions}
                     onCreateCategory={onCreateCategory}
                 />

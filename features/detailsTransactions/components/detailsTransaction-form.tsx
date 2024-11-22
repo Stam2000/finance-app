@@ -2,16 +2,15 @@ import {z} from "zod"
 import { Trash } from "lucide-react"
 import {useForm} from "react-hook-form"
 import {zodResolver} from "@hookform/resolvers/zod"
-import { DatePicker } from "@/components/date-picker"
+
 import { Select } from "@/components/select"
-import { Textarea } from "@/components/ui/textarea"
 import { AmountInput } from "@/components/account-input"
 import { useOverviewNewDetails } from "../hooks/use-overview-Newdetails"
 import { useEffect } from "react"
 
 import {Input} from "@/components/ui/input"
 import {Button} from "@/components/ui/button"
-import { insertdetailsTransactionsSchema } from "@/db/schema"
+import { detailsTransactions, insertdetailsTransactionsSchema } from "@/db/schema"
 import {
     Form,
     FormControl,
@@ -38,7 +37,7 @@ type ApiValues = z.input<typeof apiSchema>
 
 type Props ={
     id?:string,
-    transactionId:string
+    transactionId?:string
     defaultValues?:FormValues,
     //TODO modify Submit : doit plutot update le react Zustand avec les valeurs
     onSubmit:(values:ApiValues)=>void;
@@ -66,16 +65,15 @@ onCreateCategory,
         defaultValues:defaultValues,
     });
 
+    console.log(defaultValues)
+
     const {temporalId,updateId} = useOverviewNewDetails()
-    const handleSubmit = (values:FormValues)=>{
+    const handleSubmit = (values:any)=>{
         updateId()
         const quantity = values.quantity
         const unitPrice = parseFloat(values.unitPrice)
         const amount = parseFloat(values.amount)
-        const amountInMiliunits = convertAmountToMiliunits(amount)
-        const unitPriceMiliunits = convertAmountToMiliunits(unitPrice)
         onSubmit(
-            
           id ? {
             ...values,
             amount,
@@ -83,8 +81,8 @@ onCreateCategory,
             transactionId,
             quantity:+quantity
         }:{
-                id:`${temporalId}`,
                 ...values,
+                id:`${temporalId}`,
                 amount,
                 unitPrice,
                 transactionId,

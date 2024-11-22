@@ -1,24 +1,21 @@
-import { functions } from "@/lib/AI/functionsAiChat"
-import { openAiTools } from "@/lib/AI/functionsAiChat"
 import { PromptTemplate } from "@langchain/core/prompts"
 import { ChatOpenAI } from "@langchain/openai";
 import { handleRunStatus } from "@/lib/AI/functionsAiChat"
 import { openai } from "./createAiFunctions"
 import { StringOutputParser } from "@langchain/core/output_parsers"
 import { MessageCreateParams } from "openai/resources/beta/threads/messages.mjs"
-import { AssistantTool } from "openai/resources/beta/assistants.mjs"
-import { RunnableSequence } from "@langchain/core/runnables"
+import { RunnableSequence,RunnableLike } from "@langchain/core/runnables"
 import axios from "axios"
-import { startOfMonth,startOfYear,format,subWeeks,startOfWeek,endOfWeek,differenceInDays } from "date-fns"
+import { AssistantTool } from "openai/resources/beta/assistants.mjs";
 import { convertAmountFormMiliunits, formatCurrency } from "../utils"
 
-const llm = new ChatOpenAI({
+const llm:RunnableLike = new ChatOpenAI({
     openAIApiKey:"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",
     model: "gpt-4o-mini",
   })
 
-export async function analyseYearData (){
-    const SystemPromptAssistant =`Role:You areanAIassistant actingas a personalfinancialanalyst for the user. You have full access to all their financial transactions, including the details of each operation. Your goal is to help the user optimize their personal finances by providing detailed analyses, personalized recommendations, and alternatives to recurring expenses to limit or eliminate unnecessary costs.
+/* export async function analyseYearData (){
+    const SystemPromptAssistant =`You areanAIassistant actingas a personalfinancialanalyst for the user. You have full access to all their financial transactions, including the details of each operation. Your goal is to help the user optimize their personal finances by providing detailed analyses, personalized recommendations, and alternatives to recurring expenses to limit or eliminate unnecessary costs.
     Note: The continuation of the instructions is found in the description of a function named "MoreInformationForTheAssistant".`
     const goals = await fetchGoal()
 
@@ -27,7 +24,7 @@ export async function analyseYearData (){
                     ########-------#####################-------------########
         `)
     let message:MessageCreateParams = {role:"user",content:`i want you to analyse my finance from the beginning of the Year til the end of the last week all account conbnated. here is an overview of all my goals(spending limit and save goals oder earn goal) per category per month ${goals}`}
-    const tool=[{
+    const tool:AssistantTool[]=[{
 		type: "function",
 		function: {
 			name: "fetchTransactions",
@@ -68,12 +65,11 @@ Help the user better manage their finances by identifying areas where they can s
 			parameters: {},
 		}
 	}]
-    //Create Thread
+
         const emptyThread = await openai.beta.threads.create()
         const threadId = (emptyThread.id).toString()
-       /*  console.log(threadId) */
 
-    //Create assistant 
+
     const aiAssistant = await openai.beta.assistants.create({
         name:"Financial Analistic Year",
         description:SystemPromptAssistant,
@@ -81,20 +77,16 @@ Help the user better manage their finances by identifying areas where they can s
         tools:[...tool,{type:"code_interpreter"}]     
     })
 
-    /* console.log(aiAssistant) */
-    //Append Message in the thread
     try{
             const threadMessages = await openai.beta.threads.messages.create(
                 threadId!,
                 message
             )
 
-            /* console.log(threadMessages) */
+
         }catch(err){
             console.error(err)
         }
-
-    /* message["content"]=[{"type":"text","text":""}] */
 
     try{
         let run = await openai.beta.threads.runs.createAndPoll(
@@ -115,17 +107,17 @@ Help the user better manage their finances by identifying areas where they can s
        throw new Error()
     }
 
-}
+} */
 
-async function agentMonth (
-  resultYear:string,
+/* async function agentMonth (
+  personaId:string
 ){
     console.log("######################################################################################################################################################################################################")
     const SystemPromptAssistant =`Role:You areanAIassistant actingas a personalfinancialanalyst for the user. You have full access to all their financial transactions, including the details of each operation. Your goal is to help the user optimize their personal finances by providing detailed analyses, personalized recommendations, and alternatives to recurring expenses to limit or eliminate unnecessary costs.
 Note: The continuation of the instructions is found in the description of a function named "MoreInformationForTheAssistant".`
         const goals = await fetchGoal()
-        let message:MessageCreateParams = {role:"user",content:`i want you to analyse my finance from the beginning of the month til the end of the last week. here is an overview of all my goals(spending limit and save goals oder earn goal) per category per month ${goals} here is the result of the analytic from the start of the year til the end of the last week ${resultYear}`}
-        const tool =[{
+        let message:MessageCreateParams = {role:"user",content:`i want you to analyse my finance from the beginning of the month til the end of the last week. here is an overview of all my goals(spending limit and save goals oder earn goal) per category per month ${goals}`}
+        const tool:AssistantTool[] =[{
             type: "function",
             function: {
                 name: "fetchTransactions",
@@ -169,7 +161,7 @@ Help the user better manage their finances by identifying areas where they can s
         //Create Thread
             const emptyThread = await openai.beta.threads.create()
             const threadId = emptyThread.id
-            /* console.log(threadId) */
+
     
         //Create assistant 
         const aiAssistant = await openai.beta.assistants.create({
@@ -179,7 +171,7 @@ Help the user better manage their finances by identifying areas where they can s
             tools:[...tool,{type:"code_interpreter"}]     
         })
     
-       /*  console.log(aiAssistant) */
+
         //Append Message in the thread
         try{
                 const threadMessages = await openai.beta.threads.messages.create(
@@ -187,12 +179,10 @@ Help the user better manage their finances by identifying areas where they can s
                     message
                 )
     
-                /* console.log(threadMessages) */
+
             }catch(err){
                 console.error(err)
             }
-    
-        /* message["content"]=[{"type":"text","text":""}] */
     
         try{
             let run = await openai.beta.threads.runs.createAndPoll(
@@ -204,7 +194,7 @@ Help the user better manage their finances by identifying areas where they can s
             )
     
       
-         const output = await handleRunStatus(run,openai,threadId)
+         const output = await handleRunStatus(run,openai,threadId,personaId)
          console.log(` Result agentMonth ${output}`)
          return output
     
@@ -212,101 +202,58 @@ Help the user better manage their finances by identifying areas where they can s
             console.error(err)
            throw new Error()
         }
-    
-    }
+} */
 
-async function agentWeek ({
-    resultMonth,
-    resultYear,
+async function agentWeek (personaId:string,personaDes:string){
+
+    let threadId:string=""
+    try {
+        // Fetch goals and validate
+        const goals = await fetchGoal(personaId);
+        if (!goals) {
+            throw new Error("Failed to fetch goals. Please check the personaId or the fetchGoal function.");
+        }
     
-}:{ resultMonth:string,
-    resultYear:string,
-    }){
-        console.log("######################################################################################################################################################################################################")
-        const SystemPromptAssistant =`Role:You areanAIassistant actingas a personalfinancialanalyst for the user. You have full access to all their financial transactions, including the details of each operation. Your goal is to help the user optimize their personal finances by providing detailed analyses, personalized recommendations, and alternatives to recurring expenses to limit or eliminate unnecessary costs.
-Note: The continuation of the instructions is found in the description of a function named "MoreInformationForTheAssistant".`
-            const goals = await fetchGoal()
-            let message:MessageCreateParams = {role:"user",content:`i want you to analyse my finance of the last week. here is an overview of all my goals(spending limit and save goals oder earn goal) per category per month ${goals} here is the result of the analytic from the start of the year til the end of the last week ${resultYear} and from the begining of the month til the end of the last week ${resultMonth}`}
-            const tool=[{
-                type: "function",
-                function: {
-                    name: "fetchTransactions",
-                    description: "Fetches transaction data for a specified date range and account ID from a local API endpoint. Returns a JSON string of transactions or null if an error occurs.",
-                    parameters: {
-                        type: "object",
-                        properties: {
-                            from: {
-                                type: "string",
-                                description: "Starting date in 'yyyy-mm-dd' format for the transaction range, optional.",
-                                optional: true
-                            },
-                            to: {
-                                type: "string",
-                                description: "Ending date in 'yyyy-mm-dd' format for the transaction range, optional.",
-                                optional: true
-                            },
-                            accountId: {
-                                type: "string",
-                                description: "Optional ID of the account for which to fetch transactions.",
-                                optional: true
-                            }
-                        },
-                        required: []
-                    },
-                }
-            },{
-                type: "function",
-                function: {
-                    name: "MoreInformationForTheAssistant_DON_T_CALL_THIS_FUNCTION",
-                    description: `Tasks and Responsibilities:
-Expense Analysis:Identify the main categories of expenses and trends.Spot unusual or excessive expenditures.
-Recommendations:Propose ways to reduce expenses.Suggest less costly alternatives for recurring expenses.Offer advice to optimize the budget.
-Alternatives and Solutions:Look for subscriptions or services that can be canceled.Suggest saving or investment options.Propose plans to repay debts efficiently.Communication:
-Present information in a clear and structured manner.Use professional and accessible language.Be proactive and empathetic in your advice.
-Additional Guidelines:Confidentiality: Strictly respect the confidentiality of the information.Personalization: Adapt your advice based on the user's financial habits and goals.Limits: Do not make decisions on behalf of the user; provide recommendations only.Final Objective:
-Help the user better manage their finances by identifying areas where they can save money, optimizing expenses, and planning for the future.`,
-                    parameters: {},
-                }
-            }]
-            //Create Thread
-                const emptyThread = await openai.beta.threads.create()
-                const threadId =  (emptyThread.id).toString()
-                /* console.log(threadId) */
-        
-            //Create assistant 
-            const aiAssistant = await openai.beta.assistants.create({
-                name:"Financial Analistic Week",
-                description:SystemPromptAssistant,
-                model:"gpt-4o-mini",
-                tools:[...tool,{type:"code_interpreter"}]     
-            })
-        
-          /*   console.log(aiAssistant) */
-            //Append Message in the thread
-            try{
-                    const threadMessages = await openai.beta.threads.messages.create(
-                        threadId!,
-                        message
-                    )
-        
-                   /*  console.log(threadMessages) */
-                }catch(err){
-                    /* console.error(err) */
-                }
+        // Prepare the message
+        const mesg: MessageCreateParams = {
+            role: "user",
+            content: ` analyze the finance of this user for  last week. Here is an overview of all his/her goals (spending limit, save goals, or earn goal) per category per month: ${JSON.stringify(goals)}. But begin analyzing my transactions from the start of the month so that for my weekly analysis you can find relevant patterns. The date of today is ${new Date().toISOString()}. full user description ${personaDes}`
+        };
+    
+        // Create an empty thread
+        const emptyThread = await openai.beta.threads.create();
+        if (!emptyThread || !emptyThread.id) {
+            throw new Error("Failed to create a new thread. Please check the OpenAI API response.");
+        }
+        threadId = emptyThread.id.toString();
+    
+        // Append message in the thread
+        try {
+            const threadMessages = await openai.beta.threads.messages.create(threadId, mesg);
+            console.log("Message appended successfully:", threadMessages);
+        } catch (err:any) {
+            console.error("Error while creating a message in the thread:", err);
+            throw new Error(`Failed to append the message in thread ${threadId}: ${err.message}`);
+        }
+    } catch (error:any) {
+        console.error("Error in financial analysis flow:", error);
+        // Optionally rethrow or handle based on your application's requirements
+        throw new Error(`Financial analysis failed: ${error.message}`);
+    }
         
             /* message["content"]=[{"type":"text","text":""}] */
         
             try{
                 let run = await openai.beta.threads.runs.createAndPoll(
-                threadId!,
+                threadId,
                     {
-                        assistant_id:aiAssistant.id,
-                        instructions:`all date are calculate from the actual Date ${new Date()}.You get the transactions data by calling the function "fetchTransactions".use much as you can the code interpreter to provide accurate analytics`
+                        assistant_id:"asst_boZOZzFC88YlRkN7eGmPgRSX",
+                        instructions:`all date are calculate from the actual Date ${new Date()}.You get the transactions data by calling the function "fetchTransactions".use much as you can the code interpreter to provide accurate analytics  `
                     }
                 )
         
           
-             const output = await handleRunStatus(run,openai,threadId)
+             const output = await handleRunStatus(run,openai,threadId,personaId)
              console.log(` Result agentWeek ${output}`)
              return output
         
@@ -316,39 +263,32 @@ Help the user better manage their finances by identifying areas where they can s
             }
         
         }
-const fetchGoal = async()=>{
-    const res = await axios.get("http://localhost:3000/api/categories/all");
+const fetchGoal = async(personaId:string)=>{
+    const res = await axios.get("http://localhost:3000/api/categories/all",{
+        headers: {
+            'X-Persona-ID': personaId,  
+          }
+     });
     
-    // Log the data to check if it's an array
-    /* console.log(res.data.data) */
 
     if (!Array.isArray(res.data.data)) {
         console.error('Expected an array but got:', typeof res.data);
         return [];
     }
 
-    let categories = res.data.data.filter(category => category.goal !== null && category.goal !== 0);
+    let categories:any = res.data.data.filter((category:any) => category.goal !== null && category.goal !== 0);
 
-    const goals = categories.map(category => ({
+    const goals = categories.map((category:any) => ({
         name: category.name,
         spendingLimitforEachMonth: formatCurrency(convertAmountFormMiliunits(category.goal)),
     }));
     
-   /*  console.log("#####################################################------------------------------------------###########################################")
-    console.log(goals)
-    console.log("#####################################################------------------------------------------###########################################") */
 
     return JSON.stringify(goals);
 }
 
-export const langChain = async ()=>{
+export const langChain = async (personaId:string,personaDes:string)=>{
 
-    const monthAnalyticChain = RunnableSequence.from([
-        {
-            resultYear: prev => prev.resultYear,
-        },
-        async(prev)=> await agentMonth(prev.resultYear)
-    ])
 
 const answerTemplate=`your role is to provide a more friendly formating of text(which represents a finance analysis).
 i want you inspiration this layout.the content can change .Make sure all the informations you receive are represented. 
@@ -440,10 +380,6 @@ i want you inspiration this layout.the content can change .Make sure all the inf
                 <li style="margin-bottom: 10px;">Consider setting budget limits for categories like 🏥 Health and 🖥️ Electronics.</li>
             </ul>
         </div>
-
-        <p style="text-align: center; font-style: italic; color: #6b7280;">
-            🤔 Would you like to delve deeper into specific categories or trends, or do you have any other questions regarding your finances?
-        </p>
     </div>
 
 """Render only the JSX inside the <div> element (excluding the imports, function definitions, or export statements).you render should only content the div element without any commment oder added text oder cotation. and don't do any formating in your response !!! because it will be directly render in this div as HTML element <div dangerouslySetInnerHTML={{__html:""YOUR RENDER HERE""}} />"""
@@ -454,43 +390,41 @@ answer:`
     const answerChain=answerPrompt.pipe(llm).pipe(new StringOutputParser())
 
     const chain = RunnableSequence.from([
-        {
-            resultYear:analyseYearData,
-        },
-        {
-            resultYear: prev => prev.resultYear,
-            resultMonth:monthAnalyticChain,
-        },
-        async(prev)=>await agentWeek({resultMonth:prev.resultMonth,resultYear:prev.resultYear}),
+        async(prev)=>await agentWeek(personaId,personaDes),
         {
             input:prev => JSON.stringify(prev)
         },
         answerChain,
-        prev => {/* console.log(`prev result ${prev}`)  */
-            return prev }
+        new StringOutputParser ()
     ])
 
     const reducedVersionTemplate =`resume the input you recieve in exactly less than 550 Characters.
             Generate a weekly financial review summary for display in a finance app dashboard. keep it exactly less dann 320 char.
-            you will return a normal text with emoji and no Html code the only allowed HTML element is the list element.
-            you render should only content the text without any commment oder added text oder cotation. 
-            it will be directly render in a div element.Format it concisely for a clean app dashboard view.
+            
+            you render must only content the output without any commment oder added text oder cotation. 
 
-Example Output:
+            exemple output : <div>
+  <h1 style="font-weight: bold; font-size: 1.125rem; padding-bottom: 0.5rem;">📊Weekly Financial Review</h1>
+  <div style="padding-bottom: 1rem;">
+    <ul>
+      <li><span style="font-weight: 500;">Net Savings:</span> <span style="text-decoration: underline; text-decoration-thickness: 2px;">＄616</span> 💸</li>
+      <li><span style="font-weight: 500;">Income vs Expenses:</span> Well-balanced 📈</li>
+      <li><span style="font-weight: 500;">High Expense Area:</span>📚 Education <span style="text-decoration: underline; text-decoration-thickness: 2px;">＄155</span></li>
+      <li><span style="font-weight: 500;">Controlled Areas:</span>🛒 Groceries <span style="text-decoration: underline; text-decoration-thickness: 2px;">＄63</span>, 🍽️ Dining <span style="text-decoration: underline; text-decoration-thickness: 2px;">＄34</span></li>
+    </ul>
+  </div>
 
-            📊 ### Weekly Financial Review /n
-            #### Net Savings: €41 💸 /n
-            #### Income vs Expenses: Well-balanced 📈 /n
-
-            #### High Expense Area: 📱 Electronics (€133) /n
-            #### Controlled Areas: 🍽️ Dining (€34), 🎭 Entertainment (€22) /n
-
-
-            🔍 ### Recommendations:/n
-
-            Evaluate 📱 Electronics spending /n
-            Maintain 🍽️ Dining budget discipline /n
-            Build 💰 Savings for emergencies/investments /n
+  <div style="padding-bottom: 0.5rem;">
+    <div style="display: flex; justify-content: flex-start; align-items: center; gap: 0.25rem; padding-bottom: 0.5rem;">
+      🔍<h3 style="font-weight: bold;">Recommendations:</h3>
+    </div>
+    <ul>
+      <li>Maximize freelance income 💼</li>
+      <li>Monitor grocery spending 🛒</li>
+      <li>Invest savings for future growth 💰</li>
+    </ul>
+  </div>
+</div>
 
             you can create a html list if need. text:{input} 
             answer:`
