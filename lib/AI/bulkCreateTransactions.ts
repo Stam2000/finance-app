@@ -170,10 +170,10 @@ export const useBulkCreateTAndDfromJson =()=>{
                 const {data} = await responseTransaction.json()
                 result = [...result,data]
 
-                console.log(detailsTransactions)
+      
                 if(detailsTransactions?.length !== 0){
                     for(const detail of detailsTransactions!){
-                    console.log(detail)
+
                     const foundCategory = allCategories.find((category:any)=> category.name === detail.categoryId)
                     if(!foundCategory){
                         const resCreateCategory = await client.api.categories.$post({json:{name:detail!.categoryId}})

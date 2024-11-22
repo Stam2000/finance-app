@@ -32,17 +32,14 @@ interface InputCategory {
 
 const model:RunnableLike = new ChatOpenAI({
     model: "gpt-4o",
-    apiKey: "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"
   });
 
   const model2:RunnableLike = new ChatOpenAI({
     model: "gpt-4o-mini",
-    apiKey: "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"
   });
 
 const models:any = new ChatTogetherAI({
   model: "meta-llama/Meta-Llama-3.1-405B-Instruct-Turbo",
-  togetherAIApiKey:"535719ace9b7b0a8066566bd075b52112da2087dd66592fa884a4e975d79b911"
 })
 
   const formSchema = z.object({
