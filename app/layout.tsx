@@ -9,6 +9,7 @@ import { QueryProviders } from "@/providers/query-provider";
 import { SheetProvider } from "@/providers/sheet-provider";
 import { Poiret_One, Roboto, Nunito, Teko, Oxygen, Yeseva_One } from 'next/font/google'
 import { cn } from "@/lib/utils";
+import { Suspense } from "react";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -60,6 +61,7 @@ export default function RootLayout({
 }>) {
   return (
       <ContextProvider>
+      <Suspense fallback={<div>Loading...</div>}>
       <html lang="en">
         <body className={cn("",inter.className,yesevaOne.variable,roboto.variable,oxygen.variable,teko.variable,nunito.variable,roboto.variable,poiretOne.variable)}>
           <QueryProviders>
@@ -69,6 +71,7 @@ export default function RootLayout({
           </QueryProviders>
          </body>
       </html>
+      </Suspense>
 </ContextProvider>
   );
 }

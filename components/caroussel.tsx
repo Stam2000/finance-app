@@ -15,36 +15,9 @@ type CarouselProps = {
 
 const Carousel = ( {elements}:CarouselProps) => {
     const [isActive,setIsActive] = useState(0)
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const prev = useRef<SVGSVGElement>(null)
-    const next = useRef<SVGSVGElement>(null)
     const [direction,Setdirection] = useState("")
   
-    const nextSlide = () => {
-      setCurrentIndex((prevIndex) =>
-        prevIndex === elements.length - 1 ? 0 : prevIndex + 1
-      );
-    };
-  
-    const prevSlide = () => {
-      setCurrentIndex((prevIndex) =>
-        prevIndex === 0 ? elements.length - 1 : prevIndex - 1
-      );
-    };
-
-    const handleOnClick = (event:React.MouseEvent<SVGSVGElement, MouseEvent>) => {
-      const id = event.currentTarget.id
-      if(id==="moveLeft"){
-
-        prevSlide()        
-        Setdirection("left")
-      }else if(id==="moveRight"){
-        nextSlide()
-        Setdirection("right")
-      }
-
-      console.log(direction)
-    }
+    
 
     return (
       <div className="relative rounded-2xl border-[2px]  p-1 border-white" >
