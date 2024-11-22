@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { ChevronDown, ChevronUp, ArrowUpDown } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { DataTable } from '@/app/dashboard/transactions/data-table';
-import { GlobalDataTable } from '@/components/data-table';
+import { GlobalDataTable } from '@/components/data-table'
 import { detailsColumns } from '@/app/dashboard/details/DetailsColumns';
 import { columns } from "../transactions/columns";
 
