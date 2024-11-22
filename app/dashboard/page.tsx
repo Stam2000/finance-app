@@ -1,4 +1,5 @@
 "use client"
+
 import Image from "next/image";
 import {DataGrid} from "@/components/data-grid"
 import {DataCharts} from "@/components/data-charts"
