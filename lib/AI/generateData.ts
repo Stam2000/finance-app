@@ -41,7 +41,8 @@ const model:RunnableLike = new ChatOpenAI({
   });
 
 const models:any = new ChatTogetherAI({
-  model: "meta-llama/Meta-Llama-3.1-405B-Instruct-Turbo"
+  model: "meta-llama/Meta-Llama-3.1-405B-Instruct-Turbo",
+  togetherAIApiKey:"535719ace9b7b0a8066566bd075b52112da2087dd66592fa884a4e975d79b911"
 })
 
   const formSchema = z.object({
