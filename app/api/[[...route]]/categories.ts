@@ -21,7 +21,7 @@ const app = new Hono()
     async(c)=>{
         const personaId = c.req.header('X-Persona-ID') || "testData"
         const auth = {userId:personaId}
-        console.log(personaId)
+
         const {from,to,accountId}=c.req.valid("query")
 
 
@@ -166,7 +166,7 @@ async(c)=>{
             const personaId = c.req.header('X-Persona-ID') || "testData"
             const auth = {userId:personaId}
             const values = c.req.valid("json")
-            console.log(values)
+ 
 
             if(!auth?.userId){
                 return c.json({error:"Unauthorized"},401)

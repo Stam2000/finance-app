@@ -20,7 +20,7 @@ export const useGetWeeklyAnalyse = () => {
         throw new Error("Cannot access localStorage on the server.");
       }
 
-      console.log(input)
+
       // Retrieve personaId from localStorage
       const personaId = localStorage.getItem('selectedPersona') || "testData";
 
@@ -48,18 +48,18 @@ export const useGetWeeklyAnalyse = () => {
         return { res, reducedText };
       } catch (error: any) {
         // Optionally, enhance error logging here
-        console.error("Error in useGetWeeklyAnalyse mutation:", error);
+
         throw error;
       }
     },
     onSuccess: (data) => {
       // Handle success if needed
-      console.log('Weekly analysis fetched successfully:', data);
+
       // You can perform additional side effects here, such as updating context or triggering other actions
     },
     onError: (error) => {
       // Handle the error
-      console.error('Error fetching weekly analysis:', error);
+
       // Optionally, integrate with your UI to display error messages to the user
     },
     // Optional: You can add additional options like `onSettled`, `retry`, etc.

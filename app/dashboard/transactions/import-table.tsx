@@ -40,12 +40,11 @@ export const ImportTable =({
                         {
                             
                             body.map((row:string[],index)=>{
-                                console.log(body)
-                                console.log(row)
+                          
                                 return(
                                 <TableRow key={index} >
                                     { row.map((cell,index)=>{
-                                        console.log(cell)
+                                   
                                         return(
                                         <TableHead key={index}>
                                             {cell}

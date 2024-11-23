@@ -60,22 +60,16 @@ const Page = ()=>{
     const createTransactionsAndDetails = useBulkCreateTransactionsAndDetails()
     const createTransactions = useBulkCreateTransactions()
     const transactionQuery = useGetTransactions()
-    console.log(transactionQuery)
+
     const transactions = transactionQuery.data || []
     const newTransaction = useNewTransaction()
-    console.log(transactions)
+
     
     const deleteMutation = useBulkDeleteTransactions()
 
     const isDisabled= transactionQuery.isLoading || deleteMutation.isPending
 
-/*     const handleBulkImport = ()=>{
-        createTransactionsAndDetails.mutate(sampleTransactions,{
-            onSuccess(data, variables, context) {
-                console.log(data)
-            },
-        })
-    } */
+
     const onSubmitImport = async (
         values: typeof transactionSchema.$inferInsert[],
     ) => {
@@ -96,12 +90,6 @@ const Page = ()=>{
             },
         });
     };
-
-
-    const had = async()=>{
-        const r = await axios.get("http://localhost:3000/api/conversation")
-        console.log(r!)
-    }
 
     if(transactionQuery.isLoading){
         return(

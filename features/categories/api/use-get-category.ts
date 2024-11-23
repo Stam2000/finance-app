@@ -14,7 +14,7 @@ export const useGetCategory = (id?:string)=>{
                     'X-Persona-ID': personaId,      
                 }
             });
-            console.log(response)
+   
             if(!response.ok){
                 throw new Error("Failed to fetch categories");
             }

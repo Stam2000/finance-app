@@ -96,7 +96,7 @@ export const Chat = () =>{
    
     const handleOnchange = (e:React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>)=>{
         if (e.target instanceof HTMLInputElement && e.target.files) {
-            console.log(e.target.files)
+     
             const {files:filesList} = e.target
             const files:File[] = Array.from(filesList);
            setFormData({Files:files})
@@ -108,7 +108,7 @@ export const Chat = () =>{
 
             const {name,value}:{name:string,value:string} = e.target
             setFormData({question:value})
-            console.log(formData)
+
 
         }
     }

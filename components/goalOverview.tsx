@@ -11,7 +11,7 @@ import { Tag } from "lucide-react"
 const GoalOverview = ()=>{
     const categoriesQuery = useGetCategoriesAllTracking()
     const categories = categoriesQuery.data||[]
-    /* console.log(categories) */
+
 
     return(
     <div className="flex flex-col gap-2 my-2 flex-grow rounded-lg">
@@ -22,7 +22,7 @@ const GoalOverview = ()=>{
             let width=0
                 percentage> 100 ? width=100:width=percentage
                 percentage = parseFloat(percentage.toFixed(2))
-            /* console.log(percentage) */
+ 
             
                 return(
                     <div key={c.id} className="w-[90%] py-2 px-4  mx-auto border-[1px] rounded-sm shadow-sm bg-slate-50">

@@ -26,7 +26,7 @@ export const NewAccountSheet =()=>{
     const mutation = useCreateAccount()
     
     const onSubmit = (values:FormValues) =>{
-        console.log(values)
+
         mutation.mutate(values,{
             onSuccess:()=>{
                 onClose();

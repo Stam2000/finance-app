@@ -143,7 +143,7 @@ export  const detailsColumns:ColumnDef<DetailsTransactionsType>[]= [
             ),
             cell:({row})=>{
                 const amount = parseFloat(row.getValue("amount"))
-                console.log(amount)
+      
     
                 return(
                    <Badge

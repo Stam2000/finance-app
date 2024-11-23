@@ -156,7 +156,7 @@ const app = new Hono()
 
 
         
-        console.log(data)
+   
 
     return c.json({data})
 })

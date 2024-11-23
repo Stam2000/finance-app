@@ -24,8 +24,6 @@ export const DatePicker = (
     }:Props
 )=>{
 
-    console.log(value)
-    console.log(disabled)
     return(
         <Popover>
             <PopoverTrigger>

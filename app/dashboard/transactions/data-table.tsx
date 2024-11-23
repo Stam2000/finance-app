@@ -91,7 +91,7 @@ export function DataTable<TData, TValue>({
     },
   })
 
-  console.log(filterKeys)
+
 
   return (
     <div>
@@ -155,16 +155,11 @@ export function DataTable<TData, TValue>({
                     
                   >
                     {row.getVisibleCells().map((cell:any) => {
-                      
-                      console.log(row.getIsSelected())
-                      console.log(cell.row.original)
-                      console.log(cell.id)
+                    
                       return(
                         <TableCell
                         onClick={()=>{
-                          /* toggleRowExpanded(row.id) */
-                          console.log(cell.column.columnDef.cell)
-                          console.log(cell.getContext())
+                        
                         }}
                         key={cell.id}>
                           {flexRender(cell.column.columnDef.cell, cell.getContext())}

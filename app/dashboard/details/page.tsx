@@ -21,7 +21,7 @@ const Page = ()=>{
     const detailsTransactionQuery = useGetDetailsTransactions()
    
     const detailsTransactions = detailsTransactionQuery.data || []
-    console.log(detailsTransactions)
+
   
     
     const deleteMutation = useBulkDeleteDetailsTransactions()

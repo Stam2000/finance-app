@@ -12,23 +12,15 @@ const GoalBoard = ()=>{
     const {threadId,setThreadId, messages, updateMessage, setFormData, formData, removeFile } = useUpdateChat();
     const {toggleChatOpen} = useOpenChat()
     const [value,setInputValue] = useState('')
-    console.log(value)
+
     
     const handleOnChange = (e:React.ChangeEvent<HTMLInputElement>)=>{
         setInputValue(e.target.value)
-        console.log(e.target.value)
+    
         setFormData({question:e.target.value})
-        console.log(formData.question)
+
     }
 
-  /*   const handleSubmit= (e: React.FormEvent<HTMLFormElement>)=>{
-        e.preventDefault()
-            console.log(value)
-            console.log(formData)
-            sendAiMessage({threadId,setThreadId,updateMessage,formData,setFormData})
-            toggleChatOpen()
-            setInputValue("")
-    } */
     return(
         <div className=" flex w- flex-grow flex-col items-center justify-center rounded-2xl gap-4">
            #

@@ -125,7 +125,7 @@ disabled
                     <FormControl>
                        <DatePicker 
                         value={field.value}
-                        onChange={(date) =>{console.log(date) 
+                        onChange={(date) =>{ 
                             return field.onChange(date)}}
                         disabled={disabled}
                        />

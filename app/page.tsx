@@ -228,10 +228,9 @@ const Page = ()=>{
     const isFirstRender = useRef(true);
     const {personaDes,personaInfo,setPersonaDes,setPersonaInfo}=useUpdateChat()
     useEffect(() => {
-      console.log("updated")
-      console.log(generatedData)
+
       setPersonaDes(generatedData);
-      console.log(personaDes)
+
     
   }, [setPersonaDes,generatedData]);
 

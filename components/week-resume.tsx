@@ -11,7 +11,7 @@ const WeekResult = ()=>{
 /*     const [htmlCode,setHtmlCode] = useState("")
     const [error, setError] = useState(null); */
     let weekResume = MarkdownFormatter.toHtml(WRshort)
-    console.log(weekResume)
+
   
     
 /*     weekResume=`<div>

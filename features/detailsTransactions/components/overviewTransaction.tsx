@@ -31,7 +31,7 @@ export const OverviewTransactionDialog =()=>{
     const transaction = transactionQuery.data
    transaction ? transactions.push(transaction[0]) : []
     const deleteMutation = useDeleteTransaction(id)
-    console.log(transactions)
+
     const isDisabled = transactionQuery.isLoading || deleteMutation.isPending
 
     return(

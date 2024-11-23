@@ -66,7 +66,7 @@ export const EditProjectDialog =()=>{
 
     const threeMonthsBefore = addMonths(new Date(), 3);
 
-    console.log(projectQuery.data)
+
         const defaultValues = projectQuery.data ? {
             name: projectQuery.data.name,
             description: projectQuery.data.description,
@@ -81,7 +81,6 @@ export const EditProjectDialog =()=>{
             startDate:threeMonthsBefore
         };
 
-        console.log(defaultValues)
 
 
     return(

@@ -122,7 +122,7 @@ export const EditTransactionDialog =()=>{
             notes: "",
         };
 
-        console.log(defaultValues)
+
     return(
         <>
             <ConfirmDialog />

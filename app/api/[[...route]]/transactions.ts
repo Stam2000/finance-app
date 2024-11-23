@@ -27,8 +27,7 @@ const app = new Hono()
         const personaId = c.req.header('X-Persona-ID') || "testData"
         const auth = {userId:personaId}
         const {from,to,accountId} = c.req.valid("query")
-        console.log(from)
-        console.log(to)
+
 
         const defaultTo = new Date()
         const defaultFrom = subDays(defaultTo,30)
@@ -215,7 +214,7 @@ const app = new Hono()
                 id:transactions.id,
             });
 
-            console.log(data)
+         
             return c.json({data})
         }
     )

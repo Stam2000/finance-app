@@ -44,6 +44,7 @@ type ProgressData = {
         onStarted,
         ...json
       }) => {
+        
         const response = await fetch('/api/conversation/createProfil', {
           method: 'POST',
           headers: {
@@ -55,6 +56,8 @@ type ProgressData = {
           onExecution?.()
           onStarted?.()
   
+ 
+
         if (!response.ok) {
           throw new Error('Network response was not ok');
           onExecution?.()

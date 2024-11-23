@@ -22,7 +22,7 @@ export const useDeleteProjects =()=>{
                     'X-Persona-ID': personaId,      
                 }});
             const res = await response.json();
-            console.log (res)
+
             return res;
         },
         onSuccess : ()=>{

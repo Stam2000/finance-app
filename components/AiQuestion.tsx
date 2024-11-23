@@ -10,19 +10,18 @@ const QuestionChat = ()=>{
     const {toggleChatOpen} = useOpenChat()
     const [value,setInputValue] = useState('')
     const personaId = "gredzxwh7esmt1xvmnd9k283"
-    console.log(personaId)
+
     
     const handleOnChange = (e:React.ChangeEvent<HTMLInputElement>)=>{
         setInputValue(e.target.value)
-        console.log(e.target.value)
+     
         setFormData({question:e.target.value})
-        console.log(formData.question)
+   
     }
 
     const handleSubmit= (e: React.FormEvent<HTMLFormElement>)=>{
         e.preventDefault()
-            console.log(value)
-            console.log(formData)
+    
             sendAiMessage({threadId,setIsLoading,setThreadId,updateLastMessage,updateMessage,formData,setFormData,personaId,personaInfo})
             toggleChatOpen()
             setInputValue("")

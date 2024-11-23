@@ -38,7 +38,7 @@ const conversation = new Hono()
           // Handle the case where threadId is not provided or is a File
           threadId = ''
       }
-     console.log(threadId)
+ 
      if (threadId===''){
         const emptyThread = await openai.beta.threads.create()
         threadId = emptyThread.id
@@ -128,8 +128,7 @@ const conversation = new Hono()
         const from =format(fourMonthsBefore,"yyyy-MM-dd")
         const to =format(currentDate,"yyyy-MM-dd");
 
-        console.log(from)
-        console.log(to)
+   
          
         const res = await client.api.transactions.$get({
               query:{
@@ -157,7 +156,7 @@ const conversation = new Hono()
   
   try {
      const {resume, reducedText} = await langChain(personaId, personaDes)
-     console.log(resume)
+     
     return c.json({
       res: resume,
       reducedText: reducedText
@@ -218,27 +217,27 @@ const conversation = new Hono()
   
     const data = c.req.valid("json");
     
-  
+    const encoder = new TextEncoder()
     const stream = new ReadableStream({
       async start(controller) {
         try {
           // Send initial status
-          controller.enqueue(`event: extendPersona\ndata: ${JSON.stringify({ step: 'extendPersona',status:"running",message: 'Extending persona...' })}\n\n`);
+          controller.enqueue(encoder.encode(`event: extendPersona\ndata: ${JSON.stringify({ step: 'extendPersona',status:"running",message: 'Extending persona...' })}\n\n`));
   
           // Perform operations and send updates
           const guideLine = await PersonaExtender(data);
-          console.log(guideLine)
+      
   
-          controller.enqueue(`event: extendedPersona\ndata: ${JSON.stringify({ step: 'extendPersona',status:"completed",message: 'persona definition complete', data: guideLine })}\n\n`);
+          controller.enqueue(encoder.encode(`event: extendedPersona\ndata: ${JSON.stringify({ step: 'extendPersona',status:"completed",message: 'persona definition complete', data: guideLine })}\n\n`));
   
           // Continue sending SSE messages as needed...
-          controller.enqueue(`event: fiDataGenerationStart\ndata: ${JSON.stringify({ step: 'fiDataGeneration',status:"running",message: 'generating data...' })}\n\n`);
+          controller.enqueue(encoder.encode(`event: fiDataGenerationStart\ndata: ${JSON.stringify({ step: 'fiDataGeneration',status:"running",message: 'generating data...' })}\n\n`));
 
           const response  = await DataGenerator(guideLine);
           
 
-          controller.enqueue(`event: fiDataGenerationEnd\ndata: ${JSON.stringify({ step: 'fiDataGeneration',status:"completed",message: 'generation complete'})}\n\n`);
-          controller.enqueue(`event: updatingFiDataStart\ndata: ${JSON.stringify({ step: 'updatingFiData',status:"running", message: 'updating transactions'})}\n\n`);
+          controller.enqueue(encoder.encode(`event: fiDataGenerationEnd\ndata: ${JSON.stringify({ step: 'fiDataGeneration',status:"completed",message: 'generation complete'})}\n\n`));
+          controller.enqueue(encoder.encode(`event: updatingFiDataStart\ndata: ${JSON.stringify({ step: 'updatingFiData',status:"running", message: 'updating transactions'})}\n\n`));
 
           const personaId = createId()
           
@@ -285,12 +284,12 @@ const conversation = new Hono()
 
         }
 
-        controller.enqueue(`event: updatingFiDataEnd\ndata: ${JSON.stringify({ step: 'updatingFiData',status:"completed", message: 'updating transactions'})}\n\n`);
+        controller.enqueue(encoder.encode(`event: updatingFiDataEnd\ndata: ${JSON.stringify({ step: 'updatingFiData',status:"completed", message: 'updating transactions'})}\n\n`));
           // At the end, send the complete event
-          controller.enqueue(`event: complete\ndata: ${JSON.stringify({step:"complete",status:"completed",message:'Processing complete',data:personaId })}\n\n`);
+          controller.enqueue(encoder.encode(`event: complete\ndata: ${JSON.stringify({step:"complete",status:"completed",message:'Processing complete',data:personaId })}\n\n`));
           controller.close();
         } catch (err:any) {
-          controller.enqueue(`event: error\ndata: ${JSON.stringify({ message: err.message })}\n\n`);
+          controller.enqueue(encoder.encode(`event: error\ndata: ${JSON.stringify({ message: err.message })}\n\n`));
           controller.error(err);
         }
       },

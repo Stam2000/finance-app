@@ -36,11 +36,11 @@ export const EditDetailsTransactionDialog =()=>{
         "You are About to delete this transaction."
     )
     const {isOpen, onClose,id} = useOpenDetailsTransaction()
-    console.log(id)
+
     const transactionQuery = useGetDetailsTransaction(id)
     const editMutation = useEditDetailsTransaction(id)
     const deleteMutation = useDeleteDetailsTransaction(id)
-    console.log(transactionQuery.data)
+
 
 
     const onDelete = async ()=>{
@@ -129,7 +129,7 @@ export const EditDetailsTransactionDialog =()=>{
             quantity:"",
         };
 
-        console.log(defaultValues)
+
 
 
     return(

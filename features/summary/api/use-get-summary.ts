@@ -17,7 +17,7 @@ export const useGetSummary = () =>{
         queryKey:["summary",{from,to,accountId}],
         queryFn : async () =>{
             const personaId = localStorage.getItem('selectedPersona') || "testData"
-            console.log(personaId)
+
             const response = await client.api.summary.$get({
                 query:
                 {from,

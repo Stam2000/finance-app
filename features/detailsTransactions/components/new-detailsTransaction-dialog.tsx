@@ -71,7 +71,7 @@ export const NewDetailsTransactionDialog =()=>{
             const newUnitPrice = detail.unitPrice?convertAmountToMiliunits(detail.unitPrice):null
             const newDetail = {...detail,amount:newAmount,unitPrice:newUnitPrice}
             return newDetail
-            console.log(newDetail)
+
         })
 
         createDetailsTransactions.mutate(data,{

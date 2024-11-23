@@ -10,7 +10,7 @@ export const useGetTransactions = ()=> {
     
     const params = useSearchParams()
     const from = params.get("from") || ""
-    console.log(from)
+
     const to = params.get("to")|| ""
     const accountId = params.get("accountId")||""
     const personaId = localStorage.getItem('selectedPersona') || "testData"
@@ -39,7 +39,7 @@ export const useGetTransactions = ()=> {
 
             const {data} = await response.json();
 
-            console.log(data)
+
             return data.map((transaction)=>({
                 ...transaction,
             }))

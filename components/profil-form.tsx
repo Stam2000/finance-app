@@ -169,13 +169,13 @@ export const PersonaForm = ({setGeneratedData,onDisable}:{onDisable?:()=>void,se
   useEffect(() => {
     if (personaData) {
       form.reset(personaData);
-      console.log('Form data updated with AI response:', personaData);
+     
     }
   }, [personaData]);
 
   // Function to handle form submission
   const handleSubmit =  (data: any) => {
-    console.log('Form data submitted:', data);
+
     setPersonaInfo(JSON.stringify(data))
 
     generateData.mutate({
@@ -193,11 +193,11 @@ export const PersonaForm = ({setGeneratedData,onDisable}:{onDisable?:()=>void,se
         setProgress(event)
       },
       onGeneratedData: setGeneratedData ?  (data) => {
-        console.log(data)
+
         setGeneratedData(data)
       } : undefined ,
       onGeneratedPersonaId: (personaId) => {
-        console.log(personaId)
+
         setPersonaId(personaId)
       },
       onExecution:()=>{setisExecuting(prev=>!prev)},

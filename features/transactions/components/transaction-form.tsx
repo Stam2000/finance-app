@@ -95,7 +95,7 @@ onCreateCategory,
             control={form.control}
             render={({field})=>{
                 
-                console.log(field.value)
+
                 return(
                 <FormItem>
                     <FormControl className="z-50" >
