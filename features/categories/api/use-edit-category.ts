@@ -7,7 +7,7 @@ import {client} from "@/lib/hono";
 type ResponseType = InferResponseType<typeof client.api.categories[":id"]["$patch"]>
 type RequestType = InferRequestType<typeof client.api.categories[":id"]["$patch"]>["json"]
 
-export const useEditCategory =(id?:string)=>{
+export const useEditCategory =(id:string)=>{
     const queryClient=useQueryClient()
     const mutation = useMutation<
         ResponseType,
