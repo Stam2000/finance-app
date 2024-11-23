@@ -21,7 +21,7 @@ interface RunStatus {
     error?: string;
 }
 
-const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL  
+const baseURL = process.env.NEXT_PUBLIC_APP_URL  
 const fetchCategories = async({args,personaId}:{args?:any,personaId:string})=>{
 	 try{
 		  const response = await axios.get(`${baseURL}/api/categories/all`,{headers: {
@@ -355,10 +355,10 @@ const createTransactionsAndDetails = async ({
 					'X-Persona-ID': personaId,  
 				}});
 
-				  const ress = await responseDetail.json()
+				  const {data:dt} = await responseDetail.json()
 
-				  console.log(ress)
-				  return responseDetail;
+				  console.log(dt)
+				  return dt;
 				})
 			  );
 

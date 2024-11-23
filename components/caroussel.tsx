@@ -21,7 +21,7 @@ const Carousel = ( {elements}:CarouselProps) => {
 
     return (
       <div className="relative rounded-2xl border-[2px]  p-1 border-white" >
-      <ScrollArea className="relative overflow-x-hidden pt-14 bg-slate-50 rounded-xl h-72 w-full overflow-auto  pb-2 px-3">
+      <ScrollArea className="relative overflow-x-hidden pt-14 bg-slate-50 rounded-xl h-68 w-full overflow-auto  pb-2 px-3">
       <div className="absolute overflow-x-hidden flex  items-center justify-center top-1 right-0 left-0">
         
             <motion.div

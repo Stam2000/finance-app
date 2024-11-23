@@ -27,7 +27,7 @@ const GoalOverview = ()=>{
                 return(
                     <div key={c.id} className="w-[90%] py-2 px-4  mx-auto border-[1px] rounded-sm shadow-sm bg-slate-50">
                     <div className="flex w-full justify-between items-center mb-2">
-                        <h2 className="text-lg px-2 font-nunito font-bold  flex gap-1 items-center  justify-center  text-slate-800"><img className="object-cover rounded-xl h-4 "  src={`/tag-horizontal-svgrepo-com.svg`}  alt={"lg.displayName"}/> {c.name}</h2>
+                        <h2 className="text-md px-2 font-nunito font-bold  flex gap-1 items-center  justify-center  text-slate-800"><img className="object-cover rounded-xl h-4 "  src={`/tag-horizontal-svgrepo-com.svg`}  alt={"lg.displayName"}/> {c.name}</h2>
                         <div className="flex w-full justify-end gap-1  items-center">
                             <div className="flex items-center space-x-1">
                             <div className="flex items-center justify-center gap-1">
