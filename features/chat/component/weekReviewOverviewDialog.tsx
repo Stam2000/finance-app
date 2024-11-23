@@ -21,7 +21,6 @@ import { useUpdateChat } from "../hook/useUpdateMessage"
 export const OverviewWeekFinanceDialog =()=>{
     const {WRlong}=useUpdateChat()
     const {isOpen,onClose} = useOpenWeeKOverview()
-    const weekQuery = useGetWeeklyAnalyse()
 
 
 

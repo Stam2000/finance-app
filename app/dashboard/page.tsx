@@ -63,9 +63,9 @@ export default  function Home() {
         
       },[])
       
-    /*  useEffect(()=>{
+     useEffect(()=>{
         handleFetchWeeklyAnalyse()
-     },[personaDes]) */
+     },[personaDes])
 
     return (
 

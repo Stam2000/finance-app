@@ -186,7 +186,7 @@ export const Chat = () =>{
                                               <motion.div  
                                               initial={{ x: -20, opacity: 0, scale: 0 }}
                                               animate={{ x: 0, scale: 1, opacity: 1 }}
-                                              className={` font-oxygen  shadow-md text-md border-slate-50 border-[1px] 
+                                              className={` font-oxygen  shadow-md text-sm border-slate-50 border-[1px] 
                       ${sender === "user" ? "bg-gradient-to-r from-slate-900 from-10% to-slate-700 to-90% text-white" : "bg-gradient-to-tl from-white from-50% to-stone-50 to-90% border-[1px]"} 
                       rounded-xl overflow-hidden ml-2 mr-3 mb-3 max-w-full`} >
                                                {/* <div dangerouslySetInnerHTML={{__html:message.content}} /> */}
@@ -194,6 +194,7 @@ export const Chat = () =>{
                                                 sender === "user" ? <div className="p-4" dangerouslySetInnerHTML={{__html:message.content}} /> :
                                                 <div className="w-full" >
                                                     <MarkdownTypewriter
+                                                    className="text-sm"
                                                     content={message.content}
                                                     typeSpeed={10}
                                                     cursor={{

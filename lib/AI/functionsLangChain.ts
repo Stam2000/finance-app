@@ -13,7 +13,7 @@ const llm:RunnableLike = new ChatOpenAI({
     model: "gpt-4o-mini",
   })
 
-
+  const baseURL = process.env.NEXT_PUBLIC_APP_URL 
 async function agentWeek (personaId:string,personaDes:string){
 
     let threadId:string=""
@@ -74,7 +74,7 @@ async function agentWeek (personaId:string,personaDes:string){
         
         }
 const fetchGoal = async(personaId:string)=>{
-    const res = await axios.get("http://localhost:3000/api/categories/all",{
+    const res = await axios.get(`${baseURL}/api/categories/all`,{
         headers: {
             'X-Persona-ID': personaId,  
           }

@@ -88,7 +88,7 @@ const CardDisplay = ({persona , onSelect,isDisabled }:{isDisabled:boolean,person
                 <img className="object-cover rounded-xl h-32 "  src={`/ailog.webp`}  alt={"lg.displayName"}/>
             </div>
             <div className="flex flex-1 flex-col items-center justify-center " >
-              <span className= "flex text-center  items-center justify-center font-poiret-one font-extrabold text-slate-750  text-3xl mb-2" >
+              <span className= "flex text-center  items-center justify-center font-poiret-one font-extrabold text-slate-750  text-2xl mb-2" >
                   {persona.name}
               </span>
               <div className="flex items-center justify-center">
@@ -98,18 +98,18 @@ const CardDisplay = ({persona , onSelect,isDisabled }:{isDisabled:boolean,person
           </div>
           <div>
           <div className="mb-4" >
-                <div  className="w-full grid gap-3 grid-cols-2 rounded-md  bg-gradient-to-r from-black  to-slate-950 to-90% p-3  text-md" >
+                <div  className="w-full grid gap-3 grid-cols-2 rounded-md  bg-gradient-to-r from-black  to-slate-950 to-90% p-3  text-sm" >
                     <div className=" flex-col flex items-center justify-center " >
-                      <span className="font-bold text-md flex  items-center text-white  gap-1" > Nationality 📘:</span>  <span className="text-gray-100 text-md " >{persona.nationality}</span>
+                      <span className="font-bold text-sm flex  items-center text-white  gap-1" > Nationality 📘:</span>  <span className="text-gray-100 text-sm" >{persona.nationality}</span>
                     </div>
                     <div className="flex-col flex items-center justify-center" >
-                      <span className="font-bold  text-md flex items-center text-white gap-1" > Location 🗺️:</span>  <span className="text-gray-100 text-md " >{persona.location}</span>
+                      <span className="font-bold  text-sm flex items-center text-white gap-1" > Location 🗺️:</span>  <span className="text-gray-100 text-sm" >{persona.location}</span>
                     </div>
                     <div className="flex-col flex items-center justify-center" >
-                      <span className="font-bold  text-md flex items-center text-white gap-1" > Occupation 💼:</span>   <span className="text-gray-100 text-md " >{persona.Occupation}</span>
+                      <span className="font-bold  text-sm flex items-center text-white gap-1" > Occupation 💼:</span>   <span className="text-gray-100 text-sm" >{persona.Occupation}</span>
                     </div>
                     <div className="flex-col flex items-center justify-center" >
-                      <span className="font-bold text-md flex items-center text-white gap-1" > Income 💰:</span>   <span className="text-gray-100 text-md " >{persona.income} 
+                      <span className="font-bold text-sm flex items-center text-white gap-1" > Income 💰:</span>   <span className="text-gray-100 text-sm" >{persona.income} 
                       $</span>
                     </div>  
                   </div>
@@ -117,7 +117,7 @@ const CardDisplay = ({persona , onSelect,isDisabled }:{isDisabled:boolean,person
           </div>
           <div>
             <div className="flex-col flex gap-2" >
-                        <span className="font-bold text-md " >description:</span>  
+                        <span className="font-bold text-sm " >description:</span>  
                         <span className="text-gray-700 text-sm " >
                           Andere werden nur mit Ihrer Einwilligung gesetzt, z. B. solche, die uns helfen, test.de für Sie zu optimieren. Nähere Informationen über Cookies auf test.de erhalten Sie unter „Details auswählen“ und in unseren Datenschutzhinweisen.
                         </span>
@@ -335,18 +335,18 @@ const Page = ()=>{
               }
             </motion.div>):(
                 <motion.div key={"list"} initial={isFirstRender.current ? "firstLoad" : "hidden"} variants={parentVariantLeft}
-                  animate={isFirstRender.current ? "firstVisible" : "visible"} className="w-full h-full p-10 flex flex-col gap-4 justify-center " >
+                  animate={isFirstRender.current ? "firstVisible" : "visible"} className="w-full h-full p-10 flex flex-col gap-4 " >
                   <span>
                     <img className="object-cover rounded-xl h-10 "  src={`/ailog.webp`}  alt={"lg.displayName"}/>
                   </span>
                   <div className="">
-                    <div className="" >
+                    <div className="text-sm" >
                         Andere werden nur mit Ihrer Einwilligung gesetzt, z. B. solche, die uns helfen, test.de für Sie zu optimieren. Nähere Informationen über Cookies auf test.
                     </div>
                     <div className="flex items-center justify-center my-6" >
                       <button onClick={()=>setOpenForm(prev => !prev)} className=" w-full bg-slate-950 text-white text-md rounded-lg p-2" >
                         <div className="flex flex-col" >
-                          <span className="font-bold" >
+                          <span className="font-bold text-sm " >
                             Custom Profile
                           </span>
                           <span className="text-sm font-extralight" >
@@ -356,7 +356,7 @@ const Page = ()=>{
                       </button>
                     </div>
                   </div>
-                    <motion.div variants={childrenLeft} className="overflow-y-auto scrollbar-none" >
+                    <motion.div variants={childrenLeft} className=" scrollbar-none" >
                         {(profile.map((p,index)=> <CardDisplay isDisabled={isDisabled} key={index} persona={p} onSelect={selectPersona} /> ))}
                     </motion.div> 
                 </motion.div>
