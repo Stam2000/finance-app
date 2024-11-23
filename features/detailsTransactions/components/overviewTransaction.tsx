@@ -27,10 +27,10 @@ export const OverviewTransactionDialog =()=>{
     const filters = ["payee","category","account"]
     const transactions = []
     const {onClose,id,isOpen} = useOpenTransactionOverview()
-    const transactionQuery = useGetTransaction(id)
+    const transactionQuery = useGetTransaction(id!)
     const transaction = transactionQuery.data
    transaction ? transactions.push(transaction[0]) : []
-    const deleteMutation = useDeleteTransaction(id)
+    const deleteMutation = useDeleteTransaction(id!)
 
     const isDisabled = transactionQuery.isLoading || deleteMutation.isPending
 

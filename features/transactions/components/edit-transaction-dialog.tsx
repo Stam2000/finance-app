@@ -38,9 +38,9 @@ export const EditTransactionDialog =()=>{
     )
     const {isOpen, onClose,id} = useOpenTransaction()
 
-    const transactionQuery = useGetTransaction(id)
-    const editMutation = useEditTransaction(id)
-    const deleteMutation = useDeleteTransaction(id)
+    const transactionQuery = useGetTransaction(id!)
+    const editMutation = useEditTransaction(id!)
+    const deleteMutation = useDeleteTransaction(id!)
     
 
     const onDelete = async ()=>{
