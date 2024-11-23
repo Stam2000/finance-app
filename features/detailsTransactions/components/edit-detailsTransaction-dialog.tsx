@@ -57,13 +57,7 @@ export const EditDetailsTransactionDialog =()=>{
     
     const accountQuery = useGetAccounts()
     const accountMutation = useCreateAccount()
-    const accountOptions = (accountQuery.data ?? []).map((account)=>({
-        label:account.name,
-        value:account.id
-    }))
-    const onCreateAccount = (name:string)=>accountMutation.mutate({
-        name
-    })
+
 
     const categoryQuery = useGetCategories()
     const categoryMutation = useCreateCategory()
@@ -139,10 +133,10 @@ export const EditDetailsTransactionDialog =()=>{
             <DialogContent>
                 <DialogHeader>
                     <DialogTitle>
-                        Edit Detail Transaction
+                        Edit Item
                     </DialogTitle>
                     <DialogDescription>
-                        Create a new Detail to transaction
+                        Add a new Item for this transaction
                     </DialogDescription>
                 </DialogHeader>
                 {isLoading ? (

@@ -67,7 +67,7 @@ export const Actions = ({id}:Props)=>{
                 onClick={()=>onOpenDetails(id)}
             >
                 <Edit className="size-4 mr-2"/>
-                Add Details
+                Add Items
             </Button>
             <Button
                 disabled={deleteMutation.isPending}

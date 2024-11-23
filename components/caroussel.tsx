@@ -25,7 +25,7 @@ const Carousel = ( {elements}:CarouselProps) => {
       <div className="absolute overflow-x-hidden flex  items-center justify-center top-1 right-0 left-0">
         
             <motion.div
-              className="text-slate-900 overflow-x-hidden font-oxygen font-family:Roboto rounded-lg my-1 font-bold text-xl flex gap-2" >
+              className="text-slate-900 overflow-x-hidden font-oxygen font-family:Roboto rounded-lg my-1 font-bold text-md md:text-xl flex gap-2" >
                 {elements.map((e,i)=>(<Button key={i} onClick={()=>{setIsActive(i)}} className={` ${isActive === i ? "bg-slate-200 text-slate-950 hover:text-white":"bg-transparent hover:text-white border text-slate-950 "} px-2 py-0`} >{e.title}{e.title === "Weekly Review" && <WandSparkles size={14} className="ml-1" />}</Button>))}
             </motion.div>
           

@@ -86,10 +86,10 @@ export const NewDetailsTransactionDialog =()=>{
             <DialogContent>
                 <DialogHeader>
                     <DialogTitle>
-                        New Details
+                        New Items
                     </DialogTitle>
                     <DialogDescription>
-                        Add  new detials for this transaction 
+                        Add  new Items for this transaction 
                     </DialogDescription>
                 </DialogHeader>
                 <div className="flex p-2 justify-between gap-4 " >
@@ -115,7 +115,7 @@ export const NewDetailsTransactionDialog =()=>{
                         >
                             Submit
                         </Button>
-                    }<Button onClick={onClose}>
+                    }<Button variant={"destructive"} onClick={onClose}>
                         Cancel
                     </Button>
                 </DialogFooter>

@@ -54,8 +54,8 @@ export const NewProjectDialog =()=>{
                         disabled={isPending}
                     />
                 <DialogFooter>
-                    <Button onClick={onClose}>
-                        Confirm
+                    <Button variant={"destructive"} onClick={onClose}>
+                        Cancel
                     </Button>
                 </DialogFooter>
             </DialogContent>

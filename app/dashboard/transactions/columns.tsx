@@ -56,7 +56,6 @@ export const columns:ColumnDef<ResponseType>[]= [
         cell:({row})=>{
             const date = row.getValue("date") as Date;
             const detailstransactions = row.getValue("date")
-            console.log(detailstransactions)
 
             return (
                 <div className="flex justify-around items-center" >

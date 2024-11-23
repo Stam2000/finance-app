@@ -28,7 +28,7 @@ label:"Overview"
 },
 {
     href:"/dashboard/details",
-    label:"items"
+    label:"Items"
 },
 {
     href:"/dashboard/projects",

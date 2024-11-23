@@ -41,9 +41,6 @@ export const OverviewTransactionDialog =()=>{
                     <DialogTitle>
                         Overview Transaction
                     </DialogTitle>
-                    <DialogDescription>
-                        Overview of the transaction a new transaction to transaction
-                    </DialogDescription>
                 </DialogHeader>
                
                 <DataTable
@@ -56,7 +53,7 @@ export const OverviewTransactionDialog =()=>{
                     }}
                 />
                 <DialogFooter>
-                    <Button onClick={onClose}>
+                    <Button variant={"destructive"} onClick={onClose}>
                         Cancel
                     </Button>
                 </DialogFooter>

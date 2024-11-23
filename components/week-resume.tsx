@@ -12,7 +12,7 @@ const WeekResult = ()=>{
     const [error, setError] = useState(null); */
     let weekResume = MarkdownFormatter.toHtml(WRshort)
 
-  
+    console.log(`WRshort ${WRshort}`)
     
 /*     weekResume=`<div>
   <h1 style="font-weight: bold; font-size: 1.125rem; padding-bottom: 0.5rem;">📊Weekly Financial Review</h1>
