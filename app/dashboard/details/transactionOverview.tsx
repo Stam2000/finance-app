@@ -18,7 +18,7 @@ import {columns} from "./columns"
 
 export const TransactionOverview  = ()=> { 
     const {isOpen,id,onClose} = useOpenTransactionOverview()
-    const transactionQuery = useGetTransaction(id)
+    const transactionQuery = useGetTransaction(id ? id : "")
 
     const transaction = transactionQuery.data
    const data:any = [transaction] 
