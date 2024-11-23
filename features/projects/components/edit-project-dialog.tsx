@@ -33,9 +33,9 @@ export const EditProjectDialog =()=>{
     )
     const {isOpen, onClose,id} = useOpenProject()
 
-    const projectQuery = useGetProject(id)
-    const editMutation = useEditProject(id)
-    const deleteMutation = useDeleteProject(id)
+    const projectQuery = useGetProject(id!)
+    const editMutation = useEditProject(id!)
+    const deleteMutation = useDeleteProject(id!)
     
 
     const onDelete = async ()=>{

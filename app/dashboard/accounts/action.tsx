@@ -21,7 +21,7 @@ type Props = {
 export const Action = ({id}:Props)=>{
     const {onOpen} = useOpenAccount() 
     const [ConfirmDialog,confirm ] = useConfirm("Are you sure","You are about to delete this account.")
-    const deleteMutation = useDeleteAccount(id)
+    const deleteMutation = useDeleteAccount(id!)
     const [active,setActive]=useState(false)
 
     const onDelete = async()=>{

@@ -1,7 +1,7 @@
 import {create} from "zustand"
 
 type OpenAccountState = {
-    id:string,
+    id?:string,
     isOpen:boolean,
     onOpen:(id:string)=>void,
     onClose:() => void

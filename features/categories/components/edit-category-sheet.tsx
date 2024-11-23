@@ -26,9 +26,9 @@ type FormValues = z.input<typeof formSchema>
 
 export const EditCategorySheet =()=>{
     const {isOpen, onClose, id} = useOpenCategory()
-    const query = useGetCategory(id)
-    const editmutation = useEditCategory(id)
-    const deletemutation = useDeleteCategory(id)
+    const query = useGetCategory(id!)
+    const editmutation = useEditCategory(id!)
+    const deletemutation = useDeleteCategory(id!)
 
     const isLoading = query.isLoading
     const [ConfirmDialog,confirm]= useConfirm("Are you sure","You are about to delete this category.")

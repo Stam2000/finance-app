@@ -37,9 +37,9 @@ export const EditDetailsTransactionDialog =()=>{
     )
     const {isOpen, onClose,id} = useOpenDetailsTransaction()
 
-    const transactionQuery = useGetDetailsTransaction(id)
-    const editMutation = useEditDetailsTransaction(id)
-    const deleteMutation = useDeleteDetailsTransaction(id)
+    const transactionQuery = useGetDetailsTransaction(id!)
+    const editMutation = useEditDetailsTransaction(id!)
+    const deleteMutation = useDeleteDetailsTransaction(id!)
 
 
 
