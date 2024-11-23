@@ -1,0 +1,8 @@
+{
+    "functions": {
+      "api/conversation.ts": {
+        "maxDuration": 60
+      }
+    }
+  }
+  
