@@ -7,7 +7,7 @@ import {client} from "@/lib/hono";
 type ResponseType = InferResponseType<typeof client.api.detailsTransactions[":id"]["$patch"]>
 type RequestType = InferRequestType<typeof client.api.detailsTransactions[":id"]["$patch"]>["json"]
 
-export const useEditDetailsTransaction =(id:string)=>{
+export const useEditDetailsTransaction =(id?:string)=>{
     const queryClient=useQueryClient()
     const mutation = useMutation<
         ResponseType,

@@ -9,7 +9,7 @@ export const useGetAccounts = ()=>{
     const query = useQuery({
         queryKey:["accounts"],
         queryFn:async()=>{
-            const personaId = localStorage.getItem('selectedPersona') ? localStorage.getItem('selectedPersona') : "testData"
+            const personaId = localStorage.getItem('selectedPersona') || "testData"
             
             const response = await client.api.accounts.$get({},{
                 headers: {

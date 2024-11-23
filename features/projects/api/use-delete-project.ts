@@ -7,7 +7,7 @@ import {client} from "@/lib/hono";
 type ResponseType = InferResponseType<typeof client.api.projects[":id"]["$delete"]>
 
 
-export const useDeleteProject =(id:string)=>{
+export const useDeleteProject =(id?:string)=>{
     const queryClient=useQueryClient()
     const mutation = useMutation<
         ResponseType,

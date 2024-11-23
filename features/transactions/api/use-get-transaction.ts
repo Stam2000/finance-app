@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import {client} from "@/lib/hono"
 import { convertAmountFormMiliunits, convertAmountFromMiliunits } from "@/lib/utils";
 
-export const useGetTransaction = (id:string)=>{
+export const useGetTransaction = (id?:string)=>{
     const query = useQuery({
         enabled:!!id,
         queryKey:["transaction",{id}],
