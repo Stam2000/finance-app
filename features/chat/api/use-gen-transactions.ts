@@ -45,7 +45,8 @@ type ProgressData = {
         ...json
       }) => {
         
-        const response = await fetch('/api/conversation/createProfil', {
+        const baseURL = process.env.NEXT_PUBLIC_APP_URL 
+        const response = await fetch(`${baseURL}/api/conversation/createProfil`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -130,13 +131,6 @@ type ProgressData = {
                       onProgress?.(eventData);
                       break;
   
-                /* case 'processing':
-                  onTransactionProcessed?.(
-                    eventData.transaction,
-                    eventData.processedTransactions
-                  );
-                  onProgress?.(eventData);
-                  break; */
                   case 'updatingFiDataEnd':
                     toast.info(eventData.message)
                     onProgress?.(eventData);
