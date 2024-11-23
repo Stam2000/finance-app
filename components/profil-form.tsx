@@ -236,7 +236,7 @@ export const PersonaForm = ({setGeneratedData,onDisable}:{onDisable?:()=>void,se
                   if(step.status === "pending") return undefined
                 
                   return(
-                    <div className='flex items-center justify-center gap-2' >
+                    <div key={index} className='flex items-center justify-center gap-2' >
                       <span className='text-slate-600' >{step.message}</span>
                       <span>
                         {step.status === "running" && <LoaderPinwheel className='animate-spin' /> }

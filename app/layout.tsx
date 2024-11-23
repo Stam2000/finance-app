@@ -61,7 +61,6 @@ export default function RootLayout({
 }>) {
   return (
       <ContextProvider>
-      <Suspense fallback={<div>Loading...</div>}>
       <html lang="en">
         <body className={cn("",inter.className,yesevaOne.variable,roboto.variable,oxygen.variable,teko.variable,nunito.variable,roboto.variable,poiretOne.variable)}>
           <QueryProviders>
@@ -71,7 +70,6 @@ export default function RootLayout({
           </QueryProviders>
          </body>
       </html>
-      </Suspense>
 </ContextProvider>
   );
 }

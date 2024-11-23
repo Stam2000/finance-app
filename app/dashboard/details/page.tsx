@@ -57,8 +57,7 @@ const Page = ()=>{
             <NewTransactionDialog />
             <CardHeader>
                 <CardTitle>
-                   Transactions
-                   
+                  items
                 </CardTitle>
 
             </CardHeader>

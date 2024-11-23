@@ -27,12 +27,12 @@ const GoalOverview = ()=>{
                 return(
                     <div key={c.id} className=" w-[90%] py-1 px-2  mx-auto border-[1px] rounded-sm shadow-sm bg-slate-50">
                     <div className="flex w-full justify-between items-center mb-2">
-                        <h2 className="text-sm px-2 font-nunito font-bold  flex gap-1 items-center  justify-center  text-slate-800"><img className="object-cover rounded-xl h-4 "  src={`/tag-horizontal-svgrepo-com.svg`}  alt={"lg.displayName"}/> {c.name}</h2>
+                        <h2 className="text-[10px]  md:text-sm px-2 font-nunito font-bold  flex gap-1 items-center  justify-center  text-slate-800"><img className="object-cover rounded-xl h-4 "  src={`/tag-horizontal-svgrepo-com.svg`}  alt={"lg.displayName"}/> {c.name}</h2>
                         <div className="flex  justify-end gap-1  items-center">
                             <div className="flex items-center  space-x-1">
                             <div className="flex items-center justify-center gap-1">
-                                <p className="text-sm font-nunito text-slate-900">remaining:</p>
-                                <p className="text-sm text-green-800 ">{formatCurrency(convertAmountFromMiliunits(c.amount))}</p>
+                                <p className="text-[10px] md:text-sm font-nunito text-slate-900">remaining:</p>
+                                <p className="text-[10px] md:text-sm text-green-800 ">{formatCurrency(convertAmountFromMiliunits(c.amount))}</p>
                             </div>
                             <Wallet className="w-4 h-4 text-green-700" />
                             </div>  
@@ -52,16 +52,16 @@ const GoalOverview = ()=>{
                     <div className="mt-2 flex items-center justify-center gap-2  text-slate-900">
                     <div className="flex items-center justify-around space-x-1">
                                 <div className="flex items-center justify-center gap-1">
-                                    <p className="text-sm font-nunito text-gray-900">spent:</p>
-                                    <p className="text-sm text-red-800 ">{formatCurrency(convertAmountFromMiliunits(c.amount))}</p>
+                                    <p className="text-[10px] md:text-sm font-nunito text-gray-900">spent:</p>
+                                    <p className=" text-[10px] md:text-sm text-red-800 ">{formatCurrency(convertAmountFromMiliunits(c.amount))}</p>
                                 </div>
                                 <Rocket className="w-4 h-4 text-red-500" />
                             </div >
                             -
                     <div className="flex items-center space-x-1">
                             <div className="flex items-center justify-center gap-1">
-                                <p className="text-sm font-nunito text-gray-900">limit:</p>
-                                <p className="text-sm text-yellow-600">{formatCurrency(convertAmountFromMiliunits(c.goal!))}</p>
+                                <p className="text-[10px] md:text-sm font-nunito text-gray-900">limit:</p>
+                                <p className="text-[10px] md:text-sm text-yellow-600">{formatCurrency(convertAmountFromMiliunits(c.goal!))}</p>
                                 </div>
                             </div>
                             <Goal className="w-4 h-4 text-yellow-500" />

@@ -346,7 +346,7 @@ const Page = ()=>{
                     <div className="flex items-center justify-center my-6" >
                       <button onClick={()=>setOpenForm(prev => !prev)} className=" w-full bg-slate-950 text-white text-md rounded-lg p-2" >
                         <div className="flex flex-col" >
-                          <span className="font-bold text-sm " >
+                          <span className="font-bold text-sm" >
                             Custom Profile
                           </span>
                           <span className="text-sm font-extralight" >

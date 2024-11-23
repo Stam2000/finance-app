@@ -28,7 +28,7 @@ label:"Overview"
 },
 {
     href:"/dashboard/details",
-    label:"Details"
+    label:"items"
 },
 {
     href:"/dashboard/projects",
@@ -63,7 +63,7 @@ export const Navigation = ()=>{
                 <SheetContent side="left" className="px-2" >
                     <nav className="flex flex-col gap-y-2 pt-6" >
                             {
-                            routes.map((route)=>(
+                            routes.map((route,index)=>(
                                 <Button
                                 key={route.href}
                                 variant={route.href === pathName ? "secondary":"ghost"}
