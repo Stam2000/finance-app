@@ -21,9 +21,10 @@ interface RunStatus {
     error?: string;
 }
 
+const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL  
 const fetchCategories = async({args,personaId}:{args?:any,personaId:string})=>{
 	 try{
-		  const response = await axios.get("/api/categories/all",{headers: {
+		  const response = await axios.get(`${baseURL}/api/categories/all`,{headers: {
 			'X-Persona-ID': personaId,  
 		  }})
 		  const stringData = JSON.stringify(response.data)
@@ -41,7 +42,7 @@ const fetchCategories = async({args,personaId}:{args?:any,personaId:string})=>{
  const fetchAccounts = async({args,personaId}:{args?:any,personaId:string})=>{
 
 	 try{
-		  const response = await axios.get("/api/accounts",{headers: {
+		  const response = await axios.get(`${baseURL}/api/accounts`,{headers: {
 			'X-Persona-ID': personaId,  
 		  }})
 		  const stringData = JSON.stringify(response.data)
@@ -59,7 +60,7 @@ const fetchCategories = async({args,personaId}:{args?:any,personaId:string})=>{
 
  const fetchProjects = async({accountId,personaId}:{accountId?:string,personaId:string})=>{
 	try{
-		 const response = await axios.get("/api/projects",{params: {
+		 const response = await axios.get(`${baseURL}/api/projects`,{params: {
 				accountId
 			  },headers: {
 		   'X-Persona-ID': personaId,  
@@ -80,7 +81,7 @@ const fetchCategories = async({args,personaId}:{args?:any,personaId:string})=>{
 const fetchDetailsTransaction = async ({id}:{id:string},personaId:string)=>{
 
 	 try{
-		  const response = await axios.get("/api/detailsTransactions",{
+		  const response = await axios.get(`${baseURL}/api/detailsTransactions`,{
 				params:{
 					 id //transactionId
 				},
@@ -104,7 +105,7 @@ const fetchDetailsTransaction = async ({id}:{id:string},personaId:string)=>{
 const fetchTransaction = async ({id,personaId}:{id:string,personaId:string})=>{
 
 	try{
-		 const response = await axios.get("/api/transactions",{
+		 const response = await axios.get(`${baseURL}/api/transactions`,{
 			   params:{
 					id //transactionId
 			   },
@@ -128,7 +129,7 @@ const fetchTransaction = async ({id,personaId}:{id:string,personaId:string})=>{
 const fetchDetailsTransactions= async({from,to,personaId}:{from?:string,to?:string,personaId:string})=>{
 	
 	 try{
-		  const response = await axios.get("/api/detailsTransactions",{
+		  const response = await axios.get(`${baseURL}/api/detailsTransactions`,{
 				params:{
 					 from,
 					 to,
@@ -149,34 +150,6 @@ const fetchDetailsTransactions= async({from,to,personaId}:{from?:string,to?:stri
 	 }
 }
 
-/* const fetchSummary = async(input:string,personaId:string)=>{
-	const {from,to,accountId}:{
-		from?: string;
-		to?: string;
-		accountId?: string;
-	  } = await JSON.parse(input)
-	 try{
-		  const response = await axios.get("http://localhost:3000/api/summary",{
-				params:{
-					 from,
-					 to,
-					 accountId
-				},headers: {
-					'X-Persona-ID': personaId,  
-				  }
-		  })
-		  const stringData = JSON.stringify(response.data)
-		  return stringData
-	 }catch(err){
-		  console.error("error fetching transactions",err)
-		  if (axios.isAxiosError(err)){
-				console.error("Axios details",err.response?.status,err.response?.data)
-		  }
-				console.error("Unexpected error",err)
-	 
-		  return (`${err}`)
-	 }
-} */
 
 const fetchTransactions = async ({from,to,accountId,personaId}:{
 	from?: string;
@@ -187,7 +160,7 @@ const fetchTransactions = async ({from,to,accountId,personaId}:{
 
 	 try{
 
-		  const response = await axios.get("/api/transactions",{
+		  const response = await axios.get(`${baseURL}/api/transactions`,{
 				params:{
 					 from,
 					 to,
@@ -229,7 +202,7 @@ const createOneTransaction = async({
 	personaId: string;
   })=>{
 	 try {
-		 const response = await axios.post("/api/transactions", json,{
+		 const response = await axios.post(`${baseURL}/api/transactions`, json,{
 			headers: {
 				'X-Persona-ID': personaId,  
 			  }
@@ -262,7 +235,7 @@ const createOneDetailsTransactions = async({
 })=>{
 	
 	 try {
-		 const response = await axios.post("/api/detailsTransactions", json,{
+		 const response = await axios.post(`${baseURL}/api/detailsTransactions`, json,{
 			headers: {
 				'X-Persona-ID': personaId,  
 			  }
@@ -289,7 +262,7 @@ const createAccount = async({
 })=>{
 
 	 try {
-		 const response = await axios.post("/api/accounts", json,{
+		 const response = await axios.post(`${baseURL}/api/accounts`, json,{
 			headers: {
 				'X-Persona-ID': personaId,  
 			  }
@@ -316,7 +289,7 @@ const createCategory = async({
 })=>{
 	 
 	 try {
-		 const response = await axios.post("/api/categories", json,{
+		 const response = await axios.post(`${baseURL}/api/categories`, json,{
 			headers: {
 				'X-Persona-ID': personaId,  
 			  }
@@ -422,7 +395,7 @@ const createProject = async({
 })=>{
 
 	 try {
-		 const response = await axios.post("/api/projects", json,{
+		 const response = await axios.post(`${baseURL}/api/projects`, json,{
 			headers: {
 				'X-Persona-ID': personaId,  
 			  }
@@ -582,40 +555,6 @@ export const handleRunStatus = async (run:any,openai:any,threadId:string,persona
   };
 
 
-export const SystemPrompt =`You are an assistant specialized in financial analysis and management. Your primary function is to help users understand and manage their financial data, including transactions, accounts, and spending patterns. You have access to several API functions that allow you to fetch and analyze financial information.
-						  Your capabilities include:
-
-						
-						  Get the actual date
-						  Fetching and analyzing transaction data
-						  Retrieving account information
-						  Accessing and interpreting transaction details
-						  Generating financial summaries
-						  Categorizing expenses
-						  Comparing financial data across different time periods
-
-						  When interacting with users, you should:
-
-						  Provide clear and concise financial insights
-						  Offer helpful suggestions for financial management
-						  Answer questions about transactions, spending habits, and account balances
-						  Alert users to significant changes or patterns in their financial data
-						  Assist in budget planning and expense tracking
-						  Explain financial concepts in simple terms when necessary
-
-						  You have access to the following functions to retrieve data:
-
-						  fetchTransaction: Get transaction data for a specified period
-						  fetchCategories: Retrieve available expense categories
-						  fetchAccounts: Get a list of user accounts
-						  fetchDetailsTransaction: Get detailed information about a specific transaction
-						  fetchDetailsTransactions: Retrieve details for multiple transactions in a given period
-						  fetchSummary: Generate a comprehensive financial summary for a specified period
-						  getTodaysDate: Get the current date for reference
-
-						  Always prioritize user privacy and data security. Do not share or expose sensitive financial information. If you're unsure about any financial advice, recommend that the user consult with a professional financial advisor.
-
-						  Remember, your goal is to help users make informed financial decisions and better understand their financial situation.`
 
 export const openAiTools:AssistantTool[]=[
 	{
