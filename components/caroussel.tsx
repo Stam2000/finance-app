@@ -41,13 +41,6 @@ const Carousel = ( {elements}:CarouselProps) => {
             className="overflow-x-hidden mt-3">
             {elements[isActive].jsx}
           </motion.div>
-   
-        {/* <div className="absolute bottom-0 right-0 left-0">
-          <div className="flex items-center justify-center" >
-            <MoveLeft  id="moveLeft" className="text-slate-500 hover:cursor-pointer hover:text-black" onClick={handleOnClick} />
-            <MoveRight id="moveRight" className="text-slate-500 hover:cursor-pointer hover:text-black" onClick={handleOnClick} />
-          </div>
-        </div> */}
       </ScrollArea>
       </div>
     );

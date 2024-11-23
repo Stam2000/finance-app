@@ -11,16 +11,19 @@ import { Dialog,
 
 
 import { Button } from "@/components/ui/button"
-import { formatText } from "@/lib/utils"
-import { useGetWeeklyAnalyse } from "@/features/chat/hook/useGetWeekSummary"
 import { useOpenWeeKOverview } from "../hook/use-open-weekOverview" 
 import { useUpdateChat } from "../hook/useUpdateMessage"
+import { useEffect } from "react"
 
 
 
 export const OverviewWeekFinanceDialog =()=>{
-    const {WRlong}=useUpdateChat()
+    const {WRlong,WRshort}=useUpdateChat()
     const {isOpen,onClose} = useOpenWeeKOverview()
+    let weekResume = WRlong
+    useEffect(()=>{
+        weekResume = WRshort
+      },[WRshort,WRlong])
     console.log(`  WRlong : ${WRlong} `)
 
 

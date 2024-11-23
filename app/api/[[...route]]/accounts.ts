@@ -11,7 +11,6 @@ import {z} from "zod"
 const app = new Hono()
     .get("/",async (c)=>{
     const personaId = c.req.header('X-Persona-ID') || "testData"
-    console.log(personaId)
     const auth = {userId:personaId}
 
     const data = await db.select({

@@ -4,6 +4,7 @@ import { useOpenWeeKOverview } from "@/features/chat/hook/use-open-weekOverview"
 import { useUpdateChat } from "@/features/chat/hook/useUpdateMessage"
 import { formatText } from "@/lib/utils"
 import { MarkdownFormatter } from "@/lib/utils"
+import { useEffect } from "react"
 
 const WeekResult = ()=>{
   const {WRshort,WRlong}= useUpdateChat()
@@ -11,7 +12,9 @@ const WeekResult = ()=>{
 /*     const [htmlCode,setHtmlCode] = useState("")
     const [error, setError] = useState(null); */
     let weekResume = MarkdownFormatter.toHtml(WRshort)
-
+  useEffect(()=>{
+    weekResume = MarkdownFormatter.toHtml(WRshort)
+  },[WRshort,WRlong])
     console.log(`WRshort ${WRshort}`)
     
 /*     weekResume=`<div>
@@ -42,7 +45,7 @@ const WeekResult = ()=>{
     return(
         <div className="flex align-center p-4 bg-gray-50 flex-col justify-center">
             <div>
-                <div className="" dangerouslySetInnerHTML={{__html:weekResume}} />
+                <div className="flex flex-col items-center justify-center" dangerouslySetInnerHTML={{__html:weekResume}} />
             </div>
             <div className="flex items-center justify-center" >
                 <Button className="bg-slate-300 hover:text-white w-[50%] wx-auto text-slate-700 border-2" onClick={onOpen} >
