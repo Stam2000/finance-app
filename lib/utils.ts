@@ -231,23 +231,19 @@ export const sendAiMessage = async ({threadId,personaId,setThreadId,updateLastMe
        updateMessage(AIMessage)
       setFormData({question:"",Files:[]})
 
-      axios.post("http://localhost:3000/api/conversation",formD,{headers: {
+      axios.post("/api/conversation",formD,{headers: {
         'X-Persona-ID': personaId,  
       }})
       .then(response =>{
          
           const AIresponse = formatText(response.data.response.output)
           setThreadId(response.data.response.threadId)
-          /* const AIMessage:Message = {
-           sender:"AI",
-           content:AIresponse
-          } */
           updateLastMessage(AIresponse)
           setIsLoading()
        })
        .catch(
           err => {setIsLoading()
-            console.log(err)}
+           }
           //TODO 
        )
 }
@@ -405,10 +401,7 @@ await Promise.all([...uploadAccountPromises, ...uploadCategoryPromises, ...uploa
   replaceAccountIds();
   replaceCategoryIds();
   replaceProjectIds()
-  // At this point, data.transactions and data.projects have updated accountId and categoryId fields
-  // You can proceed to upload transactions and projects as needed
-/*   console.log(detailsP)
-  console.log(projects) */
+
   updatedData.push(data)
   // Return the updated data if necessary
 

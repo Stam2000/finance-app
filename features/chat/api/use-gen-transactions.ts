@@ -97,7 +97,7 @@ type ProgressData = {
             if (data) {
               const eventData = JSON.parse(data);
                 
-              console.log(data)
+        
               // Handle different event types
               switch (eventType) {
                 case 'extendPersona':
@@ -107,7 +107,7 @@ type ProgressData = {
   
                 case 'extendedPersona':
                   toast.info(eventData.message)
-                  console.log('Event Data:', eventData);
+         
                   onGeneratedData?.(eventData.data);
                   onProgress?.(eventData);
                   break;
@@ -141,10 +141,10 @@ type ProgressData = {
   
                 case 'complete':
                   onExecution?.()
-                  toast.success('Transactions created yoooooooohoooooooooooo');
+                  toast.success('Transactions created');
                   onGeneratedPersonaId?.(eventData.data)
                   onProgress?.(eventData);
-                  console.log(eventData)
+               
                   queryClient.invalidateQueries({ queryKey: ['transactions'] });
                   break;
   

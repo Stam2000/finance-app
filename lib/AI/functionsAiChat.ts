@@ -23,7 +23,7 @@ interface RunStatus {
 
 const fetchCategories = async({args,personaId}:{args?:any,personaId:string})=>{
 	 try{
-		  const response = await axios.get("http://localhost:3000/api/categories/all",{headers: {
+		  const response = await axios.get("/api/categories/all",{headers: {
 			'X-Persona-ID': personaId,  
 		  }})
 		  const stringData = JSON.stringify(response.data)
@@ -39,9 +39,9 @@ const fetchCategories = async({args,personaId}:{args?:any,personaId:string})=>{
 }
 
  const fetchAccounts = async({args,personaId}:{args?:any,personaId:string})=>{
-	console.log(personaId)
+
 	 try{
-		  const response = await axios.get("http://localhost:3000/api/accounts",{headers: {
+		  const response = await axios.get("/api/accounts",{headers: {
 			'X-Persona-ID': personaId,  
 		  }})
 		  const stringData = JSON.stringify(response.data)
@@ -59,7 +59,7 @@ const fetchCategories = async({args,personaId}:{args?:any,personaId:string})=>{
 
  const fetchProjects = async({accountId,personaId}:{accountId?:string,personaId:string})=>{
 	try{
-		 const response = await axios.get("http://localhost:3000/api/projects",{params: {
+		 const response = await axios.get("/api/projects",{params: {
 				accountId
 			  },headers: {
 		   'X-Persona-ID': personaId,  
@@ -80,7 +80,7 @@ const fetchCategories = async({args,personaId}:{args?:any,personaId:string})=>{
 const fetchDetailsTransaction = async ({id}:{id:string},personaId:string)=>{
 
 	 try{
-		  const response = await axios.get("http://localhost:3000/api/detailsTransactions",{
+		  const response = await axios.get("/api/detailsTransactions",{
 				params:{
 					 id //transactionId
 				},
@@ -104,7 +104,7 @@ const fetchDetailsTransaction = async ({id}:{id:string},personaId:string)=>{
 const fetchTransaction = async ({id,personaId}:{id:string,personaId:string})=>{
 
 	try{
-		 const response = await axios.get("http://localhost:3000/api/transactions",{
+		 const response = await axios.get("/api/transactions",{
 			   params:{
 					id //transactionId
 			   },
@@ -128,7 +128,7 @@ const fetchTransaction = async ({id,personaId}:{id:string,personaId:string})=>{
 const fetchDetailsTransactions= async({from,to,personaId}:{from?:string,to?:string,personaId:string})=>{
 	
 	 try{
-		  const response = await axios.get("http://localhost:3000/api/detailsTransactions",{
+		  const response = await axios.get("/api/detailsTransactions",{
 				params:{
 					 from,
 					 to,
@@ -187,7 +187,7 @@ const fetchTransactions = async ({from,to,accountId,personaId}:{
 
 	 try{
 
-		  const response = await axios.get("http://localhost:3000/api/transactions",{
+		  const response = await axios.get("/api/transactions",{
 				params:{
 					 from,
 					 to,
@@ -229,7 +229,7 @@ const createOneTransaction = async({
 	personaId: string;
   })=>{
 	 try {
-		 const response = await axios.post("http://localhost:3000/api/transactions", json,{
+		 const response = await axios.post("/api/transactions", json,{
 			headers: {
 				'X-Persona-ID': personaId,  
 			  }
@@ -262,7 +262,7 @@ const createOneDetailsTransactions = async({
 })=>{
 	
 	 try {
-		 const response = await axios.post("http://localhost:3000/api/detailsTransactions", json,{
+		 const response = await axios.post("/api/detailsTransactions", json,{
 			headers: {
 				'X-Persona-ID': personaId,  
 			  }
@@ -289,7 +289,7 @@ const createAccount = async({
 })=>{
 
 	 try {
-		 const response = await axios.post("http://localhost:3000/api/accounts", json,{
+		 const response = await axios.post("/api/accounts", json,{
 			headers: {
 				'X-Persona-ID': personaId,  
 			  }
@@ -316,7 +316,7 @@ const createCategory = async({
 })=>{
 	 
 	 try {
-		 const response = await axios.post("http://localhost:3000/api/categories", json,{
+		 const response = await axios.post("/api/categories", json,{
 			headers: {
 				'X-Persona-ID': personaId,  
 			  }
@@ -422,7 +422,7 @@ const createProject = async({
 })=>{
 
 	 try {
-		 const response = await axios.post("http://localhost:3000/api/projects", json,{
+		 const response = await axios.post("/api/projects", json,{
 			headers: {
 				'X-Persona-ID': personaId,  
 			  }
