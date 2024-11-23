@@ -16,11 +16,6 @@ export const useGetWeeklyAnalyse = () => {
   const mutation = useMutation<WeeklyAnalyseResponse, Error, WeeklyAnalyseInput>({
     mutationFn: async (input) => {
       // Ensure this code runs only on the client side
-      if (typeof window === 'undefined') {
-        throw new Error("Cannot access localStorage on the server.");
-      }
-
-
       // Retrieve personaId from localStorage
       const personaId = localStorage.getItem('selectedPersona') || "testData";
 

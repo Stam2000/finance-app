@@ -95,7 +95,7 @@ const CellComponent = ({ row , filters }:{row:any,filters:any}) => {
                     variant="outline"
                     className={`w-full ${showDetailsTransactions ? "bg-white text-slate-950 border-2 border-slate-950": "bg-slate-950 text-white" } hover:bg-gray-50`}
                   >
-                    {showDetailsTransactions ? 'Hide Details Transactions' : 'Show Details Transactions'}
+                    {showDetailsTransactions ? 'Hide Items' : 'Show Items'}
                     {showDetailsTransactions ? <ChevronUp className="ml-2 h-4 w-4" /> : <ChevronDown className="ml-2 h-4 w-4" />}
                   </Button>
                 </div>

@@ -6,7 +6,6 @@ import { StringOutputParser } from "@langchain/core/output_parsers"
 import { MessageCreateParams } from "openai/resources/beta/threads/messages.mjs"
 import { RunnableSequence,RunnableLike } from "@langchain/core/runnables"
 import axios from "axios"
-import { AssistantTool } from "openai/resources/beta/assistants.mjs";
 import { convertAmountFormMiliunits, formatCurrency } from "../utils"
 
 const llm:RunnableLike = new ChatOpenAI({
@@ -51,8 +50,6 @@ async function agentWeek (personaId:string,personaDes:string){
         throw new Error(`Financial analysis failed: ${error.message}`);
     }
         
-            /* message["content"]=[{"type":"text","text":""}] */
-        
             try{
                 let run = await openai.beta.threads.runs.createAndPoll(
                 threadId,
@@ -64,7 +61,6 @@ async function agentWeek (personaId:string,personaDes:string){
         
           
              const output = await handleRunStatus(run,openai,threadId,personaId)
-             console.log(` Result agentWeek ${output}`)
              return output
         
             }catch(err){
