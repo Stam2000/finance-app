@@ -13,6 +13,7 @@
     "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
+    "@aws-amplify/adapter-nextjs": "^1.2.29",
     "@clerk/backend": "^1.2.4",
     "@hono/clerk-auth": "^2.0.0",
     "@hono/zod-validator": "^0.2.2",
@@ -40,6 +41,7 @@
     "@types/dompurify": "^3.0.5",
     "@types/formidable": "^3.4.5",
     "add": "^2.0.6",
+    "aws-amplify": "^6.9.0",
     "axios": "^1.7.4",
     "calc-js": "^3.0.0",
     "class-variance-authority": "^0.7.0",
@@ -82,17 +84,24 @@
     "zustand": "^4.5.3"
   },
   "devDependencies": {
+    "@aws-amplify/backend": "^1.8.0",
+    "@aws-amplify/backend-cli": "^1.4.2",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "aws-cdk": "^2.170.0",
+    "aws-cdk-lib": "^2.170.0",
+    "constructs": "^10.4.2",
     "dompurify": "^3.1.6",
     "dotenv": "^16.4.5",
+    "esbuild": "^0.24.0",
     "eslint": "^8",
     "eslint-config-next": "14.2.4",
     "openai": "^4.57.0",
     "pg": "^8.12.0",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
-    "typescript": "^4.9.5"
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
   }
 }
