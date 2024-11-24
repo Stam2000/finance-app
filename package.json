@@ -14,7 +14,6 @@
   },
   "dependencies": {
     "@clerk/backend": "^1.2.4",
-    "@clerk/nextjs": "^5.1.6",
     "@hono/clerk-auth": "^2.0.0",
     "@hono/zod-validator": "^0.2.2",
     "@hookform/resolvers": "^3.6.0",
@@ -57,7 +56,7 @@
     "i": "^0.3.7",
     "langchain": "^0.2.16",
     "lucide-react": "^0.396.0",
-    "next": "14.2.4",
+    "next": "^13.5.3",
     "next-themes": "^0.3.0",
     "node-fetch": "^3.3.2",
     "p-limit": "^6.1.0",
