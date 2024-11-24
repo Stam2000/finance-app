@@ -47,6 +47,7 @@ type ProgressData = {
         const abortController = new AbortController()
         const baseURL = process.env.NEXT_PUBLIC_APP_URL
         console.log(baseURL)
+        console.log("first message waiting")
         const response = await fetch(`${baseURL}/api/conversation/createProfil`, {
           method: 'POST',
           headers: {
@@ -59,8 +60,8 @@ type ProgressData = {
           onExecution?.()
           onStarted?.()
   
- 
-
+        console.log(response)
+        console.log("first message came")
         if (!response.ok) {
           throw new Error('Network response was not ok');
 
@@ -164,7 +165,7 @@ type ProgressData = {
         if (error.name === 'AbortError') {
           console.log('Fetch aborted')
         } 
-        toast.error(`Failed to create project: ${error.message}`);
+        toast.error(`Failed to update transactions: ${error.message}`);
       },
     });
   

@@ -121,7 +121,7 @@ export const PersonaForm = ({setGeneratedData,onDisable}:{onDisable?:()=>void,se
   const [progress, setProgress] = useState<ProgressData>()
   const [personaId, setPersonaId] = useState<string>()
 
-
+console.log(progress)
     const mutationPersona = useGenPersona();
     const {
       mutate: fetchPersonaData,
@@ -176,6 +176,7 @@ export const PersonaForm = ({setGeneratedData,onDisable}:{onDisable?:()=>void,se
   // Function to handle form submission
   const handleSubmit =  (data: any) => {
 
+    console.log("submitingstarted")
     setPersonaInfo(JSON.stringify(data))
 
     generateData.mutate({

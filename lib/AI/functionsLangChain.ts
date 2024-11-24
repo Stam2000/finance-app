@@ -3,10 +3,10 @@ import { ChatOpenAI } from "@langchain/openai";
 import { handleRunStatus } from "@/lib/AI/functionsAiChat"
 import { openai } from "./createAiFunctions"
 import { StringOutputParser } from "@langchain/core/output_parsers"
-import { MessageCreateParams } from "openai/resources/beta/threads/messages.mjs"
+import { MessageCreateParams } from "openai/resources/beta/threads/messages"
 import { RunnableSequence,RunnableLike } from "@langchain/core/runnables"
 import axios from "axios"
-import { AssistantTool } from "openai/resources/beta/assistants.mjs";
+import { AssistantTool } from "openai/resources/beta/assistants";
 import { convertAmountFormMiliunits, formatCurrency } from "../utils"
 
 const llm:RunnableLike = new ChatOpenAI({
@@ -245,7 +245,7 @@ answer:`
 
     const resume = await chain.invoke({})
     const reducedText = await reducedVersionChain.invoke({input:resume})
-    console.log(`his is the final result in reduced text 
+/*     console.log(`his is the final result in reduced text 
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
                             ${reducedText}
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++`)
@@ -253,7 +253,7 @@ answer:`
 -----------------------------------------------------------------------
                             ${resume}
 -----------------------------------------------------------------------
-`)
+`) */
     return {resume,reducedText}
 }
 
