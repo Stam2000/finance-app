@@ -261,8 +261,11 @@ const conversation = new Hono()
             message: 'generating data...'
           }))
 
+          console.log("enter data generator")
+
           const response  = await DataGenerator(guideLine);
           
+          console.log(response)
 
          controller.enqueue(createSSEMessage('fiDataGenerationEnd', {
           step: 'fiDataGeneration',

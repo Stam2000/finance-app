@@ -6,12 +6,8 @@ import { DynamicTool } from "@langchain/core/tools"
 import { z } from "zod"
 import { StringOutputParser, StructuredOutputParser } from "@langchain/core/output_parsers"
 import { AIMessage,BaseMessage,HumanMessage } from "@langchain/core/messages"
-import { InferResponseType,InferRequestType } from "hono"
-import {client} from "@/lib/hono";
 import axios from "axios"
 import { ChatTogetherAI } from "@langchain/community/chat_models/togetherai"
-import { AgentExecutor, createToolCallingAgent } from "langchain/agents"
-import { RunnableLambda } from "@langchain/core/runnables"
 
 
 interface InputPorject  {
@@ -316,7 +312,7 @@ Below are a few sample personas that adhere to your schema and demonstrate diver
             input:"generate new persona.surprise me"
         })
         
-        console.log(response)
+
     
         return response
   
@@ -324,7 +320,7 @@ Below are a few sample personas that adhere to your schema and demonstrate diver
 
 export const PersonaExtender = async (data : Form)=>{
       const persona = JSON.stringify(data)
-  console.log(persona)
+
 
   const SysPromptExtender =`You are an advanced AI specializing in persona development, cultural analysis, and behavioral modeling. Your task is to generate a richly detailed, coherent persona description based on the structured input provided. Follow the schema carefully, ensuring every field is expanded upon with specificity, logical consistency, and cultural authenticity.
 
@@ -426,7 +422,6 @@ The goal is to create a detailed, relatable character firmly grounded in their c
     input:`generate a more detailed persona for ${persona}`
   })
 
-  console.log(guideLine)
   return guideLine
   }  
 
@@ -502,108 +497,6 @@ ProjectId: If applicable, associate the item with a relevant project.
 Specificity in Items:
 
   `
-  
-  const tools = [
-    new DynamicTool({
-      name:"create_account",
-      description: "create a new account",
-      func: async(input:string)=>{
-        let json:InputAccount = await JSON.parse(input)
-        try {
-            const response = await axios.post("http://localhost:3000/api/accounts", json);
-            return { data: response.data };
-          } catch (err) {
-            return { success: false, error: err instanceof Error ? err.message : String(err) };
-          }
-        }
-    }),
-    new DynamicTool({
-      name:"create_category",
-      description: "create a new category",
-      func: async(input:string)=>{
-        let json:InputCategory = await JSON.parse(input)
-        try {
-            const response = await axios.post("http://localhost:3000/api/categories", json);
-            return { data: response.data };
-          } catch (err) {
-            return { success: false, error: err instanceof Error ? err.message : String(err) };
-          }
-        }
-    }),
-    new DynamicTool({
-      name:"create_project",
-      description: "create a new project",
-      func: async(input:string)=>{
-        let json:InputPorject = await JSON.parse(input)
-        try {
-            const response = await axios.post("http://localhost:3000/api/projects", json);
-            return { data: response.data };
-          } catch (err) {
-            return { success: false, error: err instanceof Error ? err.message : String(err) };
-          }
-        }
-    }),
-    new DynamicTool({
-      name: "create_categories_bulk",
-      description:  `Create multiple categories in bulk. expample input "{"input":[{"name":"electronic","goal":"40000"},{"name":"food","goal":"null"},...]}" `,
-      func: async (input) => {
-        const categories = JSON.parse(input); // Expecting an array of InputCategory
-        const results = [];
-    
-        for (const category of categories) {
-          try {
-            const response = await axios.post("http://localhost:3000/api/categories", category);
-            results.push({ data: response.data });
-          } catch (err) {
-            results.push({ success: false, error: err instanceof Error ? err.message : String(err) });
-          }
-        }
-    
-        return  results ;
-      }
-    }),
-    new DynamicTool({
-      name: "create_projects_bulk",
-      description: `Create multiple projects in bulk . "{"input":[{"name":"electronic","goal":"40000"},{"name":"food","goal":"null"},...]}" `,
-      func: async (input) => {
-        const {input:projects} = JSON.parse(input);; // Expecting an array of InputProject
-        const results = [];
-    
-        for (const project of projects) {
-          try {
-            const response = await axios.post("http://localhost:3000/api/projects", project);
-            results.push({ data: response.data });
-          } catch (err) {
-            results.push({ success: false, error: err instanceof Error ? err.message : String(err) });
-          }
-        }
-    
-        return results ;
-      }
-    }),
-    new DynamicTool({
-      name: "create_accounts_bulk",
-      description:`Create multiple accounts in bulk . expample input "{"input":[projet1's JSON obj,projet2's JSON obj,...]}" `,
-      func: async (input) => {
-        console.log(input)
-        const {input:accounts} = JSON.parse(input); // Expecting an array of InputAccount
-        const results = [];
-        console.log(accounts)
-    
-        for (const account of accounts) {
-          try {
-            const response = await axios.post("http://localhost:3000/api/accounts", account);
-            results.push({ data: response.data });
-          } catch (err) {
-            results.push({ success: false, error: err instanceof Error ? err.message : String(err) });
-          }
-        }
-    
-        return  results ;
-      }
-    })
-  ]
-
 const genPrompt = `
 You are an advanced AI specialized in generating realistic and consistent daily financial transactions over time for a given persona. 
 Your primary objective is to produce a comprehensive set of daily financial transactions that maintain consistency across different weeks, accurately reflecting recurring expenses, income patterns, and spending habits,
@@ -1370,21 +1263,6 @@ exemple output 2 :
 })
   `
 
-/*   const agent = await createToolCallingAgent({llm:model,tools,prompt:dataGenPrompt})
-  const agentExecutor = new AgentExecutor({
-    agent,
-    tools
-  })
-
-  const agentRunnable = new RunnableLambda({
-    func: async ({chat_history,input}:{
-      input:string,
-      chat_history:BaseMessage[]
-    })=>{
-      const res = await agentExecutor.invoke({chat_history,input});
-      return res.output;
-    }
-  }) */
 const refinePrompt=` 
 You are an advanced AI specialized in enhancing financial transaction data by ensuring cultural alignment, personalization, and creativity. Your primary objective is to ensure that the names of banks, payees, and items are creative and contextually appropriate, and that the transactions reflect the persona's cultural background, lifestyle, and preferences.
 
@@ -2588,7 +2466,7 @@ Expanded Output:
 
     const refineChain = RunnableSequence.from([
       refineChainPrompt,
-      model2,
+      model,
       parserDataschema
     ])
 
