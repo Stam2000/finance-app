@@ -56,7 +56,7 @@
     "i": "^0.3.7",
     "langchain": "^0.2.16",
     "lucide-react": "^0.396.0",
-    "next": "^13.5.3",
+    "next": "14.2",
     "next-themes": "^0.3.0",
     "node-fetch": "^3.3.2",
     "p-limit": "^6.1.0",
