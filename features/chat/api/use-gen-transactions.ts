@@ -45,7 +45,9 @@ type ProgressData = {
         ...json
       }) => {
         const abortController = new AbortController()
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/conversation/createProfil`, {
+        const baseURL = process.env.NEXT_PUBLIC_APP_URL
+        console.log(baseURL)
+        const response = await fetch(`${baseURL}/api/conversation/createProfil`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
