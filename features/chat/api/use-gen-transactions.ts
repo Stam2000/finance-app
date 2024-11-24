@@ -44,14 +44,15 @@ type ProgressData = {
         onStarted,
         ...json
       }) => {
-        
-        const response = await fetch('/api/conversation/createProfil', {
+        const abortController = new AbortController()
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/conversation/createProfil`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
             'Accept': 'text/event-stream',
           },
           body: JSON.stringify(json),
+          signal: abortController.signal
         });
           onExecution?.()
           onStarted?.()
@@ -60,12 +61,12 @@ type ProgressData = {
 
         if (!response.ok) {
           throw new Error('Network response was not ok');
-          onExecution?.()
+
         }
   
         if (!response.body) {
           throw new Error('ReadableStream not supported in this browser.');
-          onExecution?.()
+
         }
   
         const reader = response.body.getReader();
@@ -129,14 +130,7 @@ type ProgressData = {
                       toast.info(eventData.message)
                       onProgress?.(eventData);
                       break;
-  
-                /* case 'processing':
-                  onTransactionProcessed?.(
-                    eventData.transaction,
-                    eventData.processedTransactions
-                  );
-                  onProgress?.(eventData);
-                  break; */
+
                   case 'updatingFiDataEnd':
                     toast.info(eventData.message)
                     onProgress?.(eventData);
@@ -165,6 +159,9 @@ type ProgressData = {
         return;
       },
       onError: (error) => {
+        if (error.name === 'AbortError') {
+          console.log('Fetch aborted')
+        } 
         toast.error(`Failed to create project: ${error.message}`);
       },
     });

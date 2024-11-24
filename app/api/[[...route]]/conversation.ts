@@ -17,8 +17,13 @@ import { langChain } from "@/lib/AI/functionsLangChain"
 
 
 
-const SystemPrompt =`You are an AI assistant specialized in financial analysis, helping users manage transactions, accounts, and spending patterns.providing personalized financial management advice, and offering insights on budgeting, saving, and expense optimization.Refer to the 'moreInformationsForTheAssistant' function for additional details.`
 
+
+// Helper function to create SSE messages
+const createSSEMessage = (event: string, data: any) => {
+  const encoder = new TextEncoder()
+  return encoder.encode(`event: ${event}\ndata: ${JSON.stringify(data)}\n\n`)
+}
 
 
 const conversation = new Hono()
@@ -210,37 +215,68 @@ const conversation = new Hono()
         shoppingHabits: z.enum(['planner', 'mixed', 'impulsive']).optional(),
       })
 ),async (c) => {
-    c.header('Content-Type', 'text/event-stream');
-    c.header('Cache-Control', 'no-cache');
-    c.header('Connection', 'keep-alive');
-    const limit = pLimit(5)
+  c.header('Content-Type', 'text/event-stream')
+  c.header('Cache-Control', 'no-cache')
+  c.header('Connection', 'keep-alive')
   
-    const data = c.req.valid("json");
-    
-    const encoder = new TextEncoder()
-    const stream = new ReadableStream({
-      async start(controller) {
-        try {
-          // Send initial status
-          controller.enqueue(encoder.encode(`event: extendPersona\ndata: ${JSON.stringify({ step: 'extendPersona',status:"running",message: 'Extending persona...' })}\n\n`));
+  const limit = pLimit(5)
+  const data = c.req.valid("json")
   
+  let cleanup: (() => Promise<void>) | null = null
+
+  const stream = new ReadableStream({
+    async start(controller) {
+      try {
+        // Send initial status
+        controller.enqueue(createSSEMessage('extendPersona', {
+          step: 'extendPersona',
+          status: "running",
+          message: 'Extending persona...'
+        }))
+
+        // Store active connections for cleanup
+        const activeConnections: Set<any> = new Set()
+        cleanup = async () => {
+          for (const conn of activeConnections) {
+            await conn.destroy()
+          }
+          activeConnections.clear()
+        }
+
           // Perform operations and send updates
           const guideLine = await PersonaExtender(data);
       
   
-          controller.enqueue(encoder.encode(`event: extendedPersona\ndata: ${JSON.stringify({ step: 'extendPersona',status:"completed",message: 'persona definition complete', data: guideLine })}\n\n`));
+          controller.enqueue(createSSEMessage('extendedPersona', {
+            step: 'extendPersona',
+            status: "completed",
+            message: 'persona definition complete',
+            data: guideLine
+          }))
   
-          // Continue sending SSE messages as needed...
-          controller.enqueue(encoder.encode(`event: fiDataGenerationStart\ndata: ${JSON.stringify({ step: 'fiDataGeneration',status:"running",message: 'generating data...' })}\n\n`));
+          // Data generation phase
+          controller.enqueue(createSSEMessage('fiDataGenerationStart', {
+            step: 'fiDataGeneration',
+            status: "running",
+            message: 'generating data...'
+          }))
 
           const response  = await DataGenerator(guideLine);
           
 
-          controller.enqueue(encoder.encode(`event: fiDataGenerationEnd\ndata: ${JSON.stringify({ step: 'fiDataGeneration',status:"completed",message: 'generation complete'})}\n\n`));
-          controller.enqueue(encoder.encode(`event: updatingFiDataStart\ndata: ${JSON.stringify({ step: 'updatingFiData',status:"running", message: 'updating transactions'})}\n\n`));
+         controller.enqueue(createSSEMessage('fiDataGenerationEnd', {
+          step: 'fiDataGeneration',
+          status: "completed",
+          message: 'generation complete'
+        }))
 
-          const personaId = createId()
-          
+        // Transaction processing
+        const personaId = createId()
+        controller.enqueue(createSSEMessage('updatingFiDataStart', {
+          step: 'updatingFiData',
+          status: "running",
+          message: 'updating transactions'
+        }))
           const d =  await uploadEntitiesAndReplaceReferences(response,personaId)
           
 
@@ -284,24 +320,50 @@ const conversation = new Hono()
 
         }
 
-        controller.enqueue(encoder.encode(`event: updatingFiDataEnd\ndata: ${JSON.stringify({ step: 'updatingFiData',status:"completed", message: 'updating transactions'})}\n\n`));
-          // At the end, send the complete event
-          controller.enqueue(encoder.encode(`event: complete\ndata: ${JSON.stringify({step:"complete",status:"completed",message:'Processing complete',data:personaId })}\n\n`));
-          controller.close();
-        } catch (err:any) {
-          controller.enqueue(encoder.encode(`event: error\ndata: ${JSON.stringify({ message: err.message })}\n\n`));
-          controller.error(err);
-        }
-      },
-    });
-  
-    return new Response(stream, {
-      headers: {
-        'Content-Type': 'text/event-stream',
-      },
-    });
-  });
+       
+        controller.enqueue(createSSEMessage('updatingFiDataEnd', {
+          step: 'updatingFiData',
+          status: "completed",
+          message: 'updating transactions'
+        }))
 
+        controller.enqueue(createSSEMessage('complete', {
+          step: "complete",
+          status: "completed",
+          message: 'Processing complete',
+          data: personaId
+        }))
+        
+      } catch (err: any) {
+        controller.enqueue(createSSEMessage('error', { 
+          message: err.message,
+          stack: process.env.NODE_ENV === 'development' ? err.stack : undefined
+        }))
+        throw err
+      } finally {
+        if (cleanup) {
+          await cleanup()
+        }
+        controller.close()
+      }
+    },
+
+    cancel() {
+      // Handle stream cancellation
+      if (cleanup) {
+        cleanup().catch(console.error)
+      }
+    }
+  })
+
+  return new Response(stream, {
+    headers: {
+      'Content-Type': 'text/event-stream',
+      'Cache-Control': 'no-cache',
+      'Connection': 'keep-alive',
+    }
+  })
+})
 
 export default conversation
 
