@@ -10,7 +10,7 @@ import { useEffect } from "react"
 
 import {Input} from "@/components/ui/input"
 import {Button} from "@/components/ui/button"
-import { detailsTransactions, insertdetailsTransactionsSchema } from "@/db/schema"
+import { insertdetailsTransactionsSchema } from "@/db/schema"
 import {
     Form,
     FormControl,

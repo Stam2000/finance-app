@@ -9,7 +9,6 @@ import { QueryProviders } from "@/providers/query-provider";
 import { SheetProvider } from "@/providers/sheet-provider";
 import { Poiret_One, Roboto, Nunito, Teko, Oxygen, Yeseva_One } from 'next/font/google'
 import { cn } from "@/lib/utils";
-import { Suspense } from "react";
 
 
 const inter = Inter({ subsets: ["latin"] });

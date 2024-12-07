@@ -9,7 +9,7 @@ import projects from "./projects"
 import conversation from "./conversation"
 import detailsTransactions from "./details-transactions"
 
-export const runtime = 'edge';
+export const runtime = 'nodejs';
 
 const app = new Hono().basePath('/api')
 
