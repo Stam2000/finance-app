@@ -2,7 +2,7 @@
 
 import { useOpenDetailsTransaction } from "@/features/detailsTransactions/hooks/use-open-details";
 import { useDeleteDetailsTransaction } from "@/features/detailsTransactions/api/use-delete-detailsTransaction";
-import { useOpenTransactionOverview } from "@/features/detailsTransactions/hooks/use-open-overview";
+import { useOpenTransactionOverview } from "@/features/detailsTransactions/hooks/use-openoverview";
 import { useConfirm } from "@/hooks/use-comform";
 import { Button } from "@/components/ui/button";
 import { MoreHorizontal } from "lucide-react";
