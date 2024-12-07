@@ -11,7 +11,7 @@ import {
 import { Plus,Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { use, useState } from "react";
+import { useState } from "react";
 import { useGetCategoriesAll } from "@/features/categories/api/use-get-categories-all";
 import { columns } from "./columns";
 import { DataTable } from "@/components/data-table";
