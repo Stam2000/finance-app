@@ -10,7 +10,7 @@ import Carousel from "./caroussel"
 import GoalOverview from "./goaloverview"
 
 
-export const Header=()=>{
+const Header=()=>{
 
 
     return(
@@ -44,3 +44,6 @@ export const Header=()=>{
         </header>
     )
 }
+
+
+export default Header
