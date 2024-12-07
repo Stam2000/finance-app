@@ -221,12 +221,9 @@ const conversation = new Hono()
         shoppingHabits: z.enum(['planner', 'mixed', 'impulsive']).optional(),
       })
 ),async (c) => {
-  c.header('Content-Type', 'text/event-stream');
-  c.header('Cache-Control', 'no-cache');
-  c.header('Connection', 'keep-alive');
-  c.header('Access-Control-Allow-Origin', '*');
-  c.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-  c.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  c.header('Content-Type', 'text/event-stream')
+  c.header('Cache-Control', 'no-cache')
+  c.header('Connection', 'keep-alive')
   
   const limit = pLimit(5)
   const data = c.req.valid("json")
@@ -394,11 +391,8 @@ const conversation = new Hono()
       'Content-Type': 'text/event-stream',
       'Cache-Control': 'no-cache',
       'Connection': 'keep-alive',
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
     }
-  });
+  })
 })
 
 export default conversation
