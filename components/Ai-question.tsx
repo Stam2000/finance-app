@@ -14,6 +14,7 @@ const QuestionChat = ()=>{
         setInputValue(e.target.value)
         setFormData({question:e.target.value})
     }
+    
 
     const handleSubmit= (e: React.FormEvent<HTMLFormElement>)=>{
         e.preventDefault()
