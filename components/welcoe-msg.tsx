@@ -1,5 +1,5 @@
 "use client"
-import QuestionChat from "./Ai-question";
+import QuestionChat from "./ai-question";
 import { useUpdateChat } from "@/features/chat/hook/use-update-message";
 
 
