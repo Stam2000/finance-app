@@ -1,6 +1,6 @@
 import { Input } from "./ui/input"
 import { sendAiMessage } from "@/lib/utils"
-import { useUpdateChat } from "@/features/chat/hook/useUpdateMessage"
+import { useUpdateChat } from "@/features/chat/hook/use-update-message"
 import { useOpenChat } from "@/features/chat/hook/use-open-AIchat"
 import { useState } from "react"
 
@@ -9,38 +9,22 @@ const QuestionChat = ()=>{
     const {threadId,setThreadId, setIsLoading,updateLastMessage,updateMessage, setFormData, formData,personaInfo} = useUpdateChat();
     const {toggleChatOpen} = useOpenChat()
     const [value,setInputValue] = useState('')
-    const personaId = "gredzxwh7esmt1xvmnd9k283"
-
-    
+    const personaId = localStorage.getItem('selectedPersona') || "testData"  
     const handleOnChange = (e:React.ChangeEvent<HTMLInputElement>)=>{
         setInputValue(e.target.value)
-     
         setFormData({question:e.target.value})
-   
     }
 
     const handleSubmit= (e: React.FormEvent<HTMLFormElement>)=>{
         e.preventDefault()
-    
-            sendAiMessage({threadId,setIsLoading,setThreadId,updateLastMessage,updateMessage,formData,setFormData,personaId,personaInfo})
-            toggleChatOpen()
-            setInputValue("")
-        
-        
+         sendAiMessage({threadId,setIsLoading,setThreadId,updateLastMessage,updateMessage,formData,setFormData,personaId,personaInfo})
+        toggleChatOpen()
+        setInputValue("")   
     }
+
+
     return(
         <div className="w-full flex flex-col gap-4">
-            {/* <div className="flex gap-2 justify-center items-center">
-                <div className="bg-white/60 rounded-2xl p-6">
-                    Question 1
-                </div>
-                <div className="bg-white/60 rounded-2xl p-6">
-                    Question 1
-                </div>
-                <div className="bg-white/60 rounded-2xl p-6">
-                    Question 1
-                </div>
-            </div> */}
             <form onSubmit={handleSubmit}>
             <Input
             value={value}

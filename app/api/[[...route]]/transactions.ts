@@ -4,17 +4,12 @@ import {parse,subDays} from "date-fns"
 import { transactions,accounts,categories } from "@/db/schema";
 import {createId} from "@paralleldrive/cuid2"
 import { zValidator } from "@hono/zod-validator";
-import { clerkMiddleware,getAuth } from "@hono/clerk-auth";
 import { and,eq,inArray,desc,lte,gte,sql } from "drizzle-orm";
-import { insertTransactionSchema,insertdetailsTransactionsSchema } from "@/db/schema";
+import { insertTransactionSchema, } from "@/db/schema";
 import {z} from "zod"
 import { convertAmountFormMiliunits } from "@/lib/utils";
-import { detailsTransactions } from "@/db/schema";
-import { date } from "drizzle-orm/mysql-core";
+import { detailsTransactions } from "@/db/schema"; 
 import { DetailsTransactionsType } from "@/db/schema";
-import {getCookie} from "hono/cookie"
-
-
 
 
 const app = new Hono()
@@ -27,7 +22,7 @@ const app = new Hono()
         const personaId = c.req.header('X-Persona-ID') || "testData"
         const auth = {userId:personaId}
         const {from,to,accountId} = c.req.valid("query")
-
+        
 
         const defaultTo = new Date()
         const defaultFrom = subDays(defaultTo,30)
@@ -86,10 +81,12 @@ const app = new Hono()
             detailsTransactions: details.filter(d => d.transactionId === transaction.id)
         }))
 
+    
+   
 
     return c.json({data})
 })
-    .get("/:id",
+.get("/:id",
         zValidator("param",z.object(
             {id:z.string()}
         )),
@@ -162,12 +159,12 @@ const app = new Hono()
                     error:"Not found"
                 },404)
             }
-
-
+            	
+    
             return c.json({data})
         }
     )
-    .post("/",
+.post("/",
         zValidator("json",insertTransactionSchema.omit({
             id:true
         })),

@@ -1,7 +1,7 @@
 import { PromptTemplate } from "@langchain/core/prompts"
 import { ChatOpenAI } from "@langchain/openai";
-import { handleRunStatus } from "@/lib/AI/functionsAiChat"
-import { openai } from "./createAiFunctions"
+import { handleRunStatus } from "@/lib/AI/functions-ai-chat"
+import { openai } from "./create-ai-functions"
 import { StringOutputParser } from "@langchain/core/output_parsers"
 import { MessageCreateParams } from "openai/resources/beta/threads/messages"
 import { RunnableSequence,RunnableLike } from "@langchain/core/runnables"
@@ -40,7 +40,7 @@ async function agentWeek (personaId:string,personaDes:string){
         // Append message in the thread
         try {
             const threadMessages = await openai.beta.threads.messages.create(threadId, mesg);
-            console.log("Message appended successfully:", threadMessages);
+
         } catch (err:any) {
             console.error("Error while creating a message in the thread:", err);
             throw new Error(`Failed to append the message in thread ${threadId}: ${err.message}`);
@@ -64,7 +64,7 @@ async function agentWeek (personaId:string,personaDes:string){
         
           
              const output = await handleRunStatus(run,openai,threadId,personaId)
-             console.log(` Result agentWeek ${output}`)
+
              return output
         
             }catch(err){
@@ -245,15 +245,7 @@ answer:`
 
     const resume = await chain.invoke({})
     const reducedText = await reducedVersionChain.invoke({input:resume})
-/*     console.log(`his is the final result in reduced text 
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-                            ${reducedText}
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++`)
-    console.log(`this is the final result in the LANGCHAIN 
------------------------------------------------------------------------
-                            ${resume}
------------------------------------------------------------------------
-`) */
+
     return {resume,reducedText}
 }
 

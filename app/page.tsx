@@ -3,96 +3,160 @@
 import { PersonaForm } from "@/components/profil-form"
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import {
-    Accordion,
-    AccordionContent,
-    AccordionItem,
-    AccordionTrigger,
-  } from "@/components/ui/accordion"
 import { useRouter } from "next/navigation"
-import MarkdownTypewriter from "@/components/markdownTyper"
+import MarkdownTypewriter from "@/components/markdown-typer"
 import { useMedia } from "react-use"
 import { motion } from "framer-motion"
 import { useEffect } from "react"
-import { useAnimation } from "framer-motion"
+import { MoveRight } from "lucide-react"
 import { useRef } from "react"
-import { useUpdateChat } from "@/features/chat/hook/useUpdateMessage"
+import {useMediaQuery} from "react-responsive"
+import { useUpdateChat } from "@/features/chat/hook/use-update-message"
 
 
-  interface Persona {
-    id:string,
-    name:string,
-    nationality:string,
-    location:string,
-    income:string,
-    Occupation:string,
-    description:string
+
+  interface Persona  {
+    id: string; // A unique identifier for the profile
+    name: string; // Full name of the individual
+    age: number; // Age of the individual
+    occupation: string; // Occupation or job title
+    familyStatus: string; // Marital or family status
+    countryOfResidence: string; // Country where the individual resides
+    nationality: string; // Nationality of the individual
+    monthlyIncome: string; // Monthly income as a string (e.g., "4200$")
+    locationType: string; // Type of location (e.g., urban, suburban, rural)
+    spendingBehavior: string; // Spending habits (e.g., frugal, balanced)
+    additionalInfo: string; // Extra information about the individual
+    monthlyRent: number; // Monthly rent in numerical form
+    monthlySavings: number; // Monthly savings in numerical form
+    riskTolerance: string; // Risk tolerance for investments or finances
+    creditCards: string; // Credit card usage level or behavior
+    workSchedule: string; // Work schedule (e.g., regular, irregular)
+    transportation: string; // Primary mode of transportation
+    diningPreference: string; // Dining preferences (e.g., homemade, eating out)
+    shoppingHabits: string; // Shopping habits (e.g., impulsive, planner)
+    description: string;
+    image:string;
   }
 
   const profile = [
-    {   
-        id:"d",
-        name:"Bayebeck Rostand",
-        nationality:"cameroon",
-        location:"Cameroon",
-        Occupation:"Docteur",
-        income:"2000",
-        description:"Recently started taking online courses for career advancement."
-    },
     {
-        id:"s",
-        name:"Madelene",
-        nationality:"France",
-        location:"France",
-        income:"2000",
-        Occupation:"Ingenieur",
-        description:"Recently completed a certification in cloud computing."
-    },
-    {   
-        id:"de",
-        name:"Mbimdiki jeremi",
-        nationality:"Nigeria",
-        location:"Nigeria",
-        income:"2000",
-        Occupation:"Bost",
-        description:"Recently completed a certification in cloud computing."
+      id:"profile1",
+      name: "Hans Schmidt",
+      age: 35,
+      occupation: "Mechanical Engineer",
+      familyStatus: "married",
+      countryOfResidence: "Germany",
+      nationality: "German",
+      monthlyIncome: `4200`,
+      locationType: "suburban",
+      spendingBehavior: "balanced",
+      additionalInfo: "Avid traveler",
+      monthlyRent: 1200,
+      monthlySavings: 1000,
+      riskTolerance: "moderate",
+      creditCards: "moderate",
+      workSchedule: "regular",
+      transportation: "car",
+      diningPreference: "mixed",
+      shoppingHabits: "planner",
+      description:"Hans Schmidt, 35, is a married Mechanical Engineer living in Munich’s suburbs. Combining German precision with a global outlook, he specializes in sustainable automotive systems. Fluent in German and English, Hans values family, work-life balance, and cultural diversity. Passionate about hiking, soccer, and travel, he aspires to leadership and personal fulfillment.",
+      image:"hans"
+    },{
+      id:"profile2",
+      name: "Isabella Rossi",
+      age: 38,
+      occupation: "Interior Designer",
+      familyStatus: "single",
+      countryOfResidence: "Italy",
+      nationality: "Italian",
+      monthlyIncome: "3800",
+      locationType: "urban",
+      spendingBehavior: "balanced",
+      additionalInfo: "Frequent traveler for work",
+      monthlyRent: 1300,
+      monthlySavings: 500,
+      riskTolerance: "moderate",
+      creditCards: "frequent",
+      workSchedule: "flexible",
+      transportation: "mixed",
+      diningPreference: "eatOut",
+      shoppingHabits: "impulsive",
+      description:"Isabella Rossi, a 38-year-old single Interior Designer in Milan, blends Italian elegance with modern creativity. Educated at Politecnico di Milano and Domus Academy, she excels in sustainable, high-profile projects. Fluent in Italian and English, Isabella travels frequently for work, values cultural experiences, and aspires to establish her own renowned design studio.",
+      image:"isabella"
+    },{
+      id:"profile3",
+      name: "Jean-Pierre Ebogo",
+      age: 37,
+      occupation: "IT Consultant",
+      familyStatus: "married_with_children",
+      countryOfResidence: "Germany",
+      nationality: "Cameroonian",
+      monthlyIncome: "4800",
+      locationType: "suburban",
+      spendingBehavior: "frugal",
+      additionalInfo: "Saving for children's education and family vacations",
+      monthlyRent: 1100,
+      monthlySavings: 1200,
+      riskTolerance: "conservative",
+      creditCards: "rarely",
+      workSchedule: "flexible",
+      transportation: "car",
+      diningPreference: "homeCook",
+      shoppingHabits: "planner",
+      description:"Jean-Pierre Ebogo, 37, is a married IT Consultant from Cameroon living in Frankfurt’s suburbs with two children. Dedicated to his family, he prioritizes saving for education and vacations through frugal spending and careful planning. Fluent in French, English, and German, he values cultural diversity, community, and a balanced work-life.",
+      image:"ebogo"
+    },{
+      id:"profile",
+      name: "Yumi Nakamura",
+      age: 30,
+      occupation: "Chef",
+      familyStatus: "single",
+      countryOfResidence: "Japan",
+      nationality: "Japanese",
+      monthlyIncome: "3500",
+      locationType: "urban",
+      spendingBehavior: "balanced",
+      additionalInfo: "Opening a new restaurant next year",
+      monthlyRent: 1200,
+      monthlySavings: 800,
+      riskTolerance: "aggressive",
+      creditCards: "moderate",
+      workSchedule: "shift",
+      transportation: "mixed",
+      diningPreference: "mixed",
+      shoppingHabits: "impulsive",
+      description:"Yumi Nakamura, a 30-year-old single chef in Tokyo, blends traditional Japanese values with modern innovation. Educated at Tsuji Culinary Institute, she excels in fusion cuisine and aims to open her own restaurant. Fluent in Japanese and English, Yumi values sustainability, creativity, and work-life balance while navigating Tokyo’s competitive culinary scene.",
+      image:"yumi"
     }
   ]
  
 const CardDisplay = ({persona , onSelect,isDisabled }:{isDisabled:boolean,persona:Persona,onSelect:(persona:Persona)=>void})=>{
-  const isMobile= useMedia('(max-width: 768px)',false)
+  const isMobile= useMediaQuery({maxWidth:768})
  
 
   const {setPersonaInfo}=useUpdateChat()
   const router = useRouter()
   const handleClick =(persona:Persona)=>{
     setPersonaInfo(JSON.stringify(persona))
-    localStorage.setItem('selectedPersona', persona.id)
+    localStorage.setItem('selectedPersona', "profile3")
     router.push("/dashboard")
   }
 
     if(isMobile){
       return(
-        <div className="w-full  pb-6">
+        <div className="w-full  mb-16">
         <div className="flex flex-col gap-2">
           <div className="flex items-center justify-around gap-1 mb-4">
             <div className="w-[40%] flex justify-center " >
-                <img className="object-cover rounded-xl h-32 "  src={`/ailog.webp`}  alt={"lg.displayName"}/>
+                <img className="object-cover rounded-xl h-32 "  src={`/${persona.image}.jpg`}  alt={"lg.displayName"}/>
             </div>
             <div className="flex flex-1 flex-col items-center justify-center " >
               <span className= "flex text-center  items-center justify-center font-poiret-one font-extrabold text-slate-750  text-2xl mb-2" >
                   {persona.name}
               </span>
               <div className="flex items-center justify-center">
-                <Button disabled={isDisabled} className="bg-black" onClick={()=>handleClick(persona)} >Go to Dashboard</Button>
+                <Button disabled={isDisabled} className="bg-black" onClick={()=>handleClick(persona)} >Go to Dashboard <MoveRight className="ml-2" size={16} /> </Button>
               </div>
             </div>
           </div>
@@ -103,13 +167,13 @@ const CardDisplay = ({persona , onSelect,isDisabled }:{isDisabled:boolean,person
                       <span className="font-bold text-sm flex  items-center text-white  gap-1" > Nationality 📘:</span>  <span className="text-gray-100 text-sm" >{persona.nationality}</span>
                     </div>
                     <div className="flex-col flex items-center justify-center" >
-                      <span className="font-bold  text-sm flex items-center text-white gap-1" > Location 🗺️:</span>  <span className="text-gray-100 text-sm" >{persona.location}</span>
+                      <span className="font-bold  text-sm flex items-center text-white gap-1" > Location 🗺️:</span>  <span className="text-gray-100 text-sm" >{persona.countryOfResidence}</span>
                     </div>
                     <div className="flex-col flex items-center justify-center" >
-                      <span className="font-bold  text-sm flex items-center text-white gap-1" > Occupation 💼:</span>   <span className="text-gray-100 text-sm" >{persona.Occupation}</span>
+                      <span className="font-bold  text-sm flex items-center text-white gap-1" > Occupation 💼:</span>   <span className="text-gray-100 text-sm" >{persona.occupation}</span>
                     </div>
                     <div className="flex-col flex items-center justify-center" >
-                      <span className="font-bold text-sm flex items-center text-white gap-1" > Income 💰:</span>   <span className="text-gray-100 text-sm" >{persona.income} 
+                      <span className="font-bold text-sm flex items-center text-white gap-1" > Income 💰:</span>   <span className="text-gray-100 text-sm" >{persona.monthlyIncome} 
                       $</span>
                     </div>  
                   </div>
@@ -119,18 +183,9 @@ const CardDisplay = ({persona , onSelect,isDisabled }:{isDisabled:boolean,person
             <div className="flex-col flex gap-2" >
                         <span className="font-bold text-sm " >description:</span>  
                         <span className="text-gray-700 text-sm " >
-                          Andere werden nur mit Ihrer Einwilligung gesetzt, z. B. solche, die uns helfen, test.de für Sie zu optimieren. Nähere Informationen über Cookies auf test.de erhalten Sie unter „Details auswählen“ und in unseren Datenschutzhinweisen.
+                          {persona.description}
                         </span>
                   </div>
-                  <Accordion type="single" collapsible>
-                    <AccordionItem value="item-1">
-                      <AccordionTrigger>More Information</AccordionTrigger>
-                          <AccordionContent>
-                          Wir respektieren Ihre Privatsphäre
-                          Wir nehmen den Schutz Ihrer Daten sehr ernst und möchten gleichzeitig, dass Sie bei uns die Angebote finden, die zu Ihnen passen. Dazu setzen wir verschiedene Cookies und Technologien ein. Einige dieser Cookies sind für den Betrieb unserer Website notwendig. Andere werden nur mit Ihrer Einwilligung gesetzt, z. B. solche, die uns helfen, test.de für Sie zu optimieren. Nähere Informationen über Cookies auf test.de erhalten Sie unter „Details auswählen“ und in unseren Datenschutzhinweisen.
-                          </AccordionContent>
-                    </AccordionItem>
-                  </Accordion>
             </div>
         </div>
     </div>
@@ -138,13 +193,13 @@ const CardDisplay = ({persona , onSelect,isDisabled }:{isDisabled:boolean,person
     }
 
     return(
-      <div className="w-full overflow-hidden pb-6">
+      <div className="w-full overflow-hidden mb-20">
         <div >
         <div className="flex gap-1 items-start justify-center " >
             <div className="w-2/5 flex flex-col gap-2 items-center justify-between h-[50%]" >
-                <img className="object-cover rounded-xl h-40 "  src={`/ailog.webp`}  alt={"lg.displayName"}/>
+                <img className="object-cover rounded-xl h-40 "  src={`/${persona.image}.jpg`}  alt={"lg.displayName"}/>
                 <div className="flex items-center justify-center">
-                  <Button disabled={isDisabled} className="bg-black" onClick={()=>handleClick(persona)} >Go to Dashboard</Button>
+                  <Button disabled={isDisabled} className="bg-black" onClick={()=>handleClick(persona)} >Go to Dashboard <MoveRight className="ml-2" size={16} /> </Button>
                 </div>
             </div>
             <div className="w-full flex flex-col  gap-3 text-md">
@@ -157,13 +212,13 @@ const CardDisplay = ({persona , onSelect,isDisabled }:{isDisabled:boolean,person
                       <span className="font-bold text-md flex  items-center text-white  gap-1" > Nationality 📘:</span>  <span className="text-gray-200 text-md " >{persona.nationality}</span>
                     </div>
                     <div className="flex-col flex items-center justify-center" >
-                      <span className="font-bold  text-md flex items-center text-white gap-1" > Location 🗺️:</span>  <span className="text-gray-200 text-md " >{persona.location}</span>
+                      <span className="font-bold  text-md flex items-center text-white gap-1" > Location 🗺️:</span>  <span className="text-gray-200 text-md " >{persona.countryOfResidence}</span>
                     </div>
                     <div className="flex-col flex items-center justify-center" >
-                      <span className="font-bold  text-md flex items-center text-white gap-1" > Occupation 💼:</span>   <span className="text-gray-200 text-md " >{persona.Occupation}</span>
+                      <span className="font-bold  text-md flex items-center text-white gap-1" > Occupation 💼:</span>   <span className="text-gray-200 text-md " >{persona.occupation}</span>
                     </div>
                     <div className="flex-col flex items-center justify-center" >
-                      <span className="font-bold text-md flex items-center text-white gap-1" > Income 💰:</span>   <span className="text-gray-200 text-md " >{persona.income} 
+                      <span className="font-bold text-md flex items-center text-white gap-1" > Income 💰:</span>   <span className="text-gray-200 text-md " >{persona.monthlyIncome} 
                       $</span>
                     </div>  
                   </div>
@@ -171,18 +226,9 @@ const CardDisplay = ({persona , onSelect,isDisabled }:{isDisabled:boolean,person
                 <div className="flex-col flex gap-2" >
                       <span className="font-bold text-md " >description:</span>  
                       <span className="text-gray-700 text-sm " >
-                        Andere werden nur mit Ihrer Einwilligung gesetzt, z. B. solche, die uns helfen, test.de für Sie zu optimieren. Nähere Informationen über Cookies auf test.de erhalten Sie unter „Details auswählen“ und in unseren Datenschutzhinweisen.
+                        {persona.description}
                       </span>
                 </div>
-                <Accordion type="single" collapsible>
-                  <AccordionItem value="item-1">
-                    <AccordionTrigger>More Information</AccordionTrigger>
-                        <AccordionContent>
-                        Wir respektieren Ihre Privatsphäre
-                        Wir nehmen den Schutz Ihrer Daten sehr ernst und möchten gleichzeitig, dass Sie bei uns die Angebote finden, die zu Ihnen passen. Dazu setzen wir verschiedene Cookies und Technologien ein. Einige dieser Cookies sind für den Betrieb unserer Website notwendig. Andere werden nur mit Ihrer Einwilligung gesetzt, z. B. solche, die uns helfen, test.de für Sie zu optimieren. Nähere Informationen über Cookies auf test.de erhalten Sie unter „Details auswählen“ und in unseren Datenschutzhinweisen.
-                        </AccordionContent>
-                  </AccordionItem>
-                </Accordion>
             </div> 
         </div>
       </div>
@@ -222,7 +268,7 @@ const parentVariantLeft={
 const Page = ()=>{
     const [generatedData, setGeneratedData] = useState<string>(``)
     const router = useRouter();
-    const isMobile= useMedia('(max-width: 768px)',false)
+    const isMobile= useMediaQuery({maxWidth:768})
     const [openForm,setOpenForm]=useState<boolean>(false)
     const [isDisabled,setIsDisabled]=useState<boolean>(false)
     const isFirstRender = useRef(true);
@@ -240,7 +286,6 @@ const Page = ()=>{
 
       setTimeout(() => {
         if (isFirstRender.current) {
-        console.log("Page loaded for the first time");
         isFirstRender.current = false; // Mark as no longer the first render
       }
       }, 5);
@@ -251,10 +296,10 @@ const Page = ()=>{
     const selectPersona = (persona:Persona) => {
         console.log(persona)
         // Store the selected persona in localStorage
-        localStorage.setItem('selectedPersona', persona.id);
+        localStorage.setItem('selectedPersona', "persona3");
         // Redirect to dashboard
         console.log(localStorage.getItem('selectedPersona'))
-        router.push('/transactions');
+        router.push('/dashboard');
       };
 
     if(isMobile){

@@ -59,7 +59,7 @@ const app = new Hono()
             const personaId = c.req.header('X-Persona-ID') || "testData"
             const auth = {userId:personaId}
             const {name} = c.req.valid("json")
-            console.log(name)
+
             if(!auth?.userId){
                 return c.json({error:"Unauthorized"},401)
             }
@@ -81,7 +81,7 @@ const app = new Hono()
             const personaId = c.req.header('X-Persona-ID') || "testData"
             const auth = {userId:personaId}
             const values = c.req.valid("json")
-            console.log(values)
+            
 
             if(!auth?.userId){
                 return c.json({error:"Unauthorized"},401)

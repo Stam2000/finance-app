@@ -15,7 +15,7 @@ import { EditTransactionDialog } from "@/features/transactions/components/edit-t
 import { Edit,Trash } from "lucide-react";
 import { useState } from "react";
 import { NewDetailsTransactionDialog } from "@/features/detailsTransactions/components/new-detailsTransaction-dialog";
-import { useOverviewNewDetails } from "@/features/detailsTransactions/hooks/use-overview-Newdetails";
+import { useOverviewNewDetails } from "@/features/detailsTransactions/hooks/use-overview-newdetails";
 
 
 

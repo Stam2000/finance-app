@@ -1,7 +1,7 @@
 import axios from "axios"
 import { InferRequestType } from "hono";
 import {client} from "@/lib/hono"
-import { AssistantTool } from "openai/resources/beta/assistants.mjs"
+import { AssistantTool } from "openai/resources/beta/assistants"
 
 
 type TransactionCreate = InferRequestType<typeof client.api.transactions.$post>["json"]
@@ -81,7 +81,7 @@ const fetchCategories = async({args,personaId}:{args?:any,personaId:string})=>{
 const fetchDetailsTransaction = async ({id}:{id:string},personaId:string)=>{
 
 	 try{
-		  const response = await axios.get(`${baseURL}/api/detailsTransactions`,{
+		  const response = await axios.get(`${baseURL}/api/detailsTransactions/${id}`,{
 				params:{
 					 id //transactionId
 				},
@@ -105,7 +105,7 @@ const fetchDetailsTransaction = async ({id}:{id:string},personaId:string)=>{
 const fetchTransaction = async ({id,personaId}:{id:string,personaId:string})=>{
 
 	try{
-		 const response = await axios.get(`${baseURL}/api/transactions`,{
+		 const response = await axios.get(`${baseURL}/api/transactions/${id}`,{
 			   params:{
 					id //transactionId
 			   },
@@ -219,6 +219,42 @@ const createOneTransaction = async({
  }
 }
 
+const updateTransaction = async({
+	personaId,
+	id,
+	...json
+  }: {
+	id:string;
+	accountId: string;
+	date: Date;
+	amount: number;
+	payee: string;
+	notes?: string | null | undefined;
+	projectId?: string | null | undefined;
+	categoryId?: string | null | undefined;
+	personaId: string;
+  })=>{
+	 try {
+		 const response = await axios.patch(`${baseURL}/api/transactions/${id}`, json,{
+			params:{
+				 id //transactionId
+			},
+			headers: {
+				'X-Persona-ID': personaId,  
+			  }
+	  });
+		 return JSON.stringify({success: true, data: response.data });
+		}catch(err){
+			console.error("error inserting transaction",err)
+	  if (axios.isAxiosError(err)){
+			console.error("Axios details",err.response?.status,err.response?.data)
+	  }
+			console.error("Unexpected error",err)
+ 
+	  return (`${err}`)
+ }
+}
+
  
 const createOneDetailsTransactions = async({
 	personaId,
@@ -240,6 +276,43 @@ const createOneDetailsTransactions = async({
 				'X-Persona-ID': personaId,  
 			  }
 		 });
+		 return JSON.stringify({ success: true, data: response.data });
+		}catch(err){
+			console.error("error creating detail for transaction",err)
+	  if (axios.isAxiosError(err)){
+			console.error("Axios details",err.response?.status,err.response?.data)
+	  }
+			console.error("Unexpected error",err)
+ 
+	  return (`${err}`)
+ }
+}
+
+const updateTransactionDetails = async({
+	personaId,
+	id,
+	...json
+  }:{
+	id:string;
+    amount: number;
+    transactionId: string;
+    name?: string | null | undefined;
+    projectId?: string | null | undefined;
+    categoryId?: string | null | undefined;
+    quantity?: number | null | undefined;
+    unitPrice?: number |  undefined;
+	personaId:string
+})=>{
+	
+	 try {
+		 const response = await axios.patch(`${baseURL}/api/detailsTransactions/${id}`, json,{
+			params:{
+				 id //transactionId
+			},
+			headers: {
+				'X-Persona-ID': personaId,  
+			  }
+	  });
 		 return JSON.stringify({ success: true, data: response.data });
 		}catch(err){
 			console.error("error creating detail for transaction",err)
@@ -278,6 +351,37 @@ const createAccount = async({
 	  return (`${err}`)
  }
 }
+
+const updateAccount = async({
+	personaId,
+	id,
+	...json
+  }:{
+	id:string;
+    name: string;
+	personaId:string
+})=>{
+
+	 try {
+		 const response = await axios.patch(`${baseURL}/api/accounts/${id}`, json,{
+			params:{
+				 id //transactionId
+			},
+			headers: {
+				'X-Persona-ID': personaId,  
+			  }
+	  });
+		 return JSON.stringify({ success: true, data: response.data });
+		}catch(err){
+			console.error("error creating account",err)
+	  if (axios.isAxiosError(err)){
+			console.error("Axios details",err.response?.status,err.response?.data)
+	  }
+			console.error("Unexpected error",err)
+ 
+	  return (`${err}`)
+ }
+}
  
 const createCategory = async({
 	personaId,
@@ -294,6 +398,38 @@ const createCategory = async({
 				'X-Persona-ID': personaId,  
 			  }
 		 });
+		 return JSON.stringify({ success: true, data: response.data });
+		}catch(err){
+			console.error("error creating accounts",err)
+	  if (axios.isAxiosError(err)){
+			console.error("Axios details",err.response?.status,err.response?.data)
+	  }
+			console.error("Unexpected error",err)
+ 
+	  return (`${err}`)
+ }
+}
+
+const updateCategory = async({
+	personaId,
+	id,
+	...json
+  }:{
+	id:string;
+    name: string;
+    goal?: number | null | undefined;
+	personaId:string
+})=>{
+	 
+	 try {
+		 const response = await axios.patch(`${baseURL}/api/categories/${id}`, json,{
+			params:{
+				 id //transactionId
+			},
+			headers: {
+				'X-Persona-ID': personaId,  
+			  }
+	  });
 		 return JSON.stringify({ success: true, data: response.data });
 		}catch(err){
 			console.error("error creating accounts",err)
@@ -343,12 +479,12 @@ const createTransactionsAndDetails = async ({
 		  }
 	  })
 		const {data} = await responseTransaction.json()
-		console.log(data)
+
 		if(detailsTransaction){
 
 			let completeDetailsTransaction = await Promise.all(
 				detailsTransaction.map(async (d) => {
-					console.log(data.id)
+
 				  const responseDetail = await client.api.detailsTransactions.$post({
 					json: { ...d, transactionId: data.id }
 				  },{headers: {
@@ -412,6 +548,41 @@ const createProject = async({
  }
 } 
 
+const updateProject = async({
+	personaId,
+	id,
+	...json
+  }:{
+	id:string;
+    name: string;
+    budget: number;
+    startDate: string;
+    endDate: string;
+    description?: string | undefined;
+	personaId:string
+})=>{
+
+	 try {
+		 const response = await axios.patch(`${baseURL}/api/projects/${id}`, json,{
+			params:{
+				 id //transactionId
+			},
+			headers: {
+				'X-Persona-ID': personaId,  
+			  }
+	  });
+		 return JSON.stringify({ success: true, data: response.data });
+		}catch(err){
+			console.error("error fetching transactions",err)
+	  if (axios.isAxiosError(err)){
+			console.error("Axios details",err.response?.status,err.response?.data)
+	  }
+			console.error("Unexpected error",err)
+ 
+	  return (`${err}`)
+ }
+} 
+
 //TODO build function whitch get the actual Date
 export const functions : any = {
 	getTodaysDate,
@@ -419,15 +590,20 @@ export const functions : any = {
 	fetchProjects,
 	fetchAccounts,
 	fetchOneTransaction:fetchTransaction,
-	fetchOneDetailsTransaction:fetchDetailsTransaction,
-	fetchManyDetailsTransactions:fetchDetailsTransactions,
+	fetchOneItem:fetchDetailsTransaction,
+	fetchManyItems:fetchDetailsTransactions,
 	fetchTransactions,
 	createOneTransaction,
-	createOneDetailsTransactions,
+	createOneItem:createOneDetailsTransactions,
 	createAccount,
 	createCategory,
 	createProject,
-	createTransactionsAndDetails
+	createTransactionsAndItems:createTransactionsAndDetails,
+	updateProject,
+	updateCategory,
+	updateAccount,
+	updateItem:updateTransactionDetails,
+	updateTransaction,
 }
 
 export const handleRequiresAction = async ( run: any,
@@ -437,7 +613,7 @@ export const handleRequiresAction = async ( run: any,
 ): Promise<RunStatus | null>=>{
 	
 	const runId = run.id
-	/* console.log(runId) */
+
 	if (
 		run.required_action &&
 		run.required_action.submit_tool_outputs &&
@@ -521,7 +697,7 @@ export const handleRunStatus = async (run:any,openai:any,threadId:string,persona
 		const messages = await openai.beta.threads.messages.list(run.thread_id);
 
 		// Log the response to inspect its structure
-		console.log(messages.data);
+
 	
 		// Retrieve the most recent AI message
 		const latestMessage = messages.data.find(
@@ -537,11 +713,11 @@ export const handleRunStatus = async (run:any,openai:any,threadId:string,persona
 		const aiResponse =
 		  latestMessage.content?.[0]?.text?.value || 'No response content available';
 	
-		console.log(
+/* 		console.log(
 		  `###---###---###---###---###---###---###---###---###---###---###---###---###
 				${aiResponse}
 		  ###---###---###---###---###---###---###---###---###---###---###---###---###`
-		);
+		); */
 	
 		return aiResponse;
       } else if (run.status === "requires_action") {
@@ -556,7 +732,7 @@ export const handleRunStatus = async (run:any,openai:any,threadId:string,persona
 
 
 
-export const openAiTools:AssistantTool[]=[
+/* export const openAiTools:AssistantTool[]=[
 	{
 		type: "function",
 		function: {
@@ -743,5 +919,5 @@ export const openAiTools:AssistantTool[]=[
 			},
 		}
 	}		
-]
+] */
 

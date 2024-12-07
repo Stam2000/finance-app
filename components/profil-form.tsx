@@ -35,7 +35,7 @@ import { useGenerateData } from '@/features/chat/api/use-gen-transactions';
 import { LoaderPinwheel } from 'lucide-react';
 import { Check } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { useUpdateChat } from '@/features/chat/hook/useUpdateMessage';
+import { useUpdateChat } from '@/features/chat/hook/use-update-message';
 
 // Define the form schema using Zod
 const formSchema = z.object({
@@ -58,12 +58,12 @@ const formSchema = z.object({
     }),
     countryOfResidence:z.string().optional(),
     nationality:z.string().optional(),
-    incomeLevel: z.number().min(0).optional(),
+    monthlyIncome: z.number().min(0).optional().describe("in US DOLLAR"),
     locationType: z.enum(['urban', 'suburban', 'rural']).optional(),
     spendingBehavior: z.enum(['frugal', 'balanced', 'spendthrift']).optional(),
     additionalInfo: z.string().optional(), // Added field to schema
-    monthlyRent: z.number().min(0).optional(),
-    monthlySavings: z.number().min(0).optional(),
+    monthlyRent: z.number().min(0).optional().describe("in US DOLLAR"),
+    monthlySavings: z.number().min(0).optional().describe("in US DOLLAR"),
     riskTolerance: z.enum(['conservative', 'moderate', 'aggressive']).optional(),
     creditCards: z.enum(['rarely', 'moderate', 'frequent']).optional(),
     workSchedule: z.enum(['regular', 'shift', 'flexible']).optional(),
@@ -121,15 +121,13 @@ export const PersonaForm = ({setGeneratedData,onDisable}:{onDisable?:()=>void,se
   const [progress, setProgress] = useState<ProgressData>()
   const [personaId, setPersonaId] = useState<string>()
 
-console.log(progress)
     const mutationPersona = useGenPersona();
     const {
       mutate: fetchPersonaData,
       data: personaData,
       isPending: personaLoading,
-      isError: personaError,
-      error: mutationError,
     } = mutationPersona;
+
 
   // Initialize useForm with initial defaultValues
   const form = useForm({
@@ -139,7 +137,7 @@ console.log(progress)
       age: 18,
       occupation: '',
       familyStatus: 'single',
-      incomeLevel: 0,
+      monthlyIncome: 0,
       locationType: 'urban',
       spendingBehavior: 'balanced',
       additionalInfo: '',
@@ -176,13 +174,13 @@ console.log(progress)
   // Function to handle form submission
   const handleSubmit =  (data: any) => {
 
-    console.log("submitingstarted")
     setPersonaInfo(JSON.stringify(data))
 
     generateData.mutate({
       ...data,
       onProgress: (event) => {
 
+        console.log(event)
         setSteps((prevItems) => 
           prevItems.map((step) => 
             step.step === event.step 
@@ -203,8 +201,23 @@ console.log(progress)
       },
       onExecution:()=>{setisExecuting(prev=>!prev)},
       onStarted:()=>{ if(onDisable) onDisable()}
+    },{
+      onError: (error) => {
+        // Handle error here, log it or set state
+        console.error(error);
+        const event = {
+          step: 'updatingFiData',
+          status: "completed",
+          message: 'updating transactions'
+        }
+        setProgress(event);
+
+        console.log(event)
+        console.log(progress)
+
+        //TODO handle Error 
+      },
     })
-    
     
   };
 
@@ -374,10 +387,10 @@ console.log(progress)
               {/* Annual Income (Optional) */}
               <FormField
                 control={form.control}
-                name="incomeLevel"
+                name="monthlyIncome"
                 render={({ field }) => (
                   <FormItem className="space-y-2">
-                    <FormLabel>Monthly Income <span className='text-md font-bold' >(€)</span> 💶</FormLabel>
+                    <FormLabel>Monthly Income <span className='text-md font-bold' >($)</span> 💶</FormLabel>
                     <FormControl>
                       <Input
                         {...field}

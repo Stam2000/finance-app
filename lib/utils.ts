@@ -6,6 +6,7 @@ import { client } from "./hono";
 import { z } from "zod";
 import pLimit from "p-limit";
 
+
 type user = "AI"|"user"
 interface Message {
   sender:user,
@@ -242,7 +243,9 @@ export const sendAiMessage = async ({threadId,personaId,setThreadId,updateLastMe
           setIsLoading()
        })
        .catch(
-          err => {setIsLoading()
+          err => {
+            updateLastMessage("There was a problem completing your request. Please try again or report the error")
+            setIsLoading()
            }
           //TODO 
        )
@@ -292,7 +295,7 @@ const uploadCategoryPromises = data.categories.map((category) =>limit( async()=>
   }
 
 
-  const res =  await client.api.categories.$post({ json: category },{headers: {
+  const res =  await client.api.categories.$post({json:{...category,goal:category.goal ? convertAmountToMiliunits(category.goal):category.goal}},{headers: {
     'X-Persona-ID': personaId,  
 }});
     
@@ -310,8 +313,8 @@ const uploadProjectPromises = data.projects.map((project) =>limit(async()=> {
   if (projectNameToIdMap.has(project.name)) {
     return; // Skip creation
   }
-
-  const res =  await client.api.projects.$post({ json: project },{headers: {
+  
+  const res =  await client.api.projects.$post({json:{...project,budget:convertAmountToMiliunits(project.budget)}},{headers: {
     'X-Persona-ID': personaId,  
 }});
     projects.push(project.name)

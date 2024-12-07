@@ -4,6 +4,7 @@ import { useGetProjects } from '@/features/projects/api/use-get-projects'
 import { DataTable} from './data-table'
 import { useDeleteProjects } from '@/features/projects/api/use-delete-projects'
 import { ReturnColumns } from './columns'
+import {columns} from './newColumns'
 
 export default function MinimalistProjectOverview() {
 
@@ -14,7 +15,7 @@ export default function MinimalistProjectOverview() {
   const deleteMutation = useDeleteProjects()
   const isDisabled= projectQuery.isLoading || deleteMutation.isPending
 
-  console.log(projectQuery.data)
+  
 
   
   if(isLoading){
@@ -30,7 +31,7 @@ export default function MinimalistProjectOverview() {
     <>
       <DataTable
                     filterKey='name'
-                    columns={projectsColumns}
+                    columns={columns}
                     data={projects!}
                     disabled={isDisabled}
                     onDelete={(rows)=>{

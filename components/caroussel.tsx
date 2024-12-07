@@ -38,7 +38,7 @@ const Carousel = ( {elements}:CarouselProps) => {
               x: direction === 'left' ? '-30%' : "30%"
             }}
             
-            className="overflow-x-hidden mt-3">
+            className="overflow-x-hidden  mt-3">
             {elements[isActive].jsx}
           </motion.div>
       </ScrollArea>

@@ -4,7 +4,7 @@ import { Menu } from "lucide-react"
 import { Button } from "./ui/button"
 import { usePathname,useRouter } from "next/navigation"
 import { NavButton } from "./nav-button"
-import { useMedia } from "react-use"
+import {useMediaQuery} from "react-responsive"
 import {
     Sheet,
     SheetContent,
@@ -40,7 +40,7 @@ label:"Overview"
 export const Navigation = ()=>{
     const [isOpen,setIsOpen] = useState(false)
     const pathName= usePathname()
-    const isMobile= useMedia("(max-width:1024px)",false)
+    const isMobile= useMediaQuery({maxWidth:1024})
     const router = useRouter()
 
     const onClick = (href:string )=>{

@@ -1,6 +1,6 @@
 import { Input } from "./ui/input"
 import { sendAiMessage } from "@/lib/utils"
-import { useUpdateChat } from "@/features/chat/hook/useUpdateMessage"
+import { useUpdateChat } from "@/features/chat/hook/use-update-message"
 import { useOpenChat } from "@/features/chat/hook/use-open-AIchat"
 import { useState } from "react"
 

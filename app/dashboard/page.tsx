@@ -1,14 +1,15 @@
 "use client"
 
-import Image from "next/image";
+import { createId } from "@paralleldrive/cuid2"
 import {DataGrid} from "@/components/data-grid"
 import {DataCharts} from "@/components/data-charts"
-import {useState,useEffect,useContext} from "react"
-import {ThemeContext} from "@/components/ContextProvider";
-import {useGetip} from "@/features/useGetip";
+import {useState,useContext} from "react"
+import {ThemeContext} from "@/components/context-provider";
 import { useGenFollowUpQ } from "@/features/chat/api/use-follow-up";
-import { useUpdateChat } from "@/features/chat/hook/useUpdateMessage";
-import { useGetWeeklyAnalyse } from "@/features/chat/hook/useGetWeekSummary";
+import { useUpdateChat } from "@/features/chat/hook/use-update-message";
+import { useGetWeeklyAnalyse } from "@/features/chat/hook/use-get-week-summary";
+import { Button } from "@/components/ui/button";
+import { RefreshCcw } from "lucide-react";
 
 export default  function Home() {
     const {ip,updateIp} = useContext(ThemeContext)
@@ -58,19 +59,20 @@ export default  function Home() {
           }
         );
       };
-      useEffect(()=>{
-        handleClick()
-        
-      },[])
-      
-     useEffect(()=>{
-        handleFetchWeeklyAnalyse()
-     },[personaDes])
+
+      const [renderKey, setRenderKey] = useState(createId());
+      const rerender = ()=>{
+        setRenderKey(createId())
+    }
 
     return (
 
-    <div className="max-w-screen-2xl flex-1 w-full mx-auto pb-10">
+    <div key={renderKey} className="max-w-screen-2xl flex-1 w-full mx-auto pb-10">
+        
         <DataGrid/>
+          <Button  className="p-3 mb-3" onClick={rerender} >
+              <RefreshCcw size={16} />
+          </Button>
         <DataCharts/>
     </div>
 

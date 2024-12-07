@@ -1,0 +1,7480 @@
+[
+  {
+    "categories": [
+      {
+        "name": "Rent",
+        "goal": 1100
+      },
+      {
+        "name": "Groceries",
+        "goal": 400
+      },
+      {
+        "name": "Dining Out",
+        "goal": 150
+      },
+      {
+        "name": "Transportation",
+        "goal": 150
+      },
+      {
+        "name": "Utilities",
+        "goal": 120
+      },
+      {
+        "name": "Education",
+        "goal": 150
+      },
+      {
+        "name": "Entertainment",
+        "goal": 80
+      },
+      {
+        "name": "Healthcare",
+        "goal": 100
+      },
+      {
+        "name": "Savings",
+        "goal": 1200
+      }
+    ],
+    "accounts": [
+      {
+        "name": "Primary Bank Account"
+      }
+    ],
+    "projects": [
+      {
+        "name": "Children's Education Fund",
+        "budget": 10000,
+        "startDate": "2024-01-01",
+        "endDate": "2030-12-31",
+        "description": "Savings for children's higher education in Germany."
+      }
+    ],
+    "transactions": [
+      {
+        "amount": -1100,
+        "detailsTransactions": [
+          {
+            "name": "Monthly Rent",
+            "quantity": 1,
+            "unitPrice": 1100,
+            "amount": -1100,
+            "categoryId": "Rent",
+            "projectId": null
+          }
+        ],
+        "payee": "Sunrise Apartments",
+        "notes": "Monthly rent payment for October",
+        "date": "2024-10-01",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Rent"
+      },
+      {
+        "amount": -120,
+        "detailsTransactions": [],
+        "payee": "Utility Provider",
+        "notes": "Monthly utility bill",
+        "date": "2024-10-02",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Utilities"
+      },
+      {
+        "amount": -75,
+        "detailsTransactions": [
+          {
+            "name": "Vegetables",
+            "quantity": 8,
+            "unitPrice": 3,
+            "amount": -24,
+            "categoryId": "Groceries",
+            "projectId": null
+          },
+          {
+            "name": "Chicken",
+            "quantity": 2,
+            "unitPrice": 15,
+            "amount": -30,
+            "categoryId": "Groceries",
+            "projectId": null
+          },
+          {
+            "name": "Rice",
+            "quantity": 1,
+            "unitPrice": 8,
+            "amount": -8,
+            "categoryId": "Groceries",
+            "projectId": null
+          },
+          {
+            "name": "Milk",
+            "quantity": 3,
+            "unitPrice": 4,
+            "amount": -12,
+            "categoryId": "Groceries",
+            "projectId": null
+          },
+          {
+            "name": "Eggs",
+            "quantity": 1,
+            "unitPrice": 6,
+            "amount": -6,
+            "categoryId": "Groceries",
+            "projectId": null
+          }
+        ],
+        "payee": "Lidl Supermarket",
+        "notes": "Weekly grocery shopping",
+        "date": "2024-10-03",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Groceries"
+      },
+      {
+        "amount": -50,
+        "detailsTransactions": [
+          {
+            "name": "Fuel",
+            "quantity": 1,
+            "unitPrice": 50,
+            "amount": -50,
+            "categoryId": "Transportation",
+            "projectId": null
+          }
+        ],
+        "payee": "Shell Gas Station",
+        "notes": "Fuel for the car",
+        "date": "2024-10-04",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Transportation"
+      },
+      {
+        "amount": -30,
+        "detailsTransactions": [
+          {
+            "name": "Family Dinner",
+            "quantity": 1,
+            "unitPrice": 30,
+            "amount": -30,
+            "categoryId": "Dining Out",
+            "projectId": null
+          }
+        ],
+        "payee": "Das Gute Restaurant",
+        "notes": "Family dinner out",
+        "date": "2024-10-05",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Dining Out"
+      },
+      {
+        "amount": -60,
+        "detailsTransactions": [
+          {
+            "name": "Chess Set",
+            "quantity": 1,
+            "unitPrice": 20,
+            "amount": -20,
+            "categoryId": "Entertainment",
+            "projectId": null
+          },
+          {
+            "name": "Board Game",
+            "quantity": 1,
+            "unitPrice": 40,
+            "amount": -40,
+            "categoryId": "Entertainment",
+            "projectId": null
+          }
+        ],
+        "payee": "Freizeit Spielwaren",
+        "notes": "Family game night supplies",
+        "date": "2024-10-06",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Entertainment"
+      },
+      {
+        "amount": -20,
+        "detailsTransactions": [
+          {
+            "name": "Savings",
+            "quantity": 1,
+            "unitPrice": 20,
+            "amount": -20,
+            "categoryId": "Savings",
+            "projectId": "Children's Education Fund"
+          }
+        ],
+        "payee": "Savings Account",
+        "notes": "Contribution towards children's education fund",
+        "date": "2024-10-07",
+        "projectId": "Children's Education Fund",
+        "accountId": "Primary Bank Account",
+        "categoryId": "Savings"
+      }
+    ]
+  },
+  {
+    "categories": [
+      {
+        "name": "Rent",
+        "goal": 1100
+      },
+      {
+        "name": "Groceries",
+        "goal": 400
+      },
+      {
+        "name": "Dining Out",
+        "goal": 150
+      },
+      {
+        "name": "Transportation",
+        "goal": 150
+      },
+      {
+        "name": "Utilities",
+        "goal": 120
+      },
+      {
+        "name": "Education",
+        "goal": 150
+      },
+      {
+        "name": "Entertainment",
+        "goal": 80
+      },
+      {
+        "name": "Healthcare",
+        "goal": 100
+      },
+      {
+        "name": "Savings",
+        "goal": 1200
+      }
+    ],
+    "accounts": [
+      {
+        "name": "Primary Bank Account"
+      }
+    ],
+    "projects": [
+      {
+        "name": "Children's Education Fund",
+        "budget": 10000,
+        "startDate": "2024-01-01",
+        "endDate": "2030-12-31",
+        "description": "Savings for children's higher education in Germany."
+      }
+    ],
+    "transactions": [
+      {
+        "amount": -80,
+        "detailsTransactions": [
+          {
+            "name": "Vegetables",
+            "quantity": 10,
+            "unitPrice": 3,
+            "amount": -30,
+            "categoryId": "Groceries",
+            "projectId": null
+          },
+          {
+            "name": "Beef",
+            "quantity": 2,
+            "unitPrice": 20,
+            "amount": -40,
+            "categoryId": "Groceries",
+            "projectId": null
+          },
+          {
+            "name": "Bread",
+            "quantity": 1,
+            "unitPrice": 10,
+            "amount": -10,
+            "categoryId": "Groceries",
+            "projectId": null
+          }
+        ],
+        "payee": "Aldi Supermarket",
+        "notes": "Weekly grocery shopping",
+        "date": "2024-10-08",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Groceries"
+      },
+      {
+        "amount": -30,
+        "detailsTransactions": [],
+        "payee": "Taxi Service",
+        "notes": "Ride to the airport",
+        "date": "2024-10-09",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Transportation"
+      },
+      {
+        "amount": -100,
+        "detailsTransactions": [
+          {
+            "name": "Medical Checkup",
+            "quantity": 1,
+            "unitPrice": 100,
+            "amount": -100,
+            "categoryId": "Healthcare",
+            "projectId": null
+          }
+        ],
+        "payee": "City Hospital",
+        "notes": "Routine health check-up",
+        "date": "2024-10-10",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Healthcare"
+      },
+      {
+        "amount": -40,
+        "detailsTransactions": [
+          {
+            "name": "Textbook",
+            "quantity": 1,
+            "unitPrice": 40,
+            "amount": -40,
+            "categoryId": "Education",
+            "projectId": null
+          }
+        ],
+        "payee": "Bookstore",
+        "notes": "Purchase of educational materials",
+        "date": "2024-10-11",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Education"
+      },
+      {
+        "amount": -50,
+        "detailsTransactions": [
+          {
+            "name": "Date Night Dinner",
+            "quantity": 1,
+            "unitPrice": 50,
+            "amount": -50,
+            "categoryId": "Dining Out",
+            "projectId": null
+          }
+        ],
+        "payee": "Italian Bistro",
+        "notes": "Dinner with spouse",
+        "date": "2024-10-12",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Dining Out"
+      },
+      {
+        "amount": -20,
+        "detailsTransactions": [
+          {
+            "name": "Movie Tickets",
+            "quantity": 2,
+            "unitPrice": 10,
+            "amount": -20,
+            "categoryId": "Entertainment",
+            "projectId": null
+          }
+        ],
+        "payee": "Cinema City",
+        "notes": "Weekend movie outing",
+        "date": "2024-10-13",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Entertainment"
+      },
+      {
+        "amount": -30,
+        "detailsTransactions": [
+          {
+            "name": "Online Education Subscription",
+            "quantity": 1,
+            "unitPrice": 30,
+            "amount": -30,
+            "categoryId": "Education",
+            "projectId": null
+          }
+        ],
+        "payee": "Skillshare",
+        "notes": "Monthly subscription for online courses",
+        "date": "2024-10-14",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Education"
+      }
+    ]
+  },
+  {
+    "categories": [
+      {
+        "name": "Rent",
+        "goal": 1100
+      },
+      {
+        "name": "Groceries",
+        "goal": 400
+      },
+      {
+        "name": "Dining Out",
+        "goal": 150
+      },
+      {
+        "name": "Transportation",
+        "goal": 150
+      },
+      {
+        "name": "Utilities",
+        "goal": 120
+      },
+      {
+        "name": "Education",
+        "goal": 150
+      },
+      {
+        "name": "Entertainment",
+        "goal": 80
+      },
+      {
+        "name": "Healthcare",
+        "goal": 100
+      },
+      {
+        "name": "Savings",
+        "goal": 1200
+      }
+    ],
+    "accounts": [
+      {
+        "name": "Primary Bank Account"
+      }
+    ],
+    "projects": [
+      {
+        "name": "Children's Education Fund",
+        "budget": 10000,
+        "startDate": "2024-01-01",
+        "endDate": "2030-12-31",
+        "description": "Savings for children's higher education in Germany."
+      }
+    ],
+    "transactions": [
+      {
+        "amount": -70,
+        "detailsTransactions": [
+          {
+            "name": "Fruit",
+            "quantity": 7,
+            "unitPrice": 3,
+            "amount": -21,
+            "categoryId": "Groceries",
+            "projectId": null
+          },
+          {
+            "name": "Chicken",
+            "quantity": 3,
+            "unitPrice": 10,
+            "amount": -30,
+            "categoryId": "Groceries",
+            "projectId": null
+          },
+          {
+            "name": "Eggs",
+            "quantity": 2,
+            "unitPrice": 9,
+            "amount": -18,
+            "categoryId": "Groceries",
+            "projectId": null
+          }
+        ],
+        "payee": "Kaufland",
+        "notes": "Weekly grocery shopping",
+        "date": "2024-10-15",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Groceries"
+      },
+      {
+        "amount": -10,
+        "detailsTransactions": [
+          {
+            "name": "Public Bus Pass",
+            "quantity": 1,
+            "unitPrice": 10,
+            "amount": -10,
+            "categoryId": "Transportation",
+            "projectId": null
+          }
+        ],
+        "payee": "Public Transportation Authority",
+        "notes": "Weekly bus pass",
+        "date": "2024-10-16",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Transportation"
+      },
+      {
+        "amount": -50,
+        "detailsTransactions": [],
+        "payee": "Dentist Clinic",
+        "notes": "Dental cleaning appointment",
+        "date": "2024-10-17",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Healthcare"
+      },
+      {
+        "amount": -1000,
+        "detailsTransactions": [
+          {
+            "name": "Saving Deposit",
+            "quantity": 1,
+            "unitPrice": 1000,
+            "amount": -1000,
+            "categoryId": "Savings",
+            "projectId": "Children's Education Fund"
+          }
+        ],
+        "payee": "Savings Account",
+        "notes": "Contribution to children's education fund",
+        "date": "2024-10-18",
+        "projectId": "Children's Education Fund",
+        "accountId": "Primary Bank Account",
+        "categoryId": "Savings"
+      },
+      {
+        "amount": -25,
+        "detailsTransactions": [
+          {
+            "name": "Lunch at Work",
+            "quantity": 1,
+            "unitPrice": 15,
+            "amount": -15,
+            "categoryId": "Dining Out",
+            "projectId": null
+          },
+          {
+            "name": "Afternoon Coffee",
+            "quantity": 1,
+            "unitPrice": 10,
+            "amount": -10,
+            "categoryId": "Dining Out",
+            "projectId": null
+          }
+        ],
+        "payee": "Café Corner",
+        "notes": "Lunch and coffee at work",
+        "date": "2024-10-19",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Dining Out"
+      },
+      {
+        "amount": -15,
+        "detailsTransactions": [
+          {
+            "name": "Streaming Service Subscription",
+            "quantity": 1,
+            "unitPrice": 15,
+            "amount": -15,
+            "categoryId": "Entertainment",
+            "projectId": null
+          }
+        ],
+        "payee": "Netflix",
+        "notes": "Monthly subscription fee",
+        "date": "2024-10-20",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Entertainment"
+      },
+      {
+        "amount": -60,
+        "detailsTransactions": [],
+        "payee": "Local Farmers Market",
+        "notes": "Organic vegetables and fruits for the weekend",
+        "date": "2024-10-21",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Groceries"
+      }
+    ]
+  },
+  {
+    "categories": [
+      {
+        "name": "Rent",
+        "goal": 1100
+      },
+      {
+        "name": "Groceries",
+        "goal": 400
+      },
+      {
+        "name": "Dining Out",
+        "goal": 150
+      },
+      {
+        "name": "Transportation",
+        "goal": 150
+      },
+      {
+        "name": "Utilities",
+        "goal": 120
+      },
+      {
+        "name": "Education",
+        "goal": 150
+      },
+      {
+        "name": "Entertainment",
+        "goal": 80
+      },
+      {
+        "name": "Healthcare",
+        "goal": 100
+      },
+      {
+        "name": "Savings",
+        "goal": 1200
+      }
+    ],
+    "accounts": [
+      {
+        "name": "Primary Bank Account"
+      }
+    ],
+    "projects": [
+      {
+        "name": "Children's Education Fund",
+        "budget": 10000,
+        "startDate": "2024-01-01",
+        "endDate": "2030-12-31",
+        "description": "Savings for children's higher education in Germany."
+      }
+    ],
+    "transactions": [
+      {
+        "amount": -60,
+        "detailsTransactions": [
+          {
+            "name": "Fruit",
+            "quantity": 6,
+            "unitPrice": 3,
+            "amount": -18,
+            "categoryId": "Groceries",
+            "projectId": null
+          },
+          {
+            "name": "Beef",
+            "quantity": 2,
+            "unitPrice": 15,
+            "amount": -30,
+            "categoryId": "Groceries",
+            "projectId": null
+          },
+          {
+            "name": "Milk",
+            "quantity": 3,
+            "unitPrice": 4,
+            "amount": -12,
+            "categoryId": "Groceries",
+            "projectId": null
+          }
+        ],
+        "payee": "Rewe",
+        "notes": "Weekly grocery shopping",
+        "date": "2024-10-22",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Groceries"
+      },
+      {
+        "amount": -20,
+        "detailsTransactions": [],
+        "payee": "City Taxi Service",
+        "notes": "Taxi rides for the week",
+        "date": "2024-10-23",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Transportation"
+      },
+      {
+        "amount": -50,
+        "detailsTransactions": [
+          {
+            "name": "Dinner Meetup",
+            "quantity": 1,
+            "unitPrice": 50,
+            "amount": -50,
+            "categoryId": "Dining Out",
+            "projectId": null
+          }
+        ],
+        "payee": "Local Bistro",
+        "notes": "Dinner with friends",
+        "date": "2024-10-24",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Dining Out"
+      },
+      {
+        "amount": -30,
+        "detailsTransactions": [
+          {
+            "name": "School Books",
+            "quantity": 2,
+            "unitPrice": 15,
+            "amount": -30,
+            "categoryId": "Education",
+            "projectId": null
+          }
+        ],
+        "payee": "Book Store",
+        "notes": "Books for children",
+        "date": "2024-10-25",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Education"
+      },
+      {
+        "amount": -25,
+        "detailsTransactions": [
+          {
+            "name": "Family Game Rental",
+            "quantity": 1,
+            "unitPrice": 25,
+            "amount": -25,
+            "categoryId": "Entertainment",
+            "projectId": null
+          }
+        ],
+        "payee": "Game Zone",
+        "notes": "Weekend game rental",
+        "date": "2024-10-26",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Entertainment"
+      },
+      {
+        "amount": -12,
+        "detailsTransactions": [
+          {
+            "name": "Morning Coffee",
+            "quantity": 1,
+            "unitPrice": 5,
+            "amount": -5,
+            "categoryId": "Dining Out",
+            "projectId": null
+          },
+          {
+            "name": "Pastry",
+            "quantity": 1,
+            "unitPrice": 7,
+            "amount": -7,
+            "categoryId": "Dining Out",
+            "projectId": null
+          }
+        ],
+        "payee": "Café Central",
+        "notes": "Coffee and pastry before work",
+        "date": "2024-10-27",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Dining Out"
+      },
+      {
+        "amount": -100,
+        "detailsTransactions": [],
+        "payee": "Pharmaceutical Supplies",
+        "notes": "Purchase of over-the-counter medications and health supplies",
+        "date": "2024-10-28",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Healthcare"
+      }
+    ]
+  },
+  {
+    "categories": [
+      {
+        "name": "Rent",
+        "goal": 1100
+      },
+      {
+        "name": "Groceries",
+        "goal": 400
+      },
+      {
+        "name": "Dining Out",
+        "goal": 150
+      },
+      {
+        "name": "Transportation",
+        "goal": 150
+      },
+      {
+        "name": "Utilities",
+        "goal": 120
+      },
+      {
+        "name": "Education",
+        "goal": 150
+      },
+      {
+        "name": "Entertainment",
+        "goal": 80
+      },
+      {
+        "name": "Healthcare",
+        "goal": 100
+      },
+      {
+        "name": "Savings",
+        "goal": 1200
+      }
+    ],
+    "accounts": [
+      {
+        "name": "Primary Bank Account"
+      }
+    ],
+    "projects": [
+      {
+        "name": "Children's Education Fund",
+        "budget": 10000,
+        "startDate": "2024-01-01",
+        "endDate": "2030-12-31",
+        "description": "Savings for children's higher education in Germany."
+      }
+    ],
+    "transactions": [
+      {
+        "amount": -55,
+        "detailsTransactions": [
+          {
+            "name": "Vegetables & Fruits",
+            "quantity": 10,
+            "unitPrice": 3.5,
+            "amount": -35,
+            "categoryId": "Groceries",
+            "projectId": null
+          },
+          {
+            "name": "Cheese & Bread",
+            "quantity": 2,
+            "unitPrice": 10,
+            "amount": -20,
+            "categoryId": "Groceries",
+            "projectId": null
+          }
+        ],
+        "payee": "Edeka",
+        "notes": "Weekly grocery shopping",
+        "date": "2024-10-29",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Groceries"
+      },
+      {
+        "amount": -15,
+        "detailsTransactions": [
+          {
+            "name": "Bus Pass",
+            "quantity": 1,
+            "unitPrice": 15,
+            "amount": -15,
+            "categoryId": "Transportation",
+            "projectId": null
+          }
+        ],
+        "payee": "City Transport Authority",
+        "notes": "Renewal of bus pass",
+        "date": "2024-10-30",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Transportation"
+      },
+      {
+        "amount": -1100,
+        "detailsTransactions": [
+          {
+            "name": "Monthly Rent",
+            "quantity": 1,
+            "unitPrice": 1100,
+            "amount": -1100,
+            "categoryId": "Rent",
+            "projectId": null
+          }
+        ],
+        "payee": "Sunrise Apartments",
+        "notes": "Monthly rent payment for November",
+        "date": "2024-11-01",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Rent"
+      },
+      {
+        "amount": -80,
+        "detailsTransactions": [
+          {
+            "name": "Electricity Bill",
+            "quantity": 1,
+            "unitPrice": 50,
+            "amount": -50,
+            "categoryId": "Utilities",
+            "projectId": null
+          },
+          {
+            "name": "Water Bill",
+            "quantity": 1,
+            "unitPrice": 30,
+            "amount": -30,
+            "categoryId": "Utilities",
+            "projectId": null
+          }
+        ],
+        "payee": "Utility Provider Co.",
+        "notes": "Monthly utility bills",
+        "date": "2024-11-02",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Utilities"
+      },
+      {
+        "amount": -25,
+        "detailsTransactions": [
+          {
+            "name": "Streaming Service",
+            "quantity": 1,
+            "unitPrice": 15,
+            "amount": -15,
+            "categoryId": "Entertainment",
+            "projectId": null
+          },
+          {
+            "name": "Mobile App Subscription",
+            "quantity": 1,
+            "unitPrice": 10,
+            "amount": -10,
+            "categoryId": "Entertainment",
+            "projectId": null
+          }
+        ],
+        "payee": "Digital Service Providers",
+        "notes": "Monthly digital subscriptions",
+        "date": "2024-11-03",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Entertainment"
+      },
+      {
+        "amount": -45,
+        "detailsTransactions": [
+          {
+            "name": "Dinner at Restaurant",
+            "quantity": 1,
+            "unitPrice": 45,
+            "amount": -45,
+            "categoryId": "Dining Out",
+            "projectId": null
+          }
+        ],
+        "payee": "Gourmet Haven",
+        "notes": "Dinner with colleagues",
+        "date": "2024-11-04",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Dining Out"
+      }
+    ]
+  },
+  {
+    "categories": [
+      {
+        "name": "Rent",
+        "goal": 1100
+      },
+      {
+        "name": "Groceries",
+        "goal": 400
+      },
+      {
+        "name": "Dining Out",
+        "goal": 150
+      },
+      {
+        "name": "Transportation",
+        "goal": 150
+      },
+      {
+        "name": "Utilities",
+        "goal": 120
+      },
+      {
+        "name": "Education",
+        "goal": 150
+      },
+      {
+        "name": "Entertainment",
+        "goal": 80
+      },
+      {
+        "name": "Healthcare",
+        "goal": 100
+      },
+      {
+        "name": "Savings",
+        "goal": 1200
+      }
+    ],
+    "accounts": [
+      {
+        "name": "Primary Bank Account"
+      }
+    ],
+    "projects": [
+      {
+        "name": "Children's Education Fund",
+        "budget": 10000,
+        "startDate": "2024-01-01",
+        "endDate": "2030-12-31",
+        "description": "Savings for children's higher education in Germany."
+      }
+    ],
+    "transactions": [
+      {
+        "amount": -75,
+        "detailsTransactions": [
+          {
+            "name": "Organic Produce",
+            "quantity": 10,
+            "unitPrice": 4,
+            "amount": -40,
+            "categoryId": "Groceries",
+            "projectId": null
+          },
+          {
+            "name": "Chicken Thighs",
+            "quantity": 2,
+            "unitPrice": 15,
+            "amount": -30,
+            "categoryId": "Groceries",
+            "projectId": null
+          },
+          {
+            "name": "Yogurt",
+            "quantity": 1,
+            "unitPrice": 5,
+            "amount": -5,
+            "categoryId": "Groceries",
+            "projectId": null
+          }
+        ],
+        "payee": "Local Farmers Market",
+        "notes": "Weekly grocery shopping",
+        "date": "2024-11-05",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Groceries"
+      },
+      {
+        "amount": -25,
+        "detailsTransactions": [],
+        "payee": "RideShare Service",
+        "notes": "Commute to client meetings",
+        "date": "2024-11-06",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Transportation"
+      },
+      {
+        "amount": -20,
+        "detailsTransactions": [
+          {
+            "name": "Lunch with Team",
+            "quantity": 1,
+            "unitPrice": 20,
+            "amount": -20,
+            "categoryId": "Dining Out",
+            "projectId": null
+          }
+        ],
+        "payee": "City Diner",
+        "notes": "Team bonding lunch",
+        "date": "2024-11-07",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Dining Out"
+      },
+      {
+        "amount": -60,
+        "detailsTransactions": [
+          {
+            "name": "Museum Membership Renewal",
+            "quantity": 1,
+            "unitPrice": 60,
+            "amount": -60,
+            "categoryId": "Education",
+            "projectId": null
+          }
+        ],
+        "payee": "City Museum",
+        "notes": "Annual membership renewal",
+        "date": "2024-11-08",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Education"
+      },
+      {
+        "amount": -55,
+        "detailsTransactions": [
+          {
+            "name": "Fitness Club",
+            "quantity": 1,
+            "unitPrice": 55,
+            "amount": -55,
+            "categoryId": "Health & Wellness",
+            "projectId": null
+          }
+        ],
+        "payee": "Fit Life Gym",
+        "notes": "Monthly gym membership",
+        "date": "2024-11-09",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Healthcare"
+      },
+      {
+        "amount": -30,
+        "detailsTransactions": [
+          {
+            "name": "Children's Birthday Gift",
+            "quantity": 1,
+            "unitPrice": 30,
+            "amount": -30,
+            "categoryId": "Entertainment",
+            "projectId": null
+          }
+        ],
+        "payee": "Toy Store",
+        "notes": "Purchase of birthday gift",
+        "date": "2024-11-10",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Entertainment"
+      },
+      {
+        "amount": -10,
+        "detailsTransactions": [
+          {
+            "name": "Charitable Donation",
+            "quantity": 1,
+            "unitPrice": 10,
+            "amount": -10,
+            "categoryId": "Savings",
+            "projectId": null
+          }
+        ],
+        "payee": "Local Charity",
+        "notes": "Monthly charity donation",
+        "date": "2024-11-11",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Savings"
+      }
+    ]
+  },
+  {
+    "categories": [
+      {
+        "name": "Rent",
+        "goal": 1100
+      },
+      {
+        "name": "Groceries",
+        "goal": 400
+      },
+      {
+        "name": "Dining Out",
+        "goal": 150
+      },
+      {
+        "name": "Transportation",
+        "goal": 150
+      },
+      {
+        "name": "Utilities",
+        "goal": 120
+      },
+      {
+        "name": "Education",
+        "goal": 150
+      },
+      {
+        "name": "Entertainment",
+        "goal": 80
+      },
+      {
+        "name": "Healthcare",
+        "goal": 100
+      },
+      {
+        "name": "Savings",
+        "goal": 1200
+      }
+    ],
+    "accounts": [
+      {
+        "name": "Primary Bank Account"
+      }
+    ],
+    "projects": [
+      {
+        "name": "Children's Education Fund",
+        "budget": 10000,
+        "startDate": "2024-01-01",
+        "endDate": "2030-12-31",
+        "description": "Savings for children's higher education in Germany."
+      }
+    ],
+    "transactions": [
+      {
+        "amount": -65,
+        "detailsTransactions": [
+          {
+            "name": "Vegetables",
+            "quantity": 6,
+            "unitPrice": 3.5,
+            "amount": -21,
+            "categoryId": "Groceries",
+            "projectId": null
+          },
+          {
+            "name": "Fish Fillets",
+            "quantity": 2,
+            "unitPrice": 18,
+            "amount": -36,
+            "categoryId": "Groceries",
+            "projectId": null
+          },
+          {
+            "name": "Bread",
+            "quantity": 2,
+            "unitPrice": 4,
+            "amount": -8,
+            "categoryId": "Groceries",
+            "projectId": null
+          }
+        ],
+        "payee": "Bio Supermarket",
+        "notes": "Weekly grocery shopping",
+        "date": "2024-11-12",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Groceries"
+      },
+      {
+        "amount": -20,
+        "detailsTransactions": [],
+        "payee": "Local Taxi Service",
+        "notes": "Transportation for the week",
+        "date": "2024-11-13",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Transportation"
+      },
+      {
+        "amount": -50,
+        "detailsTransactions": [
+          {
+            "name": "Dinner at Vegan Restaurant",
+            "quantity": 1,
+            "unitPrice": 50,
+            "amount": -50,
+            "categoryId": "Dining Out",
+            "projectId": null
+          }
+        ],
+        "payee": "Green Cuisine",
+        "notes": "Dinner with family",
+        "date": "2024-11-14",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Dining Out"
+      },
+      {
+        "amount": -30,
+        "detailsTransactions": [
+          {
+            "name": "Online Course Fee",
+            "quantity": 1,
+            "unitPrice": 30,
+            "amount": -30,
+            "categoryId": "Education",
+            "projectId": null
+          }
+        ],
+        "payee": "Online Learning Platform",
+        "notes": "Upcoming Capstone Course",
+        "date": "2024-11-15",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Education"
+      },
+      {
+        "amount": -40,
+        "detailsTransactions": [],
+        "payee": "Private Clinic",
+        "notes": "Routine health examination",
+        "date": "2024-11-16",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Healthcare"
+      },
+      {
+        "amount": -15,
+        "detailsTransactions": [
+          {
+            "name": "Streaming Movie Rental",
+            "quantity": 1,
+            "unitPrice": 15,
+            "amount": -15,
+            "categoryId": "Entertainment",
+            "projectId": null
+          }
+        ],
+        "payee": "Digital Cinema Service",
+        "notes": "Weekend movie rental",
+        "date": "2024-11-17",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Entertainment"
+      },
+      {
+        "amount": -20,
+        "detailsTransactions": [
+          {
+            "name": "Advance Savings Contribution",
+            "quantity": 1,
+            "unitPrice": 20,
+            "amount": -20,
+            "categoryId": "Savings",
+            "projectId": "Children's Education Fund"
+          }
+        ],
+        "payee": "Savings Account",
+        "notes": "Additional contribution for children's education",
+        "date": "2024-11-18",
+        "projectId": "Children's Education Fund",
+        "accountId": "Primary Bank Account",
+        "categoryId": "Savings"
+      }
+    ]
+  },
+  {
+    "categories": [
+      {
+        "name": "Rent",
+        "goal": 1100
+      },
+      {
+        "name": "Groceries",
+        "goal": 400
+      },
+      {
+        "name": "Dining Out",
+        "goal": 150
+      },
+      {
+        "name": "Transportation",
+        "goal": 150
+      },
+      {
+        "name": "Utilities",
+        "goal": 120
+      },
+      {
+        "name": "Education",
+        "goal": 150
+      },
+      {
+        "name": "Entertainment",
+        "goal": 80
+      },
+      {
+        "name": "Healthcare",
+        "goal": 100
+      },
+      {
+        "name": "Savings",
+        "goal": 1200
+      }
+    ],
+    "accounts": [
+      {
+        "name": "Primary Bank Account"
+      }
+    ],
+    "projects": [
+      {
+        "name": "Children's Education Fund",
+        "budget": 10000,
+        "startDate": "2024-01-01",
+        "endDate": "2030-12-31",
+        "description": "Savings for children's higher education in Germany."
+      }
+    ],
+    "transactions": [
+      {
+        "amount": -70,
+        "detailsTransactions": [
+          {
+            "name": "Apples & Oranges",
+            "quantity": 15,
+            "unitPrice": 2,
+            "amount": -30,
+            "categoryId": "Groceries",
+            "projectId": null
+          },
+          {
+            "name": "Dairy Products",
+            "quantity": 5,
+            "unitPrice": 8,
+            "amount": -40,
+            "categoryId": "Groceries",
+            "projectId": null
+          }
+        ],
+        "payee": "Supermarkt Hirsch",
+        "notes": "Weekly grocery shopping",
+        "date": "2024-11-19",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Groceries"
+      },
+      {
+        "amount": -10,
+        "detailsTransactions": [
+          {
+            "name": "Weekly Transport Pass",
+            "quantity": 1,
+            "unitPrice": 10,
+            "amount": -10,
+            "categoryId": "Transportation",
+            "projectId": null
+          }
+        ],
+        "payee": "City Transport Authority",
+        "notes": "Public transport for the week",
+        "date": "2024-11-20",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Transportation"
+      },
+      {
+        "amount": -60,
+        "detailsTransactions": [
+          {
+            "name": "Dinner Party",
+            "quantity": 1,
+            "unitPrice": 60,
+            "amount": -60,
+            "categoryId": "Dining Out",
+            "projectId": null
+          }
+        ],
+        "payee": "Bavarian Gourmet",
+        "notes": "Dinner with colleagues",
+        "date": "2024-11-21",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Dining Out"
+      },
+      {
+        "amount": -45,
+        "detailsTransactions": [
+          {
+            "name": "Yoga Class Subscription",
+            "quantity": 1,
+            "unitPrice": 45,
+            "amount": -45,
+            "categoryId": "Health & Wellness",
+            "projectId": null
+          }
+        ],
+        "payee": "Yoga Studio",
+        "notes": "Monthly yoga classes",
+        "date": "2024-11-22",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Healthcare"
+      },
+      {
+        "amount": -20,
+        "detailsTransactions": [
+          {
+            "name": "Kids Educational Games",
+            "quantity": 2,
+            "unitPrice": 10,
+            "amount": -20,
+            "categoryId": "Education",
+            "projectId": null
+          }
+        ],
+        "payee": "Toy Store",
+        "notes": "Games for educational purposes",
+        "date": "2024-11-23",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Education"
+      },
+      {
+        "amount": -15,
+        "detailsTransactions": [
+          {
+            "name": "Family Movie Night",
+            "quantity": 1,
+            "unitPrice": 15,
+            "amount": -15,
+            "categoryId": "Entertainment",
+            "projectId": null
+          }
+        ],
+        "payee": "Home Streaming Platform",
+        "notes": "Family movie night",
+        "date": "2024-11-24",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Entertainment"
+      },
+      {
+        "amount": -100,
+        "detailsTransactions": [
+          {
+            "name": "Monthly Savings Deposit",
+            "quantity": 1,
+            "unitPrice": 100,
+            "amount": -100,
+            "categoryId": "Savings",
+            "projectId": "Children's Education Fund"
+          }
+        ],
+        "payee": "Savings Account",
+        "notes": "Monthly contribution to education fund",
+        "date": "2024-11-25",
+        "projectId": "Children's Education Fund",
+        "accountId": "Primary Bank Account",
+        "categoryId": "Savings"
+      }
+    ]
+  },
+  {
+    "categories": [
+      {
+        "name": "Rent",
+        "goal": 1100
+      },
+      {
+        "name": "Groceries",
+        "goal": 400
+      },
+      {
+        "name": "Dining Out",
+        "goal": 150
+      },
+      {
+        "name": "Transportation",
+        "goal": 150
+      },
+      {
+        "name": "Utilities",
+        "goal": 120
+      },
+      {
+        "name": "Education",
+        "goal": 150
+      },
+      {
+        "name": "Entertainment",
+        "goal": 80
+      },
+      {
+        "name": "Healthcare",
+        "goal": 100
+      },
+      {
+        "name": "Savings",
+        "goal": 1200
+      }
+    ],
+    "accounts": [
+      {
+        "name": "Primary Bank Account"
+      }
+    ],
+    "projects": [
+      {
+        "name": "Children's Education Fund",
+        "budget": 10000,
+        "startDate": "2024-01-01",
+        "endDate": "2030-12-31",
+        "description": "Savings for children's higher education in Germany."
+      }
+    ],
+    "transactions": [
+      {
+        "amount": -68,
+        "detailsTransactions": [
+          {
+            "name": "Fresh Vegetables",
+            "quantity": 12,
+            "unitPrice": 2.5,
+            "amount": -30,
+            "categoryId": "Groceries",
+            "projectId": null
+          },
+          {
+            "name": "Chicken Breast",
+            "quantity": 3,
+            "unitPrice": 10,
+            "amount": -30,
+            "categoryId": "Groceries",
+            "projectId": null
+          },
+          {
+            "name": "Juice Boxes",
+            "quantity": 2,
+            "unitPrice": 4,
+            "amount": -8,
+            "categoryId": "Groceries",
+            "projectId": null
+          }
+        ],
+        "payee": "Discount Markt",
+        "notes": "Grocery shopping for the week",
+        "date": "2024-11-26",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Groceries"
+      },
+      {
+        "amount": -15,
+        "detailsTransactions": [
+          {
+            "name": "Tram Pass",
+            "quantity": 1,
+            "unitPrice": 15,
+            "amount": -15,
+            "categoryId": "Transportation",
+            "projectId": null
+          }
+        ],
+        "payee": "Public Transport",
+        "notes": "Weekly tram pass",
+        "date": "2024-11-27",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Transportation"
+      },
+      {
+        "amount": -45,
+        "detailsTransactions": [
+          {
+            "name": "Family Dinner",
+            "quantity": 1,
+            "unitPrice": 45,
+            "amount": -45,
+            "categoryId": "Dining Out",
+            "projectId": null
+          }
+        ],
+        "payee": "Family Restaurant",
+        "notes": "Monthly family dinner out",
+        "date": "2024-11-28",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Dining Out"
+      },
+      {
+        "amount": -75,
+        "detailsTransactions": [],
+        "payee": "Utility Company",
+        "notes": "Utility bill for electricity and gas",
+        "date": "2024-11-29",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Utilities"
+      },
+      {
+        "amount": -35,
+        "detailsTransactions": [
+          {
+            "name": "Language Course Subscription",
+            "quantity": 1,
+            "unitPrice": 35,
+            "amount": -35,
+            "categoryId": "Education",
+            "projectId": null
+          }
+        ],
+        "payee": "Language Learning Platform",
+        "notes": "Monthly subscription for online German classes",
+        "date": "2024-11-30",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Education"
+      },
+      {
+        "amount": -60,
+        "detailsTransactions": [
+          {
+            "name": "Monthly Gym Membership",
+            "quantity": 1,
+            "unitPrice": 60,
+            "amount": -60,
+            "categoryId": "Healthcare",
+            "projectId": null
+          }
+        ],
+        "payee": "Fitness Center",
+        "notes": "Monthly health and wellness",
+        "date": "2024-12-01",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Healthcare"
+      },
+      {
+        "amount": -1200,
+        "detailsTransactions": [
+          {
+            "name": "Rent Payment",
+            "quantity": 1,
+            "unitPrice": 1200,
+            "amount": -1200,
+            "categoryId": "Rent",
+            "projectId": null
+          }
+        ],
+        "payee": "Sunrise Apartments",
+        "notes": "Rent payment for December",
+        "date": "2024-12-02",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Rent"
+      }
+    ]
+  },
+  {
+    "categories": [
+      {
+        "name": "Rent",
+        "goal": 1100
+      },
+      {
+        "name": "Groceries",
+        "goal": 400
+      },
+      {
+        "name": "Dining Out",
+        "goal": 150
+      },
+      {
+        "name": "Transportation",
+        "goal": 150
+      },
+      {
+        "name": "Utilities",
+        "goal": 120
+      },
+      {
+        "name": "Education",
+        "goal": 150
+      },
+      {
+        "name": "Entertainment",
+        "goal": 80
+      },
+      {
+        "name": "Healthcare",
+        "goal": 100
+      },
+      {
+        "name": "Savings",
+        "goal": 1200
+      }
+    ],
+    "accounts": [
+      {
+        "name": "Primary Bank Account"
+      }
+    ],
+    "projects": [
+      {
+        "name": "Children's Education Fund",
+        "budget": 10000,
+        "startDate": "2024-01-01",
+        "endDate": "2030-12-31",
+        "description": "Savings for children's higher education in Germany."
+      }
+    ],
+    "transactions": [
+      {
+        "amount": -72,
+        "detailsTransactions": [
+          {
+            "name": "Organic Produce",
+            "quantity": 14,
+            "unitPrice": 3,
+            "amount": -42,
+            "categoryId": "Groceries",
+            "projectId": null
+          },
+          {
+            "name": "Pasta",
+            "quantity": 2,
+            "unitPrice": 5,
+            "amount": -10,
+            "categoryId": "Groceries",
+            "projectId": null
+          },
+          {
+            "name": "Cheese",
+            "quantity": 2,
+            "unitPrice": 10,
+            "amount": -20,
+            "categoryId": "Groceries",
+            "projectId": null
+          }
+        ],
+        "payee": "Bio Laden",
+        "notes": "Weekly grocery purchase",
+        "date": "2024-12-03",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Groceries"
+      },
+      {
+        "amount": -12,
+        "detailsTransactions": [
+          {
+            "name": "Bus & Train Card",
+            "quantity": 1,
+            "unitPrice": 12,
+            "amount": -12,
+            "categoryId": "Transportation",
+            "projectId": null
+          }
+        ],
+        "payee": "City Transport Service",
+        "notes": "Week's transport card",
+        "date": "2024-12-04",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Transportation"
+      },
+      {
+        "amount": -50,
+        "detailsTransactions": [
+          {
+            "name": "Colleague Lunch",
+            "quantity": 1,
+            "unitPrice": 25,
+            "amount": -25,
+            "categoryId": "Dining Out",
+            "projectId": null
+          },
+          {
+            "name": "Coffee with Friends",
+            "quantity": 1,
+            "unitPrice": 25,
+            "amount": -25,
+            "categoryId": "Dining Out",
+            "projectId": null
+          }
+        ],
+        "payee": "Cafe & Bistro",
+        "notes": "Social lunches during the week",
+        "date": "2024-12-05",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Dining Out"
+      },
+      {
+        "amount": -45,
+        "detailsTransactions": [
+          {
+            "name": "Service Fee",
+            "quantity": 1,
+            "unitPrice": 45,
+            "amount": -45,
+            "categoryId": "Healthcare",
+            "projectId": null
+          }
+        ],
+        "payee": "Health Service Provider",
+        "notes": "Routine appointment charge",
+        "date": "2024-12-06",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Healthcare"
+      },
+      {
+        "amount": -30,
+        "detailsTransactions": [
+          {
+            "name": "Board Game",
+            "quantity": 1,
+            "unitPrice": 30,
+            "amount": -30,
+            "categoryId": "Entertainment",
+            "projectId": null
+          }
+        ],
+        "payee": "Toy Shop",
+        "notes": "New game for family night",
+        "date": "2024-12-07",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Entertainment"
+      },
+      {
+        "amount": -25,
+        "detailsTransactions": [
+          {
+            "name": "Concert Tickets",
+            "quantity": 2,
+            "unitPrice": 12.5,
+            "amount": -25,
+            "categoryId": "Entertainment",
+            "projectId": null
+          }
+        ],
+        "payee": "Concert Venue",
+        "notes": "Tickets to music concert",
+        "date": "2024-12-08",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Entertainment"
+      },
+      {
+        "amount": -110,
+        "detailsTransactions": [
+          {
+            "name": "Monthly Savings Contribution",
+            "quantity": 1,
+            "unitPrice": 110,
+            "amount": -110,
+            "categoryId": "Savings",
+            "projectId": "Children's Education Fund"
+          }
+        ],
+        "payee": "Savings Institution",
+        "notes": "Regular savings for education fund",
+        "date": "2024-12-09",
+        "projectId": "Children's Education Fund",
+        "accountId": "Primary Bank Account",
+        "categoryId": "Savings"
+      }
+    ]
+  },
+  {
+    "categories": [
+      {
+        "name": "Rent",
+        "goal": 1100
+      },
+      {
+        "name": "Groceries",
+        "goal": 400
+      },
+      {
+        "name": "Dining Out",
+        "goal": 150
+      },
+      {
+        "name": "Transportation",
+        "goal": 150
+      },
+      {
+        "name": "Utilities",
+        "goal": 120
+      },
+      {
+        "name": "Education",
+        "goal": 150
+      },
+      {
+        "name": "Entertainment",
+        "goal": 80
+      },
+      {
+        "name": "Healthcare",
+        "goal": 100
+      },
+      {
+        "name": "Savings",
+        "goal": 1200
+      }
+    ],
+    "accounts": [
+      {
+        "name": "Primary Bank Account"
+      }
+    ],
+    "projects": [
+      {
+        "name": "Children's Education Fund",
+        "budget": 10000,
+        "startDate": "2024-01-01",
+        "endDate": "2030-12-31",
+        "description": "Savings for children's higher education in Germany."
+      }
+    ],
+    "transactions": [
+      {
+        "amount": -67,
+        "detailsTransactions": [
+          {
+            "name": "Fresh Produce",
+            "quantity": 14,
+            "unitPrice": 3,
+            "amount": -42,
+            "categoryId": "Groceries",
+            "projectId": null
+          },
+          {
+            "name": "Chicken",
+            "quantity": 1,
+            "unitPrice": 15,
+            "amount": -15,
+            "categoryId": "Groceries",
+            "projectId": null
+          },
+          {
+            "name": "Milk",
+            "quantity": 2,
+            "unitPrice": 5,
+            "amount": -10,
+            "categoryId": "Groceries",
+            "projectId": null
+          }
+        ],
+        "payee": "Famila Supermarkt",
+        "notes": "Grocery run for the week",
+        "date": "2024-12-10",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Groceries"
+      },
+      {
+        "amount": -20,
+        "detailsTransactions": [
+          {
+            "name": "Weekly Ticket",
+            "quantity": 1,
+            "unitPrice": 20,
+            "amount": -20,
+            "categoryId": "Transportation",
+            "projectId": null
+          }
+        ],
+        "payee": "Transport Network",
+        "notes": "Weekly metro ticket",
+        "date": "2024-12-11",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Transportation"
+      },
+      {
+        "amount": -40,
+        "detailsTransactions": [
+          {
+            "name": "Lunchtime Treat",
+            "quantity": 1,
+            "unitPrice": 40,
+            "amount": -40,
+            "categoryId": "Dining Out",
+            "projectId": null
+          }
+        ],
+        "payee": "Downtown Eatery",
+        "notes": "Midweek lunch treat",
+        "date": "2024-12-12",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Dining Out"
+      },
+      {
+        "amount": -30,
+        "detailsTransactions": [],
+        "payee": "Online Learning Platform",
+        "notes": "Monthly subscription renewal",
+        "date": "2024-12-13",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Education"
+      },
+      {
+        "amount": -50,
+        "detailsTransactions": [
+          {
+            "name": "Children's Holiday Performance",
+            "quantity": 1,
+            "unitPrice": 50,
+            "amount": -50,
+            "categoryId": "Entertainment",
+            "projectId": null
+          }
+        ],
+        "payee": "Local Theater",
+        "notes": "Booking for children's holiday show",
+        "date": "2024-12-14",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Entertainment"
+      },
+      {
+        "amount": -35,
+        "detailsTransactions": [
+          {
+            "name": "Gift Shopping",
+            "quantity": 1,
+            "unitPrice": 35,
+            "amount": -35,
+            "categoryId": "Miscellaneous",
+            "projectId": null
+          }
+        ],
+        "payee": "Department Store",
+        "notes": "Gifts for upcoming celebrations",
+        "date": "2024-12-15",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Miscellaneous"
+      },
+      {
+        "amount": -120,
+        "detailsTransactions": [
+          {
+            "name": "Additional Savings",
+            "quantity": 1,
+            "unitPrice": 120,
+            "amount": -120,
+            "categoryId": "Savings",
+            "projectId": "Children's Education Fund"
+          }
+        ],
+        "payee": "Bank of Savings",
+        "notes": "Extra savings for education fund",
+        "date": "2024-12-16",
+        "projectId": "Children's Education Fund",
+        "accountId": "Primary Bank Account",
+        "categoryId": "Savings"
+      }
+    ]
+  },
+  {
+    "categories": [
+      {
+        "name": "Rent",
+        "goal": 1100
+      },
+      {
+        "name": "Groceries",
+        "goal": 400
+      },
+      {
+        "name": "Dining Out",
+        "goal": 150
+      },
+      {
+        "name": "Transportation",
+        "goal": 150
+      },
+      {
+        "name": "Utilities",
+        "goal": 120
+      },
+      {
+        "name": "Education",
+        "goal": 150
+      },
+      {
+        "name": "Entertainment",
+        "goal": 80
+      },
+      {
+        "name": "Healthcare",
+        "goal": 100
+      },
+      {
+        "name": "Savings",
+        "goal": 1200
+      }
+    ],
+    "accounts": [
+      {
+        "name": "Primary Bank Account"
+      }
+    ],
+    "projects": [
+      {
+        "name": "Children's Education Fund",
+        "budget": 10000,
+        "startDate": "2024-01-01",
+        "endDate": "2030-12-31",
+        "description": "Savings for children's higher education in Germany."
+      }
+    ],
+    "transactions": [
+      {
+        "amount": -70,
+        "detailsTransactions": [
+          {
+            "name": "Winter Vegetables",
+            "quantity": 10,
+            "unitPrice": 3,
+            "amount": -30,
+            "categoryId": "Groceries",
+            "projectId": null
+          },
+          {
+            "name": "Beef",
+            "quantity": 2,
+            "unitPrice": 20,
+            "amount": -40,
+            "categoryId": "Groceries",
+            "projectId": null
+          }
+        ],
+        "payee": "Lidl",
+        "notes": "Weekly groceries for holidays",
+        "date": "2024-12-17",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Groceries"
+      },
+      {
+        "amount": -25,
+        "detailsTransactions": [
+          {
+            "name": "Public Transit Pass",
+            "quantity": 1,
+            "unitPrice": 25,
+            "amount": -25,
+            "categoryId": "Transportation",
+            "projectId": null
+          }
+        ],
+        "payee": "Transport Authority",
+        "notes": "Week's public transit pass",
+        "date": "2024-12-18",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Transportation"
+      },
+      {
+        "amount": -60,
+        "detailsTransactions": [
+          {
+            "name": "Holiday Dinner",
+            "quantity": 1,
+            "unitPrice": 60,
+            "amount": -60,
+            "categoryId": "Dining Out",
+            "projectId": null
+          }
+        ],
+        "payee": "Traditional Restaurant",
+        "notes": "Dinner with extended family",
+        "date": "2024-12-19",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Dining Out"
+      },
+      {
+        "amount": -55,
+        "detailsTransactions": [
+          {
+            "name": "Health Insurance Premium",
+            "quantity": 1,
+            "unitPrice": 55,
+            "amount": -55,
+            "categoryId": "Healthcare",
+            "projectId": null
+          }
+        ],
+        "payee": "Health Insurance Inc.",
+        "notes": "Monthly premium",
+        "date": "2024-12-20",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Healthcare"
+      },
+      {
+        "amount": -50,
+        "detailsTransactions": [
+          {
+            "name": "Piano Recital Tickets",
+            "quantity": 2,
+            "unitPrice": 25,
+            "amount": -50,
+            "categoryId": "Entertainment",
+            "projectId": null
+          }
+        ],
+        "payee": "Concert Hall",
+        "notes": "Holiday recital tickets for family",
+        "date": "2024-12-21",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Entertainment"
+      },
+      {
+        "amount": -90,
+        "detailsTransactions": [],
+        "payee": "Utility Services",
+        "notes": "Combined utility bills for electricity and water",
+        "date": "2024-12-22",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Utilities"
+      },
+      {
+        "amount": -115,
+        "detailsTransactions": [
+          {
+            "name": "Year-End Savings",
+            "quantity": 1,
+            "unitPrice": 115,
+            "amount": -115,
+            "categoryId": "Savings",
+            "projectId": "Children's Education Fund"
+          }
+        ],
+        "payee": "Savings Account",
+        "notes": "Year-end contribution to education fund",
+        "date": "2024-12-23",
+        "projectId": "Children's Education Fund",
+        "accountId": "Primary Bank Account",
+        "categoryId": "Savings"
+      }
+    ]
+  },
+  {
+    "categories": [
+      {
+        "name": "Rent",
+        "goal": 1100
+      },
+      {
+        "name": "Groceries",
+        "goal": 400
+      },
+      {
+        "name": "Dining Out",
+        "goal": 150
+      },
+      {
+        "name": "Transportation",
+        "goal": 150
+      },
+      {
+        "name": "Utilities",
+        "goal": 120
+      },
+      {
+        "name": "Education",
+        "goal": 150
+      },
+      {
+        "name": "Entertainment",
+        "goal": 80
+      },
+      {
+        "name": "Healthcare",
+        "goal": 100
+      },
+      {
+        "name": "Savings",
+        "goal": 1200
+      }
+    ],
+    "accounts": [
+      {
+        "name": "Primary Bank Account"
+      }
+    ],
+    "projects": [
+      {
+        "name": "Children's Education Fund",
+        "budget": 10000,
+        "startDate": "2024-01-01",
+        "endDate": "2030-12-31",
+        "description": "Savings for children's higher education in Germany."
+      }
+    ],
+    "transactions": [
+      {
+        "amount": -100,
+        "detailsTransactions": [
+          {
+            "name": "Festive Groceries",
+            "quantity": 1,
+            "unitPrice": 100,
+            "amount": -100,
+            "categoryId": "Groceries",
+            "projectId": null
+          }
+        ],
+        "payee": "Supermarket",
+        "notes": "Grocery shopping for holiday celebrations",
+        "date": "2024-12-24",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Groceries"
+      },
+      {
+        "amount": -10,
+        "detailsTransactions": [],
+        "payee": "Local Taxi Service",
+        "notes": "Holiday travel around town",
+        "date": "2024-12-25",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Transportation"
+      },
+      {
+        "amount": -20,
+        "detailsTransactions": [
+          {
+            "name": "Gift Cards",
+            "quantity": 4,
+            "unitPrice": 5,
+            "amount": -20,
+            "categoryId": "Miscellaneous",
+            "projectId": null
+          }
+        ],
+        "payee": "Department Store",
+        "notes": "Last-minute gift cards",
+        "date": "2024-12-26",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Miscellaneous"
+      },
+      {
+        "amount": -45,
+        "detailsTransactions": [
+          {
+            "name": "New Year Posters and Decor",
+            "quantity": 1,
+            "unitPrice": 45,
+            "amount": -45,
+            "categoryId": "Entertainment",
+            "projectId": null
+          }
+        ],
+        "payee": "Party Supplies Store",
+        "notes": "New Year’s party decorations",
+        "date": "2024-12-27",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Entertainment"
+      },
+      {
+        "amount": -90,
+        "detailsTransactions": [],
+        "payee": "Yoga Studio",
+        "notes": "Renewal for wellness into the new year",
+        "date": "2024-12-28",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Healthcare"
+      },
+      {
+        "amount": -150,
+        "detailsTransactions": [],
+        "payee": "Charitable Organization",
+        "notes": "Year-end charity contribution",
+        "date": "2024-12-29",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Savings"
+      },
+      {
+        "amount": -85,
+        "detailsTransactions": [
+          {
+            "name": "Extra Savings for Holidays",
+            "quantity": 1,
+            "unitPrice": 85,
+            "amount": -85,
+            "categoryId": "Savings",
+            "projectId": "Children's Education Fund"
+          }
+        ],
+        "payee": "Savings Account",
+        "notes": "Extra holiday season savings",
+        "date": "2024-12-30",
+        "projectId": "Children's Education Fund",
+        "accountId": "Primary Bank Account",
+        "categoryId": "Savings"
+      }
+    ]
+  },
+  {
+    "categories": [
+      {
+        "name": "Rent",
+        "goal": 1100
+      },
+      {
+        "name": "Groceries",
+        "goal": 400
+      },
+      {
+        "name": "Dining Out",
+        "goal": 150
+      },
+      {
+        "name": "Transportation",
+        "goal": 150
+      },
+      {
+        "name": "Utilities",
+        "goal": 120
+      },
+      {
+        "name": "Education",
+        "goal": 150
+      },
+      {
+        "name": "Entertainment",
+        "goal": 80
+      },
+      {
+        "name": "Healthcare",
+        "goal": 100
+      },
+      {
+        "name": "Savings",
+        "goal": 1200
+      },
+      {
+        "name": "Miscellaneous",
+        "goal": 50
+      }
+    ],
+    "accounts": [
+      {
+        "name": "Primary Bank Account"
+      }
+    ],
+    "projects": [
+      {
+        "name": "Children's Education Fund",
+        "budget": 10000,
+        "startDate": "2024-01-01",
+        "endDate": "2030-12-31",
+        "description": "Savings for children's higher education in Germany."
+      }
+    ],
+    "transactions": [
+      {
+        "amount": -85,
+        "detailsTransactions": [
+          {
+            "name": "New Year's Eve Party Supplies",
+            "quantity": 1,
+            "unitPrice": 85,
+            "amount": -85,
+            "categoryId": "Entertainment",
+            "projectId": null
+          }
+        ],
+        "payee": "Party Shop",
+        "notes": "Celebration essentials for New Year's Eve",
+        "date": "2024-12-31",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Entertainment"
+      },
+      {
+        "amount": -1100,
+        "detailsTransactions": [
+          {
+            "name": "Monthly Rent",
+            "quantity": 1,
+            "unitPrice": 1100,
+            "amount": -1100,
+            "categoryId": "Rent",
+            "projectId": null
+          }
+        ],
+        "payee": "Sunrise Apartments",
+        "notes": "Rent payment for January",
+        "date": "2025-01-01",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Rent"
+      },
+      {
+        "amount": -120,
+        "detailsTransactions": [
+          {
+            "name": "Utility Bills for January",
+            "quantity": 1,
+            "unitPrice": 120,
+            "amount": -120,
+            "categoryId": "Utilities",
+            "projectId": null
+          }
+        ],
+        "payee": "Utility Provider",
+        "notes": "Monthly utility bills",
+        "date": "2025-01-02",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Utilities"
+      },
+      {
+        "amount": -65,
+        "detailsTransactions": [
+          {
+            "name": "Weekly Groceries",
+            "quantity": 1,
+            "unitPrice": 65,
+            "amount": -65,
+            "categoryId": "Groceries",
+            "projectId": null
+          }
+        ],
+        "payee": "Groceries Superstore",
+        "notes": "Groceries for the first week of the New Year",
+        "date": "2025-01-03",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Groceries"
+      },
+      {
+        "amount": -15,
+        "detailsTransactions": [
+          {
+            "name": "Weekly Travel Card",
+            "quantity": 1,
+            "unitPrice": 15,
+            "amount": -15,
+            "categoryId": "Transportation",
+            "projectId": null
+          }
+        ],
+        "payee": "Transport Authority",
+        "notes": "Weekly travel for public transportation",
+        "date": "2025-01-04",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Transportation"
+      },
+      {
+        "amount": -20,
+        "detailsTransactions": [
+          {
+            "name": "Day Out Lunch",
+            "quantity": 1,
+            "unitPrice": 20,
+            "amount": -20,
+            "categoryId": "Dining Out",
+            "projectId": null
+          }
+        ],
+        "payee": "Cafe Corner",
+        "notes": "Lunch during weekend outing",
+        "date": "2025-01-05",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Dining Out"
+      },
+      {
+        "amount": -100,
+        "detailsTransactions": [
+          {
+            "name": "Annual Contribution to Savings",
+            "quantity": 1,
+            "unitPrice": 100,
+            "amount": -100,
+            "categoryId": "Savings",
+            "projectId": "Children's Education Fund"
+          }
+        ],
+        "payee": "Savings Account",
+        "notes": "Annual savings contribution for children's education",
+        "date": "2025-01-06",
+        "projectId": "Children's Education Fund",
+        "accountId": "Primary Bank Account",
+        "categoryId": "Savings"
+      }
+    ]
+  },
+  {
+    "categories": [
+      {
+        "name": "Rent",
+        "goal": 1100
+      },
+      {
+        "name": "Groceries",
+        "goal": 400
+      },
+      {
+        "name": "Dining Out",
+        "goal": 150
+      },
+      {
+        "name": "Transportation",
+        "goal": 150
+      },
+      {
+        "name": "Utilities",
+        "goal": 120
+      },
+      {
+        "name": "Education",
+        "goal": 150
+      },
+      {
+        "name": "Entertainment",
+        "goal": 80
+      },
+      {
+        "name": "Healthcare",
+        "goal": 100
+      },
+      {
+        "name": "Savings",
+        "goal": 1200
+      },
+      {
+        "name": "Miscellaneous",
+        "goal": 50
+      }
+    ],
+    "accounts": [
+      {
+        "name": "Primary Bank Account"
+      }
+    ],
+    "projects": [
+      {
+        "name": "Children's Education Fund",
+        "budget": 10000,
+        "startDate": "2024-01-01",
+        "endDate": "2030-12-31",
+        "description": "Savings for children's higher education in Germany."
+      }
+    ],
+    "transactions": [
+      {
+        "amount": -70,
+        "detailsTransactions": [
+          {
+            "name": "Organic Groceries",
+            "quantity": 1,
+            "unitPrice": 70,
+            "amount": -70,
+            "categoryId": "Groceries",
+            "projectId": null
+          }
+        ],
+        "payee": "Organic Market",
+        "notes": "Weekly groceries",
+        "date": "2025-01-07",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Groceries"
+      },
+      {
+        "amount": -10,
+        "detailsTransactions": [
+          {
+            "name": "Bus Tickets",
+            "quantity": 1,
+            "unitPrice": 10,
+            "amount": -10,
+            "categoryId": "Transportation",
+            "projectId": null
+          }
+        ],
+        "payee": "Bus Company",
+        "notes": "Public transportation for the week",
+        "date": "2025-01-08",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Transportation"
+      },
+      {
+        "amount": -60,
+        "detailsTransactions": [
+          {
+            "name": "Fuel",
+            "quantity": 1,
+            "unitPrice": 60,
+            "amount": -60,
+            "categoryId": "Transportation",
+            "projectId": null
+          }
+        ],
+        "payee": "Gas Station",
+        "notes": "Refueling the car",
+        "date": "2025-01-09",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Transportation"
+      },
+      {
+        "amount": -25,
+        "detailsTransactions": [
+          {
+            "name": "Office Lunch",
+            "quantity": 1,
+            "unitPrice": 25,
+            "amount": -25,
+            "categoryId": "Dining Out",
+            "projectId": null
+          }
+        ],
+        "payee": "Downtown Deli",
+        "notes": "Lunch with colleagues",
+        "date": "2025-01-10",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Dining Out"
+      },
+      {
+        "amount": -30,
+        "detailsTransactions": [
+          {
+            "name": "Online Course Subscription",
+            "quantity": 1,
+            "unitPrice": 30,
+            "amount": -30,
+            "categoryId": "Education",
+            "projectId": null
+          }
+        ],
+        "payee": "Online Learning Platform",
+        "notes": "Monthly subscription renewal",
+        "date": "2025-01-11",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Education"
+      },
+      {
+        "amount": -15,
+        "detailsTransactions": [
+          {
+            "name": "Family Movie Rental",
+            "quantity": 1,
+            "unitPrice": 15,
+            "amount": -15,
+            "categoryId": "Entertainment",
+            "projectId": null
+          }
+        ],
+        "payee": "Streaming Service",
+        "notes": "Weekend family movie night rental",
+        "date": "2025-01-12",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Entertainment"
+      },
+      {
+        "amount": -50,
+        "detailsTransactions": [
+          {
+            "name": "Doctor's Consultation",
+            "quantity": 1,
+            "unitPrice": 50,
+            "amount": -50,
+            "categoryId": "Healthcare",
+            "projectId": null
+          }
+        ],
+        "payee": "Medical Center",
+        "notes": "Routine health check-up",
+        "date": "2025-01-13",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Healthcare"
+      }
+    ]
+  },
+  {
+    "categories": [
+      {
+        "name": "Rent",
+        "goal": 1100
+      },
+      {
+        "name": "Groceries",
+        "goal": 400
+      },
+      {
+        "name": "Dining Out",
+        "goal": 150
+      },
+      {
+        "name": "Transportation",
+        "goal": 150
+      },
+      {
+        "name": "Utilities",
+        "goal": 120
+      },
+      {
+        "name": "Education",
+        "goal": 150
+      },
+      {
+        "name": "Entertainment",
+        "goal": 80
+      },
+      {
+        "name": "Healthcare",
+        "goal": 100
+      },
+      {
+        "name": "Savings",
+        "goal": 1200
+      },
+      {
+        "name": "Miscellaneous",
+        "goal": 50
+      }
+    ],
+    "accounts": [
+      {
+        "name": "Primary Bank Account"
+      }
+    ],
+    "projects": [
+      {
+        "name": "Children's Education Fund",
+        "budget": 10000,
+        "startDate": "2024-01-01",
+        "endDate": "2030-12-31",
+        "description": "Savings for children's higher education in Germany."
+      }
+    ],
+    "transactions": [
+      {
+        "amount": -65,
+        "detailsTransactions": [
+          {
+            "name": "Fresh Vegetables & Meat",
+            "quantity": 1,
+            "unitPrice": 65,
+            "amount": -65,
+            "categoryId": "Groceries",
+            "projectId": null
+          }
+        ],
+        "payee": "Grocery Store",
+        "notes": "Weekly grocery shopping",
+        "date": "2025-01-14",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Groceries"
+      },
+      {
+        "amount": -12,
+        "detailsTransactions": [
+          {
+            "name": "Tram Pass",
+            "quantity": 1,
+            "unitPrice": 12,
+            "amount": -12,
+            "categoryId": "Transportation",
+            "projectId": null
+          }
+        ],
+        "payee": "City Transport",
+        "notes": "Weekly tram pass",
+        "date": "2025-01-15",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Transportation"
+      },
+      {
+        "amount": -50,
+        "detailsTransactions": [
+          {
+            "name": "Birthday Dinner",
+            "quantity": 1,
+            "unitPrice": 50,
+            "amount": -50,
+            "categoryId": "Dining Out",
+            "projectId": null
+          }
+        ],
+        "payee": "Italian Restaurant",
+        "notes": "Family birthday celebration",
+        "date": "2025-01-16",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Dining Out"
+      },
+      {
+        "amount": -80,
+        "detailsTransactions": [
+          {
+            "name": "Winter Utilities",
+            "quantity": 1,
+            "unitPrice": 80,
+            "amount": -80,
+            "categoryId": "Utilities",
+            "projectId": null
+          }
+        ],
+        "payee": "Utility Company",
+        "notes": "Monthly utilities",
+        "date": "2025-01-17",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Utilities"
+      },
+      {
+        "amount": -40,
+        "detailsTransactions": [
+          {
+            "name": "Professional Development Course",
+            "quantity": 1,
+            "unitPrice": 40,
+            "amount": -40,
+            "categoryId": "Education",
+            "projectId": null
+          }
+        ],
+        "payee": "Skill Enhancement Inc.",
+        "notes": "Enrollment for career advancement",
+        "date": "2025-01-18",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Education"
+      },
+      {
+        "amount": -25,
+        "detailsTransactions": [
+          {
+            "name": "Streaming Service Subscription",
+            "quantity": 1,
+            "unitPrice": 25,
+            "amount": -25,
+            "categoryId": "Entertainment",
+            "projectId": null
+          }
+        ],
+        "payee": "Online Streaming Service",
+        "notes": "Monthly subscription charge",
+        "date": "2025-01-19",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Entertainment"
+      },
+      {
+        "amount": -130,
+        "detailsTransactions": [
+          {
+            "name": "Monthly Savings Allocation",
+            "quantity": 1,
+            "unitPrice": 130,
+            "amount": -130,
+            "categoryId": "Savings",
+            "projectId": "Children's Education Fund"
+          }
+        ],
+        "payee": "Savings Account",
+        "notes": "Monthly allocation to savings fund",
+        "date": "2025-01-20",
+        "projectId": "Children's Education Fund",
+        "accountId": "Primary Bank Account",
+        "categoryId": "Savings"
+      }
+    ]
+  },
+  {
+    "categories": [
+      {
+        "name": "Rent",
+        "goal": 1100
+      },
+      {
+        "name": "Groceries",
+        "goal": 400
+      },
+      {
+        "name": "Dining Out",
+        "goal": 150
+      },
+      {
+        "name": "Transportation",
+        "goal": 150
+      },
+      {
+        "name": "Utilities",
+        "goal": 120
+      },
+      {
+        "name": "Education",
+        "goal": 150
+      },
+      {
+        "name": "Entertainment",
+        "goal": 80
+      },
+      {
+        "name": "Healthcare",
+        "goal": 100
+      },
+      {
+        "name": "Savings",
+        "goal": 1200
+      },
+      {
+        "name": "Miscellaneous",
+        "goal": 50
+      }
+    ],
+    "accounts": [
+      {
+        "name": "Primary Bank Account"
+      }
+    ],
+    "projects": [
+      {
+        "name": "Children's Education Fund",
+        "budget": 10000,
+        "startDate": "2024-01-01",
+        "endDate": "2030-12-31",
+        "description": "Savings for children's higher education in Germany."
+      }
+    ],
+    "transactions": [
+      {
+        "amount": -75,
+        "detailsTransactions": [
+          {
+            "name": "Weekly Fresh Produce",
+            "quantity": 1,
+            "unitPrice": 75,
+            "amount": -75,
+            "categoryId": "Groceries",
+            "projectId": null
+          }
+        ],
+        "payee": "Market Fresh",
+        "notes": "Weekly grocery shopping",
+        "date": "2025-01-21",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Groceries"
+      },
+      {
+        "amount": -10,
+        "detailsTransactions": [
+          {
+            "name": "Bus Fare",
+            "quantity": 1,
+            "unitPrice": 10,
+            "amount": -10,
+            "categoryId": "Transportation",
+            "projectId": null
+          }
+        ],
+        "payee": "Bus Transport",
+        "notes": "Weekly bus fare",
+        "date": "2025-01-22",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Transportation"
+      },
+      {
+        "amount": -35,
+        "detailsTransactions": [
+          {
+            "name": "Casual Family Dinner",
+            "quantity": 1,
+            "unitPrice": 35,
+            "amount": -35,
+            "categoryId": "Dining Out",
+            "projectId": null
+          }
+        ],
+        "payee": "Family Bistro",
+        "notes": "Dinner out with family",
+        "date": "2025-01-23",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Dining Out"
+      },
+      {
+        "amount": -25,
+        "detailsTransactions": [
+          {
+            "name": "Monthly Water Bill",
+            "quantity": 1,
+            "unitPrice": 25,
+            "amount": -25,
+            "categoryId": "Utilities",
+            "projectId": null
+          }
+        ],
+        "payee": "Water Company",
+        "notes": "Monthly water utility payment",
+        "date": "2025-01-24",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Utilities"
+      },
+      {
+        "amount": -90,
+        "detailsTransactions": [],
+        "payee": "Private Tutor",
+        "notes": "Monthly tutoring for children",
+        "date": "2025-01-25",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Education"
+      },
+      {
+        "amount": -30,
+        "detailsTransactions": [
+          {
+            "name": "Live Music Event",
+            "quantity": 1,
+            "unitPrice": 30,
+            "amount": -30,
+            "categoryId": "Entertainment",
+            "projectId": null
+          }
+        ],
+        "payee": "Concert Venue",
+        "notes": "Local music event tickets",
+        "date": "2025-01-26",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Entertainment"
+      },
+      {
+        "amount": -15,
+        "detailsTransactions": [
+          {
+            "name": "Emergency Fund Contribution",
+            "quantity": 1,
+            "unitPrice": 15,
+            "amount": -15,
+            "categoryId": "Savings",
+            "projectId": "Children's Education Fund"
+          }
+        ],
+        "payee": "Savings Account",
+        "notes": "Additional contribution to emergency fund",
+        "date": "2025-01-27",
+        "projectId": "Children's Education Fund",
+        "accountId": "Primary Bank Account",
+        "categoryId": "Savings"
+      }
+    ]
+  },
+  {
+    "categories": [
+      {
+        "name": "Rent",
+        "goal": 1100
+      },
+      {
+        "name": "Groceries",
+        "goal": 400
+      },
+      {
+        "name": "Dining Out",
+        "goal": 150
+      },
+      {
+        "name": "Transportation",
+        "goal": 150
+      },
+      {
+        "name": "Utilities",
+        "goal": 120
+      },
+      {
+        "name": "Education",
+        "goal": 150
+      },
+      {
+        "name": "Entertainment",
+        "goal": 80
+      },
+      {
+        "name": "Healthcare",
+        "goal": 100
+      },
+      {
+        "name": "Savings",
+        "goal": 1200
+      },
+      {
+        "name": "Miscellaneous",
+        "goal": 50
+      }
+    ],
+    "accounts": [
+      {
+        "name": "Primary Bank Account"
+      }
+    ],
+    "projects": [
+      {
+        "name": "Children's Education Fund",
+        "budget": 10000,
+        "startDate": "2024-01-01",
+        "endDate": "2030-12-31",
+        "description": "Savings for children's higher education in Germany."
+      }
+    ],
+    "transactions": [
+      {
+        "amount": -70,
+        "detailsTransactions": [
+          {
+            "name": "Meat and Dairy",
+            "quantity": 1,
+            "unitPrice": 40,
+            "amount": -40,
+            "categoryId": "Groceries",
+            "projectId": null
+          },
+          {
+            "name": "Vegetables",
+            "quantity": 1,
+            "unitPrice": 30,
+            "amount": -30,
+            "categoryId": "Groceries",
+            "projectId": null
+          }
+        ],
+        "payee": "FoodMart",
+        "notes": "Weekly grocery supply",
+        "date": "2025-01-28",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Groceries"
+      },
+      {
+        "amount": -20,
+        "detailsTransactions": [],
+        "payee": "Public Transport",
+        "notes": "Monthly metro card refill",
+        "date": "2025-01-29",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Transportation"
+      },
+      {
+        "amount": -50,
+        "detailsTransactions": [
+          {
+            "name": "Team Lunch",
+            "quantity": 1,
+            "unitPrice": 50,
+            "amount": -50,
+            "categoryId": "Dining Out",
+            "projectId": null
+          }
+        ],
+        "payee": "Office Cafeteria",
+        "notes": "Lunch with office team",
+        "date": "2025-01-30",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Dining Out"
+      },
+      {
+        "amount": -90,
+        "detailsTransactions": [
+          {
+            "name": "Monthly Electricity Bill",
+            "quantity": 1,
+            "unitPrice": 90,
+            "amount": -90,
+            "categoryId": "Utilities",
+            "projectId": null
+          }
+        ],
+        "payee": "Electricity Company",
+        "notes": "Monthly electricity payment",
+        "date": "2025-01-31",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Utilities"
+      },
+      {
+        "amount": -75,
+        "detailsTransactions": [
+          {
+            "name": "Monthly Streaming Subscription",
+            "quantity": 1,
+            "unitPrice": 20,
+            "amount": -20,
+            "categoryId": "Entertainment",
+            "projectId": null
+          },
+          {
+            "name": "Online Magazine Subscription",
+            "quantity": 1,
+            "unitPrice": 55,
+            "amount": -55,
+            "categoryId": "Education",
+            "projectId": null
+          }
+        ],
+        "payee": "Digital Services",
+        "notes": "Monthly streaming and magazine subscription fee",
+        "date": "2025-02-01",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Entertainment"
+      },
+      {
+        "amount": -25,
+        "detailsTransactions": [
+          {
+            "name": "Monthly Gym Membership",
+            "quantity": 1,
+            "unitPrice": 25,
+            "amount": -25,
+            "categoryId": "Healthcare",
+            "projectId": null
+          }
+        ],
+        "payee": "Local Gym",
+        "notes": "Monthly health and fitness expense",
+        "date": "2025-02-02",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Healthcare"
+      },
+      {
+        "amount": -125,
+        "detailsTransactions": [
+          {
+            "name": "Monthly Savings Deposit",
+            "quantity": 1,
+            "unitPrice": 125,
+            "amount": -125,
+            "categoryId": "Savings",
+            "projectId": "Children's Education Fund"
+          }
+        ],
+        "payee": "Savings Account",
+        "notes": "Monthly savings allocation for education fund",
+        "date": "2025-02-03",
+        "projectId": "Children's Education Fund",
+        "accountId": "Primary Bank Account",
+        "categoryId": "Savings"
+      }
+    ]
+  },
+  {
+    "categories": [
+      {
+        "name": "Rent",
+        "goal": 1100
+      },
+      {
+        "name": "Groceries",
+        "goal": 400
+      },
+      {
+        "name": "Dining Out",
+        "goal": 150
+      },
+      {
+        "name": "Transportation",
+        "goal": 150
+      },
+      {
+        "name": "Utilities",
+        "goal": 120
+      },
+      {
+        "name": "Education",
+        "goal": 150
+      },
+      {
+        "name": "Entertainment",
+        "goal": 80
+      },
+      {
+        "name": "Healthcare",
+        "goal": 100
+      },
+      {
+        "name": "Savings",
+        "goal": 1200
+      },
+      {
+        "name": "Miscellaneous",
+        "goal": 50
+      }
+    ],
+    "accounts": [
+      {
+        "name": "Primary Bank Account"
+      }
+    ],
+    "projects": [
+      {
+        "name": "Children's Education Fund",
+        "budget": 10000,
+        "startDate": "2024-01-01",
+        "endDate": "2030-12-31",
+        "description": "Savings for children's higher education in Germany."
+      }
+    ],
+    "transactions": [
+      {
+        "amount": -80,
+        "detailsTransactions": [
+          {
+            "name": "Organic Groceries",
+            "quantity": 1,
+            "unitPrice": 80,
+            "amount": -80,
+            "categoryId": "Groceries",
+            "projectId": null
+          }
+        ],
+        "payee": "Green Grocer",
+        "notes": "Weekly supplies of fruits and vegetables",
+        "date": "2025-02-04",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Groceries"
+      },
+      {
+        "amount": -18,
+        "detailsTransactions": [
+          {
+            "name": "Weekly Train Pass",
+            "quantity": 1,
+            "unitPrice": 18,
+            "amount": -18,
+            "categoryId": "Transportation",
+            "projectId": null
+          }
+        ],
+        "payee": "Train Station",
+        "notes": "Public transport expenses for the week",
+        "date": "2025-02-05",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Transportation"
+      },
+      {
+        "amount": -30,
+        "detailsTransactions": [],
+        "payee": "City Cafe",
+        "notes": "Lunch with college friends",
+        "date": "2025-02-06",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Dining Out"
+      },
+      {
+        "amount": -15,
+        "detailsTransactions": [],
+        "payee": "Charitable Donation",
+        "notes": "Monthly charitable donation",
+        "date": "2025-02-07",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Miscellaneous"
+      },
+      {
+        "amount": -40,
+        "detailsTransactions": [
+          {
+            "name": "Kid's Weekly Math Tutor",
+            "quantity": 1,
+            "unitPrice": 40,
+            "amount": -40,
+            "categoryId": "Education",
+            "projectId": null
+          }
+        ],
+        "payee": "Private Tutor",
+        "notes": "Weekly tutoring class for children",
+        "date": "2025-02-08",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Education"
+      },
+      {
+        "amount": -50,
+        "detailsTransactions": [
+          {
+            "name": "Cinema Tickets",
+            "quantity": 4,
+            "unitPrice": 12.5,
+            "amount": -50,
+            "categoryId": "Entertainment",
+            "projectId": null
+          }
+        ],
+        "payee": "Movie Theater",
+        "notes": "Outing with family to watch latest movie",
+        "date": "2025-02-09",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Entertainment"
+      },
+      {
+        "amount": -100,
+        "detailsTransactions": [
+          {
+            "name": "Monthly Health Insurance Premium",
+            "quantity": 1,
+            "unitPrice": 100,
+            "amount": -100,
+            "categoryId": "Healthcare",
+            "projectId": null
+          }
+        ],
+        "payee": "Health Insurance Corp.",
+        "notes": "Health insurance premium for February",
+        "date": "2025-02-10",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Healthcare"
+      }
+    ]
+  },
+  {
+    "categories": [
+      {
+        "name": "Rent",
+        "goal": 1100
+      },
+      {
+        "name": "Groceries",
+        "goal": 400
+      },
+      {
+        "name": "Dining Out",
+        "goal": 150
+      },
+      {
+        "name": "Transportation",
+        "goal": 150
+      },
+      {
+        "name": "Utilities",
+        "goal": 120
+      },
+      {
+        "name": "Education",
+        "goal": 150
+      },
+      {
+        "name": "Entertainment",
+        "goal": 80
+      },
+      {
+        "name": "Healthcare",
+        "goal": 100
+      },
+      {
+        "name": "Savings",
+        "goal": 1200
+      },
+      {
+        "name": "Miscellaneous",
+        "goal": 50
+      }
+    ],
+    "accounts": [
+      {
+        "name": "Primary Bank Account"
+      }
+    ],
+    "projects": [
+      {
+        "name": "Children's Education Fund",
+        "budget": 10000,
+        "startDate": "2024-01-01",
+        "endDate": "2030-12-31",
+        "description": "Savings for children's higher education in Germany."
+      }
+    ],
+    "transactions": [
+      {
+        "amount": -72,
+        "detailsTransactions": [
+          {
+            "name": "Weekly Groceries",
+            "quantity": 1,
+            "unitPrice": 72,
+            "amount": -72,
+            "categoryId": "Groceries",
+            "projectId": null
+          }
+        ],
+        "payee": "Local Grocery Store",
+        "notes": "Weekly grocery shopping",
+        "date": "2025-02-11",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Groceries"
+      },
+      {
+        "amount": -15,
+        "detailsTransactions": [
+          {
+            "name": "Commuter Bus Card",
+            "quantity": 1,
+            "unitPrice": 15,
+            "amount": -15,
+            "categoryId": "Transportation",
+            "projectId": null
+          }
+        ],
+        "payee": "Transit Authority",
+        "notes": "Weekly bus travel expenses",
+        "date": "2025-02-12",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Transportation"
+      },
+      {
+        "amount": -55,
+        "detailsTransactions": [
+          {
+            "name": "Valentine's Day Dinner",
+            "quantity": 1,
+            "unitPrice": 55,
+            "amount": -55,
+            "categoryId": "Dining Out",
+            "projectId": null
+          }
+        ],
+        "payee": "Romantic Restaurant",
+        "notes": "Dinner with spouse",
+        "date": "2025-02-13",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Dining Out"
+      },
+      {
+        "amount": -60,
+        "detailsTransactions": [
+          {
+            "name": "Monthly Water and Electricity Bill",
+            "quantity": 1,
+            "unitPrice": 60,
+            "amount": -60,
+            "categoryId": "Utilities",
+            "projectId": null
+          }
+        ],
+        "payee": "Utility Provider",
+        "notes": "Monthly utilities for February",
+        "date": "2025-02-14",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Utilities"
+      },
+      {
+        "amount": -40,
+        "detailsTransactions": [
+          {
+            "name": "Children's Art Class",
+            "quantity": 1,
+            "unitPrice": 40,
+            "amount": -40,
+            "categoryId": "Education",
+            "projectId": null
+          }
+        ],
+        "payee": "Art School",
+        "notes": "Monthly art class fee for February",
+        "date": "2025-02-15",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Education"
+      },
+      {
+        "amount": -45,
+        "detailsTransactions": [],
+        "payee": "Local Bookstore",
+        "notes": "Purchase of new books for personal reading",
+        "date": "2025-02-16",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Miscellaneous"
+      },
+      {
+        "amount": -120,
+        "detailsTransactions": [
+          {
+            "name": "Monthly Savings Plan Contribution",
+            "quantity": 1,
+            "unitPrice": 120,
+            "amount": -120,
+            "categoryId": "Savings",
+            "projectId": "Children's Education Fund"
+          }
+        ],
+        "payee": "Savings Account",
+        "notes": "Additional savings for education fund",
+        "date": "2025-02-17",
+        "projectId": "Children's Education Fund",
+        "accountId": "Primary Bank Account",
+        "categoryId": "Savings"
+      }
+    ]
+  },
+  {
+    "categories": [
+      {
+        "name": "Rent",
+        "goal": 1200
+      },
+      {
+        "name": "Groceries",
+        "goal": 400
+      },
+      {
+        "name": "Dining Out",
+        "goal": 200
+      },
+      {
+        "name": "Transportation",
+        "goal": 150
+      },
+      {
+        "name": "Utilities",
+        "goal": 100
+      },
+      {
+        "name": "Entertainment",
+        "goal": 100
+      },
+      {
+        "name": "Health & Wellness",
+        "goal": 50
+      },
+      {
+        "name": "Savings",
+        "goal": 800
+      },
+      {
+        "name": "Professional Development",
+        "goal": 100
+      },
+      {
+        "name": "Miscellaneous",
+        "goal": 50
+      }
+    ],
+    "accounts": [
+      {
+        "name": "Primary Bank Account"
+      }
+    ],
+    "projects": [
+      {
+        "name": "New Restaurant Startup",
+        "budget": 30000,
+        "startDate": "2024-10-01",
+        "endDate": "2025-10-01",
+        "description": "Start and operate a new fusion cuisine restaurant."
+      }
+    ],
+    "transactions": [
+      {
+        "amount": -1200,
+        "detailsTransactions": [
+          {
+            "name": "Monthly Rent Payment",
+            "quantity": 1,
+            "unitPrice": 1200,
+            "amount": -1200,
+            "categoryId": "Rent",
+            "projectId": null
+          }
+        ],
+        "payee": "Landlord",
+        "notes": "Monthly rent for apartment",
+        "date": "2024-10-01",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Rent"
+      },
+      {
+        "amount": 2500,
+        "detailsTransactions": [],
+        "payee": "Restaurant Salary",
+        "notes": "Monthly Salary after tax",
+        "date": "2024-10-01",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Savings"
+      },
+      {
+        "amount": -95,
+        "detailsTransactions": [
+          {
+            "name": "Rice",
+            "quantity": 5,
+            "unitPrice": 5,
+            "amount": -25,
+            "categoryId": "Groceries",
+            "projectId": null
+          },
+          {
+            "name": "Fresh Vegetables",
+            "quantity": 20,
+            "unitPrice": 2,
+            "amount": -40,
+            "categoryId": "Groceries",
+            "projectId": null
+          },
+          {
+            "name": "Seafood",
+            "quantity": 3,
+            "unitPrice": 10,
+            "amount": -30,
+            "categoryId": "Groceries",
+            "projectId": null
+          }
+        ],
+        "payee": "Tokyo Fresh Market",
+        "notes": "Weekly grocery shopping",
+        "date": "2024-10-02",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Groceries"
+      },
+      {
+        "amount": -20,
+        "detailsTransactions": [],
+        "payee": "Local Coffee House",
+        "notes": "Coffee with colleagues",
+        "date": "2024-10-03",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Dining Out"
+      },
+      {
+        "amount": -60,
+        "detailsTransactions": [
+          {
+            "name": "Sushi Dinner",
+            "quantity": 1,
+            "unitPrice": 60,
+            "amount": -60,
+            "categoryId": "Dining Out",
+            "projectId": null
+          }
+        ],
+        "payee": "Sushi Restaurant",
+        "notes": "Dinner with friends",
+        "date": "2024-10-04",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Dining Out"
+      },
+      {
+        "amount": -15,
+        "detailsTransactions": [],
+        "payee": "Public Transport",
+        "notes": "Monthly transportation pass",
+        "date": "2024-10-05",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Transportation"
+      },
+      {
+        "amount": -35,
+        "detailsTransactions": [
+          {
+            "name": "Cooking Class - Advanced Techniques",
+            "quantity": 1,
+            "unitPrice": 35,
+            "amount": -35,
+            "categoryId": "Professional Development",
+            "projectId": null
+          }
+        ],
+        "payee": "Culinary Institute",
+        "notes": "Participating in an advanced cooking workshop",
+        "date": "2024-10-06",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Professional Development"
+      },
+      {
+        "amount": -25,
+        "detailsTransactions": [],
+        "payee": "Yoga Studio",
+        "notes": "Weekly yoga class",
+        "date": "2024-10-07",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Health & Wellness"
+      }
+    ]
+  },
+  {
+    "categories": [
+      {
+        "name": "Rent",
+        "goal": 1200
+      },
+      {
+        "name": "Groceries",
+        "goal": 400
+      },
+      {
+        "name": "Dining Out",
+        "goal": 200
+      },
+      {
+        "name": "Transportation",
+        "goal": 150
+      },
+      {
+        "name": "Utilities",
+        "goal": 100
+      },
+      {
+        "name": "Entertainment",
+        "goal": 100
+      },
+      {
+        "name": "Health & Wellness",
+        "goal": 50
+      },
+      {
+        "name": "Savings",
+        "goal": 800
+      },
+      {
+        "name": "Professional Development",
+        "goal": 100
+      },
+      {
+        "name": "Miscellaneous",
+        "goal": 50
+      }
+    ],
+    "accounts": [
+      {
+        "name": "Primary Bank Account"
+      }
+    ],
+    "projects": [
+      {
+        "name": "New Restaurant Startup",
+        "budget": 30000,
+        "startDate": "2024-10-01",
+        "endDate": "2025-10-01",
+        "description": "Start and operate a new fusion cuisine restaurant."
+      }
+    ],
+    "transactions": [
+      {
+        "amount": -85,
+        "detailsTransactions": [
+          {
+            "name": "Organic Fruits",
+            "quantity": 10,
+            "unitPrice": 3,
+            "amount": -30,
+            "categoryId": "Groceries",
+            "projectId": null
+          },
+          {
+            "name": "Dairy Products",
+            "quantity": 8,
+            "unitPrice": 5,
+            "amount": -40,
+            "categoryId": "Groceries",
+            "projectId": null
+          },
+          {
+            "name": "Herbs & Spices",
+            "quantity": 5,
+            "unitPrice": 3,
+            "amount": -15,
+            "categoryId": "Groceries",
+            "projectId": null
+          }
+        ],
+        "payee": "Farmers Market",
+        "notes": "Weekly groceries including organic products",
+        "date": "2024-10-08",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Groceries"
+      },
+      {
+        "amount": -45,
+        "detailsTransactions": [],
+        "payee": "Gas Station",
+        "notes": "Refill for the week's commute",
+        "date": "2024-10-09",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Transportation"
+      },
+      {
+        "amount": -40,
+        "detailsTransactions": [
+          {
+            "name": "Dining Set Investment",
+            "quantity": 1,
+            "unitPrice": 40,
+            "amount": -40,
+            "categoryId": "Miscellaneous",
+            "projectId": "New Restaurant Startup"
+          }
+        ],
+        "payee": "Home Regal",
+        "notes": "Purchase of crockery for restaurant use",
+        "date": "2024-10-10",
+        "projectId": "New Restaurant Startup",
+        "accountId": "Primary Bank Account",
+        "categoryId": "Miscellaneous"
+      },
+      {
+        "amount": -10,
+        "detailsTransactions": [],
+        "payee": "Streaming Service",
+        "notes": "Monthly movie subscription",
+        "date": "2024-10-10",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Entertainment"
+      },
+      {
+        "amount": -70,
+        "detailsTransactions": [
+          {
+            "name": "Dinner with Clients",
+            "quantity": 1,
+            "unitPrice": 70,
+            "amount": -70,
+            "categoryId": "Dining Out",
+            "projectId": "New Restaurant Startup"
+          }
+        ],
+        "payee": "Italian Bistro",
+        "notes": "Business dinner meeting",
+        "date": "2024-10-11",
+        "projectId": "New Restaurant Startup",
+        "accountId": "Primary Bank Account",
+        "categoryId": "Dining Out"
+      },
+      {
+        "amount": -25,
+        "detailsTransactions": [],
+        "payee": "Fitness Center",
+        "notes": "Weekly gym membership",
+        "date": "2024-10-12",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Health & Wellness"
+      },
+      {
+        "amount": -30,
+        "detailsTransactions": [],
+        "payee": "Electric Company",
+        "notes": "Monthly electricity bill payment",
+        "date": "2024-10-13",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Utilities"
+      },
+      {
+        "amount": -20,
+        "detailsTransactions": [],
+        "payee": "Bookstore",
+        "notes": "Purchase of culinary guide",
+        "date": "2024-10-14",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Professional Development"
+      }
+    ]
+  },
+  {
+    "categories": [
+      {
+        "name": "Rent",
+        "goal": 1200
+      },
+      {
+        "name": "Groceries",
+        "goal": 400
+      },
+      {
+        "name": "Dining Out",
+        "goal": 200
+      },
+      {
+        "name": "Transportation",
+        "goal": 150
+      },
+      {
+        "name": "Utilities",
+        "goal": 100
+      },
+      {
+        "name": "Entertainment",
+        "goal": 100
+      },
+      {
+        "name": "Health & Wellness",
+        "goal": 50
+      },
+      {
+        "name": "Savings",
+        "goal": 800
+      },
+      {
+        "name": "Professional Development",
+        "goal": 100
+      },
+      {
+        "name": "Miscellaneous",
+        "goal": 50
+      }
+    ],
+    "accounts": [
+      {
+        "name": "Primary Bank Account"
+      }
+    ],
+    "projects": [
+      {
+        "name": "New Restaurant Startup",
+        "budget": 30000,
+        "startDate": "2024-10-01",
+        "endDate": "2025-10-01",
+        "description": "Start and operate a new fusion cuisine restaurant."
+      }
+    ],
+    "transactions": [
+      {
+        "amount": -90,
+        "detailsTransactions": [
+          {
+            "name": "Fresh Produce",
+            "quantity": 7,
+            "unitPrice": 5,
+            "amount": -35,
+            "categoryId": "Groceries",
+            "projectId": null
+          },
+          {
+            "name": "Cereal & Grains",
+            "quantity": 4,
+            "unitPrice": 5,
+            "amount": -20,
+            "categoryId": "Groceries",
+            "projectId": null
+          },
+          {
+            "name": "Fresh Meats",
+            "quantity": 3,
+            "unitPrice": 10,
+            "amount": -30,
+            "categoryId": "Groceries",
+            "projectId": null
+          }
+        ],
+        "payee": "Whole Foods Market",
+        "notes": "Weekly shopping for essential groceries",
+        "date": "2024-10-15",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Groceries"
+      },
+      {
+        "amount": -50,
+        "detailsTransactions": [],
+        "payee": "Lyft",
+        "notes": "Rides for client meetings",
+        "date": "2024-10-16",
+        "projectId": "New Restaurant Startup",
+        "accountId": "Primary Bank Account",
+        "categoryId": "Transportation"
+      },
+      {
+        "amount": -20,
+        "detailsTransactions": [],
+        "payee": "Music Streaming Service",
+        "notes": "Monthly music subscription fee",
+        "date": "2024-10-17",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Entertainment"
+      },
+      {
+        "amount": -60,
+        "detailsTransactions": [
+          {
+            "name": "Networking Event Entry",
+            "quantity": 1,
+            "unitPrice": 60,
+            "amount": -60,
+            "categoryId": "Professional Development",
+            "projectId": null
+          }
+        ],
+        "payee": "Chicago Culinary Institute",
+        "notes": "Attendance at a chef's networking event",
+        "date": "2024-10-18",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Professional Development"
+      },
+      {
+        "amount": -45,
+        "detailsTransactions": [],
+        "payee": "Cafe Delights",
+        "notes": "Brunch with family",
+        "date": "2024-10-19",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Dining Out"
+      },
+      {
+        "amount": -20,
+        "detailsTransactions": [],
+        "payee": "Pharmacy",
+        "notes": "Purchase of vitamins and supplements",
+        "date": "2024-10-20",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Health & Wellness"
+      },
+      {
+        "amount": -25,
+        "detailsTransactions": [],
+        "payee": "Laundry Services",
+        "notes": "Weekly laundry",
+        "date": "2024-10-21",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Miscellaneous"
+      }
+    ]
+  },
+  {
+    "categories": [
+      {
+        "name": "Rent",
+        "goal": 1200
+      },
+      {
+        "name": "Groceries",
+        "goal": 400
+      },
+      {
+        "name": "Dining Out",
+        "goal": 200
+      },
+      {
+        "name": "Transportation",
+        "goal": 150
+      },
+      {
+        "name": "Utilities",
+        "goal": 100
+      },
+      {
+        "name": "Entertainment",
+        "goal": 100
+      },
+      {
+        "name": "Health & Wellness",
+        "goal": 50
+      },
+      {
+        "name": "Savings",
+        "goal": 800
+      },
+      {
+        "name": "Professional Development",
+        "goal": 100
+      },
+      {
+        "name": "Miscellaneous",
+        "goal": 50
+      }
+    ],
+    "accounts": [
+      {
+        "name": "Primary Bank Account"
+      }
+    ],
+    "projects": [
+      {
+        "name": "New Restaurant Startup",
+        "budget": 30000,
+        "startDate": "2024-10-01",
+        "endDate": "2025-10-01",
+        "description": "Start and operate a new fusion cuisine restaurant."
+      }
+    ],
+    "transactions": [
+      {
+        "amount": -100,
+        "detailsTransactions": [
+          {
+            "name": "Vegetables & Fruits",
+            "quantity": 10,
+            "unitPrice": 3,
+            "amount": -30,
+            "categoryId": "Groceries",
+            "projectId": null
+          },
+          {
+            "name": "Cheese & Dairy",
+            "quantity": 5,
+            "unitPrice": 8,
+            "amount": -40,
+            "categoryId": "Groceries",
+            "projectId": null
+          },
+          {
+            "name": "Bakery Items",
+            "quantity": 3,
+            "unitPrice": 10,
+            "amount": -30,
+            "categoryId": "Groceries",
+            "projectId": null
+          }
+        ],
+        "payee": "SuperMart",
+        "notes": "Weekly grocery replenishment",
+        "date": "2024-10-22",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Groceries"
+      },
+      {
+        "amount": -50,
+        "detailsTransactions": [],
+        "payee": "Taxi Service",
+        "notes": "Transportation for personal and business errands",
+        "date": "2024-10-23",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Transportation"
+      },
+      {
+        "amount": -70,
+        "detailsTransactions": [
+          {
+            "name": "Dinner Meeting with Suppliers",
+            "quantity": 1,
+            "unitPrice": 70,
+            "amount": -70,
+            "categoryId": "Dining Out",
+            "projectId": "New Restaurant Startup"
+          }
+        ],
+        "payee": "Fine Dining Restaurant",
+        "notes": "Business dinner with suppliers",
+        "date": "2024-10-24",
+        "projectId": "New Restaurant Startup",
+        "accountId": "Primary Bank Account",
+        "categoryId": "Dining Out"
+      },
+      {
+        "amount": -30,
+        "detailsTransactions": [],
+        "payee": "Water Provider",
+        "notes": "Monthly water bill payment",
+        "date": "2024-10-25",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Utilities"
+      },
+      {
+        "amount": -25,
+        "detailsTransactions": [
+          {
+            "name": "Spa Day Package",
+            "quantity": 1,
+            "unitPrice": 25,
+            "amount": -25,
+            "categoryId": "Health & Wellness",
+            "projectId": null
+          }
+        ],
+        "payee": "Relaxation Spa",
+        "notes": "Weekend stress relief session",
+        "date": "2024-10-26",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Health & Wellness"
+      },
+      {
+        "amount": -15,
+        "detailsTransactions": [],
+        "payee": "Art Supply Store",
+        "notes": "Buying paint and brushes",
+        "date": "2024-10-27",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Miscellaneous"
+      },
+      {
+        "amount": -40,
+        "detailsTransactions": [],
+        "payee": "Streaming Platform",
+        "notes": "Annual subscription renewal for movies and series",
+        "date": "2024-10-28",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Entertainment"
+      }
+    ]
+  },
+  {
+    "categories": [
+      {
+        "name": "Rent",
+        "goal": 1200
+      },
+      {
+        "name": "Groceries",
+        "goal": 400
+      },
+      {
+        "name": "Dining Out",
+        "goal": 200
+      },
+      {
+        "name": "Transportation",
+        "goal": 150
+      },
+      {
+        "name": "Utilities",
+        "goal": 100
+      },
+      {
+        "name": "Entertainment",
+        "goal": 100
+      },
+      {
+        "name": "Health & Wellness",
+        "goal": 50
+      },
+      {
+        "name": "Savings",
+        "goal": 800
+      },
+      {
+        "name": "Professional Development",
+        "goal": 100
+      },
+      {
+        "name": "Miscellaneous",
+        "goal": 50
+      }
+    ],
+    "accounts": [
+      {
+        "name": "Primary Bank Account"
+      }
+    ],
+    "projects": [
+      {
+        "name": "New Restaurant Startup",
+        "budget": 30000,
+        "startDate": "2024-10-01",
+        "endDate": "2025-10-01",
+        "description": "Start and operate a new fusion cuisine restaurant."
+      }
+    ],
+    "transactions": [
+      {
+        "amount": -95,
+        "detailsTransactions": [
+          {
+            "name": "Organic Vegetables",
+            "quantity": 8,
+            "unitPrice": 5,
+            "amount": -40,
+            "categoryId": "Groceries",
+            "projectId": null
+          },
+          {
+            "name": "Free-range Eggs",
+            "quantity": 3,
+            "unitPrice": 5,
+            "amount": -15,
+            "categoryId": "Groceries",
+            "projectId": null
+          },
+          {
+            "name": "Herbs & Spices",
+            "quantity": 4,
+            "unitPrice": 10,
+            "amount": -40,
+            "categoryId": "Groceries",
+            "projectId": null
+          }
+        ],
+        "payee": "Organic Grocer",
+        "notes": "Weekly grocery shopping focusing on organic produce",
+        "date": "2024-10-29",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Groceries"
+      },
+      {
+        "amount": -50,
+        "detailsTransactions": [],
+        "payee": "Bus Service",
+        "notes": "Monthly bus pass for local transportation",
+        "date": "2024-10-30",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Transportation"
+      },
+      {
+        "amount": -1200,
+        "detailsTransactions": [
+          {
+            "name": "Rent Payment for November",
+            "quantity": 1,
+            "unitPrice": 1200,
+            "amount": -1200,
+            "categoryId": "Rent",
+            "projectId": null
+          }
+        ],
+        "payee": "Landlord",
+        "notes": "Monthly rent for November",
+        "date": "2024-11-01",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Rent"
+      },
+      {
+        "amount": 2500,
+        "detailsTransactions": [],
+        "payee": "Restaurant Salary",
+        "notes": "Monthly salary received",
+        "date": "2024-11-01",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Savings"
+      },
+      {
+        "amount": -75,
+        "detailsTransactions": [
+          {
+            "name": "Workshop on Innovative Cuisine Techniques",
+            "quantity": 1,
+            "unitPrice": 75,
+            "amount": -75,
+            "categoryId": "Professional Development",
+            "projectId": null
+          }
+        ],
+        "payee": "Culinary Workshop Center",
+        "notes": "Participating in a professional development workshop",
+        "date": "2024-11-02",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Professional Development"
+      },
+      {
+        "amount": -60,
+        "detailsTransactions": [
+          {
+            "name": "Dinner Party with Family",
+            "quantity": 1,
+            "unitPrice": 60,
+            "amount": -60,
+            "categoryId": "Dining Out",
+            "projectId": null
+          }
+        ],
+        "payee": "Indian Cuisine Restaurant",
+        "notes": "Family dinner gathering",
+        "date": "2024-11-03",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Dining Out"
+      },
+      {
+        "amount": -20,
+        "detailsTransactions": [],
+        "payee": "Local Gym",
+        "notes": "Weekly access fee for fitness equipment",
+        "date": "2024-11-04",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Health & Wellness"
+      }
+    ]
+  },
+  {
+    "categories": [
+      {
+        "name": "Rent",
+        "goal": 1200
+      },
+      {
+        "name": "Groceries",
+        "goal": 400
+      },
+      {
+        "name": "Dining Out",
+        "goal": 200
+      },
+      {
+        "name": "Transportation",
+        "goal": 150
+      },
+      {
+        "name": "Utilities",
+        "goal": 100
+      },
+      {
+        "name": "Entertainment",
+        "goal": 100
+      },
+      {
+        "name": "Health & Wellness",
+        "goal": 50
+      },
+      {
+        "name": "Savings",
+        "goal": 800
+      },
+      {
+        "name": "Professional Development",
+        "goal": 100
+      },
+      {
+        "name": "Miscellaneous",
+        "goal": 50
+      }
+    ],
+    "accounts": [
+      {
+        "name": "Primary Bank Account"
+      }
+    ],
+    "projects": [
+      {
+        "name": "New Restaurant Startup",
+        "budget": 30000,
+        "startDate": "2024-10-01",
+        "endDate": "2025-10-01",
+        "description": "Start and operate a new fusion cuisine restaurant."
+      }
+    ],
+    "transactions": [
+      {
+        "amount": -110,
+        "detailsTransactions": [
+          {
+            "name": "Pasta & Grains",
+            "quantity": 10,
+            "unitPrice": 3,
+            "amount": -30,
+            "categoryId": "Groceries",
+            "projectId": null
+          },
+          {
+            "name": "Red Meat",
+            "quantity": 5,
+            "unitPrice": 10,
+            "amount": -50,
+            "categoryId": "Groceries",
+            "projectId": null
+          },
+          {
+            "name": "Organic Spices",
+            "quantity": 3,
+            "unitPrice": 10,
+            "amount": -30,
+            "categoryId": "Groceries",
+            "projectId": null
+          }
+        ],
+        "payee": "Farmers Market",
+        "notes": "Weekly grocery shopping",
+        "date": "2024-11-05",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Groceries"
+      },
+      {
+        "amount": -40,
+        "detailsTransactions": [],
+        "payee": "Car Service",
+        "notes": "Uber rides for meetings",
+        "date": "2024-11-06",
+        "projectId": "New Restaurant Startup",
+        "accountId": "Primary Bank Account",
+        "categoryId": "Transportation"
+      },
+      {
+        "amount": -25,
+        "detailsTransactions": [],
+        "payee": "Movie Rental",
+        "notes": "Rental of documentaries for inspirational cooking ideas",
+        "date": "2024-11-07",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Entertainment"
+      },
+      {
+        "amount": -15,
+        "detailsTransactions": [],
+        "payee": "Library",
+        "notes": "Late fee for cookbook returns",
+        "date": "2024-11-08",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Miscellaneous"
+      },
+      {
+        "amount": -80,
+        "detailsTransactions": [
+          {
+            "name": "Lunch with Suppliers",
+            "quantity": 1,
+            "unitPrice": 80,
+            "amount": -80,
+            "categoryId": "Dining Out",
+            "projectId": "New Restaurant Startup"
+          }
+        ],
+        "payee": "Gourmet Cafe",
+        "notes": "Business lunch meeting",
+        "date": "2024-11-09",
+        "projectId": "New Restaurant Startup",
+        "accountId": "Primary Bank Account",
+        "categoryId": "Dining Out"
+      },
+      {
+        "amount": -30,
+        "detailsTransactions": [],
+        "payee": "Health Store",
+        "notes": "Purchase of wellness supplements",
+        "date": "2024-11-10",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Health & Wellness"
+      },
+      {
+        "amount": -35,
+        "detailsTransactions": [],
+        "payee": "Laundry Express",
+        "notes": "Weekly laundry services",
+        "date": "2024-11-11",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Miscellaneous"
+      }
+    ]
+  },
+  {
+    "categories": [
+      {
+        "name": "Rent",
+        "goal": 1200
+      },
+      {
+        "name": "Groceries",
+        "goal": 400
+      },
+      {
+        "name": "Dining Out",
+        "goal": 200
+      },
+      {
+        "name": "Transportation",
+        "goal": 150
+      },
+      {
+        "name": "Utilities",
+        "goal": 100
+      },
+      {
+        "name": "Entertainment",
+        "goal": 100
+      },
+      {
+        "name": "Health & Wellness",
+        "goal": 50
+      },
+      {
+        "name": "Savings",
+        "goal": 800
+      },
+      {
+        "name": "Professional Development",
+        "goal": 100
+      },
+      {
+        "name": "Miscellaneous",
+        "goal": 50
+      }
+    ],
+    "accounts": [
+      {
+        "name": "Primary Bank Account"
+      }
+    ],
+    "projects": [
+      {
+        "name": "New Restaurant Startup",
+        "budget": 30000,
+        "startDate": "2024-10-01",
+        "endDate": "2025-10-01",
+        "description": "Start and operate a new fusion cuisine restaurant."
+      }
+    ],
+    "transactions": [
+      {
+        "amount": -105,
+        "detailsTransactions": [
+          {
+            "name": "Fresh Fruits & Vegetables",
+            "quantity": 15,
+            "unitPrice": 3,
+            "amount": -45,
+            "categoryId": "Groceries",
+            "projectId": null
+          },
+          {
+            "name": "Seafood Delights",
+            "quantity": 3,
+            "unitPrice": 20,
+            "amount": -60,
+            "categoryId": "Groceries",
+            "projectId": null
+          }
+        ],
+        "payee": "Local Market",
+        "notes": "Weekly grocery haul including seafood",
+        "date": "2024-11-12",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Groceries"
+      },
+      {
+        "amount": -60,
+        "detailsTransactions": [],
+        "payee": "Public Transit",
+        "notes": "Monthly metro pass for city travel",
+        "date": "2024-11-13",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Transportation"
+      },
+      {
+        "amount": -50,
+        "detailsTransactions": [
+          {
+            "name": "Theatre Tickets",
+            "quantity": 2,
+            "unitPrice": 25,
+            "amount": -50,
+            "categoryId": "Entertainment",
+            "projectId": null
+          }
+        ],
+        "payee": "City Theater",
+        "notes": "Tickets for weekend play",
+        "date": "2024-11-14",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Entertainment"
+      },
+      {
+        "amount": -20,
+        "detailsTransactions": [],
+        "payee": "Cleaning Services",
+        "notes": "Weekly home cleaning service",
+        "date": "2024-11-15",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Miscellaneous"
+      },
+      {
+        "amount": -90,
+        "detailsTransactions": [
+          {
+            "name": "Dinner with Investors",
+            "quantity": 1,
+            "unitPrice": 90,
+            "amount": -90,
+            "categoryId": "Dining Out",
+            "projectId": "New Restaurant Startup"
+          }
+        ],
+        "payee": "Elegant Diner",
+        "notes": "Business dinner with potential investors",
+        "date": "2024-11-16",
+        "projectId": "New Restaurant Startup",
+        "accountId": "Primary Bank Account",
+        "categoryId": "Dining Out"
+      },
+      {
+        "amount": -25,
+        "detailsTransactions": [
+          {
+            "name": "Swimming Fees",
+            "quantity": 1,
+            "unitPrice": 25,
+            "amount": -25,
+            "categoryId": "Health & Wellness",
+            "projectId": null
+          }
+        ],
+        "payee": "Community Pool",
+        "notes": "Weekly swimming activity",
+        "date": "2024-11-17",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Health & Wellness"
+      },
+      {
+        "amount": -25,
+        "detailsTransactions": [],
+        "payee": "Bookstore",
+        "notes": "Purchase of culinary magazine",
+        "date": "2024-11-18",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Professional Development"
+      }
+    ]
+  },
+  {
+    "categories": [
+      {
+        "name": "Rent",
+        "goal": 1200
+      },
+      {
+        "name": "Groceries",
+        "goal": 400
+      },
+      {
+        "name": "Dining Out",
+        "goal": 200
+      },
+      {
+        "name": "Transportation",
+        "goal": 150
+      },
+      {
+        "name": "Utilities",
+        "goal": 100
+      },
+      {
+        "name": "Entertainment",
+        "goal": 100
+      },
+      {
+        "name": "Health & Wellness",
+        "goal": 50
+      },
+      {
+        "name": "Savings",
+        "goal": 800
+      },
+      {
+        "name": "Professional Development",
+        "goal": 100
+      },
+      {
+        "name": "Miscellaneous",
+        "goal": 50
+      }
+    ],
+    "accounts": [
+      {
+        "name": "Primary Bank Account"
+      }
+    ],
+    "projects": [
+      {
+        "name": "New Restaurant Startup",
+        "budget": 30000,
+        "startDate": "2024-10-01",
+        "endDate": "2025-10-01",
+        "description": "Start and operate a new fusion cuisine restaurant."
+      }
+    ],
+    "transactions": [
+      {
+        "amount": -95,
+        "detailsTransactions": [
+          {
+            "name": "Organic Vegetables",
+            "quantity": 8,
+            "unitPrice": 4,
+            "amount": -32,
+            "categoryId": "Groceries",
+            "projectId": null
+          },
+          {
+            "name": "Chicken Breasts",
+            "quantity": 5,
+            "unitPrice": 10,
+            "amount": -50,
+            "categoryId": "Groceries",
+            "projectId": null
+          },
+          {
+            "name": "Beverages",
+            "quantity": 5,
+            "unitPrice": 2.6,
+            "amount": -13,
+            "categoryId": "Groceries",
+            "projectId": null
+          }
+        ],
+        "payee": "Green Grocers",
+        "notes": "Weekly groceries, including organic and protein essentials",
+        "date": "2024-11-19",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Groceries"
+      },
+      {
+        "amount": -45,
+        "detailsTransactions": [],
+        "payee": "Metro Services",
+        "notes": "Monthly metro card renewal",
+        "date": "2024-11-20",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Transportation"
+      },
+      {
+        "amount": -40,
+        "detailsTransactions": [
+          {
+            "name": "Meditation Workshop",
+            "quantity": 1,
+            "unitPrice": 40,
+            "amount": -40,
+            "categoryId": "Health & Wellness",
+            "projectId": null
+          }
+        ],
+        "payee": "Wellness Center",
+        "notes": "Participation in a one-day wellness retreat",
+        "date": "2024-11-21",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Health & Wellness"
+      },
+      {
+        "amount": -30,
+        "detailsTransactions": [],
+        "payee": "Local Electric Utility",
+        "notes": "Monthly electric bill",
+        "date": "2024-11-22",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Utilities"
+      },
+      {
+        "amount": -85,
+        "detailsTransactions": [
+          {
+            "name": "Dinner Gathering with Family",
+            "quantity": 1,
+            "unitPrice": 85,
+            "amount": -85,
+            "categoryId": "Dining Out",
+            "projectId": null
+          }
+        ],
+        "payee": "Family Bistro",
+        "notes": "Weekend family dinner outing",
+        "date": "2024-11-23",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Dining Out"
+      },
+      {
+        "amount": -20,
+        "detailsTransactions": [],
+        "payee": "Local Library",
+        "notes": "Yearly membership renewal",
+        "date": "2024-11-24",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Miscellaneous"
+      },
+      {
+        "amount": -60,
+        "detailsTransactions": [
+          {
+            "name": "Online Cooking Course",
+            "quantity": 1,
+            "unitPrice": 60,
+            "amount": -60,
+            "categoryId": "Professional Development",
+            "projectId": null
+          }
+        ],
+        "payee": "Culinary Online School",
+        "notes": "Enrollment in advanced cooking techniques course",
+        "date": "2024-11-25",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Professional Development"
+      }
+    ]
+  },
+  {
+    "categories": [
+      {
+        "name": "Rent",
+        "goal": 1200
+      },
+      {
+        "name": "Groceries",
+        "goal": 400
+      },
+      {
+        "name": "Dining Out",
+        "goal": 200
+      },
+      {
+        "name": "Transportation",
+        "goal": 150
+      },
+      {
+        "name": "Utilities",
+        "goal": 100
+      },
+      {
+        "name": "Entertainment",
+        "goal": 100
+      },
+      {
+        "name": "Health & Wellness",
+        "goal": 50
+      },
+      {
+        "name": "Savings",
+        "goal": 800
+      },
+      {
+        "name": "Professional Development",
+        "goal": 100
+      },
+      {
+        "name": "Miscellaneous",
+        "goal": 50
+      }
+    ],
+    "accounts": [
+      {
+        "name": "Primary Bank Account"
+      }
+    ],
+    "projects": [
+      {
+        "name": "New Restaurant Startup",
+        "budget": 30000,
+        "startDate": "2024-10-01",
+        "endDate": "2025-10-01",
+        "description": "Start and operate a new fusion cuisine restaurant."
+      }
+    ],
+    "transactions": [
+      {
+        "amount": -98,
+        "detailsTransactions": [
+          {
+            "name": "Organic Produce",
+            "quantity": 10,
+            "unitPrice": 4,
+            "amount": -40,
+            "categoryId": "Groceries",
+            "projectId": null
+          },
+          {
+            "name": "Salmon Fillets",
+            "quantity": 4,
+            "unitPrice": 12,
+            "amount": -48,
+            "categoryId": "Groceries",
+            "projectId": null
+          },
+          {
+            "name": "Fresh Herbs",
+            "quantity": 5,
+            "unitPrice": 2,
+            "amount": -10,
+            "categoryId": "Groceries",
+            "projectId": null
+          }
+        ],
+        "payee": "Natural Foods Co-op",
+        "notes": "Weekly grocery shopping for fresh and organic products",
+        "date": "2024-11-26",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Groceries"
+      },
+      {
+        "amount": -80,
+        "detailsTransactions": [],
+        "payee": "Rideshare Service",
+        "notes": "Rides to various meetings and events",
+        "date": "2024-11-27",
+        "projectId": "New Restaurant Startup",
+        "accountId": "Primary Bank Account",
+        "categoryId": "Transportation"
+      },
+      {
+        "amount": -25,
+        "detailsTransactions": [
+          {
+            "name": "Streaming Movie Rental",
+            "quantity": 1,
+            "unitPrice": 25,
+            "amount": -25,
+            "categoryId": "Entertainment",
+            "projectId": null
+          }
+        ],
+        "payee": "Flicks Online",
+        "notes": "Rental of new release movies",
+        "date": "2024-11-28",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Entertainment"
+      },
+      {
+        "amount": -30,
+        "detailsTransactions": [],
+        "payee": "Gas Utility Company",
+        "notes": "Monthly gas bill payment",
+        "date": "2024-11-29",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Utilities"
+      },
+      {
+        "amount": -75,
+        "detailsTransactions": [
+          {
+            "name": "Friendsgiving Dinner",
+            "quantity": 1,
+            "unitPrice": 75,
+            "amount": -75,
+            "categoryId": "Dining Out",
+            "projectId": null
+          }
+        ],
+        "payee": "Cozy Eatery",
+        "notes": "Special dinner with friends for Friendsgiving",
+        "date": "2024-11-30",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Dining Out"
+      },
+      {
+        "amount": -20,
+        "detailsTransactions": [],
+        "payee": "Fitness Club",
+        "notes": "Weekly gym session fee",
+        "date": "2024-12-01",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Health & Wellness"
+      },
+      {
+        "amount": -1200,
+        "detailsTransactions": [
+          {
+            "name": "December Rent Payment",
+            "quantity": 1,
+            "unitPrice": 1200,
+            "amount": -1200,
+            "categoryId": "Rent",
+            "projectId": null
+          }
+        ],
+        "payee": "Landlord",
+        "notes": "Monthly rent for December",
+        "date": "2024-12-02",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Rent"
+      },
+      {
+        "amount": 2500,
+        "detailsTransactions": [],
+        "payee": "Restaurant Salary",
+        "notes": "Monthly salary received for November",
+        "date": "2024-12-02",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Savings"
+      }
+    ]
+  },
+  {
+    "categories": [
+      {
+        "name": "Rent",
+        "goal": 1200
+      },
+      {
+        "name": "Groceries",
+        "goal": 400
+      },
+      {
+        "name": "Dining Out",
+        "goal": 200
+      },
+      {
+        "name": "Transportation",
+        "goal": 150
+      },
+      {
+        "name": "Utilities",
+        "goal": 100
+      },
+      {
+        "name": "Entertainment",
+        "goal": 100
+      },
+      {
+        "name": "Health & Wellness",
+        "goal": 50
+      },
+      {
+        "name": "Savings",
+        "goal": 800
+      },
+      {
+        "name": "Professional Development",
+        "goal": 100
+      },
+      {
+        "name": "Miscellaneous",
+        "goal": 50
+      }
+    ],
+    "accounts": [
+      {
+        "name": "Primary Bank Account"
+      }
+    ],
+    "projects": [
+      {
+        "name": "New Restaurant Startup",
+        "budget": 30000,
+        "startDate": "2024-10-01",
+        "endDate": "2025-10-01",
+        "description": "Start and operate a new fusion cuisine restaurant."
+      }
+    ],
+    "transactions": [
+      {
+        "amount": -110,
+        "detailsTransactions": [
+          {
+            "name": "Winter Vegetables",
+            "quantity": 12,
+            "unitPrice": 3,
+            "amount": -36,
+            "categoryId": "Groceries",
+            "projectId": null
+          },
+          {
+            "name": "Poultry",
+            "quantity": 5,
+            "unitPrice": 12,
+            "amount": -60,
+            "categoryId": "Groceries",
+            "projectId": null
+          },
+          {
+            "name": "Grains & Nuts",
+            "quantity": 7,
+            "unitPrice": 2,
+            "amount": -14,
+            "categoryId": "Groceries",
+            "projectId": null
+          }
+        ],
+        "payee": "Farm Fresh Mart",
+        "notes": "Weekly grocery shopping for the winter season",
+        "date": "2024-12-03",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Groceries"
+      },
+      {
+        "amount": -50,
+        "detailsTransactions": [],
+        "payee": "Taxi Services",
+        "notes": "Transportation for business meetings",
+        "date": "2024-12-04",
+        "projectId": "New Restaurant Startup",
+        "accountId": "Primary Bank Account",
+        "categoryId": "Transportation"
+      },
+      {
+        "amount": -20,
+        "detailsTransactions": [
+          {
+            "name": "Meditation Class",
+            "quantity": 1,
+            "unitPrice": 20,
+            "amount": -20,
+            "categoryId": "Health & Wellness",
+            "projectId": null
+          }
+        ],
+        "payee": "Zen Retreat Center",
+        "notes": "Weekly restorative meditation class",
+        "date": "2024-12-05",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Health & Wellness"
+      },
+      {
+        "amount": -40,
+        "detailsTransactions": [],
+        "payee": "Internet Provider",
+        "notes": "Monthly internet bill payment",
+        "date": "2024-12-06",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Utilities"
+      },
+      {
+        "amount": -50,
+        "detailsTransactions": [
+          {
+            "name": "Client Dinner",
+            "quantity": 1,
+            "unitPrice": 50,
+            "amount": -50,
+            "categoryId": "Dining Out",
+            "projectId": "New Restaurant Startup"
+          }
+        ],
+        "payee": "Steakhouse Restaurant",
+        "notes": "Business dinner with a potential client",
+        "date": "2024-12-07",
+        "projectId": "New Restaurant Startup",
+        "accountId": "Primary Bank Account",
+        "categoryId": "Dining Out"
+      },
+      {
+        "amount": -28,
+        "detailsTransactions": [
+          {
+            "name": "Art Supplies",
+            "quantity": 5,
+            "unitPrice": 5,
+            "amount": -25,
+            "categoryId": "Miscellaneous",
+            "projectId": null
+          },
+          {
+            "name": "Stationery",
+            "quantity": 3,
+            "unitPrice": 1,
+            "amount": -3,
+            "categoryId": "Miscellaneous",
+            "projectId": null
+          }
+        ],
+        "payee": "Art & Craft Store",
+        "notes": "Purchase of supplies for holiday decoration",
+        "date": "2024-12-08",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Miscellaneous"
+      },
+      {
+        "amount": -35,
+        "detailsTransactions": [
+          {
+            "name": "Weekend Film Festival",
+            "quantity": 1,
+            "unitPrice": 35,
+            "amount": -35,
+            "categoryId": "Entertainment",
+            "projectId": null
+          }
+        ],
+        "payee": "Downtown Cinema",
+        "notes": "Tickets for independent film screenings",
+        "date": "2024-12-09",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Entertainment"
+      }
+    ]
+  },
+  {
+    "categories": [
+      {
+        "name": "Rent",
+        "goal": 1200
+      },
+      {
+        "name": "Groceries",
+        "goal": 400
+      },
+      {
+        "name": "Dining Out",
+        "goal": 200
+      },
+      {
+        "name": "Transportation",
+        "goal": 150
+      },
+      {
+        "name": "Utilities",
+        "goal": 100
+      },
+      {
+        "name": "Entertainment",
+        "goal": 100
+      },
+      {
+        "name": "Health & Wellness",
+        "goal": 50
+      },
+      {
+        "name": "Savings",
+        "goal": 800
+      },
+      {
+        "name": "Professional Development",
+        "goal": 100
+      },
+      {
+        "name": "Miscellaneous",
+        "goal": 50
+      }
+    ],
+    "accounts": [
+      {
+        "name": "Primary Bank Account"
+      }
+    ],
+    "projects": [
+      {
+        "name": "New Restaurant Startup",
+        "budget": 30000,
+        "startDate": "2024-10-01",
+        "endDate": "2025-10-01",
+        "description": "Start and operate a new fusion cuisine restaurant."
+      }
+    ],
+    "transactions": [
+      {
+        "amount": -100,
+        "detailsTransactions": [
+          {
+            "name": "Root Vegetables",
+            "quantity": 10,
+            "unitPrice": 4,
+            "amount": -40,
+            "categoryId": "Groceries",
+            "projectId": null
+          },
+          {
+            "name": "Organic Dairy",
+            "quantity": 5,
+            "unitPrice": 8,
+            "amount": -40,
+            "categoryId": "Groceries",
+            "projectId": null
+          },
+          {
+            "name": "Seasonal Fruit",
+            "quantity": 5,
+            "unitPrice": 4,
+            "amount": -20,
+            "categoryId": "Groceries",
+            "projectId": null
+          }
+        ],
+        "payee": "Health Food Market",
+        "notes": "Weekly groceries including organic and seasonal items",
+        "date": "2024-12-10",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Groceries"
+      },
+      {
+        "amount": -60,
+        "detailsTransactions": [],
+        "payee": "RideShare App",
+        "notes": "Monthly subscription for unlimited rides",
+        "date": "2024-12-11",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Transportation"
+      },
+      {
+        "amount": -30,
+        "detailsTransactions": [
+          {
+            "name": "Yoga Membership",
+            "quantity": 1,
+            "unitPrice": 30,
+            "amount": -30,
+            "categoryId": "Health & Wellness",
+            "projectId": null
+          }
+        ],
+        "payee": "Tranquil Yoga Studio",
+        "notes": "Membership fee for unlimited weekly classes",
+        "date": "2024-12-12",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Health & Wellness"
+      },
+      {
+        "amount": -30,
+        "detailsTransactions": [],
+        "payee": "Streaming Service",
+        "notes": "Monthly subscription for premium content",
+        "date": "2024-12-13",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Entertainment"
+      },
+      {
+        "amount": -95,
+        "detailsTransactions": [
+          {
+            "name": "Evening with Investors",
+            "quantity": 1,
+            "unitPrice": 95,
+            "amount": -95,
+            "categoryId": "Dining Out",
+            "projectId": "New Restaurant Startup"
+          }
+        ],
+        "payee": "Fine Dining Restaurant",
+        "notes": "Dinner with business investors",
+        "date": "2024-12-14",
+        "projectId": "New Restaurant Startup",
+        "accountId": "Primary Bank Account",
+        "categoryId": "Dining Out"
+      },
+      {
+        "amount": -15,
+        "detailsTransactions": [],
+        "payee": "Pet Supply Store",
+        "notes": "Purchase of pet food and supplies",
+        "date": "2024-12-15",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Miscellaneous"
+      },
+      {
+        "amount": -50,
+        "detailsTransactions": [
+          {
+            "name": "Culinary Skills Seminar",
+            "quantity": 1,
+            "unitPrice": 50,
+            "amount": -50,
+            "categoryId": "Professional Development",
+            "projectId": null
+          }
+        ],
+        "payee": "Chef's Academy",
+        "notes": "Participation in a cooking skills seminar",
+        "date": "2024-12-16",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Professional Development"
+      }
+    ]
+  },
+  {
+    "categories": [
+      {
+        "name": "Rent",
+        "goal": 1200
+      },
+      {
+        "name": "Groceries",
+        "goal": 400
+      },
+      {
+        "name": "Dining Out",
+        "goal": 200
+      },
+      {
+        "name": "Transportation",
+        "goal": 150
+      },
+      {
+        "name": "Utilities",
+        "goal": 100
+      },
+      {
+        "name": "Entertainment",
+        "goal": 100
+      },
+      {
+        "name": "Health & Wellness",
+        "goal": 50
+      },
+      {
+        "name": "Savings",
+        "goal": 800
+      },
+      {
+        "name": "Professional Development",
+        "goal": 100
+      },
+      {
+        "name": "Miscellaneous",
+        "goal": 50
+      }
+    ],
+    "accounts": [
+      {
+        "name": "Primary Bank Account"
+      }
+    ],
+    "projects": [
+      {
+        "name": "New Restaurant Startup",
+        "budget": 30000,
+        "startDate": "2024-10-01",
+        "endDate": "2025-10-01",
+        "description": "Start and operate a new fusion cuisine restaurant."
+      }
+    ],
+    "transactions": [
+      {
+        "amount": -90,
+        "detailsTransactions": [
+          {
+            "name": "Winter Greens",
+            "quantity": 12,
+            "unitPrice": 3,
+            "amount": -36,
+            "categoryId": "Groceries",
+            "projectId": null
+          },
+          {
+            "name": "Cheese Selection",
+            "quantity": 4,
+            "unitPrice": 8,
+            "amount": -32,
+            "categoryId": "Groceries",
+            "projectId": null
+          },
+          {
+            "name": "Fresh Bread",
+            "quantity": 3,
+            "unitPrice": 7,
+            "amount": -21,
+            "categoryId": "Groceries",
+            "projectId": null
+          }
+        ],
+        "payee": "Gourmet Grocery",
+        "notes": "Weekly grocery shopping with emphasis on fresh produce",
+        "date": "2024-12-17",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Groceries"
+      },
+      {
+        "amount": -70,
+        "detailsTransactions": [],
+        "payee": "Public Transport Authority",
+        "notes": "Annual public transportation pass renewal",
+        "date": "2024-12-18",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Transportation"
+      },
+      {
+        "amount": -40,
+        "detailsTransactions": [
+          {
+            "name": "Basic Utilities",
+            "quantity": 2,
+            "unitPrice": 20,
+            "amount": -40,
+            "categoryId": "Utilities",
+            "projectId": null
+          }
+        ],
+        "payee": "City Utilities",
+        "notes": "Monthly cost for water and trash services",
+        "date": "2024-12-19",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Utilities"
+      },
+      {
+        "amount": -35,
+        "detailsTransactions": [],
+        "payee": "Streaming Music Service",
+        "notes": "Month subscription renewal for ad-free listening",
+        "date": "2024-12-20",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Entertainment"
+      },
+      {
+        "amount": -100,
+        "detailsTransactions": [
+          {
+            "name": "Holiday Dinner Celebration",
+            "quantity": 1,
+            "unitPrice": 100,
+            "amount": -100,
+            "categoryId": "Dining Out",
+            "projectId": null
+          }
+        ],
+        "payee": "Seasonal Restaurant",
+        "notes": "Celebratory holiday dinner with family",
+        "date": "2024-12-21",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Dining Out"
+      },
+      {
+        "amount": -50,
+        "detailsTransactions": [
+          {
+            "name": "Dance Class Registration",
+            "quantity": 1,
+            "unitPrice": 50,
+            "amount": -50,
+            "categoryId": "Health & Wellness",
+            "projectId": null
+          }
+        ],
+        "payee": "Dance Studio",
+        "notes": "Winter class registration for weekly lessons",
+        "date": "2024-12-22",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Health & Wellness"
+      },
+      {
+        "amount": -20,
+        "detailsTransactions": [],
+        "payee": "Charity Organization",
+        "notes": "Year-end donation for community support",
+        "date": "2024-12-23",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Miscellaneous"
+      }
+    ]
+  },
+  {
+    "categories": [
+      {
+        "name": "Rent",
+        "goal": 1200
+      },
+      {
+        "name": "Groceries",
+        "goal": 400
+      },
+      {
+        "name": "Dining Out",
+        "goal": 200
+      },
+      {
+        "name": "Transportation",
+        "goal": 150
+      },
+      {
+        "name": "Utilities",
+        "goal": 100
+      },
+      {
+        "name": "Entertainment",
+        "goal": 100
+      },
+      {
+        "name": "Health & Wellness",
+        "goal": 50
+      },
+      {
+        "name": "Savings",
+        "goal": 800
+      },
+      {
+        "name": "Professional Development",
+        "goal": 100
+      },
+      {
+        "name": "Miscellaneous",
+        "goal": 50
+      }
+    ],
+    "accounts": [
+      {
+        "name": "Primary Bank Account"
+      }
+    ],
+    "projects": [
+      {
+        "name": "New Restaurant Startup",
+        "budget": 30000,
+        "startDate": "2024-10-01",
+        "endDate": "2025-10-01",
+        "description": "Start and operate a new fusion cuisine restaurant."
+      }
+    ],
+    "transactions": [
+      {
+        "amount": -85,
+        "detailsTransactions": [
+          {
+            "name": "Fruit Basket",
+            "quantity": 8,
+            "unitPrice": 5,
+            "amount": -40,
+            "categoryId": "Groceries",
+            "projectId": null
+          },
+          {
+            "name": "Winter Pastries",
+            "quantity": 3,
+            "unitPrice": 15,
+            "amount": -45,
+            "categoryId": "Groceries",
+            "projectId": null
+          }
+        ],
+        "payee": "Holiday Market",
+        "notes": "Purchase of ingredients and treats for holiday season",
+        "date": "2024-12-24",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Groceries"
+      },
+      {
+        "amount": -40,
+        "detailsTransactions": [],
+        "payee": "Ride-hailing Service",
+        "notes": "Transportation for holiday errands and visits",
+        "date": "2024-12-25",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Transportation"
+      },
+      {
+        "amount": -60,
+        "detailsTransactions": [
+          {
+            "name": "Concert Tickets",
+            "quantity": 2,
+            "unitPrice": 30,
+            "amount": -60,
+            "categoryId": "Entertainment",
+            "projectId": null
+          }
+        ],
+        "payee": "Symphony Hall",
+        "notes": "Holiday concert with family",
+        "date": "2024-12-26",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Entertainment"
+      },
+      {
+        "amount": -45,
+        "detailsTransactions": [],
+        "payee": "Mobile Phone Provider",
+        "notes": "Payment of monthly mobile phone bill",
+        "date": "2024-12-27",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Utilities"
+      },
+      {
+        "amount": -70,
+        "detailsTransactions": [
+          {
+            "name": "New Year's Dinner Reservations",
+            "quantity": 1,
+            "unitPrice": 70,
+            "amount": -70,
+            "categoryId": "Dining Out",
+            "projectId": null
+          }
+        ],
+        "payee": "Fine Dining Establishment",
+        "notes": "Pre-booked a special dinner to celebrate the end of the year",
+        "date": "2024-12-28",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Dining Out"
+      },
+      {
+        "amount": -30,
+        "detailsTransactions": [],
+        "payee": "Local Gym",
+        "notes": "One month gym membership renewal",
+        "date": "2024-12-29",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Health & Wellness"
+      },
+      {
+        "amount": -50,
+        "detailsTransactions": [
+          {
+            "name": "Business Consultation Fee",
+            "quantity": 1,
+            "unitPrice": 50,
+            "amount": -50,
+            "categoryId": "Professional Development",
+            "projectId": "New Restaurant Startup"
+          }
+        ],
+        "payee": "Consulting Group",
+        "notes": "Consultation meeting to review business progress",
+        "date": "2024-12-30",
+        "projectId": "New Restaurant Startup",
+        "accountId": "Primary Bank Account",
+        "categoryId": "Professional Development"
+      }
+    ]
+  },
+  {
+    "categories": [
+      {
+        "name": "Rent",
+        "goal": 1200
+      },
+      {
+        "name": "Groceries",
+        "goal": 400
+      },
+      {
+        "name": "Dining Out",
+        "goal": 200
+      },
+      {
+        "name": "Transportation",
+        "goal": 150
+      },
+      {
+        "name": "Utilities",
+        "goal": 100
+      },
+      {
+        "name": "Entertainment",
+        "goal": 100
+      },
+      {
+        "name": "Health & Wellness",
+        "goal": 50
+      },
+      {
+        "name": "Savings",
+        "goal": 800
+      },
+      {
+        "name": "Professional Development",
+        "goal": 100
+      },
+      {
+        "name": "Miscellaneous",
+        "goal": 50
+      }
+    ],
+    "accounts": [
+      {
+        "name": "Primary Bank Account"
+      }
+    ],
+    "projects": [
+      {
+        "name": "New Restaurant Startup",
+        "budget": 30000,
+        "startDate": "2024-10-01",
+        "endDate": "2025-10-01",
+        "description": "Start and operate a new fusion cuisine restaurant."
+      }
+    ],
+    "transactions": [
+      {
+        "amount": -95,
+        "detailsTransactions": [
+          {
+            "name": "Festive Groceries",
+            "quantity": 10,
+            "unitPrice": 6,
+            "amount": -60,
+            "categoryId": "Groceries",
+            "projectId": null
+          },
+          {
+            "name": "Champagne",
+            "quantity": 2,
+            "unitPrice": 17.5,
+            "amount": -35,
+            "categoryId": "Groceries",
+            "projectId": null
+          }
+        ],
+        "payee": "Holiday Supermarket",
+        "notes": "Shopping for New Year's celebration",
+        "date": "2024-12-31",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Groceries"
+      },
+      {
+        "amount": -80,
+        "detailsTransactions": [],
+        "payee": "City Transport",
+        "notes": "Annual transit pass renewal",
+        "date": "2025-01-01",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Transportation"
+      },
+      {
+        "amount": -1200,
+        "detailsTransactions": [
+          {
+            "name": "January Rent Payment",
+            "quantity": 1,
+            "unitPrice": 1200,
+            "amount": -1200,
+            "categoryId": "Rent",
+            "projectId": null
+          }
+        ],
+        "payee": "Landlord",
+        "notes": "Monthly rent payment for January",
+        "date": "2025-01-02",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Rent"
+      },
+      {
+        "amount": 2500,
+        "detailsTransactions": [],
+        "payee": "Restaurant Salary",
+        "notes": "Monthly salary received for December",
+        "date": "2025-01-02",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Savings"
+      },
+      {
+        "amount": -25,
+        "detailsTransactions": [
+          {
+            "name": "January Yoga Class Pass",
+            "quantity": 1,
+            "unitPrice": 25,
+            "amount": -25,
+            "categoryId": "Health & Wellness",
+            "projectId": null
+          }
+        ],
+        "payee": "Neighborhood Yoga Center",
+        "notes": "Monthly fees for yoga classes",
+        "date": "2025-01-03",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Health & Wellness"
+      },
+      {
+        "amount": -55,
+        "detailsTransactions": [
+          {
+            "name": "Dinner Gathering",
+            "quantity": 1,
+            "unitPrice": 55,
+            "amount": -55,
+            "categoryId": "Dining Out",
+            "projectId": null
+          }
+        ],
+        "payee": "Trendy Bistro",
+        "notes": "First weekend dinner out with friends of the year",
+        "date": "2025-01-04",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Dining Out"
+      },
+      {
+        "amount": -35,
+        "detailsTransactions": [
+          {
+            "name": "Agenda",
+            "quantity": 1,
+            "unitPrice": 12,
+            "amount": -12,
+            "categoryId": "Miscellaneous",
+            "projectId": null
+          },
+          {
+            "name": "Planner",
+            "quantity": 1,
+            "unitPrice": 23,
+            "amount": -23,
+            "categoryId": "Miscellaneous",
+            "projectId": null
+          }
+        ],
+        "payee": "Stationery Store",
+        "notes": "Purchase of new year agenda and planner",
+        "date": "2025-01-05",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Miscellaneous"
+      },
+      {
+        "amount": -45,
+        "detailsTransactions": [],
+        "payee": "E-Learning Platform",
+        "notes": "Subscription to a new business strategy course",
+        "date": "2025-01-06",
+        "projectId": "New Restaurant Startup",
+        "accountId": "Primary Bank Account",
+        "categoryId": "Professional Development"
+      }
+    ]
+  },
+  {
+    "categories": [
+      {
+        "name": "Rent",
+        "goal": 1200
+      },
+      {
+        "name": "Groceries",
+        "goal": 400
+      },
+      {
+        "name": "Dining Out",
+        "goal": 200
+      },
+      {
+        "name": "Transportation",
+        "goal": 150
+      },
+      {
+        "name": "Utilities",
+        "goal": 100
+      },
+      {
+        "name": "Entertainment",
+        "goal": 100
+      },
+      {
+        "name": "Health & Wellness",
+        "goal": 50
+      },
+      {
+        "name": "Savings",
+        "goal": 800
+      },
+      {
+        "name": "Professional Development",
+        "goal": 100
+      },
+      {
+        "name": "Miscellaneous",
+        "goal": 50
+      }
+    ],
+    "accounts": [
+      {
+        "name": "Primary Bank Account"
+      }
+    ],
+    "projects": [
+      {
+        "name": "New Restaurant Startup",
+        "budget": 30000,
+        "startDate": "2024-10-01",
+        "endDate": "2025-10-01",
+        "description": "Start and operate a new fusion cuisine restaurant."
+      }
+    ],
+    "transactions": [
+      {
+        "amount": -88,
+        "detailsTransactions": [
+          {
+            "name": "Winter Vegetables",
+            "quantity": 8,
+            "unitPrice": 4,
+            "amount": -32,
+            "categoryId": "Groceries",
+            "projectId": null
+          },
+          {
+            "name": "Lean Meats",
+            "quantity": 4,
+            "unitPrice": 10,
+            "amount": -40,
+            "categoryId": "Groceries",
+            "projectId": null
+          },
+          {
+            "name": "Grains & Cereals",
+            "quantity": 4,
+            "unitPrice": 4,
+            "amount": -16,
+            "categoryId": "Groceries",
+            "projectId": null
+          }
+        ],
+        "payee": "Local Market",
+        "notes": "Weekly grocery shopping with a focus on healthy ingredients",
+        "date": "2025-01-07",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Groceries"
+      },
+      {
+        "amount": -40,
+        "detailsTransactions": [],
+        "payee": "Taxi Provider",
+        "notes": "Transport to and from meetings this week",
+        "date": "2025-01-08",
+        "projectId": "New Restaurant Startup",
+        "accountId": "Primary Bank Account",
+        "categoryId": "Transportation"
+      },
+      {
+        "amount": -45,
+        "detailsTransactions": [
+          {
+            "name": "Yoga & Pilates Classes",
+            "quantity": 1,
+            "unitPrice": 45,
+            "amount": -45,
+            "categoryId": "Health & Wellness",
+            "projectId": null
+          }
+        ],
+        "payee": "Yoga Studio",
+        "notes": "Monthly fees for continuing yoga and pilates",
+        "date": "2025-01-09",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Health & Wellness"
+      },
+      {
+        "amount": -30,
+        "detailsTransactions": [],
+        "payee": "City Water Services",
+        "notes": "Monthly payment for water bills",
+        "date": "2025-01-10",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Utilities"
+      },
+      {
+        "amount": -50,
+        "detailsTransactions": [
+          {
+            "name": "Team Strategy Dinner",
+            "quantity": 1,
+            "unitPrice": 50,
+            "amount": -50,
+            "categoryId": "Dining Out",
+            "projectId": "New Restaurant Startup"
+          }
+        ],
+        "payee": "Fusion Eatery",
+        "notes": "Business strategy discussion over dinner",
+        "date": "2025-01-11",
+        "projectId": "New Restaurant Startup",
+        "accountId": "Primary Bank Account",
+        "categoryId": "Dining Out"
+      },
+      {
+        "amount": -25,
+        "detailsTransactions": [],
+        "payee": "Online Movie Rentals",
+        "notes": "Streaming movie rentals for the weekend",
+        "date": "2025-01-12",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Entertainment"
+      },
+      {
+        "amount": -20,
+        "detailsTransactions": [],
+        "payee": "Dry Cleaning",
+        "notes": "Weekly dry cleaning services",
+        "date": "2025-01-13",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Miscellaneous"
+      }
+    ]
+  },
+  {
+    "categories": [
+      {
+        "name": "Rent",
+        "goal": 1200
+      },
+      {
+        "name": "Groceries",
+        "goal": 400
+      },
+      {
+        "name": "Dining Out",
+        "goal": 200
+      },
+      {
+        "name": "Transportation",
+        "goal": 150
+      },
+      {
+        "name": "Utilities",
+        "goal": 100
+      },
+      {
+        "name": "Entertainment",
+        "goal": 100
+      },
+      {
+        "name": "Health & Wellness",
+        "goal": 50
+      },
+      {
+        "name": "Savings",
+        "goal": 800
+      },
+      {
+        "name": "Professional Development",
+        "goal": 100
+      },
+      {
+        "name": "Miscellaneous",
+        "goal": 50
+      }
+    ],
+    "accounts": [
+      {
+        "name": "Primary Bank Account"
+      }
+    ],
+    "projects": [
+      {
+        "name": "New Restaurant Startup",
+        "budget": 30000,
+        "startDate": "2024-10-01",
+        "endDate": "2025-10-01",
+        "description": "Start and operate a new fusion cuisine restaurant."
+      }
+    ],
+    "transactions": [
+      {
+        "amount": -92,
+        "detailsTransactions": [
+          {
+            "name": "Fresh Vegetables",
+            "quantity": 10,
+            "unitPrice": 4,
+            "amount": -40,
+            "categoryId": "Groceries",
+            "projectId": null
+          },
+          {
+            "name": "Organic Chicken",
+            "quantity": 4,
+            "unitPrice": 10,
+            "amount": -40,
+            "categoryId": "Groceries",
+            "projectId": null
+          },
+          {
+            "name": "Herbs & Seasonings",
+            "quantity": 3,
+            "unitPrice": 4,
+            "amount": -12,
+            "categoryId": "Groceries",
+            "projectId": null
+          }
+        ],
+        "payee": "Farmers Market",
+        "notes": "Weekly groceries focused on fresh and organic produce",
+        "date": "2025-01-14",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Groceries"
+      },
+      {
+        "amount": -35,
+        "detailsTransactions": [],
+        "payee": "City Bus Service",
+        "notes": "Transportation for city commutes",
+        "date": "2025-01-15",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Transportation"
+      },
+      {
+        "amount": -50,
+        "detailsTransactions": [
+          {
+            "name": "Painting Supplies",
+            "quantity": 6,
+            "unitPrice": 8.33,
+            "amount": -50,
+            "categoryId": "Miscellaneous",
+            "projectId": null
+          }
+        ],
+        "payee": "Art Supply Store",
+        "notes": "Purchase of supplies for personal art project",
+        "date": "2025-01-16",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Miscellaneous"
+      },
+      {
+        "amount": -35,
+        "detailsTransactions": [],
+        "payee": "Electric Company",
+        "notes": "Monthly electricity bill payment",
+        "date": "2025-01-17",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Utilities"
+      },
+      {
+        "amount": -75,
+        "detailsTransactions": [
+          {
+            "name": "Dinner with Business Partners",
+            "quantity": 1,
+            "unitPrice": 75,
+            "amount": -75,
+            "categoryId": "Dining Out",
+            "projectId": "New Restaurant Startup"
+          }
+        ],
+        "payee": "Exclusive Steakhouse",
+        "notes": "Business dinner with partners to discuss collaboration",
+        "date": "2025-01-18",
+        "projectId": "New Restaurant Startup",
+        "accountId": "Primary Bank Account",
+        "categoryId": "Dining Out"
+      },
+      {
+        "amount": -25,
+        "detailsTransactions": [],
+        "payee": "Cinema Complex",
+        "notes": "Ticket purchase for a weekend film",
+        "date": "2025-01-19",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Entertainment"
+      },
+      {
+        "amount": -45,
+        "detailsTransactions": [
+          {
+            "name": "Breakfast Meeting",
+            "quantity": 1,
+            "unitPrice": 45,
+            "amount": -45,
+            "categoryId": "Professional Development",
+            "projectId": "New Restaurant Startup"
+          }
+        ],
+        "payee": "Cafe Central",
+        "notes": "Morning meeting with a mentor for business insights",
+        "date": "2025-01-20",
+        "projectId": "New Restaurant Startup",
+        "accountId": "Primary Bank Account",
+        "categoryId": "Professional Development"
+      }
+    ]
+  },
+  {
+    "categories": [
+      {
+        "name": "Rent",
+        "goal": 1200
+      },
+      {
+        "name": "Groceries",
+        "goal": 400
+      },
+      {
+        "name": "Dining Out",
+        "goal": 200
+      },
+      {
+        "name": "Transportation",
+        "goal": 150
+      },
+      {
+        "name": "Utilities",
+        "goal": 100
+      },
+      {
+        "name": "Entertainment",
+        "goal": 100
+      },
+      {
+        "name": "Health & Wellness",
+        "goal": 50
+      },
+      {
+        "name": "Savings",
+        "goal": 800
+      },
+      {
+        "name": "Professional Development",
+        "goal": 100
+      },
+      {
+        "name": "Miscellaneous",
+        "goal": 50
+      }
+    ],
+    "accounts": [
+      {
+        "name": "Primary Bank Account"
+      }
+    ],
+    "projects": [
+      {
+        "name": "New Restaurant Startup",
+        "budget": 30000,
+        "startDate": "2024-10-01",
+        "endDate": "2025-10-01",
+        "description": "Start and operate a new fusion cuisine restaurant."
+      }
+    ],
+    "transactions": [
+      {
+        "amount": -90,
+        "detailsTransactions": [
+          {
+            "name": "Organic Produce",
+            "quantity": 9,
+            "unitPrice": 5,
+            "amount": -45,
+            "categoryId": "Groceries",
+            "projectId": null
+          },
+          {
+            "name": "Pasta & Grains",
+            "quantity": 5,
+            "unitPrice": 3,
+            "amount": -15,
+            "categoryId": "Groceries",
+            "projectId": null
+          },
+          {
+            "name": "Dairy Products",
+            "quantity": 4,
+            "unitPrice": 7.5,
+            "amount": -30,
+            "categoryId": "Groceries",
+            "projectId": null
+          }
+        ],
+        "payee": "Organic Market",
+        "notes": "Weekly grocery shopping focusing on healthy options",
+        "date": "2025-01-21",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Groceries"
+      },
+      {
+        "amount": -40,
+        "detailsTransactions": [],
+        "payee": "Metro Transit",
+        "notes": "Monthly pass for city subway system",
+        "date": "2025-01-22",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Transportation"
+      },
+      {
+        "amount": -20,
+        "detailsTransactions": [],
+        "payee": "Library Book Sale",
+        "notes": "Purchase of second-hand books for home library",
+        "date": "2025-01-23",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Miscellaneous"
+      },
+      {
+        "amount": -30,
+        "detailsTransactions": [],
+        "payee": "Gas Utility Co.",
+        "notes": "Monthly gas utility bill",
+        "date": "2025-01-24",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Utilities"
+      },
+      {
+        "amount": -60,
+        "detailsTransactions": [
+          {
+            "name": "Casual Dinner Out",
+            "quantity": 1,
+            "unitPrice": 60,
+            "amount": -60,
+            "categoryId": "Dining Out",
+            "projectId": null
+          }
+        ],
+        "payee": "Casual Diner",
+        "notes": "Dinner with family and friends",
+        "date": "2025-01-25",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Dining Out"
+      },
+      {
+        "amount": -30,
+        "detailsTransactions": [
+          {
+            "name": "Pilates Monthly Subscription",
+            "quantity": 1,
+            "unitPrice": 30,
+            "amount": -30,
+            "categoryId": "Health & Wellness",
+            "projectId": null
+          }
+        ],
+        "payee": "Fitness Studio",
+        "notes": "Continued monthly access to pilates classes",
+        "date": "2025-01-26",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Health & Wellness"
+      },
+      {
+        "amount": -55,
+        "detailsTransactions": [
+          {
+            "name": "Leadership Workshop",
+            "quantity": 1,
+            "unitPrice": 55,
+            "amount": -55,
+            "categoryId": "Professional Development",
+            "projectId": "New Restaurant Startup"
+          }
+        ],
+        "payee": "Business Institute",
+        "notes": "Workshop participation to enhance leadership skills",
+        "date": "2025-01-27",
+        "projectId": "New Restaurant Startup",
+        "accountId": "Primary Bank Account",
+        "categoryId": "Professional Development"
+      }
+    ]
+  },
+  {
+    "categories": [
+      {
+        "name": "Rent",
+        "goal": 1200
+      },
+      {
+        "name": "Groceries",
+        "goal": 400
+      },
+      {
+        "name": "Dining Out",
+        "goal": 200
+      },
+      {
+        "name": "Transportation",
+        "goal": 150
+      },
+      {
+        "name": "Utilities",
+        "goal": 100
+      },
+      {
+        "name": "Entertainment",
+        "goal": 100
+      },
+      {
+        "name": "Health & Wellness",
+        "goal": 50
+      },
+      {
+        "name": "Savings",
+        "goal": 800
+      },
+      {
+        "name": "Professional Development",
+        "goal": 100
+      },
+      {
+        "name": "Miscellaneous",
+        "goal": 50
+      }
+    ],
+    "accounts": [
+      {
+        "name": "Primary Bank Account"
+      }
+    ],
+    "projects": [
+      {
+        "name": "New Restaurant Startup",
+        "budget": 30000,
+        "startDate": "2024-10-01",
+        "endDate": "2025-10-01",
+        "description": "Start and operate a new fusion cuisine restaurant."
+      }
+    ],
+    "transactions": [
+      {
+        "amount": -80,
+        "detailsTransactions": [
+          {
+            "name": "Weekly Vegetables",
+            "quantity": 10,
+            "unitPrice": 4,
+            "amount": -40,
+            "categoryId": "Groceries",
+            "projectId": null
+          },
+          {
+            "name": "Whole Grain Bread",
+            "quantity": 5,
+            "unitPrice": 4,
+            "amount": -20,
+            "categoryId": "Groceries",
+            "projectId": null
+          },
+          {
+            "name": "Organic Eggs",
+            "quantity": 3,
+            "unitPrice": 6.67,
+            "amount": -20,
+            "categoryId": "Groceries",
+            "projectId": null
+          }
+        ],
+        "payee": "Local Grocery Store",
+        "notes": "Weekly grocery shopping for everyday essentials",
+        "date": "2025-01-28",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Groceries"
+      },
+      {
+        "amount": -45,
+        "detailsTransactions": [],
+        "payee": "Taxi Service",
+        "notes": "Taxis to work meetings this week",
+        "date": "2025-01-29",
+        "projectId": "New Restaurant Startup",
+        "accountId": "Primary Bank Account",
+        "categoryId": "Transportation"
+      },
+      {
+        "amount": -15,
+        "detailsTransactions": [],
+        "payee": "Cinema Ticket",
+        "notes": "Entry to a film screening on leisure day",
+        "date": "2025-01-30",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Entertainment"
+      },
+      {
+        "amount": -1200,
+        "detailsTransactions": [
+          {
+            "name": "February Rent",
+            "quantity": 1,
+            "unitPrice": 1200,
+            "amount": -1200,
+            "categoryId": "Rent",
+            "projectId": null
+          }
+        ],
+        "payee": "Landlord",
+        "notes": "Rent payment for February",
+        "date": "2025-02-01",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Rent"
+      },
+      {
+        "amount": 2500,
+        "detailsTransactions": [],
+        "payee": "Restaurant Salary",
+        "notes": "Monthly salary received",
+        "date": "2025-02-01",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Savings"
+      },
+      {
+        "amount": -35,
+        "detailsTransactions": [
+          {
+            "name": "Yoga Session",
+            "quantity": 1,
+            "unitPrice": 35,
+            "amount": -35,
+            "categoryId": "Health & Wellness",
+            "projectId": null
+          }
+        ],
+        "payee": "Yoga Wellness Center",
+        "notes": "Monthly session package to maintain routine",
+        "date": "2025-02-02",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Health & Wellness"
+      },
+      {
+        "amount": -65,
+        "detailsTransactions": [
+          {
+            "name": "Executive Lunch Meeting",
+            "quantity": 1,
+            "unitPrice": 65,
+            "amount": -65,
+            "categoryId": "Dining Out",
+            "projectId": "New Restaurant Startup"
+          }
+        ],
+        "payee": "Executive Suites Cafe",
+        "notes": "Business lunch for project discussions",
+        "date": "2025-02-03",
+        "projectId": "New Restaurant Startup",
+        "accountId": "Primary Bank Account",
+        "categoryId": "Dining Out"
+      }
+    ]
+  },
+  {
+    "categories": [
+      {
+        "name": "Rent",
+        "goal": 1200
+      },
+      {
+        "name": "Groceries",
+        "goal": 400
+      },
+      {
+        "name": "Dining Out",
+        "goal": 200
+      },
+      {
+        "name": "Transportation",
+        "goal": 150
+      },
+      {
+        "name": "Utilities",
+        "goal": 100
+      },
+      {
+        "name": "Entertainment",
+        "goal": 100
+      },
+      {
+        "name": "Health & Wellness",
+        "goal": 50
+      },
+      {
+        "name": "Savings",
+        "goal": 800
+      },
+      {
+        "name": "Professional Development",
+        "goal": 100
+      },
+      {
+        "name": "Miscellaneous",
+        "goal": 50
+      }
+    ],
+    "accounts": [
+      {
+        "name": "Primary Bank Account"
+      }
+    ],
+    "projects": [
+      {
+        "name": "New Restaurant Startup",
+        "budget": 30000,
+        "startDate": "2024-10-01",
+        "endDate": "2025-10-01",
+        "description": "Start and operate a new fusion cuisine restaurant."
+      }
+    ],
+    "transactions": [
+      {
+        "amount": -85,
+        "detailsTransactions": [
+          {
+            "name": "Seasonal Vegetables",
+            "quantity": 12,
+            "unitPrice": 4,
+            "amount": -48,
+            "categoryId": "Groceries",
+            "projectId": null
+          },
+          {
+            "name": "Lean Beef",
+            "quantity": 4,
+            "unitPrice": 10,
+            "amount": -40,
+            "categoryId": "Groceries",
+            "projectId": null
+          }
+        ],
+        "payee": "Farm Market",
+        "notes": "Weekly groceries focused on seasonal items",
+        "date": "2025-02-04",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Groceries"
+      },
+      {
+        "amount": -50,
+        "detailsTransactions": [],
+        "payee": "City Transport Card",
+        "notes": "Top-up for city transport card",
+        "date": "2025-02-05",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Transportation"
+      },
+      {
+        "amount": -30,
+        "detailsTransactions": [
+          {
+            "name": "Jazz Concert Tickets",
+            "quantity": 2,
+            "unitPrice": 15,
+            "amount": -30,
+            "categoryId": "Entertainment",
+            "projectId": null
+          }
+        ],
+        "payee": "Music Hall",
+        "notes": "Jazz night with friends",
+        "date": "2025-02-06",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Entertainment"
+      },
+      {
+        "amount": -25,
+        "detailsTransactions": [],
+        "payee": "Neighborhood Café",
+        "notes": "Coffee meet with potential collaborator",
+        "date": "2025-02-07",
+        "projectId": "New Restaurant Startup",
+        "accountId": "Primary Bank Account",
+        "categoryId": "Dining Out"
+      },
+      {
+        "amount": -40,
+        "detailsTransactions": [],
+        "payee": "Water Utility",
+        "notes": "Monthly water bill due",
+        "date": "2025-02-08",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Utilities"
+      },
+      {
+        "amount": -20,
+        "detailsTransactions": [
+          {
+            "name": "Gym Day Passes",
+            "quantity": 4,
+            "unitPrice": 5,
+            "amount": -20,
+            "categoryId": "Health & Wellness",
+            "projectId": null
+          }
+        ],
+        "payee": "Local Gym",
+        "notes": "Day passes for weekend workouts",
+        "date": "2025-02-09",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Health & Wellness"
+      },
+      {
+        "amount": -45,
+        "detailsTransactions": [
+          {
+            "name": "Business Dinner",
+            "quantity": 1,
+            "unitPrice": 45,
+            "amount": -45,
+            "categoryId": "Dining Out",
+            "projectId": "New Restaurant Startup"
+          }
+        ],
+        "payee": "City Grill",
+        "notes": "Dinner meeting with industry colleague",
+        "date": "2025-02-10",
+        "projectId": "New Restaurant Startup",
+        "accountId": "Primary Bank Account",
+        "categoryId": "Dining Out"
+      }
+    ]
+  },
+  {
+    "categories": [
+      {
+        "name": "Rent",
+        "goal": 1200
+      },
+      {
+        "name": "Groceries",
+        "goal": 400
+      },
+      {
+        "name": "Dining Out",
+        "goal": 200
+      },
+      {
+        "name": "Transportation",
+        "goal": 150
+      },
+      {
+        "name": "Utilities",
+        "goal": 100
+      },
+      {
+        "name": "Entertainment",
+        "goal": 100
+      },
+      {
+        "name": "Health & Wellness",
+        "goal": 50
+      },
+      {
+        "name": "Savings",
+        "goal": 800
+      },
+      {
+        "name": "Professional Development",
+        "goal": 100
+      },
+      {
+        "name": "Miscellaneous",
+        "goal": 50
+      }
+    ],
+    "accounts": [
+      {
+        "name": "Primary Bank Account"
+      }
+    ],
+    "projects": [
+      {
+        "name": "New Restaurant Startup",
+        "budget": 30000,
+        "startDate": "2024-10-01",
+        "endDate": "2025-10-01",
+        "description": "Start and operate a new fusion cuisine restaurant."
+      }
+    ],
+    "transactions": [
+      {
+        "amount": -95,
+        "detailsTransactions": [
+          {
+            "name": "Fruit & Veggie Pack",
+            "quantity": 9,
+            "unitPrice": 5,
+            "amount": -45,
+            "categoryId": "Groceries",
+            "projectId": null
+          },
+          {
+            "name": "Fish Fillets",
+            "quantity": 5,
+            "unitPrice": 10,
+            "amount": -50,
+            "categoryId": "Groceries",
+            "projectId": null
+          }
+        ],
+        "payee": "Whole Foods",
+        "notes": "Weekly grocery shopping with a focus on fresh fish",
+        "date": "2025-02-11",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Groceries"
+      },
+      {
+        "amount": -30,
+        "detailsTransactions": [],
+        "payee": "City Subway",
+        "notes": "Monthly subway card renewal",
+        "date": "2025-02-12",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Transportation"
+      },
+      {
+        "amount": -20,
+        "detailsTransactions": [],
+        "payee": "Public Library Membership",
+        "notes": "Annual library membership renewal",
+        "date": "2025-02-13",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Miscellaneous"
+      },
+      {
+        "amount": -25,
+        "detailsTransactions": [],
+        "payee": "Electric Company",
+        "notes": "Monthly electricity bill payment",
+        "date": "2025-02-14",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Utilities"
+      },
+      {
+        "amount": -85,
+        "detailsTransactions": [
+          {
+            "name": "Valentine's Dinner",
+            "quantity": 1,
+            "unitPrice": 85,
+            "amount": -85,
+            "categoryId": "Dining Out",
+            "projectId": null
+          }
+        ],
+        "payee": "Romantic Restaurant",
+        "notes": "Special dinner date for Valentine's Day",
+        "date": "2025-02-14",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Dining Out"
+      },
+      {
+        "amount": -50,
+        "detailsTransactions": [
+          {
+            "name": "Spa Day",
+            "quantity": 1,
+            "unitPrice": 50,
+            "amount": -50,
+            "categoryId": "Health & Wellness",
+            "projectId": null
+          }
+        ],
+        "payee": "Downtown Spa",
+        "notes": "Relaxation and wellness package",
+        "date": "2025-02-15",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Health & Wellness"
+      },
+      {
+        "amount": -40,
+        "detailsTransactions": [],
+        "payee": "Online Course Platform",
+        "notes": "Enrollment in an online marketing course",
+        "date": "2025-02-16",
+        "projectId": "New Restaurant Startup",
+        "accountId": "Primary Bank Account",
+        "categoryId": "Professional Development"
+      },
+      {
+        "amount": -35,
+        "detailsTransactions": [
+          {
+            "name": "Family Movie Night Snacks",
+            "quantity": 1,
+            "unitPrice": 35,
+            "amount": -35,
+            "categoryId": "Entertainment",
+            "projectId": null
+          }
+        ],
+        "payee": "Cinema Snack Bar",
+        "notes": "Movie night snacks for family outing",
+        "date": "2025-02-17",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Entertainment"
+      }
+    ]
+  }
+]

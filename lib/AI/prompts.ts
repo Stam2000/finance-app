@@ -1,141 +1,127 @@
-import { RunnableSequence,RunnableLike } from "@langchain/core/runnables";
-import {ChatOpenAI} from "@langchain/openai"
-import {ChatPromptTemplate,MessagesPlaceholder} from "@langchain/core/prompts"
-import { subMonths, startOfMonth } from 'date-fns'
-import { DynamicTool } from "@langchain/core/tools"
-import { z } from "zod"
-import { StringOutputParser, StructuredOutputParser } from "@langchain/core/output_parsers"
-import { AIMessage,BaseMessage,HumanMessage } from "@langchain/core/messages"
-import axios from "axios"
-import { ChatTogetherAI } from "@langchain/community/chat_models/togetherai"
 
+//PROMPT FORM GENERATOR
 
-interface InputPorject  {
-  name: string;
-  budget: number;
-  startDate: string;
-  endDate: string;
-  description?: string | undefined;
-}
-interface InputAccount {
-  name:"string"
-}
-interface InputCategory {
-  name: string;
-  goal?: number | null | undefined;
-}
+export const promptGenTemplate = `
+You are a specialized AI system designed to generate realistic financial profile. ensure that each attribute influences financial behaviors and decisions uniquely.
+ strictly conform to the provided Zod schema
+Instructions for Generating Personas:
+-Adhere to Schema Constraints
+ 
+ALL PRICE ARE IN US DOLLAR
 
+Ensure each field meets the validation rules specified in the schema (e.g., age between 18 and 100, name length between 2 and 50 characters).
+- Create diverse, realistic personas across different socioeconomic backgrounds
+- Ensure internal consistency between all attributes
+- Generate attributes that reflect real-world financial patterns and behaviors
+- Include optional fields when they add value to the persona
+- Maintain logical relationships between income, spending, and savings
 
-const model:RunnableLike = new ChatOpenAI({
-    model: "gpt-4o",
-  });
+Name: Use a wide range of names from different cultures around the world (all 193 countries) and backgrounds.
+Age: Cover various age groups (e.g., young adults, middle-aged, seniors).
+Occupation: Include diverse professions across different industries and job levels (Actuary, Urban Planner, Robotics Engineer, Sound Engineer, Forensic Scientist, Astrophysicist, Fashion Designer, Event Planner, Archaeologist, Personal Trainer, Game Developer, Film Director, Zookeeper, Cybersecurity Specialist, Meteorologist, Nuclear Technician, Interior Designer, Air Traffic Controller, Professional Athlete, Food Scientist,...).
+Family Status: Mix between single, married, and married with children.
+Country/Nationality: Represent multiple countries and nationalities accross all country in the world to capture different economic environments.
+monthlyIncome: Vary income levels to reflect different financial capacities .need to be realistic depending of the Occupation
+Location Type: Include urban, suburban, and rural residents.
+Spending Behavior: Distribute among frugal, balanced, and spendthrift behaviors.
+Risk Tolerance: Incorporate conservative, moderate, and aggressive investors.
+Other Optional Fields: Fill optional fields where applicable to add depth and diversity.
+Provide Relevant additionalInfo:(surprise me with your creativity here)
 
-  const model2:RunnableLike = new ChatOpenAI({
-    model: "gpt-4o-mini",
-  });
+Use this field to include unique attributes or circumstances that influence financial behavior, such as "Recently started a new business" or "Planning to relocate internationally."
+Ensure Realism:
 
-const models:any = new ChatTogetherAI({
-  model: "meta-llama/Meta-Llama-3.1-405B-Instruct-Turbo",
-})
+Create plausible and coherent personas where attributes logically influence each other (e.g., a high-income individual might have higher monthly savings).
 
-  const formSchema = z.object({
-    name: z
-      .string()
-      .min(2, { message: 'Name must be at least 2 characters' })
-      .max(50),
-    age: z
-      .number({
-        required_error: 'Age is required',
-      })
-      .min(18, { message: 'Age must be at least 18' })
-      .max(100, { message: 'Age must be at most 100' }),
-    occupation: z
-      .string()
-      .min(2, { message: 'Occupation must be at least 2 characters' })
-      .max(50),
-    familyStatus: z.enum(['single', 'married', 'married_with_children'], {
-      required_error: 'Family Status is required',
-    }),
-    countryOfResidence:z.string().optional(),
-    nationality:z.string().optional(),
-    incomeLevel: z.number().min(0).optional(),
-    locationType: z.enum(['urban', 'suburban', 'rural']).optional(),
-    spendingBehavior: z.enum(['frugal', 'balanced', 'spendthrift']).optional(),
-    additionalInfo: z.string().optional(), // Added field to schema
-    monthlyRent: z.number().min(0).optional(),
-    monthlySavings: z.number().min(0).optional(),
-    riskTolerance: z.enum(['conservative', 'moderate', 'aggressive']).optional(),
-    creditCards: z.enum(['rarely', 'moderate', 'frequent']).optional(),
-    workSchedule: z.enum(['regular', 'shift', 'flexible']).optional(),
-    transportation: z.enum(['car', 'public', 'mixed']).optional(),
-    diningPreference: z.enum(['homeCook', 'mixed', 'eatOut']).optional(),
-    shoppingHabits: z.enum(['planner', 'mixed', 'impulsive']).optional(),
-  })
+Below are a few sample .
 
-  type Form = z.infer<typeof formSchema>
+{{
+  "name": "Ayesha Khan",
+  "age": 29,
+  "occupation": "Graphic Designer",
+  "familyStatus": "single",
+  "countryOfResidence": "Canada",
+  "nationality": "Pakistani",
+  "monthlyIncome": 4583.33,
+  "locationType": "urban",
+  "spendingBehavior": "balanced",
+  "additionalInfo": "Freelances part-time for additional income.",
+  "monthlyRent": 1200,
+  "monthlySavings": 500,
+  "riskTolerance": "aggressive",
+  "creditCards": "frequent",
+  "workSchedule": "flexible",
+  "transportation": "public",
+  "diningPreference": "eatOut",
+  "shoppingHabits": "impulsive"
+}},
+{{
+  "name": "Hiroshi Tanaka",
+  "age": 65,
+  "occupation": "Retired Teacher",
+  "familyStatus": "married",
+  "countryOfResidence": "Japan",
+  "nationality": "Japanese",
+  "monthlyIncome": 2500,
+  "locationType": "rural",
+  "spendingBehavior": "frugal",
+  "additionalInfo": "Enjoys gardening and volunteering at the local community center.",
+  "monthlyRent": 0,
+  "monthlySavings": 200,
+  "riskTolerance": "conservative",
+  "creditCards": "rarely",
+  "workSchedule": "regular",
+  "transportation": "mixed",
+  "diningPreference": "homeCook",
+  "shoppingHabits": "planner"
+}},
+{{
+  "name": "Sophia Müller",
+  "age": 38,
+  "occupation": "Entrepreneur",
+  "familyStatus": "married_with_children",
+  "countryOfResidence": "Germany",
+  "nationality": "German",
+  "monthlyIncome": 10000,
+  "locationType": "urban",
+  "spendingBehavior": "spendthrift",
+  "additionalInfo": "Recently launched a tech startup focusing on AI solutions.",
+  "monthlyRent": 2500,
+  "monthlySavings": 3000,
+  "riskTolerance": "aggressive",
+  "creditCards": "frequent",
+  "workSchedule": "flexible",
+  "transportation": "car",
+  "diningPreference": "eatOut",
+  "shoppingHabits": "impulsive"
+}},
+{{
+  "name": "Carlos Silva",
+  "age": 52,
+  "occupation": "Healthcare Administrator",
+  "familyStatus": "married",
+  "countryOfResidence": "Brazil",
+  "nationality": "Brazilian",
+  "monthlyIncome": 5416.67,
+  "locationType": "suburban",
+  "spendingBehavior": "balanced",
+  "additionalInfo": "Planning to fund children's higher education and invest in real estate.",
+  "monthlyRent": 800,
+  "monthlySavings": 1200,
+  "riskTolerance": "moderate",
+  "creditCards": "moderate",
+  "workSchedule": "regular",
+  "transportation": "mixed",
+  "diningPreference": "mixed",
+  "shoppingHabits": "planner"
+}}
 
-// Define the schema for `detailsTransactions`
-
-
-// Define the schema for `TransactionInterface`, which includes `detailsTransactions`
-const TransactionInterfaceSchema = z.object({
-  categories: z.array(
-    z.object({
-      name: z.string(),
-      goal: z.number().nullable().optional(),
-    })
-  ),
-  accounts: z.array(
-    z.object({
-      name: z.string(),
-    })
-  ),
-  projects: z.array(
-    z.object({
-      name: z.string(),
-      budget: z.number(),
-      startDate: z.string().refine((date) => !isNaN(Date.parse(date)), {
-        message: "Invalid date format",
-      }),
-      endDate: z.string().refine((date) => !isNaN(Date.parse(date)), {
-        message: "Invalid date format",
-      }),
-      description: z.string().optional(),
-    })
-  ),
-  transactions: z.array(
-    z.object({
-      amount: z.number(),
-      detailsTransactions: z.array(
-        z.object({
-          name: z.string().nullable(),
-          quantity: z.number().nullable(),
-          unitPrice: z.number().nullable(),
-          amount: z.number(),
-          categoryId: z.string().nullable(),
-          projectId: z.string().nullable(),
-        })
-      ),
-      payee: z.string(),
-      notes: z.string().nullable(),
-      date: z.string(),
-      projectId: z.string().nullable().optional(), // Make optional
-      accountId: z.string(),
-      categoryId: z.string().nullable(),
-  })
-  ),
-});
-
-  const parserExemple = StructuredOutputParser.fromZodSchema(formSchema)
-
-  const parserDataschema = StructuredOutputParser.fromZodSchema(TransactionInterfaceSchema)
-
-  const parserfollowUp = StructuredOutputParser.fromZodSchema(z.array(z.string()))
-
-export const GenTemplate  = async ()=>{
-
-  
-    const formatInstructions = `Respond only in valid JSON. The JSON object you return should match the following schema:
+        
+    response only in valid JSON format
+    The format instructions:
+    tags\n{format_instructions}
+`
+export const formatInstGenTemplate = `Respond only in valid JSON. The JSON object you return should match the following schema:
   
     const zodSchema = z.object({
     name: z
@@ -157,12 +143,12 @@ export const GenTemplate  = async ()=>{
     }),
     countryOfResidence:z.string().optional(),
     nationality:z.string().optional(),
-    incomeLevel: z.number().min(0).optional(),(monthly)
+    monthlyIncome: z.number().min(0).optional().describe("in US DOLLAR"),(monthly)
     locationType: z.enum(['urban', 'suburban', 'rural']).optional(),
     spendingBehavior: z.enum(['frugal', 'balanced', 'spendthrift']).optional(),
     additionalInfo: z.string().optional(), 
-    monthlyRent: z.number().min(0).optional(),
-    monthlySavings: z.number().min(0).optional(),
+    monthlyRent: z.number().min(0).optional().describe("in US DOLLAR"),
+    monthlySavings: z.number().min(0).optional().describe("in US DOLLAR"),
     riskTolerance: z.enum(['conservative', 'moderate', 'aggressive']).optional(),
     creditCards: z.enum(['rarely', 'moderate', 'frequent']).optional(),
     workSchedule: z.enum(['regular', 'shift', 'flexible']).optional(),
@@ -170,159 +156,10 @@ export const GenTemplate  = async ()=>{
     diningPreference: z.enum(['homeCook', 'mixed', 'eatOut']).optional(),
     shoppingHabits: z.enum(['planner', 'mixed', 'impulsive']).optional(),
   })
-  `
-    
-  
-const SystemPrompt=`
-You are a specialized AI system designed to generate realistic financial profile. ensure that each attribute influences financial behaviors and decisions uniquely.
- strictly conform to the provided Zod schema
-Instructions for Generating Personas:
--Adhere to Schema Constraints
- 
-ALL PRICE ARE IN US DOLLAR
-
-Ensure each field meets the validation rules specified in the schema (e.g., age between 18 and 100, name length between 2 and 50 characters).
-- Create diverse, realistic personas across different socioeconomic backgrounds
-- Ensure internal consistency between all attributes
-- Generate attributes that reflect real-world financial patterns and behaviors
-- Include optional fields when they add value to the persona
-- Maintain logical relationships between income, spending, and savings
-
-Name: Use a wide range of names from different cultures and backgrounds.
-Age: Cover various age groups (e.g., young adults, middle-aged, seniors).
-Occupation: Include diverse professions across different industries and job levels.
-Family Status: Mix between single, married, and married with children.
-Country/Nationality: Represent multiple countries and nationalities to capture different economic environments.
-Income Level: Vary income levels to reflect different financial capacities.
-Location Type: Include urban, suburban, and rural residents.
-Spending Behavior: Distribute among frugal, balanced, and spendthrift behaviors.
-Risk Tolerance: Incorporate conservative, moderate, and aggressive investors.
-Other Optional Fields: Fill optional fields where applicable to add depth and diversity.
-Provide Relevant additionalInfo:
-
-Use this field to include unique attributes or circumstances that influence financial behavior, such as "Recently started a new business" or "Planning to relocate internationally."
-Ensure Realism:
-
-Create plausible and coherent personas where attributes logically influence each other (e.g., a high-income individual might have higher monthly savings).
-
-Below are a few sample personas that adhere to your schema and demonstrate diversity across different attributes.
-
-{{
-  "name": "Ayesha Khan",
-  "age": 29,
-  "occupation": "Graphic Designer",
-  "familyStatus": "single",
-  "countryOfResidence": "Canada",
-  "nationality": "Pakistani",
-  "incomeLevel": 4583.33,
-  "locationType": "urban",
-  "spendingBehavior": "balanced",
-  "additionalInfo": "Freelances part-time for additional income.",
-  "monthlyRent": 1200,
-  "monthlySavings": 500,
-  "riskTolerance": "aggressive",
-  "creditCards": "frequent",
-  "workSchedule": "flexible",
-  "transportation": "public",
-  "diningPreference": "eatOut",
-  "shoppingHabits": "impulsive"
-}},
-{{
-  "name": "Hiroshi Tanaka",
-  "age": 65,
-  "occupation": "Retired Teacher",
-  "familyStatus": "married",
-  "countryOfResidence": "Japan",
-  "nationality": "Japanese",
-  "incomeLevel": 2500,
-  "locationType": "rural",
-  "spendingBehavior": "frugal",
-  "additionalInfo": "Enjoys gardening and volunteering at the local community center.",
-  "monthlyRent": 0,
-  "monthlySavings": 200,
-  "riskTolerance": "conservative",
-  "creditCards": "rarely",
-  "workSchedule": "regular",
-  "transportation": "mixed",
-  "diningPreference": "homeCook",
-  "shoppingHabits": "planner"
-}},
-{{
-  "name": "Sophia Müller",
-  "age": 38,
-  "occupation": "Entrepreneur",
-  "familyStatus": "married_with_children",
-  "countryOfResidence": "Germany",
-  "nationality": "German",
-  "incomeLevel": 10000,
-  "locationType": "urban",
-  "spendingBehavior": "spendthrift",
-  "additionalInfo": "Recently launched a tech startup focusing on AI solutions.",
-  "monthlyRent": 2500,
-  "monthlySavings": 3000,
-  "riskTolerance": "aggressive",
-  "creditCards": "frequent",
-  "workSchedule": "flexible",
-  "transportation": "car",
-  "diningPreference": "eatOut",
-  "shoppingHabits": "impulsive"
-}},
-{{
-  "name": "Carlos Silva",
-  "age": 52,
-  "occupation": "Healthcare Administrator",
-  "familyStatus": "married",
-  "countryOfResidence": "Brazil",
-  "nationality": "Brazilian",
-  "incomeLevel": 5416.67,
-  "locationType": "suburban",
-  "spendingBehavior": "balanced",
-  "additionalInfo": "Planning to fund children's higher education and invest in real estate.",
-  "monthlyRent": 800,
-  "monthlySavings": 1200,
-  "riskTolerance": "moderate",
-  "creditCards": "moderate",
-  "workSchedule": "regular",
-  "transportation": "mixed",
-  "diningPreference": "mixed",
-  "shoppingHabits": "planner"
-}}
-
-        
-    response only in valid JSON format
-    The format instructions:
-    tags\n{format_instructions}
 `
-    
-    
-        const memoryPrompt =await  ChatPromptTemplate.fromMessages([
-            ["system",SystemPrompt],
-            ["human","{input}"],
-        ]).partial({
-            format_instructions: formatInstructions,
-          })
-        
-        const genLchain = RunnableSequence.from([
-            memoryPrompt,
-            model,
-            parserExemple
-        ])
-    
-        const response = await genLchain.invoke({
-            input:"generate new persona.surprise me"
-        })
-        
+//PROMPT EXTENDER FORM
 
-    
-        return response
-  
-  }
-
-export const PersonaExtender = async (data : Form)=>{
-      const persona = JSON.stringify(data)
-
-
-  const SysPromptExtender =`You are an advanced AI specializing in persona development, cultural analysis, and behavioral modeling. Your task is to generate a richly detailed, coherent persona description based on the structured input provided. Follow the schema carefully, ensuring every field is expanded upon with specificity, logical consistency, and cultural authenticity.
+export const promptExtender = `You are an advanced AI specializing in persona development, cultural analysis, and behavioral modeling. Your task is to generate a richly detailed, coherent persona description based on the structured input provided. Follow the schema carefully, ensuring every field is expanded upon with specificity, logical consistency, and cultural authenticity.
 
 Instructions
 Field Mapping & Coverage
@@ -406,34 +243,10 @@ Expand all schema fields with contextualized examples.
 Use global diversity where applicable while maintaining a logical and realistic persona.
 Final Note:
 The goal is to create a detailed, relatable character firmly grounded in their cultural and professional context. Strive for authenticity and respectfulness while avoiding stereotypes. Ensure the persona is realistic, interconnected, and aligned with the input schema.
-  `
-  const extenderPrompt = ChatPromptTemplate.fromMessages([
-      ["system",SysPromptExtender],
-      ["human","{input}"],
-  ])
+`
+// PROMPT FUNDAMENTAL WEEK TEMPLATE
 
-  const extenderChain = RunnableSequence.from([
-      extenderPrompt,
-      models,
-      new StringOutputParser()
-  ])
-
-    const guideLine = await extenderChain.invoke({
-    input:`generate a more detailed persona for ${persona}`
-  })
-
-  return guideLine
-  }  
-
-export const DataGenerator = async ( guideLine:string ) => {
-  console.log("ok")
-
-    const MEMORY_KEY = "chat_history"
-    let transactionData = []
-    let History : BaseMessage [] = []
-    let refinedHistory : BaseMessage [] = []
-  
-  const formatInstExtender = `Respond only in valid JSON. The JSON object you return should match the following schema:
+export const formatInstExtenderGen = `Respond only in valid JSON. The JSON object you return should match the following schema:
 
   categories:contains an array which contains ALL the categories used so far in both transactions and detailsTransactions **WITHOUT EXCEPTION**
   accounts: represents ALL the accounts of the persona **WITHOUT EXCEPTION**
@@ -496,13 +309,16 @@ CategoryId: The category to which this item belongs, ensuring it matches one of 
 ProjectId: If applicable, associate the item with a relevant project.
 Specificity in Items:
 
-  `
-const genPrompt = `
+`
+
+export const promptFundamentalWeek = `
 You are an advanced AI specialized in generating realistic and consistent daily financial transactions over time for a given persona. 
-Your primary objective is to produce a comprehensive set of daily financial transactions that maintain consistency across different weeks, accurately reflecting recurring expenses, income patterns, and spending habits,
+Your primary objective is to produce a comprehensive set of daily financial transactions that maintain consistency across different months, accurately reflecting recurring expenses, income patterns, and spending habits,
 accurately reflect the persona's cultural background, lifestyle, spending habits, financial goals, and behavioral aspects.
 
 YOU WILL ONLY WORK IN US DOLLAR. if the currency is not in US DOLLAR CONVERT IT
+
+***DON'T forget to remove the taxes from the main salary depending on the region of the persona.***
 
 Your Tasks:
 Understand the Persona's Financial Patterns:
@@ -1192,83 +1008,14 @@ exemple output 2 :
   ]
 }}
 
+`
 
+// PROMPT REFINE TEMPLATE
 
-` 
-
-  const currentDate = new Date();
-  const threeMonthsBefore = subMonths(currentDate, 3);
-  const startOfThreeMonthsBefore = startOfMonth(currentDate);
-
-
-  const dataGenPrompt = await  ChatPromptTemplate.fromMessages([
-    ["system",genPrompt],
-    new MessagesPlaceholder(MEMORY_KEY),
-    ["human","{input}"],
-  ]).partial({
-    format_instructions: formatInstExtender,
-  })
-
-  const formatDetails = `Respond only in valid JSON. The JSON object you return should match the following schema:
-
-  categories:contains an array which contains ALL the categories used so far in both transactions and detailsTransactions **WITHOUT EXCEPTION**
-  accounts: represents ALL the accounts of the persona **WITHOUT EXCEPTION**
-  projects: represents ALL the projects used so far in both transactions and detailsTransactions **WITHOUT EXCEPTION**
-  
-   FinancialDataSchema = z.object({
- categories: z.array(
- z.object({
- name: z.string(),
- goal: z.number().nullable().optional(), //represent the monthly limit expense oder the montly target to reach
- })
- ),
- accounts: z.array(
- z.object({
- name: z.string(),
- })
- ),
- projects: z.array(
- z.object({
- name: z.string(),
- budget: z.number(),
- startDate: z.string(),  message: "Invalid date format",
- }),
- endDate: z.string(),  message: "Invalid date format",
- }),
- description: z.string().nullable().optional(),
- })
- ),
- transactions: z.array(
- z.object({
- amount: z.number(),
- detailsTransactions: z.array(
-
- z.object({
- name: z.string().nullable(),
- quantity: z.number().nullable(),
- unitPrice: z.number().nullable(),
- amount: z.number(),
- categoryId: z.string().nullable(),
- projectId: z.string().nullable(),
-
- })
- ),
- payee: z.string(),
- notes: z.string().nullable(),
- date: z.string(),
- projectId: z.string().nullable().optional(), // Make optional
- accountId: z.string(),
- categoryId: z.string().nullable() ),
-
-})
-  `
-
-const refinePrompt=` 
+export const promptRefine=` 
 You are an advanced AI specialized in enhancing financial transaction data by ensuring cultural alignment, personalization, and creativity. Your primary objective is to ensure that the names of banks, payees, and items are creative and contextually appropriate, and that the transactions reflect the persona's cultural background, lifestyle, and preferences.
 
 YOU WILL ONLY WORK IN US DOLLAR. if the currency is not in US DOLLAR CONVERT IT
-
-
 
 Your Tasks:
 
@@ -1290,7 +1037,7 @@ Avoid generic terms by listing each item separately, enhancing the clarity of sp
 Enhance Transaction Details:
 
 Extend detailsTransactions:
- systematically expand all detailsTransactions in financial data. Your goal is to ensure that every grouped item or abstract entry is decomposed into individual, specific, and realistic items, while retaining consistency with the persona's lifestyle, preferences, and goals. Here's how you should approach this task:
+Systematically expand all detailsTransactions in financial data. Your goal is to ensure that every grouped item or abstract entry is decomposed into individual, specific, and realistic items, while retaining consistency with the persona's lifestyle, preferences, and goals. Here's how you should approach this task:
 
 Expand grouped items into specific, individual entries. For example:
 Replace "Organic Essentials Basket" with a list of individual products such as "Organic Kale," "Free-Range Eggs," etc.
@@ -1302,19 +1049,16 @@ Total Amount (calculated as quantity * unit price).
 The appropriate categoryId and projectId.
 Reflect Realism and Persona Alignment:
 
-
-
 Cultural Fit: Use culturally appropriate items and names that match the persona's background (e.g., eco-conscious, organic products for Zara).
 Lifestyle Fit: Align with the persona's lifestyle, such as dietary preferences, hobbies, and family needs.
 Formatting Guidelines:
 
-Currency Multiplication: Multiply all price-related values by 1,000 to reflect realistic financial amounts.
 Ensure Accuracy: Verify that the sum of individual item amounts equals the parent transaction's total amount.
 Avoid Generic Labels: Use specific names instead of generic terms like "Groceries" or "Utilities."
 
-Multiply all price-related values by 1,000 to reflect realistic amounts (e.g., $100 becomes $100,000).
 Maintain Realism:
 Ensure that the detailed items and their prices are plausible and reflect the persona's spending capacity and lifestyle.
+
 Ensure Comprehensive Listing of Categories, Projects, and Accounts:
 
 Categories, Projects, and Accounts Listing:
@@ -1333,369 +1077,133 @@ Formatting and Clarity:
 JSON Compliance:
 Ensure that all modifications result in valid JSON output adhering strictly to the provided schema.
 
-tag/n{format_instructions}
-
-exemple Input: 
-{{
-  "categories": [
-    {{"name": "Rent", "goal": 250}},
-    {{"name": "Groceries", "goal": 600}},
-    {{"name": "Dining Out", "goal": 200}},
-    {{"name": "Transportation", "goal": 150}},
-    {{"name": "Utilities", "goal": 150}},
-    {{"name": "Education", "goal": 300}},
-    {{"name": "Entertainment", "goal": 100}},
-    {{"name": "Books", "goal": 50}},
-    {{"name": "Savings", "goal": 420}},
-    {{"name": "Charity", "goal": 75}},
-    {{"name": "Healthcare", "goal": 150}}
-  ],
-  "accounts": [
-    {{"name": "Primary Bank Account"}}
-  ],
-  "projects": [
-    {{
-      "name": "Vacation Home Purchase",
-      "budget": 200000,
-      "startDate": "2023-01-01",
-      "endDate": "2023-12-31",
-      "description": "Invest in a vacation home in the Turkish countryside."
-    }}
-  ],
-  "transactions": [
-    {{
-      "amount": -130,
-      "detailsTransactions": [
-        {{"name": "Organic Vegetables & Fruits", "quantity": 15, "unitPrice": 3, "amount": -45, "categoryId": "Groceries", "projectId": null}},
-        {{"name": "Halal Meat", "quantity": 6, "unitPrice": 10, "amount": -60, "categoryId": "Groceries", "projectId": null}},
-        {{"name": "Dairy Products", "quantity": 5, "unitPrice": 5, "amount": -25, "categoryId": "Groceries", "projectId": null}}
-      ],
-      "payee": "Local Market",
-      "notes": "Purchase of weekly groceries",
-      "date": "2023-11-08",
-      "projectId": null,
-      "accountId": "Primary Bank Account",
-      "categoryId": "Groceries"
-    }},
-    {{
-      "amount": -1200,
-      "detailsTransactions": [
-        {{"name": "Monthly Rent Payment", "quantity": 1, "unitPrice": 1200, "amount": -1200, "categoryId": "Rent", "projectId": null}}
-      ],
-      "payee": "Landlord",
-      "notes": "Monthly rent for apartment",
-      "date": "2023-11-01",
-      "projectId": null,
-      "accountId": "Primary Bank Account",
-      "categoryId": "Rent"
-    }},
-    {{
-      "amount": -50,
-      "detailsTransactions": [],
-      "payee": "Public Transport Top-Up",
-      "notes": "Monthly transportation pass",
-      "date": "2023-11-09",
-      "projectId": null,
-      "accountId": "Primary Bank Account",
-      "categoryId": "Transportation"
-    }},
-    {{
-      "amount": -100,
-      "detailsTransactions": [],
-      "payee": "Electricity Provider",
-      "notes": "Monthly electricity bill",
-      "date": "2023-11-10",
-      "projectId": null,
-      "accountId": "Primary Bank Account",
-      "categoryId": "Utilities"
-    }},
-    {{
-      "amount": -60,
-      "detailsTransactions": [
-        {{"name": "The Economist Subscription", "quantity": 1, "unitPrice": 60, "amount": -60, "categoryId": "Education", "projectId": null}}
-      ],
-      "payee": "Magazine Store",
-      "notes": "Annual subscription renewal",
-      "date": "2023-11-11",
-      "projectId": null,
-      "accountId": "Primary Bank Account",
-      "categoryId": "Education"
-    }},
-    {{
-      "amount": -30,
-      "detailsTransactions": [],
-      "payee": "Coffee Shop",
-      "notes": "Arabic coffee with colleagues",
-      "date": "2023-11-12",
-      "projectId": null,
-      "accountId": "Primary Bank Account",
-      "categoryId": "Dining Out"
-    }},
-    {{
-      "amount": -90,
-      "detailsTransactions": [
-        {{"name": "Documentary Streaming Service", "quantity": 1, "unitPrice": 15, "amount": -15, "categoryId": "Entertainment", "projectId": null}},
-        {{"name": "Weekend Family Movie Night", "quantity": 1, "unitPrice": 75, "amount": -75, "categoryId": "Entertainment", "projectId": null}}
-      ],
-      "payee": "Streaming Platforms",
-      "notes": "Family entertainment",
-      "date": "2023-11-13",
-      "projectId": null,
-      "accountId": "Primary Bank Account",
-      "categoryId": "Entertainment"
-    }},
-    {{
-      "amount": -40,
-      "detailsTransactions": [],
-      "payee": "Charity Donation",
-      "notes": "Monthly contribution to local charity",
-      "date": "2023-11-14",
-      "projectId": null,
-      "accountId": "Primary Bank Account",
-      "categoryId": "Charity"
-    }}
-  ]
-}} 
-corresponding output: {{
-  "categories": [
-    {{ "name": "Rent", "goal": 250000 }},
-    {{ "name": "Groceries", "goal": 600000 }},
-    {{ "name": "Dining Out", "goal": 200000 }},
-    {{ "name": "Transportation", "goal": 150000 }},
-    {{ "name": "Utilities", "goal": 150000 }},
-    {{ "name": "Education", "goal": 300000 }},
-    {{ "name": "Entertainment", "goal": 100000 }},
-    {{ "name": "Books", "goal": 50000 }},
-    {{ "name": "Savings", "goal": 420000 }},
-    {{ "name": "Charity", "goal": 75000 }},
-    {{ "name": "Healthcare", "goal": 150000 }}
-  ],
-  "accounts": [
-    {{ "name": "Turkiye Garanti Bankası (Garanti BBVA)" }}
-  ],
-  "projects": [
-    {{
-      "name": "Vacation Home Purchase",
-      "budget": 200000000,
-      "startDate": "2023-01-01",
-      "endDate": "2023-12-31",
-      "description": "Invest in a vacation home in the Turkish countryside."
-    }}
-  ],
-  "transactions": [
-    {{
-      "amount": -130000,
-      "detailsTransactions": [
-        {{
-          "name": "Organic Spinach (1kg)",
-          "quantity": 5,
-          "unitPrice": 6000,
-          "amount": -30000,
-          "categoryId": "Groceries",
-          "projectId": null
-        }},
-        {{
-          "name": "Fresh Tomatoes (2kg)",
-          "quantity": 3,
-          "unitPrice": 5000,
-          "amount": -15000,
-          "categoryId": "Groceries",
-          "projectId": null
-        }},
-        {{
-          "name": "Halal Chicken Breasts (1kg)",
-          "quantity": 2,
-          "unitPrice": 20000,
-          "amount": -40000,
-          "categoryId": "Groceries",
-          "projectId": null
-        }},
-        {{
-          "name": "Dairy Milk (2L)",
-          "quantity": 4,
-          "unitPrice": 2500,
-          "amount": -10000,
-          "categoryId": "Groceries",
-          "projectId": null
-        }},
-        {{
-          "name": "Yogurt (1kg)",
-          "quantity": 3,
-          "unitPrice": 5000,
-          "amount": -15000,
-          "categoryId": "Groceries",
-          "projectId": null
-        }}
-      ],
-      "payee": "İstanbul Organic Bazaar",
-      "notes": "Purchase of weekly groceries",
-      "date": "2023-11-08",
-      "projectId": null,
-      "accountId": "Turkiye Garanti Bankası (Garanti BBVA)",
-      "categoryId": "Groceries"
-    }},
-    {{
-      "amount": -1200000,
-      "detailsTransactions": [
-        {{
-          "name": "Monthly Rent Payment",
-          "quantity": 1,
-          "unitPrice": 1200000,
-          "amount": -1200000,
-          "categoryId": "Rent",
-          "projectId": null
-        }}
-      ],
-      "payee": "Emirhan Property Management",
-      "notes": "Monthly rent for apartment",
-      "date": "2023-11-01",
-      "projectId": null,
-      "accountId": "Turkiye Garanti Bankası (Garanti BBVA)",
-      "categoryId": "Rent"
-    }},
-    {{
-      "amount": -50000,
-      "detailsTransactions": [
-        {{
-          "name": "Monthly Transit Pass",
-          "quantity": 1,
-          "unitPrice": 50000,
-          "amount": -50000,
-          "categoryId": "Transportation",
-          "projectId": null
-        }}
-      ],
-      "payee": "İstanbul Ulaşım A.Ş.",
-      "notes": "Monthly transportation pass",
-      "date": "2023-11-09",
-      "projectId": null,
-      "accountId": "Turkiye Garanti Bankası (Garanti BBVA)",
-      "categoryId": "Transportation"
-    }},
-    {{
-      "amount": -100000,
-      "detailsTransactions": [
-        {{
-          "name": "Electricity Bill",
-          "quantity": 1,
-          "unitPrice": 60000,
-          "amount": -60000,
-          "categoryId": "Utilities",
-          "projectId": null
-        }},
-        {{
-          "name": "Water Bill",
-          "quantity": 1,
-          "unitPrice": 40000,
-          "amount": -40000,
-          "categoryId": "Utilities",
-          "projectId": null
-        }}
-      ],
-      "payee": "İstanbul Elektrik Dağıtım",
-      "notes": "Monthly utility bills",
-      "date": "2023-11-10",
-      "projectId": null,
-      "accountId": "Turkiye Garanti Bankası (Garanti BBVA)",
-      "categoryId": "Utilities"
-    }},
-    {{
-      "amount": -60000,
-      "detailsTransactions": [
-        {{
-          "name": "The Economist Subscription",
-          "quantity": 1,
-          "unitPrice": 60000,
-          "amount": -60000,
-          "categoryId": "Education",
-          "projectId": null
-        }}
-      ],
-      "payee": "The Economist Official Store",
-      "notes": "Annual subscription renewal",
-      "date": "2023-11-11",
-      "projectId": null,
-      "accountId": "Turkiye Garanti Bankası (Garanti BBVA)",
-      "categoryId": "Education"
-    }},
-    {{
-      "amount": -30000,
-      "detailsTransactions": [
-        {{
-          "name": "Arabic Coffee",
-          "quantity": 1,
-          "unitPrice": 20000,
-          "amount": -20000,
-          "categoryId": "Dining Out",
-          "projectId": null
-        }},
-        {{
-          "name": "Assorted Pastries",
-          "quantity": 1,
-          "unitPrice": 10000,
-          "amount": -10000,
-          "categoryId": "Dining Out",
-          "projectId": null
-        }}
-      ],
-      "payee": "Al-Qahwa Arabic Coffee House",
-      "notes": "Arabic coffee with colleagues",
-      "date": "2023-11-12",
-      "projectId": null,
-      "accountId": "Turkiye Garanti Bankası (Garanti BBVA)",
-      "categoryId": "Dining Out"
-    }},
-    {{
-      "amount": -90000,
-      "detailsTransactions": [
-        {{
-          "name": "HistoryStream Premium Subscription",
-          "quantity": 1,
-          "unitPrice": 15000,
-          "amount": -15000,
-          "categoryId": "Entertainment",
-          "projectId": null
-        }},
-        {{
-          "name": "Ottoman Empire Documentary Night Package",
-          "quantity": 1,
-          "unitPrice": 75000,
-          "amount": -75000,
-          "categoryId": "Entertainment",
-          "projectId": null
-        }}
-      ],
-      "payee": "Netflix Istanbul",
-      "notes": "Family entertainment",
-      "date": "2023-11-13",
-      "projectId": null,
-      "accountId": "Turkiye Garanti Bankası (Garanti BBVA)",
-      "categoryId": "Entertainment"
-    }},
-    {{
-      "amount": -40000,
-      "detailsTransactions": [
-        {{
-          "name": "Donation to Orphanage",
-          "quantity": 1,
-          "unitPrice": 40000,
-          "amount": -40000,
-          "categoryId": "Charity",
-          "projectId": null
-        }}
-      ],
-      "payee": "Istanbul Children's Charity",
-      "notes": "Monthly contribution to local charity",
-      "date": "2023-11-14",
-      "projectId": null,
-      "accountId": "Turkiye Garanti Bankası (Garanti BBVA)",
-      "categoryId": "Charity"
-    }}
-  ]
-}}
-
-
-exemple Input:{{
+  
+  tag/n{format_instructions}
+  
+  exemple:
+  
+  ############ Input ##############: 
+  {{
+    "categories": [
+      {{"name": "Rent", "goal": 250}},
+      {{"name": "Groceries", "goal": 600}},
+      {{"name": "Dining Out", "goal": 200}},
+      {{"name": "Transportation", "goal": 150}},
+      {{"name": "Utilities", "goal": 150}},
+      {{"name": "Education", "goal": 300}},
+      {{"name": "Entertainment", "goal": 100}},
+      {{"name": "Books", "goal": 50}},
+      {{"name": "Savings", "goal": 420}},
+      {{"name": "Charity", "goal": 75}},
+      {{"name": "Healthcare", "goal": 150}}
+    ],
+    "accounts": [
+      {{"name": "Primary Bank Account"}}
+    ],
+    "projects": [
+      {{
+        "name": "Vacation Home Purchase",
+        "budget": 200000,
+        "startDate": "2023-01-01",
+        "endDate": "2023-12-31",
+        "description": "Invest in a vacation home in the Turkish countryside."
+      }}
+    ],
+    "transactions": [
+      {{
+        "amount": -130,
+        "detailsTransactions": [
+          {{"name": "Organic Vegetables & Fruits", "quantity": 15, "unitPrice": 3, "amount": -45, "categoryId": "Groceries", "projectId": null}},
+          {{"name": "Halal Meat", "quantity": 6, "unitPrice": 10, "amount": -60, "categoryId": "Groceries", "projectId": null}},
+          {{"name": "Dairy Products", "quantity": 5, "unitPrice": 5, "amount": -25, "categoryId": "Groceries", "projectId": null}}
+        ],
+        "payee": "Local Market",
+        "notes": "Purchase of weekly groceries",
+        "date": "2023-11-08",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Groceries"
+      }},
+      {{
+        "amount": -1200,
+        "detailsTransactions": [
+          {{"name": "Monthly Rent Payment", "quantity": 1, "unitPrice": 1200, "amount": -1200, "categoryId": "Rent", "projectId": null}}
+        ],
+        "payee": "Landlord",
+        "notes": "Monthly rent for apartment",
+        "date": "2023-11-01",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Rent"
+      }},
+      {{
+        "amount": -50,
+        "detailsTransactions": [],
+        "payee": "Public Transport Top-Up",
+        "notes": "Monthly transportation pass",
+        "date": "2023-11-09",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Transportation"
+      }},
+      {{
+        "amount": -100,
+        "detailsTransactions": [],
+        "payee": "Electricity Provider",
+        "notes": "Monthly electricity bill",
+        "date": "2023-11-10",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Utilities"
+      }},
+      {{
+        "amount": -60,
+        "detailsTransactions": [
+          {{"name": "The Economist Subscription", "quantity": 1, "unitPrice": 60, "amount": -60, "categoryId": "Education", "projectId": null}}
+        ],
+        "payee": "Magazine Store",
+        "notes": "Annual subscription renewal",
+        "date": "2023-11-11",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Education"
+      }},
+      {{
+        "amount": -30,
+        "detailsTransactions": [],
+        "payee": "Coffee Shop",
+        "notes": "Arabic coffee with colleagues",
+        "date": "2023-11-12",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Dining Out"
+      }},
+      {{
+        "amount": -90,
+        "detailsTransactions": [
+          {{"name": "Documentary Streaming Service", "quantity": 1, "unitPrice": 15, "amount": -15, "categoryId": "Entertainment", "projectId": null}},
+          {{"name": "Weekend Family Movie Night", "quantity": 1, "unitPrice": 75, "amount": -75, "categoryId": "Entertainment", "projectId": null}}
+        ],
+        "payee": "Streaming Platforms",
+        "notes": "Family entertainment",
+        "date": "2023-11-13",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Entertainment"
+      }},
+      {{
+        "amount": -40,
+        "detailsTransactions": [],
+        "payee": "Charity Donation",
+        "notes": "Monthly contribution to local charity",
+        "date": "2023-11-14",
+        "projectId": null,
+        "accountId": "Primary Bank Account",
+        "categoryId": "Charity"
+      }}
+    ]
+  }} 
+ ################ corresponding output #################: {{
   "categories": [
     {{ "name": "Rent", "goal": 250 }},
     {{ "name": "Groceries", "goal": 600 }},
@@ -1710,7 +1218,7 @@ exemple Input:{{
     {{ "name": "Healthcare", "goal": 150 }}
   ],
   "accounts": [
-    {{ "name": "Primary Bank Account" }}
+    {{ "name": "Garanti BBVA" }}
   ],
   "projects": [
     {{
@@ -1723,821 +1231,986 @@ exemple Input:{{
   ],
   "transactions": [
     {{
-      "amount": -150,
+      "amount": -130,
       "detailsTransactions": [
-        {{ "name": "Organic Produce", "quantity": 20, "unitPrice": 3, "amount": -60, "categoryId": "Groceries", "projectId": null }},
-        {{ "name": "Fish & Poultry", "quantity": 5, "unitPrice": 10, "amount": -50, "categoryId": "Groceries", "projectId": null }},
-        {{ "name": "Baked Goods", "quantity": 4, "unitPrice": 10, "amount": -40, "categoryId": "Groceries", "projectId": null }}
+        {{ "name": "Tomatoes (1kg) - Golden Crescent Farms", "quantity": 5, "unitPrice": 3, "amount": -15, "categoryId": "Groceries", "projectId": null }},
+        {{ "name": "Cucumbers (1kg) - Golden Crescent Farms", "quantity": 4, "unitPrice": 3, "amount": -12, "categoryId": "Groceries", "projectId": null }},
+        {{ "name": "Bell Peppers (1kg) - Green Oasis Farms", "quantity": 3, "unitPrice": 3, "amount": -9, "categoryId": "Groceries", "projectId": null }},
+        {{ "name": "Spinach (1kg) - Green Oasis Farms", "quantity": 3, "unitPrice": 3, "amount": -9, "categoryId": "Groceries", "projectId": null }},
+        {{ "name": "Halal Meat (1kg) - Sultan's Choice Meats", "quantity": 6, "unitPrice": 10, "amount": -60, "categoryId": "Groceries", "projectId": null }},
+        {{ "name": "Milk (1L) - Anatolian Creamery", "quantity": 3, "unitPrice": 5, "amount": -15, "categoryId": "Groceries", "projectId": null }},
+        {{ "name": "Yogurt (1kg) - Anatolian Creamery", "quantity": 2, "unitPrice": 5, "amount": -10, "categoryId": "Groceries", "projectId": null }}
       ],
-      "payee": "Organic Grocery Store",
-      "notes": "Weekly groceries",
-      "date": "2023-11-15",
+      "payee": "Golden Crescent Market",
+      "notes": "Purchase of weekly groceries",
+      "date": "2023-11-08",
       "projectId": null,
-      "accountId": "Primary Bank Account",
+      "accountId": "Garanti BBVA",
       "categoryId": "Groceries"
     }},
     {{
-      "amount": -40,
-      "detailsTransactions": [],
-      "payee": "Taxi Service",
-      "notes": "Trip to Istanbul University",
-      "date": "2023-11-16",
+      "amount": -1200,
+      "detailsTransactions": [
+        {{ "name": "Monthly Rent Payment", "quantity": 1, "unitPrice": 1200, "amount": -1200, "categoryId": "Rent", "projectId": null }}
+      ],
+      "payee": "Bosporus Realty Services",
+      "notes": "Monthly rent for apartment",
+      "date": "2023-11-01",
       "projectId": null,
-      "accountId": "Primary Bank Account",
-      "categoryId": "Transportation"
+      "accountId": "Garanti BBVA",
+      "categoryId": "Rent"
     }},
     {{
       "amount": -50,
-      "detailsTransactions": [],
-      "payee": "Water Utility",
-      "notes": "Monthly water bill",
-      "date": "2023-11-17",
+      "detailsTransactions": [
+        {{ "name": "Monthly Transit Pass", "quantity": 1, "unitPrice": 50, "amount": -50, "categoryId": "Transportation", "projectId": null }}
+      ],
+      "payee": "Bosphorus Mobility",
+      "notes": "Monthly transportation pass",
+      "date": "2023-11-09",
       "projectId": null,
-      "accountId": "Primary Bank Account",
-      "categoryId": "Utilities"
+      "accountId": "Garanti BBVA",
+      "categoryId": "Transportation"
     }},
     {{
       "amount": -100,
-      "detailsTransactions": [],
-      "payee": "Private Tutor",
-      "notes": "French lessons for children",
-      "date": "2023-11-18",
+      "detailsTransactions": [
+        {{ "name": "Electricity Bill - Energex Istanbul", "quantity": 1, "unitPrice": 100, "amount": -100, "categoryId": "Utilities", "projectId": null }}
+      ],
+      "payee": "Sultan Energy Services",
+      "notes": "Monthly electricity bill",
+      "date": "2023-11-10",
       "projectId": null,
-      "accountId": "Primary Bank Account",
+      "accountId": "Garanti BBVA",
+      "categoryId": "Utilities"
+    }},
+    {{
+      "amount": -60,
+      "detailsTransactions": [
+        {{ "name": "World Insight Magazine Subscription", "quantity": 1, "unitPrice": 60, "amount": -60, "categoryId": "Education", "projectId": null }}
+      ],
+      "payee": "The Economist Official Store",
+      "notes": "Annual subscription renewal",
+      "date": "2023-11-11",
+      "projectId": null,
+      "accountId": "Garanti BBVA",
       "categoryId": "Education"
     }},
     {{
-      "amount": -75,
-      "detailsTransactions": [],
-      "payee": "Local Turkish Restaurant",
-      "notes": "Dinner with family friends",
-      "date": "2023-11-19",
+      "amount": -30,
+      "detailsTransactions": [
+        {{ "name": "Arabic Coffee - Desert Brew", "quantity": 1, "unitPrice": 20, "amount": -20, "categoryId": "Dining Out", "projectId": null }},
+        {{ "name": "Assorted Pastries - Ottoman Bakery", "quantity": 1, "unitPrice": 10, "amount": -10, "categoryId": "Dining Out", "projectId": null }}
+      ],
+      "payee": "Al-Qahwa Arabic Coffee House",
+      "notes": "Arabic coffee with colleagues",
+      "date": "2023-11-12",
       "projectId": null,
-      "accountId": "Primary Bank Account",
+      "accountId": "Garanti BBVA",
       "categoryId": "Dining Out"
     }},
     {{
-      "amount": -35,
+      "amount": -90,
       "detailsTransactions": [
-        {{ "name": "Family Board Game Night", "quantity": 1, "unitPrice": 35, "amount": -35, "categoryId": "Entertainment", "projectId": null }}
+        {{ "name": "Documentary Streaming Service - 'Empire's Echo'", "quantity": 1, "unitPrice": 15, "amount": -15, "categoryId": "Entertainment", "projectId": null }},
+        {{ "name": "Family Movie Night - 'The Hidden City'", "quantity": 1, "unitPrice": 75, "amount": -75, "categoryId": "Entertainment", "projectId": null }}
       ],
-      "payee": "Toy Store",
-      "notes": "Purchase of new board games",
-      "date": "2023-11-20",
+      "payee": "Netflix Turkey",
+      "notes": "Family entertainment",
+      "date": "2023-11-13",
       "projectId": null,
-      "accountId": "Primary Bank Account",
+      "accountId": "Garanti BBVA",
       "categoryId": "Entertainment"
     }},
     {{
-      "amount": -45,
-      "detailsTransactions": [],
-      "payee": "Medical Checkup",
-      "notes": "Routine health check-up",
-      "date": "2023-11-21",
-      "projectId": null,
-      "accountId": "Primary Bank Account",
-      "categoryId": "Healthcare"
-    }},
-    {{
-      "amount": -250,
+      "amount": -40,
       "detailsTransactions": [
-        {{ "name": "Monthly Apartment Rent", "quantity": 1, "unitPrice": 250, "amount": -250, "categoryId": "Rent", "projectId": null }}
+        {{ "name": "Donation to Orphanage - Hope Haven", "quantity": 1, "unitPrice": 40, "amount": -40, "categoryId": "Charity", "projectId": null }}
       ],
-      "payee": "Landlord",
-      "notes": "Rent payment for November",
-      "date": "2023-11-01",
+      "payee": "Bosporus Kids Foundation",
+      "notes": "Monthly contribution to local charity",
+      "date": "2023-11-14",
       "projectId": null,
-      "accountId": "Primary Bank Account",
-      "categoryId": "Rent"
+      "accountId": "Garanti BBVA",
+      "categoryId": "Charity"
     }}
   ]
 }}
 
-corresponding output :
+  
+  exemple 
+  
+  ################ input ################:{{
+    "categories": [
+      {{
+        "name": "Rent",
+        "goal": 900
+      }},
+      {{
+        "name": "Utilities",
+        "goal": 150
+      }},
+      {{
+        "name": "Food & Groceries",
+        "goal": 300
+      }},
+      {{
+        "name": "Dining Out",
+        "goal": 100
+      }},
+      {{
+        "name": "Transportation",
+        "goal": 100
+      }},
+      {{
+        "name": "Entertainment",
+        "goal": 50
+      }},
+      {{
+        "name": "Health & Fitness",
+        "goal": 50
+      }},
+      {{
+        "name": "Education",
+        "goal": 50
+      }},
+      {{
+        "name": "Personal Care",
+        "goal": 30
+      }},
+      {{
+        "name": "Savings",
+        "goal": 300
+      }},
+      {{
+        "name": "Family Support",
+        "goal": 200
+      }},
+      {{
+        "name": "Tech Gadgets",
+        "goal": 100
+      }}
+    ],
+    "accounts": [
+      {{
+        "name": "Primary Bank Account"
+      }},
+      {{
+        "name": "Savings Account"
+      }},
+      {{
+        "name": "PayPal"
+      }}
+    ],
+    "projects": [
+      {{
+        "name": "Tech Startup Fund",
+        "budget": 5000,
+        "startDate": "2024-01-01",
+        "endDate": "2024-12-31"
+      }}
+    ],
+    "transactions": [
+      {{
+        "amount": -900,
+        "payee": "Landlord",
+        "notes": "Monthly rent payment",
+        "date": "2024-09-01",
+        "accountId": "Primary Bank Account",
+        "categoryId": "Rent"
+      }},
+      {{
+        "amount": -150,
+        "payee": "Utility Company",
+        "notes": "Monthly utilities bill",
+        "date": "2024-09-02",
+        "accountId": "Primary Bank Account",
+        "categoryId": "Utilities"
+      }},
+      {{
+        "amount": -50,
+        "detailsTransactions": [
+          {{
+            "name": "Fresh Produce",
+            "quantity": 1,
+            "unitPrice": 50,
+            "amount": 50,
+            "categoryId": "Food & Groceries"
+          }}
+        ],
+        "payee": "Local Supermarket",
+        "notes": "Weekly grocery shopping",
+        "date": "2024-09-03",
+        "accountId": "Primary Bank Account",
+        "categoryId": "Food & Groceries"
+      }},
+      {{
+        "amount": -20,
+        "detailsTransactions": [
+          {{
+            "name": "Coffee",
+            "quantity": 1,
+            "unitPrice": 3,
+            "amount": 3,
+            "categoryId": "Dining Out"
+          }},
+          {{
+            "name": "Croissant",
+            "quantity": 1,
+            "unitPrice": 2.5,
+            "amount": 2.5,
+            "categoryId": "Dining Out"
+          }},
+          {{
+            "name": "Tip",
+            "quantity": 1,
+            "unitPrice": 2,
+            "amount": 2,
+            "categoryId": "Dining Out"
+          }},
+          {{
+            "name": "Pastries",
+            "quantity": 3,
+            "unitPrice": 3.5,
+            "amount": 10.5,
+            "categoryId": "Dining Out"
+          }},
+          {{
+            "name": "Juice",
+            "quantity": 1,
+            "unitPrice": 2,
+            "amount": 2,
+            "categoryId": "Dining Out"
+          }}
+        ],
+        "payee": "Local Café",
+        "notes": "Morning coffee and breakfast",
+        "date": "2024-09-04",
+        "accountId": "Primary Bank Account",
+        "categoryId": "Dining Out"
+      }},
+      {{
+        "amount": -30,
+        "payee": "Public Transportation",
+        "notes": "Monthly transit pass",
+        "date": "2024-09-05",
+        "accountId": "Primary Bank Account",
+        "categoryId": "Transportation"
+      }},
+      {{
+        "amount": -15,
+        "payee": "Gym",
+        "notes": "Monthly gym membership",
+        "date": "2024-09-06",
+        "accountId": "Primary Bank Account",
+        "categoryId": "Health & Fitness"
+      }},
+      {{
+        "amount": -30,
+        "detailsTransactions": [
+          {{
+            "name": "Books",
+            "quantity": 2,
+            "unitPrice": 15,
+            "amount": 30,
+            "categoryId": "Education"
+          }}
+        ],
+        "payee": "University Bookstore",
+        "notes": "Purchase of academic books",
+        "date": "2024-09-07",
+        "accountId": "Primary Bank Account",
+        "categoryId": "Education"
+      }},
+      {{
+        "amount": -100,
+        "payee": "Family",
+        "notes": "Monthly support to family in Cameroon",
+        "date": "2024-09-08",
+        "accountId": "Primary Bank Account",
+        "categoryId": "Family Support"
+      }},
+      {{
+        "amount": -50,
+        "payee": "Tech Store",
+        "notes": "Purchase of tech gadgets",
+        "date": "2024-09-09",
+        "accountId": "Primary Bank Account",
+        "categoryId": "Tech Gadgets"
+      }},
+      {{
+        "amount": 2000,
+        "payee": "University",
+        "notes": "Monthly stipend",
+        "date": "2024-09-10",
+        "accountId": "Primary Bank Account",
+        "categoryId": null
+      }},
+      {{
+        "amount": -300,
+        "payee": "Savings Account",
+        "notes": "Monthly savings contribution",
+        "date": "2024-09-11",
+        "accountId": "Primary Bank Account",
+        "categoryId": "Savings"
+      }},
+      {{
+        "amount": -20,
+        "detailsTransactions": [
+          {{
+            "name": "Movie Ticket",
+            "quantity": 1,
+            "unitPrice": 10,
+            "amount": 10,
+            "categoryId": "Entertainment"
+          }},
+          {{
+            "name": "Popcorn",
+            "quantity": 1,
+            "unitPrice": 5,
+            "amount": 5,
+            "categoryId": "Entertainment"
+          }},
+          {{
+            "name": "Drink",
+            "quantity": 1,
+            "unitPrice": 5,
+            "amount": 5,
+            "categoryId": "Entertainment"
+          }}
+        ],
+        "payee": "Cinema",
+        "notes": "Movie night with friends",
+        "date": "2024-09-12",
+        "accountId": "Primary Bank Account",
+        "categoryId": "Entertainment"
+      }},
+      {{
+        "amount": -10,
+        "detailsTransactions": [
+          {{
+            "name": "Shampoo",
+            "quantity": 1,
+            "unitPrice": 5,
+            "amount": 5,
+            "categoryId": "Personal Care"
+          }},
+          {{
+            "name": "Toothpaste",
+            "quantity": 1,
+            "unitPrice": 5,
+            "amount": 5,
+            "categoryId": "Personal Care"
+          }}
+        ],
+        "payee": "Pharmacy",
+        "notes": "Personal care items",
+        "date": "2024-09-13",
+        "accountId": "Primary Bank Account",
+        "categoryId": "Personal Care"
+      }},
+      {{
+        "amount": -20,
+        "detailsTransactions": [
+          {{
+            "name": "Lunch",
+            "quantity": 1,
+            "unitPrice": 20,
+            "amount": 20,
+            "categoryId": "Dining Out"
+          }}
+        ],
+        "payee": "Restaurant",
+        "notes": "Lunch with colleagues",
+        "date": "2024-09-14",
+        "accountId": "Primary Bank Account",
+        "categoryId": "Dining Out"
+      }}
+    ]
+  }}
+  
+  
+  ######### corresponding output of the previous ##############:{{
+    "categories": [
+      {{ "name": "Rent", "goal": 900 }},
+      {{ "name": "Utilities", "goal": 150 }},
+      {{ "name": "Food & Groceries", "goal": 300 }},
+      {{ "name": "Dining Out", "goal": 100 }},
+      {{ "name": "Transportation", "goal": 100 }},
+      {{ "name": "Entertainment", "goal": 50 }},
+      {{ "name": "Health & Fitness", "goal": 50 }},
+      {{ "name": "Education", "goal": 50 }},
+      {{ "name": "Personal Care", "goal": 30 }},
+      {{ "name": "Savings", "goal": 300 }},
+      {{ "name": "Family Support", "goal": 200 }},
+      {{ "name": "Tech Gadgets", "goal": 100 }}
+    ],
+    "accounts": [
+      {{ "name": "Sparkasse" }},
+      {{ "name": "ING-DiBa Savings Account" }},
+      {{ "name": "PayPal" }}
+    ],
+    "projects": [
+      {{
+        "name": "Tech Startup Fund",
+        "budget": 5000,
+        "startDate": "2024-01-01",
+        "endDate": "2024-12-31",
+        "description": "Funding for launching a tech startup focused on AI innovation."
+      }}
+    ],
+    "transactions": [
+      {{
+        "amount": -900,
+        "detailsTransactions": [
+          {{
+            "name": "Monthly Rent Payment",
+            "quantity": 1,
+            "unitPrice": 900,
+            "amount": -900,
+            "categoryId": "Rent",
+            "projectId": null
+          }}
+        ],
+        "payee": "Berlin Property Management",
+        "notes": "Monthly rent payment",
+        "date": "2024-09-01",
+        "accountId": "Sparkasse",
+        "categoryId": "Rent"
+      }},
+      {{
+        "amount": -150,
+        "detailsTransactions": [
+          {{
+            "name": "Electricity Bill - Vattenfall",
+            "quantity": 1,
+            "unitPrice": 100,
+            "amount": -100,
+            "categoryId": "Utilities",
+            "projectId": null
+          }},
+          {{
+            "name": "Water Bill - Berliner Wasserbetriebe",
+            "quantity": 1,
+            "unitPrice": 50,
+            "amount": -50,
+            "categoryId": "Utilities",
+            "projectId": null
+          }}
+        ],
+        "payee": "Berliner Stadtwerke",
+        "notes": "Monthly utilities bill",
+        "date": "2024-09-02",
+        "accountId": "Sparkasse",
+        "categoryId": "Utilities"
+      }},
+      {{
+        "amount": -50,
+        "detailsTransactions": [
+          {{
+            "name": "Frisches Obst und Gemüse (1kg) - Grüne Wiesen Hof",
+            "quantity": 1,
+            "unitPrice": 50,
+            "amount": -50,
+            "categoryId": "Food & Groceries",
+            "projectId": null
+          }}
+        ],
+        "payee": "Grüne Wiesen Hof",
+        "notes": "Weekly grocery shopping",
+        "date": "2024-09-03",
+        "accountId": "Sparkasse",
+        "categoryId": "Food & Groceries"
+      }},
+      {{
+        "amount": -100,
+        "detailsTransactions": [
+          {{
+            "name": "Bio-Hähnchenbrust (1kg) - Sonnenhof",
+            "quantity": 2,
+            "unitPrice": 50,
+            "amount": -100,
+            "categoryId": "Food & Groceries",
+            "projectId": null
+          }}
+        ],
+        "payee": "Sonnenhof",
+        "notes": "Weekly grocery shopping",
+        "date": "2024-09-03",
+        "accountId": "Sparkasse",
+        "categoryId": "Food & Groceries"
+      }},
+      {{
+        "amount": -30,
+        "detailsTransactions": [
+          {{
+            "name": "Reis (2kg) - Rewe",
+            "quantity": 1,
+            "unitPrice": 30,
+            "amount": -30,
+            "categoryId": "Food & Groceries",
+            "projectId": null
+          }}
+        ],
+        "payee": "Rewe",
+        "notes": "Weekly grocery shopping",
+        "date": "2024-09-03",
+        "accountId": "Sparkasse",
+        "categoryId": "Food & Groceries"
+      }},
+      {{
+        "amount": -20,
+        "detailsTransactions": [
+          {{
+            "name": "Frische Milch (2L) - Edeka",
+            "quantity": 1,
+            "unitPrice": 20,
+            "amount": -20,
+            "categoryId": "Food & Groceries",
+            "projectId": null
+          }}
+        ],
+        "payee": "Edeka",
+        "notes": "Weekly grocery shopping",
+        "date": "2024-09-03",
+        "accountId": "Sparkasse",
+        "categoryId": "Food & Groceries"
+      }},
+      {{
+        "amount": -20,
+        "detailsTransactions": [
+          {{
+            "name": "Baguette - Aldi",
+            "quantity": 2,
+            "unitPrice": 10,
+            "amount": -20,
+            "categoryId": "Food & Groceries",
+            "projectId": null
+          }}
+        ],
+        "payee": "Aldi",
+        "notes": "Weekly grocery shopping",
+        "date": "2024-09-03",
+        "accountId": "Sparkasse",
+        "categoryId": "Food & Groceries"
+      }},
+      {{
+        "amount": -10,
+        "detailsTransactions": [
+          {{
+            "name": "Bio-Butter (250g) - Weihenstephan",
+            "quantity": 1,
+            "unitPrice": 10,
+            "amount": -10,
+            "categoryId": "Food & Groceries",
+            "projectId": null
+          }}
+        ],
+        "payee": "Weihenstephan",
+        "notes": "Weekly grocery shopping",
+        "date": "2024-09-03",
+        "accountId": "Sparkasse",
+        "categoryId": "Food & Groceries"
+      }},
+      {{
+        "amount": -10,
+        "detailsTransactions": [
+          {{
+            "name": "Regionaler Honig (500g) - Schwarzwald Imkerei",
+            "quantity": 1,
+            "unitPrice": 10,
+            "amount": -10,
+            "categoryId": "Food & Groceries",
+            "projectId": null
+          }}
+        ],
+        "payee": "Schwarzwald Imkerei",
+        "notes": "Weekly grocery shopping",
+        "date": "2024-09-03",
+        "accountId": "Sparkasse",
+        "categoryId": "Food & Groceries"
+      }},
+      {{
+        "amount": -20,
+        "detailsTransactions": [
+          {{
+            "name": "Kaffee - Berliner Kaffeerösterei",
+            "quantity": 1,
+            "unitPrice": 3,
+            "amount": -3,
+            "categoryId": "Dining Out",
+            "projectId": null
+          }},
+          {{
+            "name": "Croissant - Bäckerei Schmidt",
+            "quantity": 1,
+            "unitPrice": 2.5,
+            "amount": -2.5,
+            "categoryId": "Dining Out",
+            "projectId": null
+          }},
+          {{
+            "name": "Trinkgeld",
+            "quantity": 1,
+            "unitPrice": 2,
+            "amount": -2,
+            "categoryId": "Dining Out",
+            "projectId": null
+          }},
+          {{
+            "name": "Butter Croissant - Bäckerei Schmidt",
+            "quantity": 1,
+            "unitPrice": 3.5,
+            "amount": -3.5,
+            "categoryId": "Dining Out",
+            "projectId": null
+          }},
+          {{
+            "name": "Schokoladen Croissant - Bäckerei Schmidt",
+            "quantity": 1,
+            "unitPrice": 3.5,
+            "amount": -3.5,
+            "categoryId": "Dining Out",
+            "projectId": null
+          }},
+          {{
+            "name": "Salzbrezel - Bäckerei Schmidt",
+            "quantity": 1,
+            "unitPrice": 3.5,
+            "amount": -3.5,
+            "categoryId": "Dining Out",
+            "projectId": null
+          }},
+          {{
+            "name": "Apfelsaft - Berliner Saft AG",
+            "quantity": 1,
+            "unitPrice": 2,
+            "amount": -2,
+            "categoryId": "Dining Out",
+            "projectId": null
+          }}
+        ],
+        "payee": "Café Einstein",
+        "notes": "Morning coffee and breakfast",
+        "date": "2024-09-04",
+        "accountId": "Sparkasse",
+        "categoryId": "Dining Out"
+      }},
+      {{
+        "amount": -30,
+        "detailsTransactions": [
+          {{
+            "name": "Monatskarte - BVG",
+            "quantity": 1,
+            "unitPrice": 30,
+            "amount": -30,
+            "categoryId": "Transportation",
+            "projectId": null
+          }}
+        ],
+        "payee": "Berliner Verkehrsbetriebe (BVG)",
+        "notes": "Monthly transit pass",
+        "date": "2024-09-05",
+        "accountId": "Sparkasse",
+        "categoryId": "Transportation"
+      }},
+      {{
+        "amount": -15,
+        "detailsTransactions": [
+          {{
+            "name": "Monatliche Mitgliedschaft - Fitness First",
+            "quantity": 1,
+            "unitPrice": 15,
+            "amount": -15,
+            "categoryId": "Health & Fitness",
+            "projectId": null
+          }}
+        ],
+        "payee": "Fitness First",
+        "notes": "Monthly gym membership",
+        "date": "2024-09-06",
+        "accountId": "Sparkasse",
+        "categoryId": "Health & Fitness"
+      }},
+      {{
+        "amount": -30,
+        "detailsTransactions": [
+          {{
+            "name": "Buch 'KI und Ethik' - Springer Verlag",
+            "quantity": 1,
+            "unitPrice": 15,
+            "amount": -15,
+            "categoryId": "Education",
+            "projectId": null
+          }},
+          {{
+            "name": "Handbuch Maschinelles Lernen - Springer Verlag",
+            "quantity": 1,
+            "unitPrice": 15,
+            "amount": -15,
+            "categoryId": "Education",
+            "projectId": null
+          }}
+        ],
+        "payee": "Universitätsbuchhandlung",
+        "notes": "Purchase of academic books",
+        "date": "2024-09-07",
+        "accountId": "Sparkasse",
+        "categoryId": "Education"
+      }},
+      {{
+        "amount": -100,
+        "detailsTransactions": [
+          {{
+            "name": "Monatliche Unterstützung für Familie - Wise",
+            "quantity": 1,
+            "unitPrice": 100,
+            "amount": -100,
+            "categoryId": "Family Support",
+            "projectId": null
+          }}
+        ],
+        "payee": "Wise",
+        "notes": "Monthly support to family in Cameroon",
+        "date": "2024-09-08",
+        "accountId": "Sparkasse",
+        "categoryId": "Family Support"
+      }},
+      {{
+        "amount": -50,
+        "detailsTransactions": [
+          {{
+            "name": "Apple Watch Series 8 - Apple Store",
+            "quantity": 1,
+            "unitPrice": 50,
+            "amount": -50,
+            "categoryId": "Tech Gadgets",
+            "projectId": null
+          }}
+        ],
+        "payee": "Apple Store",
+        "notes": "Purchase of tech gadgets",
+        "date": "2024-09-09",
+        "accountId": "Sparkasse",
+        "categoryId": "Tech Gadgets"
+      }},
+      {{
+        "amount": 2000,
+        "detailsTransactions": [],
+        "payee": "Technische Universität Berlin",
+        "notes": "Monthly stipend",
+        "date": "2024-09-10",
+        "accountId": "Sparkasse",
+        "categoryId": null
+      }},
+      {{
+        "amount": -300,
+        "detailsTransactions": [
+          {{
+            "name": "Monatliche Sparbeitrag",
+            "quantity": 1,
+            "unitPrice": 300,
+            "amount": -300,
+            "categoryId": "Savings",
+            "projectId": null
+          }}
+        ],
+        "payee": "ING-DiBa Savings Account",
+        "notes": "Monthly savings contribution",
+        "date": "2024-09-11",
+        "accountId": "Sparkasse",
+        "categoryId": "Savings"
+      }},
+      {{
+        "amount": 300,
+        "detailsTransactions": [
+          {{
+            "name": "Einkommensüberweisung",
+            "quantity": 1,
+            "unitPrice": 300,
+            "amount": 300,
+            "categoryId": "Savings",
+            "projectId": "Tech Startup Fund"
+          }}
+        ],
+        "payee": "ING-DiBa Savings Account",
+        "notes": "Income transfer from Tech Startup Fund",
+        "date": "2024-09-15",
+        "accountId": "PayPal",
+        "categoryId": "Savings"
+      }},
+      {{
+        "amount": -20,
+        "detailsTransactions": [
+          {{
+            "name": "Kinokarte - 'Die Matrix: Wiedergeburt'",
+            "quantity": 1,
+            "unitPrice": 10,
+            "amount": -10,
+            "categoryId": "Entertainment",
+            "projectId": null
+          }},
+          {{
+            "name": "Popcorn - Cinestar",
+            "quantity": 1,
+            "unitPrice": 5,
+            "amount": -5,
+            "categoryId": "Entertainment",
+            "projectId": null
+          }},
+          {{
+            "name": "Getränk - Coca-Cola",
+            "quantity": 1,
+            "unitPrice": 5,
+            "amount": -5,
+            "categoryId": "Entertainment",
+            "projectId": null
+          }}
+        ],
+        "payee": "Cinestar",
+        "notes": "Movie night with friends",
+        "date": "2024-09-12",
+        "accountId": "Sparkasse",
+        "categoryId": "Entertainment"
+      }},
+      {{
+        "amount": -10,
+        "detailsTransactions": [
+          {{
+            "name": "Shampoo - Berlin Botanicals",
+            "quantity": 1,
+            "unitPrice": 5,
+            "amount": -5,
+            "categoryId": "Personal Care",
+            "projectId": null
+          }},
+          {{
+            "name": "Zahnpasta - Elmex",
+            "quantity": 1,
+            "unitPrice": 5,
+            "amount": -5,
+            "categoryId": "Personal Care",
+            "projectId": null
+          }}
+        ],
+        "payee": "dm Drogerie",
+        "notes": "Personal care items",
+        "date": "2024-09-13",
+        "accountId": "Sparkasse",
+        "categoryId": "Personal Care"
+      }},
+      {{
+        "amount": -20,
+        "detailsTransactions": [
+          {{
+            "name": "Schnitzel - Bavarian Kitchen",
+            "quantity": 1,
+            "unitPrice": 10,
+            "amount": -10,
+            "categoryId": "Dining Out",
+            "projectId": null
+          }},
+          {{
+            "name": "Kartoffelsalat",
+            "quantity": 1,
+            "unitPrice": 10,
+            "amount": -10,
+            "categoryId": "Dining Out",
+            "projectId": null
+          }}
+        ],
+        "payee": "Berliner Kneipe",
+        "notes": "Lunch with colleagues",
+        "date": "2024-09-14",
+        "accountId": "Sparkasse",
+        "categoryId": "Dining Out"
+      }}
+    ]
+  }}
 
-exemple input: {{ 
-  "categories": [ 
-    {{ "name": "Food & Groceries", "goal": 500 }},
-    {{ "name": "Loan Payments & Credit Cards", "goal": 400 }},
-    {{ "name": "Utilities", "goal": 150 }},
-    {{ "name": "Transportation", "goal": 100 }},
-    {{ "name": "Entertainment & Education", "goal": 150 }},
-    {{ "name": "Savings & Investments", "goal": 300 }}
-  ], 
-  "accounts": [ 
-    {{ "name": "Primary Bank Account" }}
-  ], 
-  "projects": [ 
-    {{ 
-      "name": "Community Garden Project", 
-      "budget": 200, 
-      "startDate": "2023-09-01", 
-      "endDate": "2023-12-31", 
-      "description": "Developing a sustainable community garden." 
-    }},
-    {{ 
-      "name": "Photography Course", 
-      "budget": 250, 
-      "startDate": "2023-11-01", 
-      "endDate": "2023-11-30", 
-      "description": "Enrolling in a course to enhance environmental documentation skills." 
-    }}
-  ], 
-  "transactions": [ 
-    {{ 
-      "amount": 1250, 
-      "detailsTransactions": [], 
-      "payee": "Emerge Sustainability", 
-      "notes": "Bi-weekly salary", 
-      "date": "2023-11-01", 
-      "projectId": null, 
-      "accountId": "Primary Bank Account", 
-      "categoryId": null 
-    }},
-    {{ 
-      "amount": -150, 
-      "detailsTransactions": [ 
-        {{ 
-          "name": "Electricity Bill", 
-          "quantity": 1, 
-          "unitPrice": 75, 
-          "amount": -75, 
-          "categoryId": "Utilities", 
-          "projectId": null 
-        }},
-        {{ 
-          "name": "Water Bill", 
-          "quantity": 1, 
-          "unitPrice": 50, 
-          "amount": -50, 
-          "categoryId": "Utilities", 
-          "projectId": null 
-        }}
-      ], 
-      "payee": "Oakwood Utilities", 
-      "notes": "Monthly utility bills", 
-      "date": "2023-11-03", 
-      "projectId": null, 
-      "accountId": "Primary Bank Account", 
-      "categoryId": "Utilities" 
-    }},
-    {{ 
-      "amount": -90, 
-      "detailsTransactions": [ 
-        {{ 
-          "name": "Public Transport", 
-          "quantity": 10, 
-          "unitPrice": 9, 
-          "amount": -90, 
-          "categoryId": "Transportation", 
-          "projectId": null 
-        }}
-      ], 
-      "payee": "Toronto Transit Commission", 
-      "notes": "Weekly public transit expenses", 
-      "date": "2023-11-04", 
-      "projectId": null, 
-      "accountId": "Primary Bank Account", 
-      "categoryId": "Transportation" 
-    }},
-    {{ 
-      "amount": -100, 
-      "detailsTransactions": [ 
-        {{ 
-          "name": "Community Garden Supplies", 
-          "quantity": 1, 
-          "unitPrice": 100, 
-          "amount": -100, 
-          "categoryId": null, 
-          "projectId": "Community Garden Project" 
-        }}
-      ], 
-      "payee": "Green Growers", 
-      "notes": "Supplies for community garden project.", 
-      "date": "2023-11-05", 
-      "projectId": "Community Garden Project", 
-      "accountId": "Primary Bank Account", 
-      "categoryId": null 
-    }},
-    {{ 
-      "amount": -60, 
-      "detailsTransactions": [ 
-        {{ 
-          "name": "Theme Park Tickets", 
-          "quantity": 4, 
-          "unitPrice": 15, 
-          "amount": -60, 
-          "categoryId": "Entertainment & Education", 
-          "projectId": null 
-        }}
-      ], 
-      "payee": "Adventureland", 
-      "notes": "Family day out", 
-      "date": "2023-11-06", 
-      "projectId": null, 
-      "accountId": "Primary Bank Account", 
-      "categoryId": "Entertainment & Education" 
-    }},
-    {{ 
-      "amount": -120, 
-      "detailsTransactions": [ 
-        {{ 
-          "name": "Groceries", 
-          "quantity": null, 
-          "unitPrice": null, 
-          "amount": -120, 
-          "categoryId": "Food & Groceries", 
-          "projectId": null 
-        }}
-      ], 
-      "payee": "Organic Grocery Store", 
-      "notes": "Weekly grocery shopping", 
-      "date": "2023-11-07", 
-      "projectId": null, 
-      "accountId": "Primary Bank Account", 
-      "categoryId": "Food & Groceries" 
-    }},
-    {{ 
-      "amount": -250, 
-      "detailsTransactions": [ 
-        {{ 
-          "name": "Student Loan Payment", 
-          "quantity": 1, 
-          "unitPrice": 250, 
-          "amount": -250, 
-          "categoryId": "Loan Payments & Credit Cards", 
-          "projectId": null 
-        }}
-      ], 
-      "payee": "Student Loan Center", 
-      "notes": "Monthly student loan payment", 
-      "date": "2023-11-02", 
-      "projectId": null, 
-      "accountId": "Primary Bank Account", 
-      "categoryId": "Loan Payments & Credit Cards" 
-    }},
-    {{ 
-      "amount": -180, 
-      "detailsTransactions": [], 
-      "payee": "RoboInvest", 
-      "notes": "Monthly savings and investment contribution", 
-      "date": "2023-11-07", 
-      "projectId": null, 
-      "accountId": "Primary Bank Account", 
-      "categoryId": "Savings & Investments" 
-    }}
-  ] 
-}}
+  some exemples of bank account names : don't restrict your self to these exemple :
 
+Here’s a list of real and fictitious bank names from around the world that you can use or replace with names like e.g:"Primary Bank Account" or "Savings Account":
 
-
-   exemple output:{{ 
-  "categories": [ 
-    {{ "name": "Food & Groceries", "goal": 500000 }},
-    {{ "name": "Loan Payments & Credit Cards", "goal": 400000 }},
-    {{ "name": "Utilities", "goal": 150000 }},
-    {{ "name": "Transportation", "goal": 100000 }},
-    {{ "name": "Entertainment & Education", "goal": 150000 }},
-    {{ "name": "Savings & Investments", "goal": 300000 }}
-  ], 
-  "accounts": [ 
-    {{ "name": "Royal Bank of Canada (RBC)" }},
-    {{ "name": "Toronto Dominion Bank (TD)" }},
-    {{ "name": "Scotiabank" }}
-  ], 
-  "projects": [ 
-    {{ 
-      "name": "Community Garden Project", 
-      "budget": 200000, 
-      "startDate": "2023-09-01", 
-      "endDate": "2023-12-31", 
-      "description": "Developing a sustainable community garden." 
-    }},
-    {{ 
-      "name": "Photography Course", 
-      "budget": 250000, 
-      "startDate": "2023-11-01", 
-      "endDate": "2023-11-30", 
-      "description": "Enrolling in a course to enhance environmental documentation skills." 
-    }}
-  ], 
-  "transactions": [ 
-    {{ 
-      "amount": 1250000, 
-      "detailsTransactions": [], 
-      "payee": "Emerge Sustainability", 
-      "notes": "Bi-weekly salary", 
-      "date": "2023-11-01", 
-      "projectId": null, 
-      "accountId": "Royal Bank of Canada (RBC)", 
-      "categoryId": null 
-    }},
-    {{ 
-      "amount": -150000, 
-      "detailsTransactions": [ 
-        {{ 
-          "name": "Hydro-One Power Supply", 
-          "quantity": 1, 
-          "unitPrice": 75000, 
-          "amount": -75000, 
-          "categoryId": "Utilities", 
-          "projectId": null 
-        }},
-        {{ 
-          "name": "PureLife Water Services", 
-          "quantity": 1, 
-          "unitPrice": 50000, 
-          "amount": -50000, 
-          "categoryId": "Utilities", 
-          "projectId": null 
-        }}
-      ], 
-      "payee": "Oakwood Utilities", 
-      "notes": "Monthly utility bills", 
-      "date": "2023-11-03", 
-      "projectId": null, 
-      "accountId": "Toronto Dominion Bank (TD)", 
-      "categoryId": "Utilities" 
-    }},
-    {{ 
-      "amount": -90000, 
-      "detailsTransactions": [ 
-        {{ 
-          "name": "CommuteEco Transit Pass", 
-          "quantity": 30, 
-          "unitPrice": 3000, 
-          "amount": -90000, 
-          "categoryId": "Transportation", 
-          "projectId": null 
-        }}
-      ], 
-      "payee": "Toronto Transit Commission", 
-      "notes": "Weekly public transit expenses", 
-      "date": "2023-11-04", 
-      "projectId": null, 
-      "accountId": "Scotiabank", 
-      "categoryId": "Transportation" 
-    }},
-    {{ 
-      "amount": -100000, 
-      "detailsTransactions": [ 
-        {{ 
-          "name": "Eco-Garden Soil & Seeds", 
-          "quantity": 1, 
-          "unitPrice": 100000, 
-          "amount": -100000, 
-          "categoryId": null, 
-          "projectId": "Community Garden Project" 
-        }}
-      ], 
-      "payee": "Green Growers", 
-      "notes": "Supplies for community garden project.", 
-      "date": "2023-11-05", 
-      "projectId": "Community Garden Project", 
-      "accountId": "Royal Bank of Canada (RBC)", 
-      "categoryId": null 
-    }},
-    {{ 
-      "amount": -60000, 
-      "detailsTransactions": [ 
-        {{ 
-          "name": "EcoFun Family Park Pass", 
-          "quantity": 4, 
-          "unitPrice": 15000, 
-          "amount": -60000, 
-          "categoryId": "Entertainment & Education", 
-          "projectId": null 
-        }}
-      ], 
-      "payee": "Adventureland", 
-      "notes": "Family day out", 
-      "date": "2023-11-06", 
-      "projectId": null, 
-      "accountId": "Scotiabank", 
-      "categoryId": "Entertainment & Education" 
-    }},
-    {{ 
-      "amount": -120000, 
-      "detailsTransactions": [ 
-        {{ 
-          "name": "Organic Kale", 
-          "quantity": 1, 
-          "unitPrice": 10000, 
-          "amount": -10000, 
-          "categoryId": "Food & Groceries", 
-          "projectId": null 
-        }},
-        {{ 
-          "name": "Fair-Trade Coffee Beans", 
-          "quantity": 1, 
-          "unitPrice": 15000, 
-          "amount": -15000, 
-          "categoryId": "Food & Groceries", 
-          "projectId": null 
-        }},
-        {{ 
-          "name": "Free-Range Eggs (Dozen)", 
-          "quantity": 1, 
-          "unitPrice": 12000, 
-          "amount": -12000, 
-          "categoryId": "Food & Groceries", 
-          "projectId": null 
-        }},
-        {{ 
-          "name": "Local Honey Jar (500ml)", 
-          "quantity": 1, 
-          "unitPrice": 8000, 
-          "amount": -8000, 
-          "categoryId": "Food & Groceries", 
-          "projectId": null 
-        }},
-        {{ 
-          "name": "Fresh Strawberries (500g)", 
-          "quantity": 1, 
-          "unitPrice": 12000, 
-          "amount": -12000, 
-          "categoryId": "Food & Groceries", 
-          "projectId": null 
-        }},
-        {{ 
-          "name": "Sweet Potatoes (1kg)", 
-          "quantity": 1, 
-          "unitPrice": 9000, 
-          "amount": -9000, 
-          "categoryId": "Food & Groceries", 
-          "projectId": null 
-        }},
-        {{ 
-          "name": "Artisan Sourdough Bread", 
-          "quantity": 1, 
-          "unitPrice": 10000, 
-          "amount": -10000, 
-          "categoryId": "Food & Groceries", 
-          "projectId": null 
-        }},
-        {{ 
-          "name": "Organic Butter (250g)", 
-          "quantity": 1, 
-          "unitPrice": 7000, 
-          "amount": -7000, 
-          "categoryId": "Food & Groceries", 
-          "projectId": null 
-        }},
-        {{ 
-          "name": "Cheddar Cheese Block (500g)", 
-          "quantity": 1, 
-          "unitPrice": 14000, 
-          "amount": -14000, 
-          "categoryId": "Food & Groceries", 
-          "projectId": null 
-        }},
-        {{ 
-          "name": "Fresh Spinach Leaves (500g)", 
-          "quantity": 1, 
-          "unitPrice": 6000, 
-          "amount": -6000, 
-          "categoryId": "Food & Groceries", 
-          "projectId": null 
-        }}
-      ], 
-      "payee": "The Maple Green Grocer", 
-      "notes": "Weekly grocery shopping", 
-      "date": "2023-11-07", 
-      "projectId": null, 
-      "accountId": "Royal Bank of Canada (RBC)", 
-      "categoryId": "Food & Groceries" 
-    }},
-    {{ 
-      "amount": -250000, 
-      "detailsTransactions": [ 
-        {{ 
-          "name": "Higher Ed Loan Installment", 
-          "quantity": 1, 
-          "unitPrice": 250000, 
-          "amount": -250000, 
-          "categoryId": "Loan Payments & Credit Cards", 
-          "projectId": null 
-        }}
-      ], 
-      "payee": "Future Invest Loan Center", 
-      "notes": "Monthly student loan payment", 
-      "date": "2023-11-02", 
-      "projectId": null, 
-      "accountId": "Toronto Dominion Bank (TD)", 
-      "categoryId": "Loan Payments & Credit Cards" 
-    }},
-    {{ 
-      "amount": -180000, 
-      "detailsTransactions": [], 
-      "payee": "GreenPortfolio Investments", 
-      "notes": "Monthly savings and investment contribution", 
-      "date": "2023-11-07", 
-      "projectId": null, 
-      "accountId": "Royal Bank of Canada (RBC)", 
-      "categoryId": "Savings & Investments" 
-    }}
-  ] 
-}}
-
-
-
-  here is some exemples of decomposition of detailsTransactions just to increase your undersanding : 
-
-  1. Groceries
-Input:
-
-{{
-  "name": "Weekly Grocery Shopping",
-  "quantity": 1,
-  "unitPrice": 120000,
-  "amount": -120000,
-  "categoryId": "Food & Groceries",
-  "projectId": null
-}}
-Expanded Output:
-
-{{
-  "name": "Organic Kale",
-  "quantity": 1,
-  "unitPrice": 10000,
-  "amount": -10000,
-  "categoryId": "Food & Groceries",
-  "projectId": null
-}},
-{{
-  "name": "Fair-Trade Coffee Beans",
-  "quantity": 1,
-  "unitPrice": 15000,
-  "amount": -15000,
-  "categoryId": "Food & Groceries",
-  "projectId": null
-}},
-...
-2. Dining Out
-Input:
-
-{{
-  "name": "Dinner at Family Restaurant",
-  "quantity": 1,
-  "unitPrice": 60000,
-  "amount": -60000,
-  "categoryId": "Dining Out",
-  "projectId": null
-}}
-Expanded Output:
-
-{{
-  "name": "Grilled Salmon",
-  "quantity": 1,
-  "unitPrice": 25000,
-  "amount": -25000,
-  "categoryId": "Dining Out",
-  "projectId": null
-}},
-{{
-  "name": "Vegetable Stir-Fry",
-  "quantity": 1,
-  "unitPrice": 15000,
-  "amount": -15000,
-  "categoryId": "Dining Out",
-  "projectId": null
-}},
-...
-3. Utilities
-Input:
-
-{{
-  "name": "Monthly Utility Bills",
-  "quantity": 1,
-  "unitPrice": 150000,
-  "amount": -150000,
-  "categoryId": "Utilities",
-  "projectId": null
-}}
-Expanded Output:
-
-{{
-  "name": "Electricity Bill",
-  "quantity": 1,
-  "unitPrice": 75000,
-  "amount": -75000,
-  "categoryId": "Utilities",
-  "projectId": null
-}},
-{{
-  "name": "Water Bill",
-  "quantity": 1,
-  "unitPrice": 50000,
-  "amount": -50000,
-  "categoryId": "Utilities",
-  "projectId": null
-}},
-...
-4. Entertainment & Education
-Input:
-
-{{
-  "name": "Family Day Out",
-  "quantity": 1,
-  "unitPrice": 60000,
-  "amount": -60000,
-  "categoryId": "Entertainment & Education",
-  "projectId": null
-}}
-Expanded Output:
-
-{{
-  "name": "Amusement Park Tickets",
-  "quantity": 2,
-  "unitPrice": 15000,
-  "amount": -30000,
-  "categoryId": "Entertainment & Education",
-  "projectId": null
-}},
-{{
-  "name": "Cotton Candy",
-  "quantity": 1,
-  "unitPrice": 5000,
-  "amount": -5000,
-  "categoryId": "Entertainment & Education",
-  "projectId": null
-}},
-...
-5. Transportation
-Input:
-
-{{
-  "name": "Weekly Public Transit",
-  "quantity": 1,
-  "unitPrice": 90000,
-  "amount": -90000,
-  "categoryId": "Transportation",
-  "projectId": null
-}}
-Expanded Output:
-
-{{
-  "name": "Transit Pass (7-Day)",
-  "quantity": 1,
-  "unitPrice": 60000,
-  "amount": -60000,
-  "categoryId": "Transportation",
-  "projectId": null
-}},
-{{
-  "name": "Single Ride Tickets",
-  "quantity": 10,
-  "unitPrice": 3000,
-  "amount": -30000,
-  "categoryId": "Transportation",
-  "projectId": null
-}}
-6. Savings & Investments
-Input:
-
-{{
-  "name": "Monthly Investment Contribution",
-  "quantity": 1,
-  "unitPrice": 180000,
-  "amount": -180000,
-  "categoryId": "Savings & Investments",
-  "projectId": null
-}}
-Expanded Output:
-
-{{
-  "name": "Robo-Advisory Service Fee",
-  "quantity": 1,
-  "unitPrice": 30000,
-  "amount": -30000,
-  "categoryId": "Savings & Investments",
-  "projectId": null
-}},
-{{
-  "name": "Stock Market Investments",
-  "quantity": 1,
-  "unitPrice": 100000,
-  "amount": -100000,
-  "categoryId": "Savings & Investments",
-  "projectId": null
-}},
-...
-7. Loan Payments & Credit Cards
-Input:
-
-{{
-  "name": "Monthly Credit Card Payment",
-  "quantity": 1,
-  "unitPrice": 400000,
-  "amount": -400000,
-  "categoryId": "Loan Payments & Credit Cards",
-  "projectId": null
-}}
-Expanded Output:
-
-{{
-  "name": "Principal Payment",
-  "quantity": 1,
-  "unitPrice": 300000,
-  "amount": -300000,
-  "categoryId": "Loan Payments & Credit Cards",
-  "projectId": null
-}},
-{{
-  "name": "Interest Payment",
-  "quantity": 1,
-  "unitPrice": 100000,
-  "amount": -100000,
-  "categoryId": "Loan Payments & Credit Cards",
-  "projectId": null
-}}
-
-
-    `
-
-    const refineChainPrompt = await  ChatPromptTemplate.fromMessages([
-      ["system",refinePrompt],
-      new MessagesPlaceholder("refined_history"),
-      ["human","{input}"],
-    ]).partial({
-      format_instructions: formatDetails,
-    })
-
-
-    const refineChain = RunnableSequence.from([
-      refineChainPrompt,
-      model,
-      parserDataschema
-    ])
-
-  const dataGenChain = RunnableSequence.from([
-    dataGenPrompt,
-    model,
-    parserDataschema
-])
-
-const IniInput = `
-  IMPORTANT: Start generating the Transaction data. no need of Sample Data. Begin with the first week. your output must not have any surarounding text. 
-
-  genrate the weekly data starting from this date: ${startOfThreeMonthsBefore}
-  Persona: ${guideLine}
+Real Bank Names
+Chase Bank (USA)
+HSBC (UK/Global)
+Deutsche Bank (Germany)
+Santander (Spain/Global)
+BNP Paribas (France/Global)
+ICICI Bank (India)
+ANZ Bank (Australia/New Zealand)
+Bank of Tokyo-Mitsubishi UFJ (Japan)
+Royal Bank of Canada (RBC) (Canada)
+Standard Bank (South Africa)
+Fictitious Bank Names
+Gringotts Bank (Harry Potter universe – Wizarding Bank)
+Gotham National Bank (DC Comics)
+Bank of Westeros (Game of Thrones-inspired)
+Springfield First Bank (The Simpsons)
+Monopoly Bank (Monopoly board game)
+Pawnee National Bank (Parks and Recreation)
+Vault-Tec Bank (Fallout series)
+Illium Financial Services (Mass Effect universe)
+Oceanic Trust Bank (Generic corporate setting)
+Iron Bank of Braavos (Game of Thrones)
+  
 `
-let transactions = []
 
-for (let week = 0; week < 1; week++){
-  console.log(week)
-  let succes:boolean = false 
+export const promptDetails = `Respond only in valid JSON. The JSON object you return should match the following schema:
 
-  let attempts = 0;
-  console.log(attempts)
-  const maxAttempts = 5;
-  while (!succes && attempts < maxAttempts){
-    attempts++;
-    
-  try{
+  categories:contains an array which contains ALL the categories used so far in both transactions and detailsTransactions **WITHOUT EXCEPTION**
+  accounts: represents ALL the accounts of the persona **WITHOUT EXCEPTION**
+  projects: represents ALL the projects used so far in both transactions and detailsTransactions **WITHOUT EXCEPTION**
   
-  const weekData = await dataGenChain.invoke({
-      input:week === 0 ? IniInput : attempts > 1 ? `your failed generating the last set of financial data. this is your ${attempts+1}.retry again. carefully follow all the JSON format instruction. directly response with the JSON object without any surrounding text. ` : `generate the next week using the same persona`,
-      chat_history:History
+    z.object({
+  categories: z.array(
+    z.object({
+      name: z.string(),
+      goal: z.number().nullable(),
     })
-
-    const detailedWeekData = await refineChain.invoke({
-      input:week === 0 ?attempts > 1 ? `your failed generating the last set of financial data. this is your ${attempts+1}.retry again. carefully follow all the JSON format instruction. directly response with the JSON object without any surrounding text. ` : `${JSON.stringify(weekData)} persona:${guideLine}` : `modify the next week same persona ${JSON.stringify(weekData)}`,
-      refined_history:refinedHistory
+  ),
+  accounts: z.array(
+    z.object({
+      name: z.string(),
     })
+  ),
+  projects: z.array(
+    z.object({
+      name: z.string(),
+      budget: z.number(),
+      startDate: z.string(),
+      endDate: z.string(),
+      description: z.string().optional(),
+    })
+  ),
+  transactions: z.array(
+    z.object({
+      amount: z.number(),
+      detailsTransactions: z.array(
+        z.object({
+          name: z.string().nullable(),
+          quantity: z.number().nullable(),
+          unitPrice: z.number().nullable(),
+          amount: z.number(),
+          categoryId: z.string().nullable(),
+          projectId: z.string().nullable(),
+        })
+      ),
+      payee: z.string(),
+      notes: z.string().nullable(),
+      date: z.string(),
+      projectId: z.string().nullable(), 
+      accountId: z.string(),
+      categoryId: z.string().nullable(),
+  })
+  ),
+})
+`
 
-        console.log(weekData)
-        console.log(detailedWeekData)
+// FOLLOW UP QUESTION
 
-    History.push(new HumanMessage("generate the next week  using the same persona . carefuly follow all the instruction i provided you"))
-    History.push(new AIMessage(JSON.stringify(weekData)))
-
-    refinedHistory.push(new HumanMessage("generate the next week  using the same persona . carefuly follow all the instruction i provided you"))
-    refinedHistory.push(new AIMessage(JSON.stringify(detailedWeekData)))
-    transactions.push(detailedWeekData)
-
-    succes=true
-    
-  }catch(err){
-    console.log(err)
-    if (attempts === maxAttempts) {
-      
-      return 'Something went wrong. Please try again.';
-  }
-  }
-
-}
-  
-   
-}
-
-  return transactions
-}
-
-export const FollowUpQuestion = async (transactions:string,personaDes:string,History:BaseMessage[])=>{
-
-
-const systemPrompt = `**System Prompt: Financial Insight Agent**
+export const promptFollowUp = `**System Prompt: Financial Insight Agent**
 
 You are **FinSight**, a sophisticated financial assistant designed to help users gain insights into their financial lives. Your primary role is to generate thoughtful, relevant questions that users might have about their financial activities based on their transaction data and personal profile.
 
@@ -2742,38 +2415,99 @@ These example questions demonstrate how FinSight can effectively analyze and int
 
 `
 
-const MEMORY_KEY = "chat_history"
-const qGenPrompt = ChatPromptTemplate.fromMessages([
-  ["system",systemPrompt],
-  new MessagesPlaceholder(MEMORY_KEY),
-  ["human","{input}"],
-])
 
-const followUpChain = RunnableSequence.from([
-  qGenPrompt,
-  model2,
-  parserfollowUp
-])
 
-let succes:boolean = false 
+export const personaToGenerate = `
 
-let attempts = 0;
-console.log(attempts)
-const maxAttempts = 5;
+Summary:
 
- 
-   
-      attempts++;
-      const response =  await followUpChain.invoke({
-        input:`transactions: ${transactions} ${personaDes}`,
-        chat_history:History
-      })
-      succes=false
-
-      console.log(response)
-    
-
-  
-  console.log(response)
-  return response 
+${JSON.stringify({
+"name": "Yumi Nakamura",
+"age": 30,
+"occupation": "Chef",
+"familyStatus": "single",
+"countryOfResidence": "Japan",
+"nationality": "Japanese",
+"monthlyIncome": "3500$",
+"locationType": "urban",
+"spendingBehavior": "balanced",
+"additionalInfo": "Opening a new restaurant next year",
+"monthlyRent": 1200,
+"monthlySavings": 800,
+"riskTolerance": "aggressive",
+"creditCards": "moderate",
+"workSchedule": "shift",
+"transportation": "mixed",
+"diningPreference": "mixed",
+"shoppingHabits": "impulsive"
 }
+  )}
+
+
+Full Persona Description
+
+Introduction
+
+Meet Yumi Nakamura, a 30-year-old Chef residing in the bustling city of Tokyo, Japan. Yumi is single and leads an ambitious life, driven by her passion for culinary arts and her dream of opening a new restaurant next year. Her urban lifestyle is a blend of traditional Japanese values and modern, innovative thinking, reflected in her balanced spending behavior and impulsive shopping habits.
+
+Cultural Background
+
+Ethnicity and Nationality: Yumi is a proud Japanese, born and raised in the historic city of Kyoto. Her upbringing in a culturally rich environment has instilled in her a deep appreciation for tradition, art, and culinary excellence.
+
+Cultural Traditions and Practices: Yumi celebrates traditional Japanese festivals like Obon and Hanami with enthusiasm. She enjoys preparing festive meals, especially during New Year's, and participates in tea ceremonies and flower arrangement classes. Her culinary journey has also led her to explore and incorporate various international practices into her cooking.
+
+Language(s) Spoken: Yumi is fluent in Japanese and English. She uses Japanese in her daily life and English for professional communication, especially when interacting with international clients and colleagues.
+
+Religion or Belief Systems: Raised in a Shinto household, Yumi maintains a spiritual connection through visiting local shrines and participating in traditional rituals. She values the principles of harmony, respect, and purity, which are deeply rooted in her cultural upbringing. Additionally, she practices mindfulness and meditation to stay centered and focused.
+
+Societal Norms and Values: Yumi embodies typical Japanese values such as respect for elders, humility, and a strong work ethic. Her culinary background has honed her attention to detail and dedication to perfection, while her entrepreneurial spirit has cultivated her innovative and risk-taking side.
+
+Demographics
+
+Age, Gender, and Marital Status: At 30, Yumi is single and enjoys her independence. She values her freedom and the flexibility it offers in pursuing her culinary dreams and personal interests.
+
+Education Level: Yumi holds a diploma in Culinary Arts from the prestigious Tsuji Culinary Institute in Osaka. Her education has been instrumental in honing her culinary skills and fostering her innovative mindset.
+
+Occupation and Career Path: Yumi works as a Chef in a renowned restaurant in Tokyo. Her career path has been marked by a series of impressive achievements, from winning local cooking competitions to working under celebrated chefs. She specializes in fusion cuisine, blending traditional Japanese flavors with international ingredients and techniques. Her shift work schedule allows her to dedicate time to planning her new restaurant and exploring culinary trends.
+
+Geographic Location and Living Environment: Yumi lives in a vibrant urban neighborhood in Tokyo, known for its dynamic food scene and cultural diversity. Her apartment is a cozy one-bedroom in a modern high-rise building, filled with culinary inspirations and traditional Japanese decor.
+
+Psychographics
+
+Personality Traits: Yumi is creative, ambitious, and resilient. Her culinary background has made her meticulous and dedicated, while her entrepreneurial spirit has cultivated her innovative and risk-taking side. She is also a balanced spender, always thinking ahead and preparing for the future.
+
+Interests and Hobbies: Yumi enjoys exploring local food markets, attending culinary workshops, and experimenting with new recipes. She also loves practicing calligraphy, visiting art exhibitions, and attending traditional tea ceremonies. Her impulsive nature often leads her to spontaneous culinary adventures and last-minute travel plans.
+
+Lifestyle and Daily Routines: Yumi's days are structured yet flexible. She starts her day with a morning meditation session, followed by a nutritious breakfast. Her work schedule varies, allowing her to dedicate time to personal projects, socializing, and planning her new restaurant. Evenings are often spent exploring new dining experiences, attending cultural events, or relaxing at home with a good book.
+
+Motivations and Aspirations: Yumi's short-term goal is to secure funding and finalize the menu for her new restaurant. Long-term, she aims to establish a successful culinary brand, balancing her professional ambitions with her desire to inspire and educate others about the art of fusion cuisine.
+
+Attitudes and Beliefs: Yumi believes in the power of food to bring people together and create memorable experiences. She is committed to sustainable and ethical culinary practices and values the importance of innovation and cultural exchange in her work.
+
+Behavioral Aspects
+
+Consumer Behavior and Purchasing Habits: Yumi is a balanced spender, investing in quality ingredients, kitchen equipment, and culinary experiences. She prefers eco-friendly and locally sourced products, whether it's fresh produce, cooking tools, or dining out at sustainable restaurants. She enjoys a mix of home-cooked meals and dining out, always seeking new culinary inspirations.
+
+Media Consumption Preferences: Yumi follows culinary trends and food news through platforms like Cookpad and Eater. She enjoys watching cooking shows and documentaries on food culture, often streaming them on Netflix. For leisure, she listens to a mix of traditional Japanese music and international genres.
+
+Social Interactions and Relationship Dynamics: Yumi is an active member of Tokyo's culinary community. She values her friendships and often hosts gatherings where she shares her culinary creations and cultural insights. Her single status allows her to fully immerse herself in her passions and professional goals.
+
+Decision-Making Processes: Yumi's decision-making is intuitive and strategic, reflecting her culinary background and entrepreneurial spirit. She considers her feelings and instincts, often taking calculated risks, especially in pursuing her culinary and professional goals.
+
+Challenges and Pain Points
+
+Common Obstacles Faced: Yumi often faces the challenge of maintaining a work-life balance due to the demanding nature of her job and her ambitious plans for the new restaurant. The competitive culinary scene in Tokyo and the pressure to secure funding are significant stressors.
+
+Needs and Desires Unmet: Yumi wishes for more mentorship opportunities in the culinary industry and better access to funding for her new restaurant. She also desires more time to pursue her personal culinary projects without financial constraints.
+
+Frustrations and Sources of Stress: The unpredictability of the culinary industry and the pressure to meet customer expectations are significant stressors for Yumi. She also feels the need to constantly innovate and stay ahead of culinary trends, which adds to her professional anxieties.
+
+Goals and Objectives
+
+Short-term Goals: Yumi aims to complete a professional certification in restaurant management and secure a pop-up event to showcase her fusion cuisine within the next year.
+
+Long-term Goals: Establishing a successful culinary brand and opening multiple restaurants are Yumi's ultimate ambitions. She envisions a life where her professional success is balanced with personal fulfillment and culinary exploration.
+
+Professional and Personal Aspirations: Professionally, Yumi aspires to be recognized as a leading chef in the industry. Personally, she hopes to inspire others with her culinary work and contribute to the food culture in Japan and beyond.
+
+Desired Outcomes and Success Criteria: Success for Yumi means achieving financial stability, making a significant impact through her culinary work, and creating a lifetime of memorable dining experiences. She measures success by the quality of her culinary output, the recognition she receives, and the positive influence she has on the food community.`

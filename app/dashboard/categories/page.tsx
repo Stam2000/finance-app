@@ -2,7 +2,6 @@
 
 import {useNewCategory } from "@/features/categories/hooks/use-new-category"
 import { useGetCategories } from "@/features/categories/api/use-get-categories";
-
 import {
     Card,
     CardHeader,
@@ -17,14 +16,18 @@ import { useGetCategoriesAll } from "@/features/categories/api/use-get-categorie
 import { columns } from "./columns";
 import { DataTable } from "@/components/data-table";
 import { useDeleteCategories } from "@/features/categories/api/use-delete-categories";
-import { all } from "axios";
+import { createId } from "@paralleldrive/cuid2"
+import { RefreshCcw } from "lucide-react";
 
 
 
 
 const CategoriesPage = ()=>{
    const [showAllCategories,setShowAllCategories] = useState(false)
-    
+   const [renderKey, setRenderKey] = useState(createId());
+   const rerender = ()=>{
+       setRenderKey(createId())
+   }
     const newCategory = useNewCategory()
     const categoriesQuery = useGetCategories()
     const deleteCategories = useDeleteCategories()
@@ -53,15 +56,18 @@ const CategoriesPage = ()=>{
     )
    }
     return(
-        <div className="flex-1 mx-auto w-full mb-10" >
+        <div key={renderKey} className="flex-1 mx-auto w-full mb-10" >
             <Card className="border-none drop-shadow-sm" >
                 <CardHeader className="gap-y-2 lg:flex-row lg:items-center lg:justify-between" >
-                    <CardTitle className="text-xl line-clamp-1" >
+                    <CardTitle className=" line-clamp-1 flex items-center gap-2" >
                         Categories
+                        <Button variant={"outline"} onClick={rerender} className="p-3"  >
+                            <RefreshCcw size={16} />
+                        </Button>
                     </CardTitle>
                     <div className="flex gap-2" >
                         <Button onClick={toggleAllshowCategories} size="sm">
-                            List All Categories
+                            { showAllCategories ? "Only this Month":"List All Categories"}
                         </Button> 
                        <Button onClick={newCategory.onOpen} size="sm">
                             <Plus className="size-4 mr-2"  />

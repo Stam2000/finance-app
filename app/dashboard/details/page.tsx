@@ -6,28 +6,28 @@ import {
     CardHeader,
     CardTitle
 } from "@/components/ui/card"
+import { useState } from "react"
 import { Loader2 } from "lucide-react"
 import { DataTable } from "@/components/data-table"
-/* import { DataTable } from "./Overviewtable" */
-
+import { createId } from "@paralleldrive/cuid2"
+import { RefreshCcw } from "lucide-react";
 import {detailsColumns} from "./DetailsColumns"
 import { useGetDetailsTransactions } from "@/features/detailsTransactions/api/use-get-detailsTransactions"
 import { useBulkDeleteDetailsTransactions } from "@/features/detailsTransactions/api/use-bulk-delete-detailsTransactions"
 import { Skeleton } from "@/components/ui/skeleton"
+import { Button } from "@/components/ui/button"
 import { NewTransactionDialog } from "@/features/transactions/components/new-transaction-dialog"
 
 
 const Page = ()=>{
     const detailsTransactionQuery = useGetDetailsTransactions()
-   
     const detailsTransactions = detailsTransactionQuery.data || []
-
-  
-    
     const deleteMutation = useBulkDeleteDetailsTransactions()
-
     const isDisabled= detailsTransactionQuery.isLoading || deleteMutation.isPending
-
+    const [renderKey, setRenderKey] = useState(createId());
+    const rerender = ()=>{
+        setRenderKey(createId())
+    }
 
 
 
@@ -53,13 +53,16 @@ const Page = ()=>{
     
 
     return(
-        <Card className=" flex-1 mb-10" >
-            <NewTransactionDialog />
+        <>
+        <NewTransactionDialog />
+        <Card key={renderKey} className=" flex-1 mb-10" >
             <CardHeader>
-                <CardTitle>
+                <CardTitle className="line-clamp-1 flex items-center gap-2" >
                   items
+                    <Button variant={"outline"} onClick={rerender} className="p-3"  >
+                        <RefreshCcw size={16} />
+                    </Button>
                 </CardTitle>
-
             </CardHeader>
             <CardContent>
                 <DataTable
@@ -74,6 +77,7 @@ const Page = ()=>{
                 />
             </CardContent>
         </Card>
+        </>
     )
 }
 

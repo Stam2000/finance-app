@@ -16,7 +16,9 @@ import { useCreateCategory } from "@/features/categories/api/use-create-categori
 const formSchema = z.object({
     name:z.string(),
     description:z.string().nullable().optional(),
-    budget:z.number(),
+    budget:z.string(),
+    startDate:z.coerce.date(),
+    endDate:z.coerce.date(),
 })
 
 type FormValues = z.input<typeof formSchema>

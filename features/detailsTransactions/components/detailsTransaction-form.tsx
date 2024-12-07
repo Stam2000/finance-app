@@ -5,7 +5,7 @@ import {zodResolver} from "@hookform/resolvers/zod"
 
 import { Select } from "@/components/select"
 import { AmountInput } from "@/components/account-input"
-import { useOverviewNewDetails } from "../hooks/use-overview-Newdetails"
+import { useOverviewNewDetails } from "../hooks/use-overview-newdetails"
 import { useEffect } from "react"
 
 import {Input} from "@/components/ui/input"
@@ -65,7 +65,6 @@ onCreateCategory,
         defaultValues:defaultValues,
     });
 
-    console.log(defaultValues)
 
     const {temporalId,updateId} = useOverviewNewDetails()
     const handleSubmit = (values:any)=>{

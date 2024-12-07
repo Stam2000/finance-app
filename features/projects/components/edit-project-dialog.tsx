@@ -11,7 +11,7 @@ import { Dialog,
 } from "@/components/ui/dialog"
 import { Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { addMonths } from "date-fns"
+import { addMonths,parseISO } from "date-fns"
 import { useEditProject } from "../api/use-edit-project"
 import { useDeleteProject } from "../api/use-delete-project"
 import { useOpenProject } from "../hooks/use-open-project"
@@ -21,7 +21,9 @@ import { useGetProject} from "@/features/projects/api/use-get-project"
 const formSchema = z.object({
     name:z.string(),
     description:z.string().nullable().optional(),
-    budget:z.number(),
+    budget:z.string(),
+    startDate:z.coerce.date(),
+    endDate:z.coerce.date(),
 })
 
 type FormValues = z.input<typeof formSchema>
@@ -29,13 +31,13 @@ type FormValues = z.input<typeof formSchema>
 export const EditProjectDialog =()=>{
     const[ConfirmDialog,confirm] = useConfirm(
         "Are you sure",
-        "You are About to delete this transaction."
+        "You are About to delete this project."
     )
     const {isOpen, onClose,id} = useOpenProject()
 
-    const projectQuery = useGetProject(id)
-    const editMutation = useEditProject(id)
-    const deleteMutation = useDeleteProject(id)
+    const projectQuery = useGetProject(id!)
+    const editMutation = useEditProject(id!)
+    const deleteMutation = useDeleteProject(id!)
     
 
     const onDelete = async ()=>{
@@ -50,7 +52,13 @@ export const EditProjectDialog =()=>{
     }
 
     
-    const onSubmit = (values:FormValues) =>{
+    const onSubmit = (values:{
+        name: string;
+        budget: number;
+        startDate: Date;
+        endDate: Date;
+        description?: string | null | undefined;
+    }) =>{
         editMutation.mutate(values,{
             onSuccess:()=>{
                 onClose();
@@ -66,13 +74,14 @@ export const EditProjectDialog =()=>{
 
     const threeMonthsBefore = addMonths(new Date(), 3);
 
+        console.log(projectQuery.data)
 
         const defaultValues = projectQuery.data ? {
-            name: projectQuery.data.name,
-            description: projectQuery.data.description,
-            budget: projectQuery.data.budget.toString(),
-            endDate:new Date(projectQuery.data.endDate!),
-            startDate:new Date(projectQuery.data.startDate!) 
+            name: projectQuery.data[0].name,
+            description: projectQuery.data[0].description,
+            budget: projectQuery.data[0].budget.toString(),
+            endDate:parseISO(projectQuery.data[0].endDate),
+            startDate:parseISO(projectQuery.data[0].startDate) 
         } : {
             name: "",
             description:"",

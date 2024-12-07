@@ -2,12 +2,12 @@
 
 import { useOpenDetailsTransaction } from "@/features/detailsTransactions/hooks/use-open-details";
 import { useDeleteDetailsTransaction } from "@/features/detailsTransactions/api/use-delete-detailsTransaction";
-import { useOpenTransactionOverview } from "@/features/detailsTransactions/hooks/use-open-Overview";
+import { useOpenTransactionOverview } from "@/features/detailsTransactions/hooks/use-open-overview";
 import { useConfirm } from "@/hooks/use-comform";
 import { Button } from "@/components/ui/button";
 import { MoreHorizontal } from "lucide-react";
 import { Edit,Trash } from "lucide-react";
-import { OverviewTransactionDialog } from "@/features/detailsTransactions/components/overviewTransaction";
+import { OverviewTransactionDialog } from "@/features/detailsTransactions/components/overview-transaction";
 import { EditDetailsTransactionDialog } from "@/features/detailsTransactions/components/edit-detailsTransaction-dialog";
 import {
     Popover,

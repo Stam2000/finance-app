@@ -46,6 +46,9 @@ const app = new Hono()
                 lte(transactions.date,endDate) ))
         .groupBy(categories.id, categories.name)
 
+
+        console.log(data)
+
     return c.json({data})
 }).get("/all",
 async(c)=>{
@@ -93,7 +96,8 @@ async(c)=>{
                 ))
             .groupBy(categories.id, categories.name, categories.goal).orderBy(desc(categories.goal));;
       
-        
+            
+        console.log(data)
           return c.json({ data });
       })
     .get("/:id",

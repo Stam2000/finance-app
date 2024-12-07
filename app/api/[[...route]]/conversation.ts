@@ -1,20 +1,21 @@
 
-import { handleRunStatus } from "@/lib/AI/functionsAiChat"
+import { handleRunStatus } from "@/lib/AI/functions-ai-chat"
 import {Hono} from "hono"
 import {z} from "zod"
-import { openai } from "@/lib/AI/createAiFunctions"
-import { GenTemplate } from "@/lib/AI/generateData"
-import { DataGenerator } from "@/lib/AI/generateData"
+import { openai } from "@/lib/AI/create-ai-functions"
+import { GenTemplate } from "@/lib/AI/generate-data"
+import { DataGenerator } from "@/lib/AI/generate-data"
 import { zValidator } from "@hono/zod-validator"
 import {uploadEntitiesAndReplaceReferences} from "@/lib/utils"
 import { client } from "@/lib/hono"
-import { PersonaExtender } from "@/lib/AI/generateData"
+import { PersonaExtender } from "@/lib/AI/generate-data"
 import { createId } from "@paralleldrive/cuid2"
 import pLimit from "p-limit"
-import { subMonths,startOfMonth,parse, format } from "date-fns"
-import { FollowUpQuestion } from "@/lib/AI/generateData"
-import { langChain } from "@/lib/AI/functionsLangChain"
-
+import { subMonths, format } from "date-fns"
+import { FollowUpQuestion } from "@/lib/AI/generate-data"
+import { langChain } from "@/lib/AI/functions-langchain"
+import { personaToGenerate } from "@/lib/AI/prompts"
+import { convertAmountToMiliunits } from "@/lib/utils"
 
 
 
@@ -111,13 +112,13 @@ const conversation = new Hono()
     try{let run = await openai.beta.threads.runs.createAndPoll(
         threadId!,
         {assistant_id:"asst_x1O38JZm8yr6KApu0IkdMzQ4",
-            instructions:`all date are calculate from the actual Date ${new Date()}   address the user with his name user Info:${personaInfo}`
-        }
-    )
+            instructions:`remember : very important - don't use the date of your last update:2023. only consider,refer the actual date of the user :${JSON.stringify(new Date())} for your raisonning. Address the user with his name user Info:${personaInfo}. all retrieved informations are in Dollar$ no need to convert them into local currency. use the US DOLLAR as currency `
+          }
+      )
      const output = await handleRunStatus(run,openai,threadId,personaId)
      return c.json({response:{output,threadId}},200)
     }catch(err){
-        return c.text("error",500)
+        return c.json({response:{output:"There was a problem completing your request. Please try again or report the error",threadId}},500)
     }
 
 })
@@ -128,32 +129,38 @@ const conversation = new Hono()
 
         
         const currentDate = new Date();
-        const fourMonthsBefore = subMonths(currentDate, 4);
+        const fourMonthsBefore = subMonths(currentDate, 2);
 
         const from =format(fourMonthsBefore,"yyyy-MM-dd")
         const to =format(currentDate,"yyyy-MM-dd");
 
    
-         
-        const res = await client.api.transactions.$get({
-              query:{
-                  from,
-                  to
-              }, 
-          },{
-              headers: {
-                  // Add persona ID to request headers
-                  'X-Persona-ID': personaId,
-                  // You can add other persona-related headers if needed
-                  
-              }
-          })
+        try{
+          const res = await client.api.transactions.$get({
+                query:{
+                    from,
+                    to
+                }, 
+            },{
+                headers: {
+                    // Add persona ID to request headers
+                    'X-Persona-ID': personaId,
+                    // You can add other persona-related headers if needed
+                    
+                }
+            })
 
-        const {data} =await res.json()
-        const transactionsString = JSON.stringify(data)
-        const response =await FollowUpQuestion(transactionsString,personaDes,followHistory)
+          const {data} =await res.json()
+          const transactionsString = JSON.stringify(data)
+          const response =await FollowUpQuestion(transactionsString,personaDes,followHistory)
+              return c.json({data:response})
+        }catch(err){
+          return c.json({data:["something went wrong"]})
+        }
+
+
     
-    return c.json({data:response})
+
 })
 .post("/weeklyResume",async(c)=>{
   const personaDes = await c.req.json()
@@ -246,9 +253,9 @@ const conversation = new Hono()
           activeConnections.clear()
         }
 
-          // Perform operations and send updates
+
           const guideLine = await PersonaExtender(data);
-      
+
   
           controller.enqueue(createSSEMessage('extendedPersona', {
             step: 'extendPersona',
@@ -264,11 +271,9 @@ const conversation = new Hono()
             message: 'generating data...'
           }))
 
-          console.log("enter data generator")
 
           const response  = await DataGenerator(guideLine);
           
-          console.log(response)
 
          controller.enqueue(createSSEMessage('fiDataGenerationEnd', {
           step: 'fiDataGeneration',
@@ -291,40 +296,60 @@ const conversation = new Hono()
             throw new Error(d)
           }
 
-        for (const week of d){
-            for(const transaction of week.transactions){
-                const detailsTransaction = transaction["detailsTransactions"]
-                const {detailsTransactions, ...transacToUp} = transaction
-                const timestamp = Date.parse(transacToUp.date);
-                const responseTransaction = await client.api.transactions.$post({json:{...transacToUp,date:new Date(timestamp)}},{
-                  headers: {
-                      'X-Persona-ID': personaId,  
+          for (const week of d) {
+            for (const transaction of week.transactions) {
+              const detailsTransaction = transaction["detailsTransactions"];
+              const { detailsTransactions, ...transacToUp } = transaction;
+              const timestamp = Date.parse(transacToUp.date);
+          
+              try {
+                const responseTransaction = await client.api.transactions.$post(
+                  { json: { ...transacToUp,
+                    amount:convertAmountToMiliunits(transacToUp.amount),
+                    date: new Date(timestamp) } },
+                  {
+                    headers: {
+                      'X-Persona-ID': personaId,
+                    },
                   }
-              })
-                const {data} = await responseTransaction.json()
-               
-                if(detailsTransaction){
-
-                    let completeDetailsTransaction = await Promise.all(
-                        detailsTransaction.map( (d) =>limit( async () => {
-                            
-                          const responseDetail = await client.api.detailsTransactions.$post({
-                            json: { ...d, transactionId: data.id }
-                          },{headers: {
-                            'X-Persona-ID': personaId,  
-                        }});
-
-                          const ress = await responseDetail.json()
-
-                          return responseDetail;
-                        }))
-                      );
-                    continue
+                );
+          
+                const { data } = await responseTransaction.json();
+          
+                if (detailsTransaction) {
+                  let completeDetailsTransaction = await Promise.all(
+                    detailsTransaction.map((d) =>
+                      limit(async () => {
+                        try {
+                          const responseDetail = await client.api.detailsTransactions.$post(
+                            {
+                              json: { ...d,
+                                amount:convertAmountToMiliunits(d.amount),
+                                unitPrice:d.unitPrice?convertAmountToMiliunits(d.unitPrice):d.unitPrice,
+                                transactionId: data.id },
+                            },
+                            {
+                              headers: {
+                                'X-Persona-ID': personaId,
+                              },
+                            }
+                          );
+          
+                          const ress = await responseDetail.json();
+                          return ress;
+                        } catch (err) {
+                          console.error(err);
+                        }
+                      })
+                    )
+                  );
                 }
-               
+              } catch (err) {
+                console.error(err);
+              }
             }
-
-        }
+          }
+          
 
        
         controller.enqueue(createSSEMessage('updatingFiDataEnd', {
@@ -341,10 +366,13 @@ const conversation = new Hono()
         }))
         
       } catch (err: any) {
+
+
         controller.enqueue(createSSEMessage('error', { 
           message: err.message,
           stack: process.env.NODE_ENV === 'development' ? err.stack : undefined
         }))
+
         throw err
       } finally {
         if (cleanup) {

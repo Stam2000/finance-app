@@ -111,8 +111,8 @@ export const projects = pgTable("project",{
     name:text("name").notNull(),
     description:text("description"),
     budget:integer("budget").notNull(),
-    startDate: timestamp("startDate",{mode:"date"}),
-    endDate: timestamp("endDate",{mode:"date"}),
+    startDate: timestamp("startDate",{mode:"date"}).notNull(),
+    endDate: timestamp("endDate",{mode:"date"}).notNull(),
     userId:text("user_id").notNull(),
 })
 

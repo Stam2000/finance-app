@@ -12,7 +12,7 @@ import { Dialog,
     } from "@/components/ui/dialog2"
 import { useGetTransaction } from "@/features/transactions/api/use-get-transaction"
 import { useDeleteTransaction } from "@/features/transactions/api/use-delete-transaction"
-import { useOpenTransactionOverview } from "../hooks/use-open-Overview"
+import { useOpenTransactionOverview } from "../hooks/use-open-overview"
 import { DataTable} from "@/app/dashboard/transactions/data-table"
 import {columns} from "@/app/dashboard/transactions/columns"
 import { Button } from "@/components/ui/button"

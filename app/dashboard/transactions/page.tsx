@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button"
 import { useGetTransactions } from "@/features/transactions/api/use-get-transactions"
 import { useBulkDeleteTransactions } from "@/features/transactions/api/use-bulk-delete-transactions"
 import { useNewTransaction } from "@/features/transactions/hooks/use-new-transaction"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import {transactions as transactionSchema} from "@/db/schema"
 import { UploadButton } from "./upload-button"
 import { Skeleton } from "@/components/ui/skeleton"
@@ -22,14 +22,10 @@ import { useSelectAccount } from "@/features/accounts/hooks/use-select-account"
 import { ImportCard } from "./import-card"
 import { toast } from "sonner"
 import { useBulkCreateTransactionsAndDetails } from "@/features/transactions/api/bulk-upload-Transations-and-Details"
-import { useCreateTransaction } from "@/features/transactions/api/use-create-transactions"
 import { useBulkCreateTransactions } from "@/features/transactions/api/use-bulk-create-transactions"
 import { NewTransactionDialog } from "@/features/transactions/components/new-transaction-dialog"
-/* import { useBulkCreateTAndDfromJson } from "@/lib/AI/bulkCreateTransactions" */
-import {json} from "@/lib/AI/bulkCreateTransactions"
-import { testData } from "@/lib/transaction"
-import axios from "axios"
-
+import { RefreshCcw } from "lucide-react"
+import { createId } from "@paralleldrive/cuid2"
 
 
 enum VARIANTS {
@@ -46,10 +42,18 @@ const Page = ()=>{
     const [AccountDialog,confirm] = useSelectAccount()
     const [variant,setVariant] = useState<VARIANTS>(VARIANTS.LIST)
     const [importResults,setImportResults] = useState(INITIAL_IMPORT_RESULTS)
+    const [renderKey, setRenderKey] = useState(createId());
+
+    
+    const filters = ["payee","category","account"]
 
     const onUpload = (results:typeof INITIAL_IMPORT_RESULTS)=>{
         setImportResults(results)
         setVariant(VARIANTS.IMPORT)
+    }
+
+    const rerender = ()=>{
+        setRenderKey(createId())
     }
 
     const onCancelImport = ()=>{
@@ -121,15 +125,18 @@ const Page = ()=>{
             </>
         )
     }
-    
-    const filters = ["payee","category","account"]
+
 
     return(
-        <Card className=" flex-1 " >
-            <NewTransactionDialog />
+        <>
+        <NewTransactionDialog />
+        <Card key={renderKey}  className=" flex-1 " >    
             <CardHeader className="gap-y-2 lg:flex-row lg:items-center lg:justify-between" >
-                <CardTitle>
+                <CardTitle className="flex items-center  gap-2"  >
                    Transaction History
+                   <Button variant={"outline"} onClick={rerender} className="p-3"  >
+                        <RefreshCcw size={16} />
+                   </Button>
                 </CardTitle>
                 <div className="flex flex-col lg:flex-row gap-y-2 items-center gap-x-2">
             <Button 
@@ -156,6 +163,7 @@ const Page = ()=>{
                 />
             </CardContent>
         </Card>
+        </>
 
     )
 }

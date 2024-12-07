@@ -4,7 +4,7 @@ import type { Metadata } from "next"
 import { Toaster } from "@/components/ui/sonner";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import {ContextProvider} from "@/components/ContextProvider";
+import {ContextProvider} from "@/components/context-provider";
 import { QueryProviders } from "@/providers/query-provider";
 import { SheetProvider } from "@/providers/sheet-provider";
 import { Poiret_One, Roboto, Nunito, Teko, Oxygen, Yeseva_One } from 'next/font/google'

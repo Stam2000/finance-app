@@ -11,9 +11,10 @@ import { Dialog,
 
 
 import { Button } from "@/components/ui/button"
-import { useOpenWeeKOverview } from "../hook/use-open-weekOverview" 
-import { useUpdateChat } from "../hook/useUpdateMessage"
+import { useOpenWeeKOverview } from "../hook/use-open-week-overview" 
+import { useUpdateChat } from "../hook/use-update-message"
 import { useEffect } from "react"
+import Animation from "@/components/animation"
 
 
 
@@ -37,8 +38,18 @@ export const OverviewWeekFinanceDialog =()=>{
                         Weekly Review
                     </DialogTitle>
                 </DialogHeader>
-                    <div>
-                    <div className="flex flex-col align-center justify-center p-4" dangerouslySetInnerHTML={{__html:WRlong}} />
+                    <div >
+                    {
+                WRshort === 'Loading...' ? (<div className="flex flex-col mx-auto items-center justify-center my-4"><Animation 
+                    initialColors = {["#595959", "#151515", "#8f8f8f", "#d9d9d9"]}
+                    itemWidth ={20}
+                    itemHeight = {25}
+                    itemMarginRight = {4}
+                    itemMarginBottom = {0}
+                    containerWidth = {200} />
+                    <span className="mt-2 text-slate-400 italic">AI is working...</span></div>) :(
+                    <div className="flex flex-col align-center justify-center p-4" dangerouslySetInnerHTML={{__html:WRlong}} />)
+              }
                     </div>
                 <DialogFooter>
                     <Button onClick={onClose}>

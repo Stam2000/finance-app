@@ -25,8 +25,10 @@ const app = new Hono()
     const Projectsdata = await db.select({
         id:projects.id,
         name:projects.name,
-        projects:projects.description,
+        description:projects.description,
         budget:projects.budget,
+        startDate:projects.startDate,
+        endDate:projects.endDate,
         spent:sum(detailsTransactions.amount).mapWith(Number)
     }).from(projects).where(eq(projects.userId,auth?.userId))
     .leftJoin(detailsTransactions, eq(projects.id, detailsTransactions.projectId))
@@ -52,6 +54,8 @@ const app = new Hono()
             categoryId?: string | null | undefined;
         }[]
     }[] = []
+
+  
     let detailsForTransactions : DetailsTransactionsType []=[]
     let detailsProjects:Partial<DetailsTransactionsType>[]=[]
     if(Projectsdata.length > 0){
@@ -128,9 +132,10 @@ const app = new Hono()
             const transactionsSpent = transactionsData.reduce((acc,p)=>{
     
                 if (!p.detailsTransactions || p.detailsTransactions.length === 0) {
-                  acc += p.amount;
+
+                  acc += Math.abs(p.amount);
                 }
-                p.detailsTransactions?.forEach(dt=> acc +=dt.amount)
+                p.detailsTransactions?.forEach(dt=> acc +=Math.abs(dt.amount))
               ;
             
             return acc;
@@ -138,10 +143,12 @@ const app = new Hono()
 
         
 
-        const data = Projectsdata.map(project=>({
+
+        const data = Projectsdata.map(project=>{
+            return({
             ...project,
-            spent : project.spent + transactionsSpent*1000,
-            project:convertAmountFormMiliunits(project.budget),
+            spent :convertAmountFormMiliunits(project.spent + transactionsSpent*1000),
+            budget :convertAmountFormMiliunits(project.budget),
             transactions: transactionsData.filter(d => d.projectId === project.id),
             detailsTransactions: detailsProjects.map(d=>{
                 return{
@@ -150,13 +157,9 @@ const app = new Hono()
                     unitPrice:convertAmountFormMiliunits(d.unitPrice || 0)
                 }
             }),
-        }))
+        })})
 
 
-
-
-        
-   
 
     return c.json({data})
 })
@@ -173,30 +176,155 @@ const app = new Hono()
                 return c.json({error:"Unauthorized"},401)
             }
 
-            let [data] = await db.select({
+            let Projectsdata = await db.select({
                 id:projects.id,
                 name:projects.name,
                 description:projects.description,
                 budget:projects.budget,
                 startDate:projects.startDate,
-                endDate:projects.endDate
+                endDate:projects.endDate,
+                spent:sum(detailsTransactions.amount).mapWith(Number)
             }).from(projects).where(
                 and(
                   eq(projects.userId,auth.userId),
                   eq(projects.id,id!)  
                 ),
-            );
+            ).leftJoin(detailsTransactions, eq(projects.id, detailsTransactions.projectId))
+            .groupBy(projects.id,projects.name);
 
-            if(!data){
+
+
+
+            if(!Projectsdata){
                 return c.json({
                     error:"Not found"
                 },404)
             }
-            
-            data = {
-                ...data,
-                budget:convertAmountFormMiliunits(data.budget)
+
+            let transactionsData:{
+                date: Date;
+                id: string;
+                amount: number;
+                payee: string;
+                accountId: string;
+                notes?: string | null | undefined;
+                projectId?: string | null | undefined;
+                categoryId?: string | null | undefined;
+                detailsTransactions?: {
+                    id: string;
+                    amount: number;
+                    transactionId: string;
+                    name?: string | null | undefined;
+                    quantity?: number | null | undefined;
+                    unitPrice?: number | null | undefined;
+                    projectId?: string | null | undefined;
+                    categoryId?: string | null | undefined;
+                }[]
+            }[] = []
+        
+            let detailsForTransactions : DetailsTransactionsType []=[]
+            let detailsProjects:Partial<DetailsTransactionsType>[]=[]
+            if(Projectsdata.length > 0){
+                const projectsId = Projectsdata.map(t=>t.id)
+                    transactionsData =  await db.select({
+                        id: transactions.id,
+                        amount: transactions.amount,
+                        account:accounts.name,
+                        category:categories.name,
+                        payee: transactions.payee,
+                        notes: transactions.notes,
+                        date: transactions.date,
+                        projectId:transactions.projectId,
+                        accountId: transactions.accountId,
+                        categoryId: transactions.categoryId,
+                     }).from(transactions)
+                    .innerJoin(accounts,eq(transactions.accountId,accounts.id))
+                    .leftJoin(categories,eq(transactions.categoryId,categories.id))
+                    .where(and(
+                        inArray(transactions.projectId,projectsId),
+                        eq(accounts.userId,auth.userId)))
+                       .orderBy(desc(transactions.date)
+                    )
+        
+            let details : DetailsTransactionsType []  =[]
+            if(transactionsData.length > 0){
+                const transactionsId = transactionsData.map(t=>t.id)
+                    details = await db.select({
+                    id: detailsTransactions.id,
+                    name: detailsTransactions.name,
+                    quantity: detailsTransactions.quantity,
+                    unitPrice: detailsTransactions.unitPrice,
+                    amount: detailsTransactions.amount,
+                    transactionId: detailsTransactions.transactionId
+                })
+                    .from(detailsTransactions)
+                    .leftJoin(categories,eq(detailsTransactions.categoryId,categories.id))
+                    .where(inArray(detailsTransactions.transactionId,transactionsId))
             }
+            
+                
+                   detailsForTransactions = details.map(detail=>({
+                        ...detail,
+                        amount:convertAmountFormMiliunits(detail.amount),
+                        unitPrice:convertAmountFormMiliunits(!detail.unitPrice ? 0 : detail.unitPrice )
+                    }))
+        
+                    transactionsData = transactionsData.map(transaction=>({
+                        ...transaction,
+                        amount:convertAmountFormMiliunits(transaction.amount),
+                        detailsTransactions: detailsForTransactions.filter(d => d.transactionId === transaction.id)
+                    }))
+            
+                
+                    detailsProjects = await db.select({
+                        id: detailsTransactions.id,
+                        name: detailsTransactions.name,
+                        quantity: detailsTransactions.quantity,
+                        unitPrice: detailsTransactions.unitPrice,
+                        amount: detailsTransactions.amount,
+                        date:transactions.date,
+                        transactionId: detailsTransactions.transactionId,
+                        categoryId: detailsTransactions.categoryId,
+                        category:categories.name
+                })
+                    .from(detailsTransactions)
+                    .innerJoin(transactions,eq(detailsTransactions.transactionId,transactions.id))
+                    .innerJoin(accounts,eq(transactions.accountId,accounts.id))
+                    .leftJoin(projects, eq(detailsTransactions.projectId, projects.id)) 
+                    .leftJoin(categories,eq(detailsTransactions.categoryId,categories.id))
+                    .where(and(eq(detailsTransactions.projectId,projects.id)))
+            }
+        
+                    const transactionsSpent = transactionsData.reduce((acc,p)=>{
+            
+                        if (!p.detailsTransactions || p.detailsTransactions.length === 0) {
+                          acc += Math.abs(p.amount);
+                        }
+                        p.detailsTransactions?.forEach(dt=> acc +=Math.abs(dt.amount))
+                      ;
+                    
+                    return acc;
+                  }, 0);
+        
+                
+                
+                const data = Projectsdata.map(project=>{
+                    
+                    return({
+                    ...project,
+                    spent : convertAmountFormMiliunits(project.spent + transactionsSpent*1000),
+                    budget:convertAmountFormMiliunits(project.budget),
+                    transactions: transactionsData.filter(d => d.projectId === project.id),
+                    detailsTransactions: detailsProjects.map(d=>{
+                        return{
+                            ...d,
+                            amount:convertAmountFormMiliunits(d.amount || 0),
+                            unitPrice:convertAmountFormMiliunits(d.unitPrice || 0)
+                        }
+                    }),
+                })})
+        
+           
             return c.json({data})
         }
     )
@@ -260,8 +388,13 @@ const app = new Hono()
         zValidator("json",insertProjectSchema.pick({
             name:true,
             description:true,
-            budget:true
+            budget:true,
+        }).extend({
+            startDate: z.coerce.date(),
+            endDate: z.coerce.date(),
         })) ,async (c)=>{
+
+            
             const personaId = c.req.header('X-Persona-ID') || "testData"
             const auth = {userId:personaId}
             const {id} = c.req.valid("param")
@@ -289,7 +422,7 @@ const app = new Hono()
                 return c.json({error:"Not found"},404)
             }
 
-            return c.json({data})
+            return c.json({data},200)
         })
     .delete("/:id",
         zValidator("param",

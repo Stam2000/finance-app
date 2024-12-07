@@ -14,6 +14,7 @@ export const useGetTransactions = ()=> {
     const to = params.get("to")|| ""
     const accountId = params.get("accountId")||""
     const personaId = localStorage.getItem('selectedPersona') || "testData"
+
     
     const query = useQuery({
         queryKey:["transactions",{from,to,accountId}],

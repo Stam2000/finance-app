@@ -1,10 +1,11 @@
 
 import { Button } from "./ui/button"
-import { useOpenWeeKOverview } from "@/features/chat/hook/use-open-weekOverview"
-import { useUpdateChat } from "@/features/chat/hook/useUpdateMessage"
+import { useOpenWeeKOverview } from "@/features/chat/hook/use-open-week-overview"
+import { useUpdateChat } from "@/features/chat/hook/use-update-message"
 import { formatText } from "@/lib/utils"
 import { MarkdownFormatter } from "@/lib/utils"
 import { useEffect } from "react"
+import Animation from "./animation"
 
 const WeekResult = ()=>{
   const {WRshort,WRlong}= useUpdateChat()
@@ -15,7 +16,7 @@ const WeekResult = ()=>{
   useEffect(()=>{
     weekResume = MarkdownFormatter.toHtml(WRshort)
   },[WRshort,WRlong])
-    console.log(`WRshort ${WRshort}`)
+
     
 /*     weekResume=`<div>
   <h1 style="font-weight: bold; font-size: 1.125rem; padding-bottom: 0.5rem;">📊Weekly Financial Review</h1>
@@ -43,12 +44,21 @@ const WeekResult = ()=>{
     
 
     return(
-        <div className="flex align-center p-4 bg-gray-50 flex-col justify-center">
-            <div>
-                <div className="flex flex-col items-center justify-center" dangerouslySetInnerHTML={{__html:weekResume}} />
+        <div className="flex min-h-full items-center p-4  flex-col justify-center">
+
+            <div className="mx-auto" >
+              {
+                WRshort === 'Loading...' ? (<div className="flex flex-col mx-auto items-center justify-center mt-5 mb-14"><Animation itemWidth ={20}
+                  initialColors = {["#595959", "#151515", "#8f8f8f", "#d9d9d9"]}
+                  itemHeight = {25}
+                  itemMarginRight = {4}
+                  itemMarginBottom = {0}
+                  containerWidth = {200} /><span className="mt-2 text-slate-400 italic">AI is working...</span> </div>) :(
+                  <div className="flex flex-col items-center justify-center" dangerouslySetInnerHTML={{__html:weekResume}} />)
+              }
             </div>
             <div className="flex items-center justify-center" >
-                <Button className="bg-slate-300 hover:text-white w-[50%] wx-auto text-slate-700 border-2" onClick={onOpen} >
+                <Button className="bg-slate-300  hover:text-white w  text-slate-700 border-2" onClick={onOpen} >
                     Full Review
                 </Button>
             </div>

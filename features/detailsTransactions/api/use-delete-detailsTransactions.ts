@@ -23,7 +23,7 @@ export const useDeleteTransactions =()=>{
                 }
             });
             const res = await response.json();
-            console.log (res)
+
             return res;
         },
         onSuccess : ()=>{

@@ -15,12 +15,15 @@ export const useEditProject =(id?:string)=>{
         RequestType
     >({
         mutationFn: async (json) =>{
+            
+
             const personaId = localStorage.getItem('selectedPersona') || "testData"
             const response = await client.api.projects[":id"]["$patch"]({param:{id},json},{
                 headers: {
                     'X-Persona-ID': personaId,      
                 }
             });
+
             return await  response.json();
         },
         onSuccess : ()=>{
@@ -28,8 +31,8 @@ export const useEditProject =(id?:string)=>{
             queryClient.invalidateQueries({ queryKey:["projects",{id}]})
             queryClient.invalidateQueries({queryKey:["projects"]})
         },
-        onError: ()=>{
-            
+        onError: (e)=>{
+
             toast.error("Failed to update project")
         }
     })

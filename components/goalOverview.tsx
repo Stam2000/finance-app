@@ -11,17 +11,34 @@ import { Tag } from "lucide-react"
 const GoalOverview = ()=>{
     const categoriesQuery = useGetCategoriesAllTracking()
     const categories = categoriesQuery.data||[]
+    let categoriesUpdated = categories.map((c,index)=>{
+        let percentage = Math.min((Math.abs(c.amount) / c.goal!) * 100)
+        let width=0
+        percentage> 100 ? width=100:width=percentage
+        percentage = parseFloat(percentage.toFixed(2))
+
+        return{
+            ...c,
+            percentage,
+            width
+        }
+    })
+
+ categoriesUpdated.sort((a,b)=> b.percentage - a.percentage )
+
+ console.log(categoriesUpdated)
+
+
 
 
     return(
     <div className="flex flex-col gap-2 my-2 flex-grow rounded-lg">
-       {/*bar de progression*/}
+
        {
-        categories.map((c,index)=>{
-            let percentage = Math.min((Math.abs(c.amount) / c.goal!) * 100)
-            let width=0
-                percentage> 100 ? width=100:width=percentage
-                percentage = parseFloat(percentage.toFixed(2))
+        categoriesUpdated.map((c,index)=>{
+            const width = c.width 
+            const percentage = c.percentage
+            
  
             
                 return(

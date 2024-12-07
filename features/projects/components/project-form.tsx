@@ -7,6 +7,7 @@ import { convertAmountToMiliunits } from "@/lib/utils"
 import { DatePicker } from "@/components/date-picker"
 import {Input} from "@/components/ui/input"
 import {Button} from "@/components/ui/button"
+import {parse,subDays} from "date-fns"
 import { insertProjectSchema } from "@/db/schema"
 import {
     Form,
@@ -31,16 +32,23 @@ const apiSchema = insertProjectSchema.omit({
     userId:true
 })
 
-type ApiValues = z.input<typeof apiSchema>
+type ApiValues = z.infer<typeof apiSchema>
 type FormValues = z.input<typeof formSchema>
 
 type Props ={
     id?:string,
     defaultValues?:FormValues,
-    onSubmit:(values:ApiValues)=>void;
+    onSubmit:(values:{
+        name: string;
+        budget: number;
+        startDate: Date;
+        endDate: Date;
+        description?: string | null | undefined;
+    })=>void;
     onDelete?:()=>void;
     disabled?:boolean;
 };
+
 
 export const ProjectForm =({
 id,
@@ -50,16 +58,19 @@ onDelete,
 disabled
 }:Props)=>{
 
+
+
     const form  = useForm<FormValues>({
         resolver:zodResolver(formSchema),
         defaultValues:defaultValues,
     });
 
     const handleSubmit = (values:FormValues)=>{
+
         const amount = parseFloat(values.budget)
         const amountInMiliunits = convertAmountToMiliunits(amount)
         onSubmit({
-            ...values,
+            ...values, 
             budget:amountInMiliunits,
         })
     }

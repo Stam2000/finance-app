@@ -2,7 +2,7 @@
 
 import { useGetTransaction } from "@/features/transactions/api/use-get-transaction";
 import { DataTable } from "./Overviewtable";
-import { useOpenTransactionOverview } from "@/features/detailsTransactions/hooks/use-open-Overview";
+import { useOpenTransactionOverview } from "@/features/detailsTransactions/hooks/use-open-overview";
 import { Button } from "@/components/ui/button";
 import {
     Dialog,
@@ -18,7 +18,7 @@ import {columns} from "./columns"
 
 export const TransactionOverview  = ()=> { 
     const {isOpen,id,onClose} = useOpenTransactionOverview()
-    const transactionQuery = useGetTransaction(id)
+    const transactionQuery = useGetTransaction(id!)
 
     const transaction = transactionQuery.data
    const data:any = [transaction] 

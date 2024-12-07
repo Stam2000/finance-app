@@ -99,7 +99,7 @@ const app = new Hono()
             unitPrice:convertAmountFormMiliunits(!data.unitPrice ? 0 : data.unitPrice)
         }
         
-        console.log(data)
+
         return c.json({data})
     }
 ).post("/",
@@ -127,7 +127,7 @@ const app = new Hono()
     async(c)=>{
         const auth = {userId:"testData"}
         const values = c.req.valid("json")
-        console.log(values)
+   
 
         const data = await db.delete(detailsTransactions)
         .where(
@@ -172,7 +172,7 @@ const app = new Hono()
             const auth = {userId:personaId}
             const {id} = c.req.valid("param")
             const values = c.req.valid("json")
-            console.log(values)
+    
 
             const transactionToUpdate = db.$with("deetailsTransactions_to_update")
                 .as(

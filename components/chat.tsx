@@ -13,13 +13,14 @@ import { useLayoutEffect } from "react"
 import { Bot } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useOpenChat } from "@/features/chat/hook/use-open-AIchat"
-import { useUpdateChat } from "@/features/chat/hook/useUpdateMessage"
+import { useUpdateChat } from "@/features/chat/hook/use-update-message"
 import { sendAiMessage } from "@/lib/utils"
 import { motion } from "framer-motion"
-import MessageLoading from "./MessageLoading"
-import MarkdownTypewriter from "./markdownTyper"
+import MessageLoading from "./message-loading"
+import MarkdownTypewriter from "./markdown-typer"
 import { ListRestart } from "lucide-react"
 import { useGenFollowUpQ } from "@/features/chat/api/use-follow-up"
+import { Description } from "@radix-ui/react-dialog"
 
 
 
@@ -34,11 +35,17 @@ interface Message {
 
 export const Chat = () =>{
     const {chatOpen,toggleChatOpen} = useOpenChat()
-    const personaId = 'gredzxwh7esmt1xvmnd9k283'
+    const personaId = localStorage.getItem('selectedPersona') || "testData"
     const {personaDes,setFollowQ,followUpQ,followHistory,threadId,resetMessage,reset,setThreadId,updateLastMessage,isloading,setIsLoading, messages, updateMessage, setFormData, formData, removeFile,personaInfo } = useUpdateChat();
     const [fileNames,setFilenames] = useState<string[]>([])
     const chat = useRef<HTMLDivElement>(null)
     const genFollowUpQ = useGenFollowUpQ()
+
+
+    let perInfo = JSON.parse(personaInfo)
+    perInfo ={name:perInfo.name,Description:perInfo.description}
+    perInfo = JSON.stringify(perInfo)
+
 
     const newChatCreate =()=>{
         setFilenames([])
@@ -90,7 +97,7 @@ export const Chat = () =>{
 
             if (e) e.preventDefault();
             setFilenames([])
-            sendAiMessage({threadId,setIsLoading,setThreadId,updateLastMessage,updateMessage,formData,setFormData,personaId,personaInfo})
+            sendAiMessage({threadId,setIsLoading,setThreadId,updateLastMessage,updateMessage,formData,setFormData,personaId,personaInfo:perInfo})
             
         }
    
