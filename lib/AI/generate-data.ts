@@ -8,7 +8,6 @@ import { StringOutputParser, StructuredOutputParser } from "@langchain/core/outp
 import { AIMessage,BaseMessage,HumanMessage } from "@langchain/core/messages"
 import { ChatMistralAI } from "@langchain/mistralai";
 import { ChatTogetherAI } from "@langchain/community/chat_models/togetherai"
-import { promises as fs } from 'fs'
 import { promptGenTemplate,formatInstGenTemplate, promptExtender, formatInstExtenderGen, promptRefine, promptDetails, promptFundamentalWeek } from "./prompts";
 
 
@@ -374,60 +373,6 @@ for (let week = 0; week < 20; week++){
       . some time you can change the name of products to break the monotony but only products not bank accounts,categories and projects names you allready generated .ensure that all categories,projects used within all transactions are beeing listed if not add them. now modify this week. surprise me :)`,
       refined_history:refinedHistory
     })
-
-
-        let existingBasicWeekData = [];
-        try {
-          const data = await fs.readFile('basicWeek.json', 'utf8');
-          existingBasicWeekData = JSON.parse(data);
-          if (!Array.isArray(existingBasicWeekData)) {
-            existingBasicWeekData = [existingBasicWeekData];
-          }
-          console.log('basicWeek.json has been updated successfully!');
-        } catch (err:any) {
-          if (err.code !== 'ENOENT') { // Ignore the error if file doesn't exist
-            console.error('Error reading basicWeek.json:', err);
-          }
-        }
-
-        existingBasicWeekData.push(weekData);
-
-        try {
-          await fs.writeFile(
-            'basicWeek.json',
-            JSON.stringify(existingBasicWeekData, null, 2),
-            'utf8'
-          );
-
-        } catch (err) {
-          console.error('Error writing to basicWeek.json:', err);
-        }
-              // For advancedWeek.json
-              let existingAdvancedWeekData = [];
-              try {
-                const data = await fs.readFile('advancedWeek.json', 'utf8');
-                existingAdvancedWeekData = JSON.parse(data);
-                if (!Array.isArray(existingAdvancedWeekData)) {
-                  existingAdvancedWeekData = [existingAdvancedWeekData];
-                }
-              } catch (err:any) {
-                if (err.code !== 'ENOENT') { // Ignore the error if file doesn't exist
-                  console.error('Error reading advancedWeek.json:', err);
-                }
-              }
-        
-              existingAdvancedWeekData.push(detailedWeekData);
-        
-              try {
-                await fs.writeFile(
-                  'advancedWeek.json',
-                  JSON.stringify(existingAdvancedWeekData, null, 2),
-                  'utf8'
-                );
-                console.log('advancedWeek.json has been updated successfully!');
-              } catch (err) {
-                console.error('Error writing to advancedWeek.json:', err);
-              }
 
     if ((week + 1) % 4 === 0) {
   // After processing, update the history with the specific prompt

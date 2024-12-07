@@ -7,9 +7,9 @@ import summary from "./summary"
 import getip from "./getip";
 import projects from "./projects"
 import conversation from "./conversation"
-import detailsTransactions from "./detailsTransactions"
+import detailsTransactions from "./details-transactions"
 
-export const runtime = 'nodejs';
+export const runtime = 'edge';
 
 const app = new Hono().basePath('/api')
 

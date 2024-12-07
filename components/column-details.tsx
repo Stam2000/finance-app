@@ -29,7 +29,7 @@ import { ArrowUpDown } from "lucide-react";
 import {formatCurrency} from "@/lib/utils"
 import { Badge } from "@/components/ui/badge";
 import {format} from "date-fns"
-import { ActionsDetails } from "./actionsDetails";
+import { ActionsDetails } from "./actions-details";
 import React from "react"
 import { insertdetailsTransactionsSchema } from "@/db/schema";
 

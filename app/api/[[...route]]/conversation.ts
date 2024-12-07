@@ -14,7 +14,6 @@ import pLimit from "p-limit"
 import { subMonths, format } from "date-fns"
 import { FollowUpQuestion } from "@/lib/AI/generate-data"
 import { langChain } from "@/lib/AI/functions-langchain"
-import { personaToGenerate } from "@/lib/AI/prompts"
 import { convertAmountToMiliunits } from "@/lib/utils"
 
 

@@ -1,5 +1,5 @@
 
-import { HeaderLogo } from "./headerLogo"
+import { HeaderLogo } from "./header-logo"
 import { Navigation } from "./navigation"
 import { WelcomeMsg } from "./welcoe-msg"
 import { Filter } from "./filter" 
@@ -7,9 +7,8 @@ import { Filter } from "./filter"
 import WeekResult from "./week-resume"
 
 import Carousel from "./caroussel"
-import GoalOverview from "./goalOverview"
+import GoalOverview from "./goaloverview"
 
-import { useOpenChat } from "@/features/chat/hook/use-open-AIchat"
 
 export const Header=()=>{
 
