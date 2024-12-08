@@ -5,14 +5,13 @@ import { Button } from "@/components/ui/button"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import MarkdownTypewriter from "@/components/markdown-typer"
-import { useMedia } from "react-use"
 import { motion } from "framer-motion"
 import { useEffect } from "react"
 import { MoveRight } from "lucide-react"
 import { useRef } from "react"
 import {useMediaQuery} from "react-responsive"
 import { useUpdateChat } from "@/features/chat/hook/use-update-message"
-
+import { persona1D,persona2D,persona3D,persona4D } from "@/lib/personaDescr"
 
 
   interface Persona  {
@@ -37,6 +36,7 @@ import { useUpdateChat } from "@/features/chat/hook/use-update-message"
     shoppingHabits: string; // Shopping habits (e.g., impulsive, planner)
     description: string;
     image:string;
+    fullDesc:string
   }
 
   const profile = [
@@ -61,7 +61,8 @@ import { useUpdateChat } from "@/features/chat/hook/use-update-message"
       diningPreference: "mixed",
       shoppingHabits: "planner",
       description:"Hans Schmidt, 35, is a married Mechanical Engineer living in Munich’s suburbs. Combining German precision with a global outlook, he specializes in sustainable automotive systems. Fluent in German and English, Hans values family, work-life balance, and cultural diversity. Passionate about hiking, soccer, and travel, he aspires to leadership and personal fulfillment.",
-      image:"hans"
+      image:"hans",
+      fullDesc:persona1D
     },{
       id:"profile2",
       name: "Isabella Rossi",
@@ -83,7 +84,8 @@ import { useUpdateChat } from "@/features/chat/hook/use-update-message"
       diningPreference: "eatOut",
       shoppingHabits: "impulsive",
       description:"Isabella Rossi, a 38-year-old single Interior Designer in Milan, blends Italian elegance with modern creativity. Educated at Politecnico di Milano and Domus Academy, she excels in sustainable, high-profile projects. Fluent in Italian and English, Isabella travels frequently for work, values cultural experiences, and aspires to establish her own renowned design studio.",
-      image:"isabella"
+      image:"isabella",
+      fullDesc:persona2D
     },{
       id:"profile3",
       name: "Jean-Pierre Ebogo",
@@ -105,7 +107,8 @@ import { useUpdateChat } from "@/features/chat/hook/use-update-message"
       diningPreference: "homeCook",
       shoppingHabits: "planner",
       description:"Jean-Pierre Ebogo, 37, is a married IT Consultant from Cameroon living in Frankfurt’s suburbs with two children. Dedicated to his family, he prioritizes saving for education and vacations through frugal spending and careful planning. Fluent in French, English, and German, he values cultural diversity, community, and a balanced work-life.",
-      image:"ebogo"
+      image:"ebogo",
+      fullDesc:persona3D
     },{
       id:"profile",
       name: "Yumi Nakamura",
@@ -127,19 +130,23 @@ import { useUpdateChat } from "@/features/chat/hook/use-update-message"
       diningPreference: "mixed",
       shoppingHabits: "impulsive",
       description:"Yumi Nakamura, a 30-year-old single chef in Tokyo, blends traditional Japanese values with modern innovation. Educated at Tsuji Culinary Institute, she excels in fusion cuisine and aims to open her own restaurant. Fluent in Japanese and English, Yumi values sustainability, creativity, and work-life balance while navigating Tokyo’s competitive culinary scene.",
-      image:"yumi"
+      image:"yumi",
+      fullDesc:persona4D
     }
   ]
  
-const CardDisplay = ({persona , onSelect,isDisabled }:{isDisabled:boolean,persona:Persona,onSelect:(persona:Persona)=>void})=>{
+const CardDisplay = ({persona , isDisabled }:{isDisabled:boolean,persona:Persona})=>{
   const isMobile= useMediaQuery({maxWidth:768})
+  const {setPersonaDes}=useUpdateChat()
  
 
   const {setPersonaInfo}=useUpdateChat()
   const router = useRouter()
+
   const handleClick =(persona:Persona)=>{
     setPersonaInfo(JSON.stringify(persona))
-    localStorage.setItem('selectedPersona', "profile3")
+    setPersonaDes(persona.fullDesc)
+    localStorage.setItem('selectedPersona', persona.id)
     router.push("/dashboard")
   }
 
@@ -272,7 +279,7 @@ const Page = ()=>{
     const [openForm,setOpenForm]=useState<boolean>(false)
     const [isDisabled,setIsDisabled]=useState<boolean>(false)
     const isFirstRender = useRef(true);
-    const {personaDes,personaInfo,setPersonaDes,setPersonaInfo}=useUpdateChat()
+    const {setPersonaDes}=useUpdateChat()
     useEffect(() => {
 
       setPersonaDes(generatedData);
@@ -292,15 +299,6 @@ const Page = ()=>{
       
     }, []);
   
-
-    const selectPersona = (persona:Persona) => {
-        console.log(persona)
-        // Store the selected persona in localStorage
-        localStorage.setItem('selectedPersona', "persona3");
-        // Redirect to dashboard
-        console.log(localStorage.getItem('selectedPersona'))
-        router.push('/dashboard');
-      };
 
     if(isMobile){
 
@@ -402,7 +400,7 @@ const Page = ()=>{
                     </div>
                   </div>
                     <motion.div variants={childrenLeft} className=" scrollbar-none" >
-                        {(profile.map((p,index)=> <CardDisplay isDisabled={isDisabled} key={index} persona={p} onSelect={selectPersona} /> ))}
+                        {(profile.map((p,index)=> <CardDisplay isDisabled={isDisabled} key={index} persona={p} /> ))}
                     </motion.div> 
                 </motion.div>
               )
@@ -434,7 +432,7 @@ const Page = ()=>{
                 </motion.div> :
                 <motion.div initial={isFirstRender.current ? "firstLoad" : "hidden"} variants={parentVariantLeft}
                 animate={isFirstRender.current ? "firstVisible" : "visible"} exit="exit"  key={"personaList"} className="overflow-y-auto scrollbar-none" >
-                    {(profile.map((p,index)=> <CardDisplay isDisabled={isDisabled} key={index} persona={p} onSelect={selectPersona} /> ))}
+                    {(profile.map((p,index)=> <CardDisplay isDisabled={isDisabled} key={index} persona={p} /> ))}
                 </motion.div>
                  }
                 </div>

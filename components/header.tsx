@@ -1,4 +1,5 @@
 "use client"
+
 import { HeaderLogo } from "./header-logo"
 import { Navigation } from "./navigation"
 import { WelcomeMsg } from "./welcoe-msg"
