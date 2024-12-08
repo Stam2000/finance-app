@@ -4,7 +4,7 @@ import { useGetProjects } from '@/features/projects/api/use-get-projects'
 import { DataTable} from './data-table'
 import { useDeleteProjects } from '@/features/projects/api/use-delete-projects'
 import { ReturnColumns } from './columns'
-import {columns} from './newColumns'
+import {columns} from './new-columns'
 
 export default function MinimalistProjectOverview() {
 

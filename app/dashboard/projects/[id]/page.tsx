@@ -10,7 +10,7 @@ import { ChevronDown, ChevronUp,Loader2 } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { DataTable } from '@/app/dashboard/transactions/data-table';
 import { GlobalDataTable } from '@/components/data-table'
-import { detailsColumns } from '@/app/dashboard/details/DetailsColumns';
+import { detailsColumns } from '@/app/dashboard/details/details-columns';
 import { columns } from "../../transactions/columns";
 import { useGetProject } from "@/features/projects/api/use-get-project";
 import { useState } from "react"

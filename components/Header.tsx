@@ -1,4 +1,4 @@
-
+"use client"
 import { HeaderLogo } from "./header-logo"
 import { Navigation } from "./navigation"
 import { WelcomeMsg } from "./welcoe-msg"
@@ -7,7 +7,7 @@ import { Filter } from "./filter"
 import WeekResult from "./week-resume"
 
 import Carousel from "./caroussel"
-import GoalOverview from "./goaloverview"
+import GoalOverview from "./goal-overview"
 
 
 export const Header=()=>{

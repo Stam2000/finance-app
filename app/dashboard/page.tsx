@@ -3,7 +3,7 @@
 import { createId } from "@paralleldrive/cuid2"
 import {DataGrid} from "@/components/data-grid"
 import {DataCharts} from "@/components/data-charts"
-import {useState,useContext} from "react"
+import {useState,useContext,useEffect} from "react"
 import {ThemeContext} from "@/components/context-provider";
 import { useGenFollowUpQ } from "@/features/chat/api/use-follow-up";
 import { useUpdateChat } from "@/features/chat/hook/use-update-message";
@@ -44,6 +44,7 @@ export default  function Home() {
 
 
     const handleClick = () => {
+
         // Call the mutation function with the required payload
         genFollowUpQ.mutate(
           {personaDes,followHistory},
@@ -64,6 +65,12 @@ export default  function Home() {
       const rerender = ()=>{
         setRenderKey(createId())
     }
+
+    useEffect(() => {
+      handleFetchWeeklyAnalyse()
+      handleClick()
+    }, [personaDes]);
+
 
     return (
 

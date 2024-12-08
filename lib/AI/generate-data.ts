@@ -1,7 +1,7 @@
 import { RunnableSequence,RunnableLike } from "@langchain/core/runnables";
 import {ChatOpenAI} from "@langchain/openai"
 import {ChatPromptTemplate,MessagesPlaceholder} from "@langchain/core/prompts"
-import { subMonths, startOfMonth,addDays,format } from 'date-fns'
+import { subMonths, startOfMonth,addDays,format,subDays } from 'date-fns'
 import { DynamicTool } from "@langchain/core/tools"
 import { z } from "zod"
 import { StringOutputParser, StructuredOutputParser } from "@langchain/core/output_parsers"
@@ -161,9 +161,6 @@ const TransactionSchemaModel = z.object({
   ),
 });
 
-
-
-
   const parserExemple = StructuredOutputParser.fromZodSchema(formSchema)
 
   const parserDataschema = StructuredOutputParser.fromZodSchema(TransactionInterfaceSchema)
@@ -231,8 +228,7 @@ export const DataGenerator = async ( guideLine:string ) => {
   const genPrompt = promptFundamentalWeek
 
   const currentDate = new Date();
-  const threeMonthsBefore = subMonths(currentDate, 2);
-  const startOfThreeMonthsBefore = startOfMonth(threeMonthsBefore);
+  const oneMonthsBefore = subDays(currentDate, 30);
 
 
   const dataGenPrompt = await  ChatPromptTemplate.fromMessages([
@@ -271,7 +267,7 @@ const refinePrompt = promptRefine
 
 let transactions = []
 
-for (let week = 0; week < 20; week++){
+for (let week = 0; week < 4; week++){
   console.log(`
 
     ############
@@ -281,7 +277,7 @@ for (let week = 0; week < 20; week++){
     `,week)
   let succes:boolean = false 
 
-  const weekStartDate = addDays(startOfThreeMonthsBefore, week * 7);
+  const weekStartDate = addDays(oneMonthsBefore, week * 7);
   const weekEndDate = addDays(weekStartDate, 6);
 
 

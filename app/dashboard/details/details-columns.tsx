@@ -1,62 +1,26 @@
 "use client"
 
 import {
-    Table,
-    TableHeader,
-    TableRow,
-    TableHead,
-    TableBody,
-    TableCell,
-} from "@/components/ui/table"
-import {
-    ColumnDef,
-    ColumnFiltersState,
-    Row,
-    SortingState,
-    flexRender,
-    getCoreRowModel,
-    getExpandedRowModel,
-    getFilteredRowModel,
-    getPaginationRowModel,
-    getSortedRowModel,
-    useReactTable,
+    ColumnDef,   
   } from "@tanstack/react-table"
 import { InferResponseType } from "hono";
 import {client} from "@/lib/hono"
-import { ResponseLimit } from "next";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import { ArrowUpDown } from "lucide-react";
-import {convertAmountFormMiliunits, formatCurrency} from "@/lib/utils"
+import {formatCurrency} from "@/lib/utils"
 import { Badge } from "@/components/ui/badge";
-import {format} from "date-fns"
-import { CategoryColumn } from "./category-column";
-import { AccountColumn } from "./account-column";
-import { ActionsDetails } from "./actionsDetails";
+import { ActionsDetails } from "./actions-details";
 import React from "react"
+import {format} from "date-fns"
+import { DetailsTransactionsType } from "@/db/schema";
 
 
 
 export type ResponseType = InferResponseType<typeof client.api.detailsTransactions.$get,200 >["data"][0]
-type trResponseType =  InferResponseType<typeof client.api.transactions.$get,200 >["data"][0]
 
 
-
-
-export const DetailsTable:React.FC<{detailsTransactions:ResponseType[]}> =({
-    detailsTransactions
-})=>{
-
-
-    
-  const [sorting, setSorting] = React.useState<SortingState>([])
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
-  )
-  const [rowSelection, setRowSelection] = React.useState({})
-  const [expanded,setExpanded]= React.useState({})
-
-    const detailsColumns:ColumnDef<ResponseType>[]= [
+export  const detailsColumns:ColumnDef<DetailsTransactionsType>[]= [
         {
             id:"select",
             header:({table})=>(
@@ -80,6 +44,26 @@ export const DetailsTable:React.FC<{detailsTransactions:ResponseType[]}> =({
             ),
             enableHiding:false,
             enableSorting:false,
+        },{
+            accessorKey:"date",
+            header:({column})=>(
+                <Button 
+                 variant="ghost"
+                 onClick={()=>column.toggleSorting(column.getIsSorted()==="asc")}
+                >
+                    Date
+                    <ArrowUpDown className="ml-2 h-4 w-4"/>
+                </Button>
+            ),
+            cell:({row})=>{
+                const date = row.getValue("date") as Date;
+    
+                return (
+                    <div className="flex justify-around items-center" >
+                        {format(date,("dd MMMM,yyyy"))}
+                    </div>
+                )
+            }
         },{
             accessorKey:"name",
             header:({column})=>(
@@ -111,7 +95,7 @@ export const DetailsTable:React.FC<{detailsTransactions:ResponseType[]}> =({
                     <ArrowUpDown className="ml-2 h-4 w-4"/>
                 </Button>
             ),
-             cell:({row})=>{
+            cell:({row})=>{
     
                 const unitPrice:number = row.getValue("unitPrice")
                 return(
@@ -119,7 +103,7 @@ export const DetailsTable:React.FC<{detailsTransactions:ResponseType[]}> =({
                   className="text-xs font-medium px-3.5 py-2.5"
                   variant={unitPrice < 0 ? "destructive":"primary" }
              >
-              {formatCurrency(unitPrice || 0)}
+              {formatCurrency(unitPrice)}
              </Badge>
                 );
             }
@@ -158,7 +142,8 @@ export const DetailsTable:React.FC<{detailsTransactions:ResponseType[]}> =({
                 </Button>
             ),
             cell:({row})=>{
-                const amount:number = row.getValue("amount")
+                const amount = parseFloat(row.getValue("amount"))
+      
     
                 return(
                    <Badge
@@ -171,73 +156,8 @@ export const DetailsTable:React.FC<{detailsTransactions:ResponseType[]}> =({
             }
         },{
             id:"actions",
-            cell:({row})=><ActionsDetails id={{detailsId:row.original.id,transactionId:row.original.transactionId}}/>     
+            cell:({row})=><ActionsDetails id={row.original.id} transactionId={row.original.transactionId} />     
         }
     ];
 
-    const table = useReactTable({
-        data:detailsTransactions,
-        columns:detailsColumns,
-        getCoreRowModel: getCoreRowModel(),
-        getPaginationRowModel: getPaginationRowModel(),
-        onSortingChange:setSorting,
-        getSortedRowModel:getSortedRowModel(),
-        onExpandedChange:setExpanded,
-        getExpandedRowModel: getExpandedRowModel(),
-        onColumnFiltersChange: setColumnFilters,
-        getFilteredRowModel: getFilteredRowModel(),
-        onRowSelectionChange: setRowSelection,
-        state: {
-          sorting,
-          columnFilters,
-          rowSelection,
-          expanded
-        },
-      })
-
-      return(
-        <Table>
-        <TableHeader>
-          {table.getHeaderGroups().map((headerGroup) => (
-            <TableRow key={headerGroup.id}>
-              {headerGroup.headers.map((header) => {
-                return (
-                  <TableHead key={header.id}>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                  </TableHead>
-                )
-              })}
-            </TableRow>
-          ))}
-        </TableHeader>
-        <TableBody>
-          {table.getRowModel().rows?.length ? (
-            table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                    </TableCell>
-                  ))}
-                </TableRow>         
-            ))   
-          ) : (
-            <TableRow>
-              <TableCell colSpan={detailsColumns.length} className="h-24 text-center">
-                No results.
-              </TableCell>
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
-      )
-
-}
+   

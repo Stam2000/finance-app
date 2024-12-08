@@ -4,7 +4,7 @@ import {client} from "@/lib/hono"
 import { Button } from "@/components/ui/button"
 import { ArrowUpDown} from "lucide-react"
 import { Checkbox } from "@/components/ui/checkbox"
-import CellComponent from "./cellComponents"
+import CellComponent from "./cell-components"
 
 export type ResponseType = InferResponseType<typeof client.api.projects.$get,200>["data"][0]
 

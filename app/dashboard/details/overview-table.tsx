@@ -25,7 +25,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 
-import { DetailsTable } from "./DetailsTableOverview"
+import { DetailsTable } from "./details-table-overview"
 
 //TODO ON EDIT
 interface DataTableProps<TData, TValue> {

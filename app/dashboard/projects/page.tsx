@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useGetProjects } from "@/features/projects/api/use-get-projects";
 import { useNewProject } from "@/features/projects/hooks/use-new-project";
-import MinimalistProjectOverview from "./projectOverview";
+import MinimalistProjectOverview from "./project-overview";
 import { NewProjectDialog } from "@/features/projects/components/new-project-dialog";
 import { EditProjectDialog } from "@/features/projects/components/edit-project-dialog";
 import { createId } from "@paralleldrive/cuid2"

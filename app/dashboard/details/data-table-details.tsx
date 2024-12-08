@@ -22,7 +22,7 @@ import {
     useReactTable,
   } from "@tanstack/react-table"
 import React from "react"
-import { detailsColumns } from "./DetailsColumns";
+import { detailsColumns } from "./details-columns";
 import { Trash } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";

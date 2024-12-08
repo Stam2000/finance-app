@@ -68,7 +68,7 @@ export const useUpdateChat = create(persist((set) => ({
     setPersonaInfo:(data)=>set({personaInfo:data}),
     setIsLoading:()=>set((state)=>({isloading:!state.isloading})),
     messages: [],
-    personaInfo:'',
+    personaInfo:`{"name":""}`,
     resetMessage:()=>set({messages:[]}),
     threadId:"",
     formData: { question: "", Files: [] },

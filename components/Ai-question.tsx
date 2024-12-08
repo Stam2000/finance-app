@@ -1,15 +1,18 @@
+"use client"
+
 import { Input } from "./ui/input"
 import { sendAiMessage } from "@/lib/utils"
 import { useUpdateChat } from "@/features/chat/hook/use-update-message"
 import { useOpenChat } from "@/features/chat/hook/use-open-AIchat"
-import { useState } from "react"
+import { useState,useEffect } from "react"
 
 
 const QuestionChat = ()=>{
     const {threadId,setThreadId, setIsLoading,updateLastMessage,updateMessage, setFormData, formData,personaInfo} = useUpdateChat();
     const {toggleChatOpen} = useOpenChat()
     const [value,setInputValue] = useState('')
-    const personaId = localStorage.getItem('selectedPersona') || "testData"  
+    const [personaId, setPersonaId] = useState<string>("")
+
     const handleOnChange = (e:React.ChangeEvent<HTMLInputElement>)=>{
         setInputValue(e.target.value)
         setFormData({question:e.target.value})
@@ -22,6 +25,13 @@ const QuestionChat = ()=>{
         toggleChatOpen()
         setInputValue("")   
     }
+
+    useEffect(() => {
+
+        const storedPersonaId = localStorage.getItem('selectedPersona') || "testData";
+        setPersonaId(storedPersonaId);
+
+    }, []);
 
 
     return(

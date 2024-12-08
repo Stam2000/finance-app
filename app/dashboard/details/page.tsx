@@ -11,7 +11,7 @@ import { Loader2 } from "lucide-react"
 import { DataTable } from "@/components/data-table"
 import { createId } from "@paralleldrive/cuid2"
 import { RefreshCcw } from "lucide-react";
-import {detailsColumns} from "./DetailsColumns"
+import {detailsColumns} from "./details-columns"
 import { useGetDetailsTransactions } from "@/features/detailsTransactions/api/use-get-detailsTransactions"
 import { useBulkDeleteDetailsTransactions } from "@/features/detailsTransactions/api/use-bulk-delete-detailsTransactions"
 import { Skeleton } from "@/components/ui/skeleton"

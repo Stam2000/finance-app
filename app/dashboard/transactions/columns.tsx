@@ -12,7 +12,7 @@ import {format} from "date-fns"
 import { CategoryColumn } from "./category-column";
 import { AccountColumn } from "./account-column";
 import { Actions } from "./actions";
-import { DetailsTable } from "./columnsDetails"
+import { DetailsTable } from "./columns-details"
 
 
 export type ResponseType = InferResponseType<typeof client.api.transactions.$get,200 >["data"][0]

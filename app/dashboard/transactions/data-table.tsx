@@ -28,9 +28,8 @@ import {
 } from "@/components/ui/table"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { DetailsTable } from "./columnsDetails"
-import {columns as Ccolumns} from "./columns"
-import { SelectFilterKey } from "./selectFilter"
+import { DetailsTable } from "./columns-details"
+import { SelectFilterKey } from "./select-filter"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]

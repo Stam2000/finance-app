@@ -23,36 +23,37 @@ import {
   } from "@tanstack/react-table"
 import { InferResponseType } from "hono";
 import {client} from "@/lib/hono"
-import { ResponseLimit } from "next";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import { ArrowUpDown } from "lucide-react";
-import {formatCurrency} from "@/lib/utils"
+import { formatCurrency} from "@/lib/utils"
 import { Badge } from "@/components/ui/badge";
-import { ActionsDetails } from "./actionsDetails";
+
+import { ActionsDetails } from "./actions-details";
 import React from "react"
-import { DetailsTransactionsType } from "@/db/schema";
 
 
 
 export type ResponseType = InferResponseType<typeof client.api.detailsTransactions.$get,200 >["data"][0]
+type trResponseType =  InferResponseType<typeof client.api.transactions.$get,200 >["data"][0]
 
 
 
 
-
-export const DetailsTable:React.FC<{detailsTransactions:DetailsTransactionsType[]}> =({
+export const DetailsTable:React.FC<{detailsTransactions:ResponseType[]}> =({
     detailsTransactions
 })=>{
 
-    const [sorting, setSorting] = React.useState<SortingState>([])
+
+    
+  const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   )
   const [rowSelection, setRowSelection] = React.useState({})
   const [expanded,setExpanded]= React.useState({})
 
-    const detailsColumns:ColumnDef<DetailsTransactionsType>[]= [
+    const detailsColumns:ColumnDef<ResponseType>[]= [
         {
             id:"select",
             header:({table})=>(
@@ -103,19 +104,20 @@ export const DetailsTable:React.FC<{detailsTransactions:DetailsTransactionsType[
                  variant="ghost"
                  onClick={()=> column.toggleSorting(column.getIsSorted()==="asc")}
                 >
-                    unitPrice
+                    UnitPrice
                     <ArrowUpDown className="ml-2 h-4 w-4"/>
                 </Button>
             ),
              cell:({row})=>{
     
-                const unitPrice:number|null = row.getValue("unitPrice")
+                const unitPrice:number = row.getValue("unitPrice")
                 return(
-                    <div
-                    className="flex items-center cursor-pointer hover:underline"
-                >
-                    {unitPrice}
-                </div>
+                  <Badge
+                  className="text-xs font-medium px-3.5 py-2.5"
+                  variant={unitPrice < 0 ? "destructive":"primary" }
+             >
+              {formatCurrency(unitPrice || 0)}
+             </Badge>
                 );
             }
         },
@@ -153,7 +155,7 @@ export const DetailsTable:React.FC<{detailsTransactions:DetailsTransactionsType[
                 </Button>
             ),
             cell:({row})=>{
-                const amount = parseFloat(row.getValue("amount"))
+                const amount:number = row.getValue("amount")
     
                 return(
                    <Badge
@@ -166,7 +168,7 @@ export const DetailsTable:React.FC<{detailsTransactions:DetailsTransactionsType[
             }
         },{
             id:"actions",
-            cell:({row})=><ActionsDetails id={row.original.id} transactionId={null}/>     
+            cell:({row})=><ActionsDetails id={{detailsId:row.original.id,transactionId:row.original.transactionId}}/>     
         }
     ];
 
