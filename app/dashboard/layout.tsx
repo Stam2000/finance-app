@@ -1,6 +1,6 @@
 "use client"
 
-import Header from"@/components/header"
+import {Header} from"@/components/header"
 import { Button } from "@/components/ui/button"
 import React from "react"
 import { useOpenChat } from "@/features/chat/hook/use-open-AIchat"
