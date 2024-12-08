@@ -12,6 +12,7 @@ import { useRef } from "react"
 import {useMediaQuery} from "react-responsive"
 import { useUpdateChat } from "@/features/chat/hook/use-update-message"
 import { persona1D,persona2D,persona3D,persona4D } from "@/lib/personaDescr"
+import { Separator } from "@/components/ui/separator"
 
 
   interface Persona  {
@@ -215,17 +216,17 @@ const CardDisplay = ({persona , isDisabled }:{isDisabled:boolean,persona:Persona
                 </div>
                 <div>
                     <div  className="w-full grid  lg:grid-cols-4 rounded-md  bg-gradient-to-r from-black  to-slate-950 to-90% p-2 gap-2 text-md" >
-                    <div className=" flex-col flex items-center justify-center " >
-                      <span className="font-bold text-md flex  items-center text-white  gap-1" > Nationality 📘:</span>  <span className="text-gray-200 text-md " >{persona.nationality}</span>
+                    <div className=" flex-col flex items-center  " >
+                      <span className="font-bold text-md flex  items-center text-white  gap-1" > Nationality 📘:</span>  <span className="text-gray-200 text-md flex items-center justify-center h-full " >{persona.nationality}</span>
                     </div>
-                    <div className="flex-col flex items-center justify-center" >
-                      <span className="font-bold  text-md flex items-center text-white gap-1" > Location 🗺️:</span>  <span className="text-gray-200 text-md " >{persona.countryOfResidence}</span>
+                    <div className="flex-col flex items-center" >
+                      <span className="font-bold  text-md flex items-center justify-self-start  text-white gap-1" > Location 🗺️:</span>  <span className="text-gray-200 text-md flex items-center justify-center h-full " >{persona.countryOfResidence}</span>
                     </div>
-                    <div className="flex-col flex items-center justify-center" >
-                      <span className="font-bold  text-md flex items-center text-white gap-1" > Occupation 💼:</span>   <span className="text-gray-200 text-md " >{persona.occupation}</span>
+                    <div className="flex-col flex items-center " >
+                      <span className="font-bold  text-md flex items-center text-white gap-1" > Occupation 💼:</span>   <span className="text-gray-200 text-md text-center flex items-center justify-center h-full " >{persona.occupation}</span>
                     </div>
-                    <div className="flex-col flex items-center justify-center" >
-                      <span className="font-bold text-md flex items-center text-white gap-1" > Income 💰:</span>   <span className="text-gray-200 text-md " >{persona.monthlyIncome} 
+                    <div className="flex-col flex items-center " >
+                      <span className="font-bold text-md flex items-center text-white gap-1" > Income 💰:</span>   <span className="text-gray-200 text-md flex items-center justify-center h-full " >{persona.monthlyIncome} 
                       $</span>
                     </div>  
                   </div>
@@ -413,12 +414,25 @@ const Page = ()=>{
 
     return(
         <div className="flex h-lvh overflow-y-hidden">
-            <div className="w-[55%] h-full p-10 flex flex-col gap-4 justify-center " >
-              <div className="my-4 " >
-                  <img className="object-cover rounded-xl h-10 "  src={`/ailog.webp`}  alt={"lg.displayName"}/>
+            <div className="w-[55%] h-full pt-0 p-10 flex flex-col gap-4 justify-center " >
+              <div className="" >
+                  <div className="flex items-center mt-4 gap-2 " >
+                    <span className="" >
+                      <img className="object-cover rounded-xl h-10 "  src={`/ailog.webp`}  alt={"lg.displayName"}/>
+                    </span>
+                    <h1 className="flex-1  p-4 rounded-xl text-center font-poiret-one text-[38px] font-bold  bg-gradient-to-r from-slate-800 from-0% via-blue-700 via-25% to-blue-950 to-100% text-transparent bg-clip-text" > Welcome to <span className="underline decoration-blue-800 underline-offset-8 decoration-4" >Fimae</span>, your personal ai finance assistant! </h1>
+                  </div>
+                  <div className="whitespace-pre-line mb-6 flex flex-col gap-2 leading-relaxed" >
+                    {/* <p className="self-center  text-slate-800 font-oxygen italic text-sm " >Get started:</p> */}
+                    <p  className="flex gap-2 my-8" >
+                      <span className="flex-1 text-[17px] text-slate-600 text-center  font-oxygen ">Selecting a ready-made profile to experience how FImae can support your financial decisions.</span>
+                      <span className=" w-14 flex items-center font-oxygen  text-sm justify-center" ><Separator className="mr-2" orientation="vertical" />Oder<Separator className="ml-2" orientation="vertical" /></span>
+                      <span className="flex-1 text-[17px] text-center font-oxygen text-slate-600 " >Creating a custom profile tailored to your needs or use AI to generate a profile for you</span>
+                    </p>
+                  </div>
               </div>
               
-                <div className="overflow-y-auto flex-1 scrollbar-none" >
+                <div className="overflow-y-auto  flex-1 scrollbar-none" >
                   {generatedData ? <motion.div key={"MarkdownTypewriter"}   transition={{x: { type: "spring", stiffness: 350, damping: 40 }}} initial={{x:-1000}} animate={{x:0}} className="bg-slate-50 border-[1px] border-slate-500 h-full rounded-md font-light overflow-y-auto">
                   <MarkdownTypewriter
                     content={generatedData}
