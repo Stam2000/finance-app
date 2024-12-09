@@ -57,7 +57,7 @@ const formSchema = z.object({
     familyStatus: z.enum(['single', 'married', 'married_with_children'], {
       required_error: 'Family Status is required',
     }),
-    countryOfResidence:z.string().optional(),
+    countryOfResidence:z.string().min(2, { message: 'Please provide a location' }),
     nationality:z.string().optional(),
     monthlyIncome: z.number().min(0).optional().describe("in US DOLLAR"),
     locationType: z.enum(['urban', 'suburban', 'rural']).optional(),
@@ -231,7 +231,10 @@ export const PersonaForm = ({setGeneratedData,onDisable}:{onDisable?:()=>void,se
 
       <CardHeader className="flex justify-between items-center gap-2">
         <CardTitle className="font-poiret-one text-5xl mb-4 text-slate-800 ">Profile Creator</CardTitle>
-        <CardDescription  >Fill out the form to create your unique persona… or let the AI work its magic and surprise you! ✨</CardDescription>
+        <CardDescription  >
+          Fill out the form to create your unique profile… or let the AI work its magic and surprise you! ✨
+
+        </CardDescription>
         {!progress && <Button onClick={handleGenerateWithAi} disabled={personaLoading}>
           {personaLoading ? 'Generating...' : 'Generate with AI'}
         </Button>}
@@ -346,7 +349,7 @@ export const PersonaForm = ({setGeneratedData,onDisable}:{onDisable?:()=>void,se
                 render={({ field }) => (
                   <FormItem className="space-y-2">
                     <FormLabel>
-                    nationality <span className="text-red-500">* 📘</span>
+                    nationality <span className="text-red-500"> 📘</span>
                     </FormLabel>
                     <FormControl>
                       <Input {...field} className="text-blue-900 font-medium" placeholder="Enter nationality" />
@@ -709,8 +712,8 @@ export const PersonaForm = ({setGeneratedData,onDisable}:{onDisable?:()=>void,se
               </AccordionItem>
             </Accordion>
 
-            <div className="flex justify-end">
-              <Button type="submit">Generate Data</Button>
+            <div className="flex">
+              <Button className='w-full' type="submit"> Launch Dashboard 🚀 <span className='italic' >(~ 5min)</span></Button>
             </div>
           </form>
         </Form>
@@ -718,7 +721,7 @@ export const PersonaForm = ({setGeneratedData,onDisable}:{onDisable?:()=>void,se
 
       {
         steps[3].status === "completed" && (<CardFooter className="flex items-center justify-center">
-        <Button onClick={()=> router.push("/dashboard") } className="w-full" >go to dashboard</Button>
+        <Button onClick={()=> router.push("/dashboard") } className="w-full" >go to dashboard </Button>
         </CardFooter>)
       }
 
