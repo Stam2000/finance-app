@@ -422,17 +422,17 @@ const Page = ()=>{
                     </span>
                     <h1 className="flex-1  p-4 rounded-xl text-center font-poiret-one text-[38px] font-bold  bg-gradient-to-r from-slate-800 from-0% via-blue-700 via-25% to-blue-950 to-100% text-transparent bg-clip-text" > Welcome to <span className="underline decoration-blue-800 underline-offset-8 decoration-4" >Fimae</span>, your personal ai finance assistant! </h1>
                   </div>
-                  <div className="whitespace-pre-line mb-6 flex flex-col gap-2 leading-relaxed" >
-                    {/* <p className="self-center  text-slate-800 font-oxygen italic text-sm " >Get started:</p> */}
-                    <p  className="flex gap-2 my-8" >
+                  <div className="whitespace-pre-line  flex flex-col gap-2 leading-relaxed" >
+                    <p className="self-center  text-slate-800 font-caveat text-4xl " > two ways to start:</p>
+                    <p  className="flex gap-2 mt-4 mb-8" >
                       <span className="flex-1 text-[17px] text-slate-600 text-center  font-oxygen ">Selecting a ready-made profile to experience how FImae can support your financial decisions.</span>
-                      <span className=" w-14 flex items-center font-oxygen  text-sm justify-center" ><Separator className="mr-2" orientation="vertical" />Oder<Separator className="ml-2" orientation="vertical" /></span>
+                      <span className=" w-14 flex items-center font-caveat text-slate-500 text-2xl justify-center" >or</span>
                       <span className="flex-1 text-[17px] text-center font-oxygen text-slate-600 " >Creating a custom profile tailored to your needs or use AI to generate a profile for you</span>
                     </p>
                   </div>
               </div>
               
-                <div className="overflow-y-auto  flex-1 scrollbar-none" >
+                <div className="overflow-y-auto flex-1 scrollbar-none " >
                   {generatedData ? <motion.div key={"MarkdownTypewriter"}   transition={{x: { type: "spring", stiffness: 350, damping: 40 }}} initial={{x:-1000}} animate={{x:0}} className="bg-slate-50 border-[1px] border-slate-500 h-full rounded-md font-light overflow-y-auto">
                   <MarkdownTypewriter
                     content={generatedData}
@@ -445,7 +445,7 @@ const Page = ()=>{
                     {/* <MarkdownTypewriter content={generatedData} /> */}
                 </motion.div> :
                 <motion.div initial={isFirstRender.current ? "firstLoad" : "hidden"} variants={parentVariantLeft}
-                animate={isFirstRender.current ? "firstVisible" : "visible"} exit="exit"  key={"personaList"} className="overflow-y-auto scrollbar-none" >
+                animate={isFirstRender.current ? "firstVisible" : "visible"} exit="exit"  key={"personaList"} className="overflow-y-auto  scrollbar-none" >
                     {(profile.map((p,index)=> <CardDisplay isDisabled={isDisabled} key={index} persona={p} /> ))}
                 </motion.div>
                  }
@@ -453,9 +453,10 @@ const Page = ()=>{
 
             </div>
             <div
-              className="relative w-[45%] flex items-center justify-center bg-[length:900px_900px] bg-repeat"
+              className="relative w-[45%] flex  items-center justify-center bg-[length:900px_900px] bg-repeat"
               style={{ backgroundImage: "url('/pattern.png')" }}
             >
+            
                 <motion.div initial="hidden" animate="visible" variants={parentVariantRight} className=" h-[90%] p-4" >
                     <PersonaForm onDisable={()=>setIsDisabled(prev => !prev)} setGeneratedData={(data)=>setGeneratedData(data)} generatedData={generatedData} />
                 </motion.div>

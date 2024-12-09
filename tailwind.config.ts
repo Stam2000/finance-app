@@ -85,8 +85,9 @@ const config = {
 			nunito: ['var(--font-nunito)'],
 			teko: ['var(--font-teko)'],
 			oxygen: ['var(--font-oxygen)'],
-			'yeseva-one': ['var(--font-yeseva-one)'],
-			sans: ['var(--font-roboto)', 'system-ui', 'sans-serif']
+			'yeseva-one': ['var(--font-yeseva-one)','cursive'],
+			sans: ['var(--font-roboto)', 'system-ui', 'sans-serif'],
+			caveat : ['var(--font-caveat)', 'cursive']
 		},
   	}
   },
