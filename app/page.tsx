@@ -203,11 +203,11 @@ const CardDisplay = ({persona , isDisabled }:{isDisabled:boolean,persona:Persona
     return(
       <div className="w-full overflow-hidden mb-20">
         <div >
-        <div className="flex gap-1 items-start justify-center " >
-            <div className="w-2/5 flex flex-col gap-2 items-center justify-between h-[50%]" >
+        <div className="flex gap-5 lg:gap-1 items-start justify-center " >
+            <div className="w-2/5 flex flex-col gap-4  items-center justify-between h-[50%]" >
                 <img className="object-cover rounded-xl h-40 "  src={`/${persona.image}.jpg`}  alt={"lg.displayName"}/>
                 <div className="flex items-center justify-center">
-                  <Button disabled={isDisabled} className="bg-black" onClick={()=>handleClick(persona)} >Go to Dashboard <MoveRight className="ml-2" size={16} /> </Button>
+                  <Button disabled={isDisabled} className="bg-black   md:text-[12px] " onClick={()=>handleClick(persona)} >Go to Dashboard <MoveRight className="ml-2" size={16} /> </Button>
                 </div>
             </div>
             <div className="w-full flex flex-col  gap-3 text-md">
@@ -217,16 +217,16 @@ const CardDisplay = ({persona , isDisabled }:{isDisabled:boolean,persona:Persona
                 <div>
                     <div  className="w-full grid  lg:grid-cols-4 rounded-md  bg-gradient-to-r from-black  to-slate-950 to-90% p-2 gap-2 text-md" >
                     <div className=" flex-col flex items-center  " >
-                      <span className="font-bold text-md flex  items-center text-white  gap-1" > Nationality 📘:</span>  <span className="text-gray-200 text-md flex items-center justify-center h-full " >{persona.nationality}</span>
+                      <span className="font-bold md:text-sm lg:text-md flex  items-center text-white  gap-1" > Nationality 📘:</span>  <span className="text-gray-200 md:text-sm lg:text-md flex items-center justify-center h-full " >{persona.nationality}</span>
                     </div>
                     <div className="flex-col flex items-center" >
-                      <span className="font-bold  text-md flex items-center justify-self-start  text-white gap-1" > Location 🗺️:</span>  <span className="text-gray-200 text-md flex items-center justify-center h-full " >{persona.countryOfResidence}</span>
+                      <span className="font-bold  md:text-sm lg:text-md flex items-center justify-self-start  text-white gap-1" > Location 🗺️:</span>  <span className="text-gray-200 md:text-sm lg:text-md flex items-center justify-center h-full " >{persona.countryOfResidence}</span>
                     </div>
                     <div className="flex-col flex items-center " >
-                      <span className="font-bold  text-md flex items-center text-white gap-1" > Occupation 💼:</span>   <span className="text-gray-200 text-md text-center flex items-center justify-center h-full " >{persona.occupation}</span>
+                      <span className="font-bold  md:text-sm lg:text-md flex items-center text-white gap-1" > Occupation 💼:</span>   <span className="text-gray-200 md:text-sm lg:text-md text-center flex items-center justify-center h-full " >{persona.occupation}</span>
                     </div>
                     <div className="flex-col flex items-center " >
-                      <span className="font-bold text-md flex items-center text-white gap-1" > Income 💰:</span>   <span className="text-gray-200 text-md flex items-center justify-center h-full " >{persona.monthlyIncome} 
+                      <span className="font-bold md:text-sm lg:text-md flex items-center text-white gap-1" > Income 💰:</span>   <span className="text-gray-200 md:text-sm lg:text-md flex items-center justify-center h-full " >{persona.monthlyIncome} 
                       $</span>
                     </div>  
                   </div>
@@ -414,44 +414,47 @@ const Page = ()=>{
 
     return(
         <div className="flex h-lvh overflow-y-hidden">
-            <div className="w-[55%] h-full pt-0 p-10 flex flex-col gap-4 justify-center " >
+            <div className={`w-[55%] ${generatedData ? "overflow-hidden" :"overflow-y-auto"} h-full pt-0 p-10 flex flex-col gap-4 `} >
               <div className="" >
-                  <div className="flex items-center mt-4 gap-2 " >
+                  <div className="flex items-center mt-2 lg:mt-4 gap-2 " >
                     <span className="" >
                       <img className="object-cover rounded-xl h-10 "  src={`/ailog.webp`}  alt={"lg.displayName"}/>
                     </span>
-                    <h1 className="flex-1  p-4 rounded-xl text-center font-poiret-one text-[38px] font-bold  bg-gradient-to-r from-slate-800 from-0% via-blue-700 via-25% to-blue-950 to-100% text-transparent bg-clip-text" > Welcome to <span className="underline decoration-blue-800 underline-offset-8 decoration-4" >Fimae</span>, your personal ai finance assistant! </h1>
+                    {generatedData ===''  && <p className="flex-1 leading-[30px] 2xl:leading-[35px] p-2 2xl:p-4 rounded-xl text-center font-poiret-one  md:text-[28px] 2xl:text-[38px] font-bold  bg-gradient-to-r from-slate-800 from-0% via-blue-700 via-25% to-blue-950 to-100% text-transparent bg-clip-text" > Welcome to <span className="desk:underline decoration-blue-800 underline-offset-8 decoration-4" >Fimae</span>, your personal ai finance assistant! </p>}
                   </div>
-                  <div className="whitespace-pre-line  flex flex-col gap-2 leading-relaxed" >
-                    <p className="self-center  text-slate-800 font-caveat text-4xl " > two ways to start:</p>
-                    <p  className="flex gap-2 mt-4 mb-8" >
-                      <span className="flex-1 text-[17px] text-slate-600 text-center  font-oxygen ">Selecting a ready-made profile to experience how FImae can support your financial decisions.</span>
+                  {generatedData ==='' && <div className=" flex flex-col 2xl:py-4" >
+                    <p className="self-center  text-slate-800 font-caveat md:text-2xl  desk:text-4xl " > two ways to start:</p>
+                    <p  className="flex gap-2 lg:mt-4 lg:mb-8" >
+                      <span className="flex-1 md:text-sm 2xl:text-[17px] text-slate-600 text-center  font-oxygen ">Selecting a ready-made profile to experience how FImae can support your financial decisions.</span>
                       <span className=" w-14 flex items-center font-caveat text-slate-500 text-2xl justify-center" >or</span>
-                      <span className="flex-1 text-[17px] text-center font-oxygen text-slate-600 " >Creating a custom profile tailored to your needs or use AI to generate a profile for you</span>
+                      <span className="flex-1 md:text-sm 2xl:text-[17px] text-center font-oxygen text-slate-600 " >Creating a custom profile tailored to your needs or use AI to generate a profile for you</span>
                     </p>
-                  </div>
+                  </div>}
               </div>
-              
-                <div className="overflow-y-auto flex-1 scrollbar-none " >
-                  {generatedData ? <motion.div key={"MarkdownTypewriter"}   transition={{x: { type: "spring", stiffness: 350, damping: 40 }}} initial={{x:-1000}} animate={{x:0}} className="bg-slate-50 border-[1px] border-slate-500 h-full rounded-md font-light overflow-y-auto">
-                  <MarkdownTypewriter
-                    content={generatedData}
-                    typeSpeed={30}
-                    cursor={{
-                      shape: 'block',
-                      color: 'bg-blue-500'
-                    }}
-                  />
-                    {/* <MarkdownTypewriter content={generatedData} /> */}
-                </motion.div> :
-                <motion.div initial={isFirstRender.current ? "firstLoad" : "hidden"} variants={parentVariantLeft}
-                animate={isFirstRender.current ? "firstVisible" : "visible"} exit="exit"  key={"personaList"} className="overflow-y-auto  scrollbar-none" >
-                    {(profile.map((p,index)=> <CardDisplay isDisabled={isDisabled} key={index} persona={p} /> ))}
-                </motion.div>
-                 }
-                </div>
 
-            </div>
+                  {generatedData ?(
+                    <div className="overflow-y-auto flex-1 scrollbar-none " > 
+                      <motion.div key={"MarkdownTypewriter"}   transition={{x: { type: "spring", stiffness: 350, damping: 40 }}} initial={{x:-1000}} animate={{x:0}} className="bg-slate-50 border-[1px] border-slate-500 h-full rounded-md font-light overflow-y-auto">
+                        <MarkdownTypewriter
+                          content={generatedData}
+                          typeSpeed={30}
+                          cursor={{
+                            shape: 'block',
+                            color: 'bg-blue-500'
+                          }}
+                        />
+                    {/* <MarkdownTypewriter content={generatedData} /> */}
+                    </motion.div>
+                </div>) :
+                (
+                <div className="" >
+                  <motion.div initial={isFirstRender.current ? "firstLoad" : "hidden"} variants={parentVariantLeft}
+                  animate={isFirstRender.current ? "firstVisible" : "visible"} exit="exit"  key={"personaList"} className="  scrollbar-none" >
+                      {(profile.map((p,index)=> <CardDisplay isDisabled={isDisabled} key={index} persona={p} /> ))}
+                  </motion.div>
+                </div>)
+                 }
+              </div>            
             <div
               className="relative w-[45%] flex  items-center justify-center bg-[length:900px_900px] bg-repeat"
               style={{ backgroundImage: "url('/pattern.png')" }}
