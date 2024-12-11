@@ -103,11 +103,26 @@ export const PersonaForm = ({setGeneratedData,onDisable}:{onDisable?:()=>void,se
     status:"extending"
   },
   {
+    step:"weekGen-1",
+    message:"",
+    status:"pending"
+  },{
+    step:"weekGen-2",
+    message:"",
+    status:"pending"
+  },{
+    step:"weekGen-3",
+    message:"",
+    status:"pending"
+  },{
+    step:"weekGen-4",
+    message:"",
+    status:"pending"
+  },{
     step:"fiDataGeneration",
     message:"",
     status:"pending"
-  },
-  {
+  },{
     step:"updatingFiData",
     message:"",
     status:"pending"
@@ -181,14 +196,19 @@ export const PersonaForm = ({setGeneratedData,onDisable}:{onDisable?:()=>void,se
       ...data,
       onProgress: (event) => {
 
-        console.log(event)
         setSteps((prevItems) => 
-          prevItems.map((step) => 
-            step.step === event.step 
-              ? { ...step, message: event.message, status: event.status } 
-              : step
+
+          prevItems.map((step) =>{  
+
+            if(step.step === event.step ){
+                return { ...step, message: event.message, status: event.status, progress:event.progress }
+            }  
+
+             return step}
           )
         );
+
+        console.log()
 
         setProgress(event)
       },
@@ -207,9 +227,9 @@ export const PersonaForm = ({setGeneratedData,onDisable}:{onDisable?:()=>void,se
         // Handle error here, log it or set state
         console.error(error);
         const event = {
-          step: 'updatingFiData',
+          step: 'error',
           status: "completed",
-          message: 'updating transactions'
+          message: 'something went wrong  😫. please try again'
         }
         setProgress(event);
 
@@ -233,7 +253,6 @@ export const PersonaForm = ({setGeneratedData,onDisable}:{onDisable?:()=>void,se
         <CardTitle className="font-poiret-one text-5xl mb-4 text-slate-800 ">Profile Creator</CardTitle>
         <CardDescription  >
           Fill out the form to create your unique profile… or let the AI work its magic and surprise you! ✨
-
         </CardDescription>
         {!progress && <Button onClick={handleGenerateWithAi} disabled={personaLoading}>
           {personaLoading ? 'Generating...' : 'Generate with AI'}
@@ -252,6 +271,8 @@ export const PersonaForm = ({setGeneratedData,onDisable}:{onDisable?:()=>void,se
                 steps.map((step,index)=>{
                   
                   if(step.status === "pending") return undefined
+                  
+                  console.log(step)
                 
                   return(
                     <div key={index} className='flex items-center justify-center gap-2' >

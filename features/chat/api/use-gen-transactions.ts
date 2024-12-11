@@ -121,6 +121,13 @@ type ProgressData = {
                   onProgress?.(eventData);
                   break;
 
+                  case 'weekGen':
+                    toast.info(eventData.message)
+                    onEntitiesUploaded?.(eventData.data);
+                    console.log(eventData)
+                    onProgress?.(eventData);
+                    break;
+
                   case 'fiDataGenerationEnd':
                     toast.info(eventData.message)
                     onProgress?.(eventData);

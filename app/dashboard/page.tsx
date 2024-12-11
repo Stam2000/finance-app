@@ -12,17 +12,10 @@ import { Button } from "@/components/ui/button";
 import { RefreshCcw } from "lucide-react";
 
 export default  function Home() {
-    const {ip,updateIp} = useContext(ThemeContext)
-
-    const {toggleChatOpen,chatOpen} = useContext(ThemeContext)
     const genFollowUpQ = useGenFollowUpQ()
     const {personaDes,followHistory,setFollowQ,setWRshort,setWRlong} = useUpdateChat()
     const {
       mutate,
-      isError,
-      data,
-      error,
-      isPending
     } = useGetWeeklyAnalyse() 
 
     
@@ -65,13 +58,13 @@ export default  function Home() {
       const rerender = ()=>{
         setRenderKey(createId())
     }
-
+/* 
     useEffect(() => {
       handleFetchWeeklyAnalyse()
       handleClick()
     }, [personaDes]);
 
-
+ */
     return (
 
     <div key={renderKey} className="max-w-screen-2xl flex-1 w-full mx-auto pb-10">

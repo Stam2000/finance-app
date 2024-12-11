@@ -117,50 +117,6 @@ const TransactionInterfaceSchema = z.object({
   ),
 });
 
-const TransactionSchemaModel = z.object({
-  categories: z.array(
-    z.object({
-      name: z.string(),
-      goal: z.number().nullable(),
-    })
-  ),
-  accounts: z.array(
-    z.object({
-      name: z.string(),
-    })
-  ),
-  projects: z.array(
-    z.object({
-      name: z.string(),
-      budget: z.number(),
-      startDate: z.string(),
-      endDate: z.string(),
-      description: z.string().optional(),
-    })
-  ),
-  transactions: z.array(
-    z.object({
-      amount: z.number(),
-      detailsTransactions: z.array(
-        z.object({
-          name: z.string().nullable(),
-          quantity: z.number().nullable(),
-          unitPrice: z.number().nullable(),
-          amount: z.number(),
-          categoryId: z.string().nullable(),
-          projectId: z.string().nullable(),
-        })
-      ),
-      payee: z.string(),
-      notes: z.string().nullable(),
-      date: z.string(),
-      projectId: z.string().nullable(), 
-      accountId: z.string(),
-      categoryId: z.string().nullable(),
-  })
-  ),
-});
-
   const parserExemple = StructuredOutputParser.fromZodSchema(formSchema)
 
   const parserDataschema = StructuredOutputParser.fromZodSchema(TransactionInterfaceSchema)
@@ -433,12 +389,12 @@ console.log(`
     
   }catch(err){
     console.log(err)
-    if (attempts === maxAttempts) {
-      
-      return 'Something went wrong. Please try again.';
+    if (attempts === maxAttempts) {    
+     return 'Something went wrong. Please try again.';
+  }
 
-  }
-  }
+  attempts
+}
 
 }
    
