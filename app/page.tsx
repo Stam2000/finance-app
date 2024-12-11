@@ -111,7 +111,7 @@ import { Separator } from "@/components/ui/separator"
       image:"ebogo",
       fullDesc:persona3D
     },{
-      id:"profile",
+      id:"profile4",
       name: "Yumi Nakamura",
       age: 30,
       occupation: "Chef",
