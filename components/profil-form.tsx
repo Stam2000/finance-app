@@ -279,18 +279,19 @@ export const PersonaForm = ({
       <CardContent className="flex-1 flex flex-col  gap-14 text-md items-center justify-center">
         {isExecuting ? (
           <div className="flex flex-col">
-            {steps.map((step, index) => { 
+
+            {isExecuting && 
+            steps.map((step, index) => { 
 
               console.log(`#### current step`,step)
 
-             /*  if (step.status === "pending") return undefined; */
+              if (step.status === "pending") return undefined;
 
               return (
                 <div
                   key={index}
                   className="flex items-center justify-center gap-2"
                 >
-                  sddvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvsdvdsvd
                   {error ? <div className="text-red-500 text-sm mb-4">{error.message}</div> :
                   <>
                     <span className="text-slate-600">{step.message}</span>
@@ -304,7 +305,9 @@ export const PersonaForm = ({
                   }
                 </div>
               );
-            })}
+            }
+            
+            )}
           </div>
         ) : (
           <Form {...form}>
