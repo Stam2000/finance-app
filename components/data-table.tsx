@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { Trash } from "lucide-react"
+import * as React from "react";
+import { Trash } from "lucide-react";
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -13,7 +13,7 @@ import {
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
-} from "@tanstack/react-table"
+} from "@tanstack/react-table";
 
 import {
   Table,
@@ -22,16 +22,16 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+} from "@/components/ui/table";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[]
-  data: TData[]
-  filterKey:string,
-  onDelete:(rows:Row<TData>[]) => void;
-  disabled?:boolean
+  columns: ColumnDef<TData, TValue>[];
+  data: TData[];
+  filterKey: string;
+  onDelete: (rows: Row<TData>[]) => void;
+  disabled?: boolean;
 }
 export function DataTable<TData, TValue>({
   columns,
@@ -40,18 +40,18 @@ export function DataTable<TData, TValue>({
   onDelete,
   disabled,
 }: DataTableProps<TData, TValue>) {
-  const [sorting, setSorting] = React.useState<SortingState>([])
+  const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
-  )
-  const [rowSelection, setRowSelection] = React.useState({})
+    [],
+  );
+  const [rowSelection, setRowSelection] = React.useState({});
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
-    onSortingChange:setSorting,
-    getSortedRowModel:getSortedRowModel(),
+    onSortingChange: setSorting,
+    getSortedRowModel: getSortedRowModel(),
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
     onRowSelectionChange: setRowSelection,
@@ -60,11 +60,11 @@ export function DataTable<TData, TValue>({
       columnFilters,
       rowSelection,
     },
-  })
+  });
 
   return (
     <div>
-       <div className="flex items-center py-4">
+      <div className="flex items-center py-4">
         <Input
           placeholder={`Filter ${filterKey}`}
           value={(table.getColumn(filterKey)?.getFilterValue() as string) ?? ""}
@@ -74,13 +74,13 @@ export function DataTable<TData, TValue>({
           className="max-w-sm"
         />
         {table.getFilteredSelectedRowModel().rows.length > 0 && (
-          <Button 
+          <Button
             disabled={disabled}
             size="sm"
             variant="outline"
             className="ml-auto font-normal text-xs"
-            onClick={()=>{
-              onDelete(table.getFilteredSelectedRowModel().rows)
+            onClick={() => {
+              onDelete(table.getFilteredSelectedRowModel().rows);
               setRowSelection({});
             }}
           >
@@ -101,10 +101,10 @@ export function DataTable<TData, TValue>({
                         ? null
                         : flexRender(
                             header.column.columnDef.header,
-                            header.getContext()
+                            header.getContext(),
                           )}
                     </TableHead>
-                  )
+                  );
                 })}
               </TableRow>
             ))}
@@ -118,14 +118,20 @@ export function DataTable<TData, TValue>({
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext(),
+                      )}
                     </TableCell>
                   ))}
                 </TableRow>
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={columns.length} className="h-24 text-center">
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-24 text-center"
+                >
                   No results.
                 </TableCell>
               </TableRow>
@@ -134,7 +140,7 @@ export function DataTable<TData, TValue>({
         </Table>
       </div>
       <div className="flex items-center justify-end space-x-2 py-4">
-        <div className="flex-1 text-sm text-muted-foreground" >
+        <div className="flex-1 text-sm text-muted-foreground">
           {table.getFilteredSelectedRowModel().rows.length} of {""}
           {table.getFilteredRowModel().rows.length} rows(s) selected.
         </div>
@@ -156,9 +162,8 @@ export function DataTable<TData, TValue>({
         </Button>
       </div>
     </div>
-  )
+  );
 }
-
 
 export function GlobalDataTable<TData, TValue>({
   columns,
@@ -167,18 +172,18 @@ export function GlobalDataTable<TData, TValue>({
   onDelete,
   disabled,
 }: DataTableProps<TData, TValue>) {
-  const [sorting, setSorting] = React.useState<SortingState>([])
+  const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
-  )
-  const [rowSelection, setRowSelection] = React.useState({})
+    [],
+  );
+  const [rowSelection, setRowSelection] = React.useState({});
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
-    onSortingChange:setSorting,
-    getSortedRowModel:getSortedRowModel(),
+    onSortingChange: setSorting,
+    getSortedRowModel: getSortedRowModel(),
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
     onRowSelectionChange: setRowSelection,
@@ -187,11 +192,11 @@ export function GlobalDataTable<TData, TValue>({
       columnFilters,
       rowSelection,
     },
-  })
+  });
 
   return (
     <div>
-       <div className="flex items-center py-4">
+      <div className="flex items-center py-4">
         <Input
           placeholder={`Filter ${filterKey}`}
           value={(table.getColumn(filterKey)?.getFilterValue() as string) ?? ""}
@@ -201,13 +206,13 @@ export function GlobalDataTable<TData, TValue>({
           className="max-w-sm"
         />
         {table.getFilteredSelectedRowModel().rows.length > 0 && (
-          <Button 
+          <Button
             disabled={disabled}
             size="sm"
             variant="outline"
             className="ml-auto font-normal text-xs"
-            onClick={()=>{
-              onDelete(table.getFilteredSelectedRowModel().rows)
+            onClick={() => {
+              onDelete(table.getFilteredSelectedRowModel().rows);
               setRowSelection({});
             }}
           >
@@ -228,10 +233,10 @@ export function GlobalDataTable<TData, TValue>({
                         ? null
                         : flexRender(
                             header.column.columnDef.header,
-                            header.getContext()
+                            header.getContext(),
                           )}
                     </TableHead>
-                  )
+                  );
                 })}
               </TableRow>
             ))}
@@ -245,14 +250,20 @@ export function GlobalDataTable<TData, TValue>({
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext(),
+                      )}
                     </TableCell>
                   ))}
                 </TableRow>
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={columns.length} className="h-24 text-center">
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-24 text-center"
+                >
                   No results.
                 </TableCell>
               </TableRow>
@@ -261,7 +272,7 @@ export function GlobalDataTable<TData, TValue>({
         </Table>
       </div>
       <div className="flex items-center justify-end space-x-2 py-4">
-        <div className="flex-1 text-sm text-muted-foreground" >
+        <div className="flex-1 text-sm text-muted-foreground">
           {table.getFilteredSelectedRowModel().rows.length} of {""}
           {table.getFilteredRowModel().rows.length} rows(s) selected.
         </div>
@@ -283,5 +294,5 @@ export function GlobalDataTable<TData, TValue>({
         </Button>
       </div>
     </div>
-  )
+  );
 }

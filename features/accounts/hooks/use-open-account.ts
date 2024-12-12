@@ -1,17 +1,15 @@
-import {create} from "zustand"
+import { create } from "zustand";
 
 type OpenAccountState = {
-    id?:string,
-    isOpen:boolean,
-    onOpen:(id:string)=>void,
-    onClose:() => void
-}
+  id?: string;
+  isOpen: boolean;
+  onOpen: (id: string) => void;
+  onClose: () => void;
+};
 
-
-export const useOpenAccount = create<OpenAccountState>((set)=>({
-    id:undefined,
-    isOpen:false,
-    onOpen:(id)=>set({isOpen:true,id}),
-    onClose:()=>set({isOpen:false,id:undefined})
-})
-)
+export const useOpenAccount = create<OpenAccountState>((set) => ({
+  id: undefined,
+  isOpen: false,
+  onOpen: (id) => set({ isOpen: true, id }),
+  onClose: () => set({ isOpen: false, id: undefined }),
+}));

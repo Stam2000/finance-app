@@ -68,8 +68,7 @@ Desired Outcomes and Success Criteria: Success for Hans means achieving a harmon
 
 Key Requirements
 
-Hans's persona is a blend of German efficiency, a love for adventure, and a commitment to sustainability. His story is one of balance, ambition, and a deep appreciation for both his cultural roots and the diverse world he explores through travel.`
-
+Hans's persona is a blend of German efficiency, a love for adventure, and a commitment to sustainability. His story is one of balance, ambition, and a deep appreciation for both his cultural roots and the diverse world he explores through travel.`;
 
 export const persona2D = `Full Persona Description
 
@@ -137,7 +136,7 @@ Long-term Goals: Establishing her own design studio and becoming a leading figur
 
 Professional and Personal Aspirations: Professionally, Isabella aspires to be recognized as a leading interior designer in the industry. Personally, she hopes to inspire others with her creative work and contribute to the art and design community in Italy and beyond. She also aspires to travel the world, drawing inspiration from different cultures and design styles.
 
-Desired Outcomes and Success Criteria: Success for Isabella means achieving financial stability, making a significant impact through her design work, and creating a lifetime of memorable experiences and design inspirations. She measures success by the quality of her creative output, the recognition she receives, and the positive influence she has on the design community and her personal life.`
+Desired Outcomes and Success Criteria: Success for Isabella means achieving financial stability, making a significant impact through her design work, and creating a lifetime of memorable experiences and design inspirations. She measures success by the quality of her creative output, the recognition she receives, and the positive influence she has on the design community and her personal life.`;
 
 export const persona3D = `Full Persona Description
 
@@ -205,9 +204,9 @@ Long-term Goals: Seeing his children graduate from university and achieve succes
 
 Professional and Personal Aspirations: Professionally, Jean-Pierre aspires to be recognized as a leading IT consultant in his field. Personally, he hopes to inspire his children with his work ethic, dedication, and commitment to their education and future. He also aims to be a role model for his community, embodying the values of hard work, resilience, and cultural appreciation.
 
-Desired Outcomes and Success Criteria: Success for Jean-Pierre means achieving financial stability, providing the best education for his children, and creating a lifetime of memorable family experiences. He measures success by the quality of his relationships, the opportunities he provides for his children, and the positive influence he has on his community and society as a whole. His ultimate goal is to leave a lasting legacy of education, cultural appreciation, and community support.`
+Desired Outcomes and Success Criteria: Success for Jean-Pierre means achieving financial stability, providing the best education for his children, and creating a lifetime of memorable family experiences. He measures success by the quality of his relationships, the opportunities he provides for his children, and the positive influence he has on his community and society as a whole. His ultimate goal is to leave a lasting legacy of education, cultural appreciation, and community support.`;
 
-export const persona4D =`Full Persona Description
+export const persona4D = `Full Persona Description
 
 Introduction
 
@@ -273,4 +272,4 @@ Long-term Goals: Establishing a successful culinary brand and opening multiple r
 
 Professional and Personal Aspirations: Professionally, Yumi aspires to be recognized as a leading chef in the industry. Personally, she hopes to inspire others with her culinary work and contribute to the food culture in Japan and beyond.
 
-Desired Outcomes and Success Criteria: Success for Yumi means achieving financial stability, making a significant impact through her culinary work, and creating a lifetime of memorable dining experiences. She measures success by the quality of her culinary output, the recognition she receives, and the positive influence she has on the food community.`
+Desired Outcomes and Success Criteria: Success for Yumi means achieving financial stability, making a significant impact through her culinary work, and creating a lifetime of memorable dining experiences. She measures success by the quality of her culinary output, the recognition she receives, and the positive influence she has on the food community.`;

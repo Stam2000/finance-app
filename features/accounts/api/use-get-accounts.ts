@@ -1,32 +1,30 @@
 import { useQuery } from "@tanstack/react-query";
-import {client} from "@/lib/hono"
+import { client } from "@/lib/hono";
 
+export const useGetAccounts = () => {
+  const query = useQuery({
+    queryKey: ["accounts"],
+    queryFn: async () => {
+      const personaId = localStorage.getItem("selectedPersona") || "testData";
 
+      const response = await client.api.accounts.$get(
+        {},
+        {
+          headers: {
+            "X-Persona-ID": personaId,
+          },
+        },
+      );
 
-export const useGetAccounts = ()=>{
+      if (!response.ok) {
+        throw new Error("Failed to fetch accounts");
+      }
 
+      const { data } = await response.json();
 
-    const query = useQuery({
-        queryKey:["accounts"],
-        queryFn:async()=>{
-            const personaId = localStorage.getItem('selectedPersona') || "testData"
-            
-            const response = await client.api.accounts.$get({},{
-                headers: {
-                    'X-Persona-ID': personaId,      
-                }
-            })
+      return data;
+    },
+  });
 
-            if(!response.ok){
-                throw new Error("Failed to fetch accounts");
-            }
-
-            
-            const {data} = await response.json();
-
-            return data
-        }
-    })
-
-    return query
-}
+  return query;
+};

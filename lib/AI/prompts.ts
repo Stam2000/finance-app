@@ -1,4 +1,3 @@
-
 //PROMPT FORM GENERATOR
 
 export const promptGenTemplate = `
@@ -120,7 +119,7 @@ Below are a few sample .
     response only in valid JSON format
     The format instructions:
     tags\n{format_instructions}
-`
+`;
 export const formatInstGenTemplate = `Respond only in valid JSON. The JSON object you return should match the following schema:
   
     const zodSchema = z.object({
@@ -156,7 +155,7 @@ export const formatInstGenTemplate = `Respond only in valid JSON. The JSON objec
     diningPreference: z.enum(['homeCook', 'mixed', 'eatOut']).optional(),
     shoppingHabits: z.enum(['planner', 'mixed', 'impulsive']).optional(),
   })
-`
+`;
 //PROMPT EXTENDER FORM
 
 export const promptExtender = `You are an advanced AI specializing in persona development, cultural analysis, and behavioral modeling. Your task is to generate a richly detailed, coherent persona description based on the structured input provided. Follow the schema carefully, ensuring every field is expanded upon with specificity, logical consistency, and cultural authenticity.
@@ -243,7 +242,7 @@ Expand all schema fields with contextualized examples.
 Use global diversity where applicable while maintaining a logical and realistic persona.
 Final Note:
 The goal is to create a detailed, relatable character firmly grounded in their cultural and professional context. Strive for authenticity and respectfulness while avoiding stereotypes. Ensure the persona is realistic, interconnected, and aligned with the input schema.
-`
+`;
 // PROMPT FUNDAMENTAL WEEK TEMPLATE
 
 export const formatInstExtenderGen = `Respond only in valid JSON. The JSON object you return should match the following schema:
@@ -309,7 +308,7 @@ CategoryId: The category to which this item belongs, ensuring it matches one of 
 ProjectId: If applicable, associate the item with a relevant project.
 Specificity in Items:
 
-`
+`;
 
 export const promptFundamentalWeek = `
 You are an advanced AI specialized in generating realistic and consistent daily financial transactions over time for a given persona. 
@@ -1008,11 +1007,11 @@ exemple output 2 :
   ]
 }}
 
-`
+`;
 
 // PROMPT REFINE TEMPLATE
 
-export const promptRefine=` 
+export const promptRefine = ` 
 You are an advanced AI specialized in enhancing financial transaction data by ensuring cultural alignment, personalization, and creativity. Your primary objective is to ensure that the names of banks, payees, and items are creative and contextually appropriate, and that the transactions reflect the persona's cultural background, lifestyle, and preferences.
 
 YOU WILL ONLY WORK IN US DOLLAR. if the currency is not in US DOLLAR CONVERT IT
@@ -2155,7 +2154,7 @@ Illium Financial Services (Mass Effect universe)
 Oceanic Trust Bank (Generic corporate setting)
 Iron Bank of Braavos (Game of Thrones)
   
-`
+`;
 
 export const promptDetails = `Respond only in valid JSON. The JSON object you return should match the following schema:
 
@@ -2206,7 +2205,7 @@ export const promptDetails = `Respond only in valid JSON. The JSON object you re
   })
   ),
 })
-`
+`;
 
 // FOLLOW UP QUESTION
 
@@ -2413,35 +2412,32 @@ Encouraging Financial Awareness: Both simple and complex questions are designed 
 Promoting Engagement: By addressing various aspects of his financial life, the questions aim to keep Eric engaged with his financial data, fostering better financial planning and management.
 These example questions demonstrate how FinSight can effectively analyze and interpret Eric's financial data in the context of his personal and professional life, providing insightful and actionable financial inquiries.
 
-`
-
-
+`;
 
 export const personaToGenerate = `
 
 Summary:
 
 ${JSON.stringify({
-"name": "Yumi Nakamura",
-"age": 30,
-"occupation": "Chef",
-"familyStatus": "single",
-"countryOfResidence": "Japan",
-"nationality": "Japanese",
-"monthlyIncome": "3500$",
-"locationType": "urban",
-"spendingBehavior": "balanced",
-"additionalInfo": "Opening a new restaurant next year",
-"monthlyRent": 1200,
-"monthlySavings": 800,
-"riskTolerance": "aggressive",
-"creditCards": "moderate",
-"workSchedule": "shift",
-"transportation": "mixed",
-"diningPreference": "mixed",
-"shoppingHabits": "impulsive"
-}
-  )}
+  name: "Yumi Nakamura",
+  age: 30,
+  occupation: "Chef",
+  familyStatus: "single",
+  countryOfResidence: "Japan",
+  nationality: "Japanese",
+  monthlyIncome: "3500$",
+  locationType: "urban",
+  spendingBehavior: "balanced",
+  additionalInfo: "Opening a new restaurant next year",
+  monthlyRent: 1200,
+  monthlySavings: 800,
+  riskTolerance: "aggressive",
+  creditCards: "moderate",
+  workSchedule: "shift",
+  transportation: "mixed",
+  diningPreference: "mixed",
+  shoppingHabits: "impulsive",
+})}
 
 
 Full Persona Description
@@ -2510,4 +2506,4 @@ Long-term Goals: Establishing a successful culinary brand and opening multiple r
 
 Professional and Personal Aspirations: Professionally, Yumi aspires to be recognized as a leading chef in the industry. Personally, she hopes to inspire others with her culinary work and contribute to the food culture in Japan and beyond.
 
-Desired Outcomes and Success Criteria: Success for Yumi means achieving financial stability, making a significant impact through her culinary work, and creating a lifetime of memorable dining experiences. She measures success by the quality of her culinary output, the recognition she receives, and the positive influence she has on the food community.`
+Desired Outcomes and Success Criteria: Success for Yumi means achieving financial stability, making a significant impact through her culinary work, and creating a lifetime of memorable dining experiences. She measures success by the quality of her culinary output, the recognition she receives, and the positive influence she has on the food community.`;

@@ -1,15 +1,18 @@
-"use client"
-import { InferResponseType } from "hono"
-import {client} from "@/lib/hono"
-import { ColumnDef } from "@tanstack/react-table"
-import { Button } from "@/components/ui/button"
-import { ArrowUpDown } from "lucide-react"
-import { Checkbox } from "@/components/ui/checkbox"
-import {Action} from "./action"
+"use client";
+import { InferResponseType } from "hono";
+import { client } from "@/lib/hono";
+import { ColumnDef } from "@tanstack/react-table";
+import { Button } from "@/components/ui/button";
+import { ArrowUpDown } from "lucide-react";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Action } from "./action";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
-export type ResponseType = InferResponseType<typeof client.api.accounts.$get,200>["data"][0]
+export type ResponseType = InferResponseType<
+  typeof client.api.accounts.$get,
+  200
+>["data"][0];
 
 export const columns: ColumnDef<ResponseType>[] = [
   {
@@ -45,10 +48,11 @@ export const columns: ColumnDef<ResponseType>[] = [
           Name
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
-      )
+      );
     },
-  },{
-    id:"actions",
-    cell:({row})=> (<Action  id={row.original.id} />)
-    }
-]
+  },
+  {
+    id: "actions",
+    cell: ({ row }) => <Action id={row.original.id} />,
+  },
+];

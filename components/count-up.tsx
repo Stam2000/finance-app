@@ -1,5 +1,4 @@
-"use client"
+"use client";
 
-
-import CountUp from "react-countup"
-export {CountUp}
+import CountUp from "react-countup";
+export { CountUp };

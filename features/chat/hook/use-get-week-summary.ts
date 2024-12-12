@@ -13,27 +13,32 @@ interface WeeklyAnalyseResponse {
 
 export const useGetWeeklyAnalyse = () => {
   // Initialize the mutation
-  const mutation = useMutation<WeeklyAnalyseResponse, Error, WeeklyAnalyseInput>({
+  const mutation = useMutation<
+    WeeklyAnalyseResponse,
+    Error,
+    WeeklyAnalyseInput
+  >({
     mutationFn: async (input) => {
       // Ensure this code runs only on the client side
-      if (typeof window === 'undefined') {
+      if (typeof window === "undefined") {
         throw new Error("Cannot access localStorage on the server.");
       }
 
-
       // Retrieve personaId from localStorage
-      const personaId = localStorage.getItem('selectedPersona') || "testData";
+      const personaId = localStorage.getItem("selectedPersona") || "testData";
 
       try {
         // Make the API call
-        const response: any = await client.api.conversation["weeklyResume"].$post(
+        const response: any = await client.api.conversation[
+          "weeklyResume"
+        ].$post(
           { json: input.personaDes },
           {
             headers: {
-              'X-Persona-ID': personaId,
+              "X-Persona-ID": personaId,
               // Add other persona-related headers if needed
             },
-          }
+          },
         );
 
         // Check if the response is okay
@@ -42,7 +47,8 @@ export const useGetWeeklyAnalyse = () => {
         }
 
         // Parse the JSON response
-        const { res, reducedText }: WeeklyAnalyseResponse = await response.json();
+        const { res, reducedText }: WeeklyAnalyseResponse =
+          await response.json();
 
         // Return the parsed data
         return { res, reducedText };
@@ -54,12 +60,10 @@ export const useGetWeeklyAnalyse = () => {
     },
     onSuccess: (data) => {
       // Handle success if needed
-
       // You can perform additional side effects here, such as updating context or triggering other actions
     },
     onError: (error) => {
       // Handle the error
-
       // Optionally, integrate with your UI to display error messages to the user
     },
     // Optional: You can add additional options like `onSettled`, `retry`, etc.

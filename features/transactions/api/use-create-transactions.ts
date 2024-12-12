@@ -1,41 +1,37 @@
-import {InferRequestType, InferResponseType} from "hono";
-import {useMutation,useQueryClient } from "@tanstack/react-query";
+import { InferRequestType, InferResponseType } from "hono";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
-import {client} from "@/lib/hono";
+import { client } from "@/lib/hono";
 
-type ResponseType = InferResponseType<typeof client.api.transactions.$post>
-type RequestType = InferRequestType<typeof client.api.transactions.$post>["json"]
+type ResponseType = InferResponseType<typeof client.api.transactions.$post>;
+type RequestType = InferRequestType<
+  typeof client.api.transactions.$post
+>["json"];
 
-export const useCreateTransaction =()=>{
-    const queryClient=useQueryClient()
-    const mutation = useMutation<
-        ResponseType,
-        Error,
-        RequestType
-    
-    >({
-        mutationFn: async (json) =>{
-
-            const personaId = localStorage.getItem('selectedPersona') || "testData"
-            const response = await client.api.transactions.$post({json},{
-                headers: {
-                    'X-Persona-ID': personaId,      
-                }
-            });
-            return await  response.json();
-            
+export const useCreateTransaction = () => {
+  const queryClient = useQueryClient();
+  const mutation = useMutation<ResponseType, Error, RequestType>({
+    mutationFn: async (json) => {
+      const personaId = localStorage.getItem("selectedPersona") || "testData";
+      const response = await client.api.transactions.$post(
+        { json },
+        {
+          headers: {
+            "X-Persona-ID": personaId,
+          },
         },
-        onSuccess : ()=>{
-            toast.success("Transaction created")
-            queryClient.invalidateQueries({ queryKey:["transactions"]})
-        },
-        onError: ()=>{
-            
-            toast.error("Failed to create transaction")
-        }
-    })
+      );
+      return await response.json();
+    },
+    onSuccess: () => {
+      toast.success("Transaction created");
+      queryClient.invalidateQueries({ queryKey: ["transactions"] });
+    },
+    onError: () => {
+      toast.error("Failed to create transaction");
+    },
+  });
 
-    return mutation
-}
-
+  return mutation;
+};

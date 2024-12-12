@@ -1,17 +1,15 @@
-import {create} from "zustand"
+import { create } from "zustand";
 
 type OpenProjectState = {
-    id?:string,
-    isOpen:boolean,
-    onOpen:(id:string)=>void,
-    onClose:() => void
-}
+  id?: string;
+  isOpen: boolean;
+  onOpen: (id: string) => void;
+  onClose: () => void;
+};
 
-
-export const useOpenProject = create<OpenProjectState>((set)=>({
-    id:undefined,
-    isOpen:false,
-    onOpen:(id)=>set({isOpen:true,id}),
-    onClose:()=>set({isOpen:false,id:undefined})
-})
-)
+export const useOpenProject = create<OpenProjectState>((set) => ({
+  id: undefined,
+  isOpen: false,
+  onOpen: (id) => set({ isOpen: true, id }),
+  onClose: () => set({ isOpen: false, id: undefined }),
+}));

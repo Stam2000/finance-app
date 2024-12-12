@@ -1,72 +1,84 @@
-import { RunnableSequence,RunnableLike } from "@langchain/core/runnables";
-import {ChatOpenAI} from "@langchain/openai"
-import {ChatPromptTemplate,MessagesPlaceholder} from "@langchain/core/prompts"
-import { subMonths, startOfMonth,addDays,format,subDays } from 'date-fns'
-import { DynamicTool } from "@langchain/core/tools"
-import { z } from "zod"
-import { StringOutputParser, StructuredOutputParser } from "@langchain/core/output_parsers"
-import { AIMessage,BaseMessage,HumanMessage } from "@langchain/core/messages"
+import { RunnableSequence, RunnableLike } from "@langchain/core/runnables";
+import { ChatOpenAI } from "@langchain/openai";
+import {
+  ChatPromptTemplate,
+  MessagesPlaceholder,
+} from "@langchain/core/prompts";
+import { subMonths, startOfMonth, addDays, format, subDays } from "date-fns";
+import { DynamicTool } from "@langchain/core/tools";
+import { z } from "zod";
+import {
+  StringOutputParser,
+  StructuredOutputParser,
+} from "@langchain/core/output_parsers";
+import { AIMessage, BaseMessage, HumanMessage } from "@langchain/core/messages";
 import { ChatMistralAI } from "@langchain/mistralai";
-import { ChatTogetherAI } from "@langchain/community/chat_models/togetherai"
-import { promptGenTemplate,formatInstGenTemplate, promptExtender, formatInstExtenderGen, promptRefine, promptDetails, promptFundamentalWeek } from "./prompts";
+import { ChatTogetherAI } from "@langchain/community/chat_models/togetherai";
+import {
+  promptGenTemplate,
+  formatInstGenTemplate,
+  promptExtender,
+  formatInstExtenderGen,
+  promptRefine,
+  promptDetails,
+  promptFundamentalWeek,
+} from "./prompts";
 
+const model: any = new ChatOpenAI({
+  model: "gpt-4o",
+});
 
-const model:any = new ChatOpenAI({
-    model: "gpt-4o",
-  });
+const model2: any = new ChatOpenAI({
+  model: "gpt-4o-mini",
+});
 
-  const model2:any = new ChatOpenAI({
-    model: "gpt-4o-mini",
-  });
-
-const modelMistral:any = new  ChatMistralAI({
+const modelMistral: any = new ChatMistralAI({
   model: "mistral-large-latest",
   temperature: 0.5,
   maxRetries: 2,
 });
 
-const models:any = new ChatTogetherAI({
+const models: any = new ChatTogetherAI({
   model: "meta-llama/Meta-Llama-3.1-405B-Instruct-Turbo",
-})
+});
 
-  const formSchema =  z.object({
-    name: z
-      .string()
-      .min(2, { message: 'Name must be at least 2 characters' })
-      .max(50),
-    age: z
-      .number({
-        required_error: 'Age is required',
-      })
-      .min(18, { message: 'Age must be at least 18' })
-      .max(100, { message: 'Age must be at most 100' }),
-    occupation: z
-      .string()
-      .min(2, { message: 'Occupation must be at least 2 characters' })
-      .max(50),
-    familyStatus: z.enum(['single', 'married', 'married_with_children'], {
-      required_error: 'Family Status is required',
-    }),
-    countryOfResidence:z.string().optional(),
-    nationality:z.string().optional(),
-    monthlyIncome: z.number().min(0).optional().describe("in US DOLLAR"),
-    locationType: z.enum(['urban', 'suburban', 'rural']).optional(),
-    spendingBehavior: z.enum(['frugal', 'balanced', 'spendthrift']).optional(),
-    additionalInfo: z.string().optional(), // Added field to schema
-    monthlyRent: z.number().min(0).optional().describe("in US DOLLAR"),
-    monthlySavings: z.number().min(0).optional().describe("in US DOLLAR"),
-    riskTolerance: z.enum(['conservative', 'moderate', 'aggressive']).optional(),
-    creditCards: z.enum(['rarely', 'moderate', 'frequent']).optional(),
-    workSchedule: z.enum(['regular', 'shift', 'flexible']).optional(),
-    transportation: z.enum(['car', 'public', 'mixed']).optional(),
-    diningPreference: z.enum(['homeCook', 'mixed', 'eatOut']).optional(),
-    shoppingHabits: z.enum(['planner', 'mixed', 'impulsive']).optional(),
-  })
+const formSchema = z.object({
+  name: z
+    .string()
+    .min(2, { message: "Name must be at least 2 characters" })
+    .max(50),
+  age: z
+    .number({
+      required_error: "Age is required",
+    })
+    .min(18, { message: "Age must be at least 18" })
+    .max(100, { message: "Age must be at most 100" }),
+  occupation: z
+    .string()
+    .min(2, { message: "Occupation must be at least 2 characters" })
+    .max(50),
+  familyStatus: z.enum(["single", "married", "married_with_children"], {
+    required_error: "Family Status is required",
+  }),
+  countryOfResidence: z.string().optional(),
+  nationality: z.string().optional(),
+  monthlyIncome: z.number().min(0).optional().describe("in US DOLLAR"),
+  locationType: z.enum(["urban", "suburban", "rural"]).optional(),
+  spendingBehavior: z.enum(["frugal", "balanced", "spendthrift"]).optional(),
+  additionalInfo: z.string().optional(), // Added field to schema
+  monthlyRent: z.number().min(0).optional().describe("in US DOLLAR"),
+  monthlySavings: z.number().min(0).optional().describe("in US DOLLAR"),
+  riskTolerance: z.enum(["conservative", "moderate", "aggressive"]).optional(),
+  creditCards: z.enum(["rarely", "moderate", "frequent"]).optional(),
+  workSchedule: z.enum(["regular", "shift", "flexible"]).optional(),
+  transportation: z.enum(["car", "public", "mixed"]).optional(),
+  diningPreference: z.enum(["homeCook", "mixed", "eatOut"]).optional(),
+  shoppingHabits: z.enum(["planner", "mixed", "impulsive"]).optional(),
+});
 
-  type Form = z.infer<typeof formSchema>
+type Form = z.infer<typeof formSchema>;
 
 // Define the schema for `detailsTransactions`
-
 
 // Define the schema for `TransactionInterface`, which includes `detailsTransactions`
 const TransactionInterfaceSchema = z.object({
@@ -74,12 +86,12 @@ const TransactionInterfaceSchema = z.object({
     z.object({
       name: z.string(),
       goal: z.number().nullable(),
-    })
+    }),
   ),
   accounts: z.array(
     z.object({
       name: z.string(),
-    })
+    }),
   ),
   projects: z.array(
     z.object({
@@ -92,7 +104,7 @@ const TransactionInterfaceSchema = z.object({
         message: "Invalid date format",
       }),
       description: z.string().optional(),
-    })
+    }),
   ),
   transactions: z.array(
     z.object({
@@ -105,143 +117,140 @@ const TransactionInterfaceSchema = z.object({
           amount: z.number(),
           categoryId: z.string().nullable(),
           projectId: z.string().nullable(),
-        })
+        }),
       ),
       payee: z.string(),
       notes: z.string().nullable(),
       date: z.string(),
-      projectId: z.string().nullable(), 
+      projectId: z.string().nullable(),
       accountId: z.string(),
       categoryId: z.string().nullable(),
-  })
+    }),
   ),
 });
 
-  const parserExemple = StructuredOutputParser.fromZodSchema(formSchema)
+const parserExemple = StructuredOutputParser.fromZodSchema(formSchema);
 
-  const parserDataschema = StructuredOutputParser.fromZodSchema(TransactionInterfaceSchema)
+const parserDataschema = StructuredOutputParser.fromZodSchema(
+  TransactionInterfaceSchema,
+);
 
-  const parserfollowUp = StructuredOutputParser.fromZodSchema(z.array(z.string()))
+const parserfollowUp = StructuredOutputParser.fromZodSchema(
+  z.array(z.string()),
+);
 
-export const GenTemplate  = async ()=>{
+export const GenTemplate = async () => {
+  const formatInstructions = formatInstGenTemplate;
+  const SystemPrompt = promptGenTemplate;
 
-  
-const formatInstructions = formatInstGenTemplate
-const SystemPrompt = promptGenTemplate
-    
-    
-        const memoryPrompt =await  ChatPromptTemplate.fromMessages([
-            ["system",SystemPrompt],
-            ["human","{input}"],
-        ]).partial({
-            format_instructions: formatInstructions,
-          })
-        
-        const genLchain = RunnableSequence.from([
-            memoryPrompt,
-            modelMistral,
-            parserExemple
-        ])
-    
-        const response = await genLchain.invoke({
-            input:"generate new persona.surprise me"
-        })
-      
-        return response
-  
-  }
+  const memoryPrompt = await ChatPromptTemplate.fromMessages([
+    ["system", SystemPrompt],
+    ["human", "{input}"],
+  ]).partial({
+    format_instructions: formatInstructions,
+  });
 
-export const PersonaExtender = async (data : Form)=>{
-      const persona = JSON.stringify(data)
+  const genLchain = RunnableSequence.from([
+    memoryPrompt,
+    modelMistral,
+    parserExemple,
+  ]);
 
+  const response = await genLchain.invoke({
+    input: "generate new persona.surprise me",
+  });
 
-  const SysPromptExtender = promptExtender
+  return response;
+};
+
+export const PersonaExtender = async (data: Form) => {
+  const persona = JSON.stringify(data);
+
+  const SysPromptExtender = promptExtender;
   const extenderPrompt = ChatPromptTemplate.fromMessages([
-      ["system",SysPromptExtender],
-      ["human","{input}"],
-  ])
+    ["system", SysPromptExtender],
+    ["human", "{input}"],
+  ]);
 
   const extenderChain = RunnableSequence.from([
-      extenderPrompt,
-      models,
-      new StringOutputParser()
-  ])
+    extenderPrompt,
+    models,
+    new StringOutputParser(),
+  ]);
 
-    const guideLine = await extenderChain.invoke({
-    input:`generate a more detailed persona for ${persona}`
-  })
+  const guideLine = await extenderChain.invoke({
+    input: `generate a more detailed persona for ${persona}`,
+  });
 
-  return guideLine
-  }  
+  return guideLine;
+};
 
-export const DataGenerator = async ( guideLine:string ) => {
+export const DataGenerator = async (guideLine: string) => {
+  const MEMORY_KEY = "chat_history";
+  let History: BaseMessage[] = [];
+  let refinedHistory: BaseMessage[] = [];
 
-    const MEMORY_KEY = "chat_history"
-    let History : BaseMessage [] = []
-    let refinedHistory : BaseMessage [] = []
-  
-  const formatInstExtender = formatInstExtenderGen
-  const genPrompt = promptFundamentalWeek
+  const formatInstExtender = formatInstExtenderGen;
+  const genPrompt = promptFundamentalWeek;
 
   const currentDate = new Date();
   const oneMonthsBefore = subDays(currentDate, 30);
 
-
-  const dataGenPrompt = await  ChatPromptTemplate.fromMessages([
-    ["system",genPrompt],
+  const dataGenPrompt = await ChatPromptTemplate.fromMessages([
+    ["system", genPrompt],
     new MessagesPlaceholder(MEMORY_KEY),
-    ["human","{input}"],
+    ["human", "{input}"],
   ]).partial({
     format_instructions: formatInstExtender,
-  })
+  });
 
-const formatDetails = promptDetails
+  const formatDetails = promptDetails;
 
-const refinePrompt = promptRefine
+  const refinePrompt = promptRefine;
 
-    const refineChainPrompt = await  ChatPromptTemplate.fromMessages([
-      ["system",refinePrompt],
-      new MessagesPlaceholder("refined_history"),
-      ["human","{input}"],
-    ]).partial({
-      format_instructions: formatDetails,
-    })
+  const refineChainPrompt = await ChatPromptTemplate.fromMessages([
+    ["system", refinePrompt],
+    new MessagesPlaceholder("refined_history"),
+    ["human", "{input}"],
+  ]).partial({
+    format_instructions: formatDetails,
+  });
 
-
-    const refineChain = RunnableSequence.from([
-      refineChainPrompt,
-      model,
-      parserDataschema
-    ])
+  const refineChain = RunnableSequence.from([
+    refineChainPrompt,
+    model,
+    parserDataschema,
+  ]);
 
   const dataGenChain = RunnableSequence.from([
     dataGenPrompt,
     model,
-    parserDataschema
-])
+    parserDataschema,
+  ]);
 
+  let transactions = [];
 
-let transactions = []
-
-for (let week = 0; week < 4; week++){
-  console.log(`
+  for (let week = 0; week < 4; week++) {
+    console.log(
+      `
 
     ############
     current week 
     ############
 
-    `,week)
-  let succes:boolean = false 
+    `,
+      week,
+    );
+    let succes: boolean = false;
 
-  const weekStartDate = addDays(oneMonthsBefore, week * 7);
-  const weekEndDate = addDays(weekStartDate, 6);
+    const weekStartDate = addDays(oneMonthsBefore, week * 7);
+    const weekEndDate = addDays(weekStartDate, 6);
 
+    // Format the dates as strings
+    const weekStartDateStr = format(weekStartDate, "yyyy-MM-dd");
+    const weekEndDateStr = format(weekEndDate, "yyyy-MM-dd");
 
-  // Format the dates as strings
-  const weekStartDateStr = format(weekStartDate, 'yyyy-MM-dd');
-  const weekEndDateStr = format(weekEndDate, 'yyyy-MM-dd');
-
-  console.log(`
+    console.log(`
     
     ############
     weekStartDate:
@@ -253,37 +262,36 @@ for (let week = 0; week < 4; week++){
     -${weekEndDateStr}
     ############
 
-    `)
+    `);
 
-  let attempts = 0;
- 
-  const maxAttempts = 5;
-  while (!succes && attempts < maxAttempts){
-    console.log(`
+    let attempts = 0;
+
+    const maxAttempts = 5;
+    while (!succes && attempts < maxAttempts) {
+      console.log(`
 
       ############
         attempt:
-        -${attempts+1}
+        -${attempts + 1}
         week:
-        -${week+1}
+        -${week + 1}
       ############
   
-      `)
-    setTimeout(() => {
-      attempts++;
-    }, 3000)
-  try{
+      `);
+      setTimeout(() => {
+        attempts++;
+      }, 3000);
+      try {
+        let weekPrompt;
 
-    let weekPrompt;
-
-  if (week === 0) {
-    // Initial prompt for the first week
-    weekPrompt = `Start generating the Transaction data. no need of Sample Data.
+        if (week === 0) {
+          // Initial prompt for the first week
+          weekPrompt = `Start generating the Transaction data. no need of Sample Data.
       Generate transactions for the next week (from ${weekStartDateStr} to ${weekEndDateStr}). directly response with the JSON object without any surrounding text or comment.
   Persona: ${guideLine}`;
-  } else if ((week+1) % 4 === 0) {
-    // Specific prompt at the end of every 4 weeks
-    weekPrompt = `
+        } else if ((week + 1) % 4 === 0) {
+          // Specific prompt at the end of every 4 weeks
+          weekPrompt = `
       IMPORTANT: We have completed one month of data generation.
       Begin generating data for the next month.
 
@@ -292,66 +300,81 @@ for (let week = 0; week < 4; week++){
       directly response with the JSON object without any surrounding text.
     `;
 
-
-    console.log(`
+          console.log(`
 
       ############
       Month termited 
       ############
   
-      `)
-  } else {
-    // Regular weekly prompt
-    weekPrompt = `
+      `);
+        } else {
+          // Regular weekly prompt
+          weekPrompt = `
       Generate transactions of the next, starting from ${weekStartDateStr} to ${weekEndDateStr} using the same persona.
       Ensure that all categories and projects used within all transactions are listed; if not, add them.
     `;
-  }
-  
-  const weekData = await dataGenChain.invoke({
-      input:attempts > 1 ? `your failed generating the last  set of financial data(probalby due to a not respecting the JSON format or some internal error). this is your ${attempts+1}.retry again. 
-      .carefully respect the JSON format . directly response with the JSON object without any surrounding text. ` : weekPrompt,
-      chat_history:History
-    })
+        }
 
-    
-    
+        const weekData = await dataGenChain.invoke({
+          input:
+            attempts > 1
+              ? `your failed generating the last  set of financial data(probalby due to a not respecting the JSON format or some internal error). this is your ${attempts + 1}.retry again. 
+      .carefully respect the JSON format . directly response with the JSON object without any surrounding text. `
+              : weekPrompt,
+          chat_history: History,
+        });
 
-    const detailedWeekData = await refineChain.invoke({
-      input:week === 0 ?attempts > 1 ? `your failed generating the last set of financial data. 
-      this is your ${attempts+1}.
+        const detailedWeekData = await refineChain.invoke({
+          input:
+            week === 0
+              ? attempts > 1
+                ? `your failed generating the last set of financial data. 
+      this is your ${attempts + 1}.
        .Keep consistency accross all name you provide (Banks account names,...) some time you can change the name of products to break the monotony but only products not bank accounts,categories and projects names you generate .retry again. carefully respect  JSON format 
-       .Directly response with the JSON object without any surrounding text. ` : `first week:${JSON.stringify(weekData)} persona:${guideLine}` : `here is the next week :${JSON.stringify(weekData)} for the same persona same persona .now modify this week.
+       .Directly response with the JSON object without any surrounding text. `
+                : `first week:${JSON.stringify(weekData)} persona:${guideLine}`
+              : `here is the next week :${JSON.stringify(weekData)} for the same persona same persona .now modify this week.
       . some time you can change the name of products to break the monotony but only products not bank accounts,categories and projects names you allready generated .ensure that all categories,projects used within all transactions are beeing listed if not add them. now modify this week. surprise me :)`,
-      refined_history:refinedHistory
-    })
+          refined_history: refinedHistory,
+        });
 
-    if ((week + 1) % 4 === 0) {
-  // After processing, update the history with the specific prompt
-  History.push(new HumanMessage(`
+        if ((week + 1) % 4 === 0) {
+          // After processing, update the history with the specific prompt
+          History.push(
+            new HumanMessage(`
       IMPORTANT: We have completed one month of data generation.
       Begin generating data for the next month.
 
       Generate transactions for the week from ${weekStartDateStr} to ${weekEndDateStr}.
       Ensure that recurring transactions continue appropriately and adjust any monthly patterns as needed.
       directly response with the JSON object without any surrounding text.
-    `));
-  History.push(new AIMessage(JSON.stringify(weekData)));
+    `),
+          );
+          History.push(new AIMessage(JSON.stringify(weekData)));
 
-  refinedHistory.push(new HumanMessage(`We have completed one month of data generation. Begin generating data for the next month.generate next week input:${weekData}`));
-  refinedHistory.push(new AIMessage(JSON.stringify(detailedWeekData)));
-} else {
-  // Regular update to the history
-  History.push(new HumanMessage(`Generate transactions of the next, starting from ${weekStartDateStr} to ${weekEndDateStr} using the same persona.
-      Ensure that all categories and projects used within all transactions are listed; if not, add them.`));
-  History.push(new AIMessage(JSON.stringify(weekData)));
+          refinedHistory.push(
+            new HumanMessage(
+              `We have completed one month of data generation. Begin generating data for the next month.generate next week input:${weekData}`,
+            ),
+          );
+          refinedHistory.push(new AIMessage(JSON.stringify(detailedWeekData)));
+        } else {
+          // Regular update to the history
+          History.push(
+            new HumanMessage(`Generate transactions of the next, starting from ${weekStartDateStr} to ${weekEndDateStr} using the same persona.
+      Ensure that all categories and projects used within all transactions are listed; if not, add them.`),
+          );
+          History.push(new AIMessage(JSON.stringify(weekData)));
 
-  refinedHistory.push(new HumanMessage(`here is the next week :${JSON.stringify(weekData)} for the same persona same persona .now modify this week.
-      .some time you can change the name of products to break the monotony but only products not bank accounts,categories and projects names you allready generated .ensure that all categories,projects used within all transactions are beeing listed if not add them. now modify this week. surprise me :)`));
-  refinedHistory.push(new AIMessage(JSON.stringify(detailedWeekData)));
-}
+          refinedHistory.push(
+            new HumanMessage(`here is the next week :${JSON.stringify(weekData)} for the same persona same persona .now modify this week.
+      .some time you can change the name of products to break the monotony but only products not bank accounts,categories and projects names you allready generated .ensure that all categories,projects used within all transactions are beeing listed if not add them. now modify this week. surprise me :)`),
+          );
+          refinedHistory.push(new AIMessage(JSON.stringify(detailedWeekData)));
+        }
 
-console.log(`
+        console.log(
+          `
 
   ######### Basic WEEK #########
   ############
@@ -364,11 +387,12 @@ console.log(`
   -${weekEndDateStr}
   ############
 
-  `,weekData)
+  `,
+          weekData,
+        );
 
-
-
-console.log(`
+        console.log(
+          `
 
   ######### Detailled WEEK #########
   ############
@@ -381,31 +405,33 @@ console.log(`
   -${weekEndDateStr}
   ############
 
-  `,detailedWeekData)
+  `,
+          detailedWeekData,
+        );
 
-    transactions.push(detailedWeekData)
+        transactions.push(detailedWeekData);
 
-    succes=true
-    
-  }catch(err){
-    console.log(err)
-    if (attempts === maxAttempts) {    
-     return 'Something went wrong. Please try again.';
+        succes = true;
+      } catch (err) {
+        console.log(err);
+        if (attempts === maxAttempts) {
+          return "Something went wrong. Please try again.";
+        }
+
+        attempts;
+      }
+    }
   }
 
-  attempts
-}
+  return transactions;
+};
 
-}
-   
-}
-
-  return transactions
-}
-
-export const FollowUpQuestion = async (transactions:string,personaDes:string,History:BaseMessage[])=>{
-
-const systemPrompt = `**System Prompt: Financial Insight Agent**
+export const FollowUpQuestion = async (
+  transactions: string,
+  personaDes: string,
+  History: BaseMessage[],
+) => {
+  const systemPrompt = `**System Prompt: Financial Insight Agent**
 
 You are **FinSight**, a sophisticated financial assistant designed to help users gain insights into their financial lives. Your primary role is to generate thoughtful, relevant questions that users might have about their financial activities based on their transaction data and personal profile.
 
@@ -608,25 +634,25 @@ Encouraging Financial Awareness: Both simple and complex questions are designed 
 Promoting Engagement: By addressing various aspects of his financial life, the questions aim to keep Eric engaged with his financial data, fostering better financial planning and management.
 These example questions demonstrate how FinSight can effectively analyze and interpret Eric's financial data in the context of his personal and professional life, providing insightful and actionable financial inquiries.
 
-`
+`;
 
-const MEMORY_KEY = "chat_history"
-const qGenPrompt = ChatPromptTemplate.fromMessages([
-  ["system",systemPrompt],
-  new MessagesPlaceholder(MEMORY_KEY),
-  ["human","{input}"],
-])
+  const MEMORY_KEY = "chat_history";
+  const qGenPrompt = ChatPromptTemplate.fromMessages([
+    ["system", systemPrompt],
+    new MessagesPlaceholder(MEMORY_KEY),
+    ["human", "{input}"],
+  ]);
 
-const followUpChain = RunnableSequence.from([
-  qGenPrompt,
-  model2,
-  parserfollowUp
-])
+  const followUpChain = RunnableSequence.from([
+    qGenPrompt,
+    model2,
+    parserfollowUp,
+  ]);
 
-const response =  await followUpChain.invoke({
-    input:`transactions: ${transactions} ${personaDes}`,
-    chat_history:History
-  })
+  const response = await followUpChain.invoke({
+    input: `transactions: ${transactions} ${personaDes}`,
+    chat_history: History,
+  });
 
-  return response 
-}
+  return response;
+};

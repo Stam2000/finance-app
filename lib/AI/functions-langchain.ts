@@ -1,106 +1,107 @@
-import { PromptTemplate } from "@langchain/core/prompts"
+import { PromptTemplate } from "@langchain/core/prompts";
 import { ChatOpenAI } from "@langchain/openai";
-import { handleRunStatus } from "@/lib/AI/functions-ai-chat"
-import { openai } from "./create-ai-functions"
-import { StringOutputParser } from "@langchain/core/output_parsers"
-import { MessageCreateParams } from "openai/resources/beta/threads/messages"
-import { RunnableSequence,RunnableLike } from "@langchain/core/runnables"
-import axios from "axios"
+import { handleRunStatus } from "@/lib/AI/functions-ai-chat";
+import { openai } from "./create-ai-functions";
+import { StringOutputParser } from "@langchain/core/output_parsers";
+import { MessageCreateParams } from "openai/resources/beta/threads/messages";
+import { RunnableSequence, RunnableLike } from "@langchain/core/runnables";
+import axios from "axios";
 import { AssistantTool } from "openai/resources/beta/assistants";
-import { convertAmountFormMiliunits, formatCurrency } from "../utils"
+import { convertAmountFormMiliunits, formatCurrency } from "../utils";
 
-const llm:RunnableLike = new ChatOpenAI({
-    model: "gpt-4o-mini",
-  })
+const llm: RunnableLike = new ChatOpenAI({
+  model: "gpt-4o-mini",
+});
 
-  const baseURL = process.env.NEXT_PUBLIC_APP_URL 
-async function agentWeek (personaId:string,personaDes:string){
+const baseURL = process.env.NEXT_PUBLIC_APP_URL;
+async function agentWeek(personaId: string, personaDes: string) {
+  let threadId: string = "";
+  try {
+    // Fetch goals and validate
+    const goals = await fetchGoal(personaId);
+    if (!goals) {
+      throw new Error(
+        "Failed to fetch goals. Please check the personaId or the fetchGoal function.",
+      );
+    }
 
-    let threadId:string=""
+    // Prepare the message
+    const mesg: MessageCreateParams = {
+      role: "user",
+      content: ` analyze the finance of this user for  last week. Here is an overview of all his/her goals (spending limit, save goals, or earn goal) per category per month: ${JSON.stringify(goals)}. But begin analyzing my transactions from the start of the month so that for my weekly analysis you can find relevant patterns. The date of today is ${new Date().toISOString()}. full user description ${personaDes}`,
+    };
+
+    // Create an empty thread
+    const emptyThread = await openai.beta.threads.create();
+    if (!emptyThread || !emptyThread.id) {
+      throw new Error(
+        "Failed to create a new thread. Please check the OpenAI API response.",
+      );
+    }
+    threadId = emptyThread.id.toString();
+
+    // Append message in the thread
     try {
-        // Fetch goals and validate
-        const goals = await fetchGoal(personaId);
-        if (!goals) {
-            throw new Error("Failed to fetch goals. Please check the personaId or the fetchGoal function.");
-        }
-    
-        // Prepare the message
-        const mesg: MessageCreateParams = {
-            role: "user",
-            content: ` analyze the finance of this user for  last week. Here is an overview of all his/her goals (spending limit, save goals, or earn goal) per category per month: ${JSON.stringify(goals)}. But begin analyzing my transactions from the start of the month so that for my weekly analysis you can find relevant patterns. The date of today is ${new Date().toISOString()}. full user description ${personaDes}`
-        };
-    
-        // Create an empty thread
-        const emptyThread = await openai.beta.threads.create();
-        if (!emptyThread || !emptyThread.id) {
-            throw new Error("Failed to create a new thread. Please check the OpenAI API response.");
-        }
-        threadId = emptyThread.id.toString();
-    
-        // Append message in the thread
-        try {
-            const threadMessages = await openai.beta.threads.messages.create(threadId, mesg);
-
-        } catch (err:any) {
-            console.error("Error while creating a message in the thread:", err);
-            throw new Error(`Failed to append the message in thread ${threadId}: ${err.message}`);
-        }
-    } catch (error:any) {
-        console.error("Error in financial analysis flow:", error);
-        // Optionally rethrow or handle based on your application's requirements
-        throw new Error(`Financial analysis failed: ${error.message}`);
+      const threadMessages = await openai.beta.threads.messages.create(
+        threadId,
+        mesg,
+      );
+    } catch (err: any) {
+      console.error("Error while creating a message in the thread:", err);
+      throw new Error(
+        `Failed to append the message in thread ${threadId}: ${err.message}`,
+      );
     }
-        
-            /* message["content"]=[{"type":"text","text":""}] */
-        
-            try{
-                let run = await openai.beta.threads.runs.createAndPoll(
-                threadId,
-                    {
-                        assistant_id:"asst_boZOZzFC88YlRkN7eGmPgRSX",
-                        instructions:`all date are calculate from the actual Date ${new Date()}.You get the transactions data by calling the function "fetchTransactions".use much as you can the code interpreter to provide accurate analytics  `
-                    }
-                )
-        
-          
-             const output = await handleRunStatus(run,openai,threadId,personaId)
+  } catch (error: any) {
+    console.error("Error in financial analysis flow:", error);
+    // Optionally rethrow or handle based on your application's requirements
+    throw new Error(`Financial analysis failed: ${error.message}`);
+  }
 
-             return output
-        
-            }catch(err){
-                console.error(err)
-               throw new Error()
-            }
-        
-        }
-const fetchGoal = async(personaId:string)=>{
-    const res = await axios.get(`${baseURL}/api/categories/all`,{
-        headers: {
-            'X-Persona-ID': personaId,  
-          }
-     });
-    
+  /* message["content"]=[{"type":"text","text":""}] */
 
-    if (!Array.isArray(res.data.data)) {
-        console.error('Expected an array but got:', typeof res.data);
-        return [];
-    }
+  try {
+    let run = await openai.beta.threads.runs.createAndPoll(threadId, {
+      assistant_id: "asst_boZOZzFC88YlRkN7eGmPgRSX",
+      instructions: `all date are calculate from the actual Date ${new Date()}.You get the transactions data by calling the function "fetchTransactions".use much as you can the code interpreter to provide accurate analytics  `,
+    });
 
-    let categories:any = res.data.data.filter((category:any) => category.goal !== null && category.goal !== 0);
+    const output = await handleRunStatus(run, openai, threadId, personaId);
 
-    const goals = categories.map((category:any) => ({
-        name: category.name,
-        spendingLimitforEachMonth: formatCurrency(convertAmountFormMiliunits(category.goal)),
-    }));
-    
-
-    return JSON.stringify(goals);
+    return output;
+  } catch (err) {
+    console.error(err);
+    throw new Error();
+  }
 }
+const fetchGoal = async (personaId: string) => {
+  const res = await axios.get(`${baseURL}/api/categories/all`, {
+    headers: {
+      "X-Persona-ID": personaId,
+    },
+  });
 
-export const langChain = async (personaId:string,personaDes:string)=>{
+  if (!Array.isArray(res.data.data)) {
+    console.error("Expected an array but got:", typeof res.data);
+    return [];
+  }
 
+  let categories: any = res.data.data.filter(
+    (category: any) => category.goal !== null && category.goal !== 0,
+  );
 
-const answerTemplate=`your role is to provide a more friendly formating of text(which represents a finance analysis).
+  const goals = categories.map((category: any) => ({
+    name: category.name,
+    spendingLimitforEachMonth: formatCurrency(
+      convertAmountFormMiliunits(category.goal),
+    ),
+  }));
+
+  return JSON.stringify(goals);
+};
+
+export const langChain = async (personaId: string, personaDes: string) => {
+  const answerTemplate = `your role is to provide a more friendly formating of text(which represents a finance analysis).
 i want you inspiration this layout.the content can change .Make sure all the informations you receive are represented. 
 
     follow exactly this layout with the exact css attribute
@@ -195,20 +196,20 @@ i want you inspiration this layout.the content can change .Make sure all the inf
 """Render only the JSX inside the <div> element (excluding the imports, function definitions, or export statements).you render should only content the div element without any commment oder added text oder cotation. and don't do any formating in your response !!! because it will be directly render in this div as HTML element <div dangerouslySetInnerHTML={{__html:""YOUR RENDER HERE""}} />"""
 
 text:{input}
-answer:`
-    const answerPrompt = PromptTemplate.fromTemplate(answerTemplate)
-    const answerChain=answerPrompt.pipe(llm).pipe(new StringOutputParser())
+answer:`;
+  const answerPrompt = PromptTemplate.fromTemplate(answerTemplate);
+  const answerChain = answerPrompt.pipe(llm).pipe(new StringOutputParser());
 
-    const chain = RunnableSequence.from([
-        async(prev)=>await agentWeek(personaId,personaDes),
-        {
-            input:prev => JSON.stringify(prev)
-        },
-        answerChain,
-        new StringOutputParser ()
-    ])
+  const chain = RunnableSequence.from([
+    async (prev) => await agentWeek(personaId, personaDes),
+    {
+      input: (prev) => JSON.stringify(prev),
+    },
+    answerChain,
+    new StringOutputParser(),
+  ]);
 
-    const reducedVersionTemplate =`resume the input you recieve in exactly less than 550 Characters.
+  const reducedVersionTemplate = `resume the input you recieve in exactly less than 550 Characters.
             Generate a weekly financial review summary for display in a finance app dashboard. keep it exactly less dann 320 char.
             
             you render must only content the output without any commment oder added text oder cotation. 
@@ -237,16 +238,18 @@ answer:`
 </div>
 
             you can create a html list if need. text:{input} 
-            answer:`
+            answer:`;
 
-    const reducedVersionPrompt = PromptTemplate.fromTemplate(reducedVersionTemplate)
+  const reducedVersionPrompt = PromptTemplate.fromTemplate(
+    reducedVersionTemplate,
+  );
 
-    const reducedVersionChain = reducedVersionPrompt.pipe(llm).pipe(new StringOutputParser())
+  const reducedVersionChain = reducedVersionPrompt
+    .pipe(llm)
+    .pipe(new StringOutputParser());
 
-    const resume = await chain.invoke({})
-    const reducedText = await reducedVersionChain.invoke({input:resume})
+  const resume = await chain.invoke({});
+  const reducedText = await reducedVersionChain.invoke({ input: resume });
 
-    return {resume,reducedText}
-}
-
-
+  return { resume, reducedText };
+};
