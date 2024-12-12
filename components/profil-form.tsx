@@ -283,7 +283,7 @@ export const PersonaForm = ({
 
               console.log(`#### current step`,step)
 
-              if (step.status === "pending") return undefined;
+             /*  if (step.status === "pending") return undefined; */
 
               return (
                 <div
