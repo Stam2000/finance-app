@@ -327,17 +327,17 @@ const CardDisplay = ({
 
 const parentVariantRight = {
   hidden: {
-    y: -300,
+    y: -100,
     opacity: 0,
   },
   visible: {
     y: 0,
     opacity: 1,
     transition: {
-      duration: 0.1,
-      type: "spring",
-      stiffness: 230,
-      damping: 40,
+      duration: 0.3,
+      /* type: "spring",
+      stiffness: 100,
+      damping: 20, */
     },
   },
 };
@@ -348,11 +348,11 @@ const parentVariantLeft = {
     y: 0,
     opacity: 1,
     transition: {
-      y: { type: "spring", stiffness: 230, damping: 40 }, // Specific for x
-      duration: 0.1,
+      /* y: { type: "spring", stiffness: 100, damping: 20 }, */ // Specific for x
+      duration: 0.3,
     },
   },
-  firstLoad: { y: -300, opacity: 0 },
+  firstLoad: { y: -100, opacity: 0 },
   exit: { x: -1000 },
 };
 
