@@ -109,7 +109,7 @@ export const PersonaForm = ({
     {
       step: "extendPersona",
       message: "",
-      status: "extending",
+      status: "pending",
     },
     {
       step: "weekGen-1",
@@ -280,7 +280,7 @@ export const PersonaForm = ({
         {isExecuting ? (
           <div className="flex flex-col">
 
-            {isExecuting && 
+            {
             steps.map((step, index) => { 
 
               console.log(`#### current step`,step)
