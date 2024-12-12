@@ -53,6 +53,13 @@ export const useGenerateData = () => {
       onStarted?.();
       onExecution?.();
 
+      onProgress?.({
+        step: "extendPersona",
+        status: "running",
+        message: "Extending persona...",
+      });
+      toast.info("Extending persona...");
+
       const response = await fetch(`${baseURL}/api/conversation/createProfil`, {
         method: "POST",
         headers: {
