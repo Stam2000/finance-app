@@ -276,7 +276,7 @@ export const PersonaForm = ({
           Fill out the form to create your unique profile… or let the AI work
           its magic and surprise you! ✨
         </CardDescription>
-        {!progress && (
+        {!isExecuting && (
           <Button onClick={handleGenerateWithAi} disabled={personaLoading}>
             {personaLoading ? "Generating..." : "Generate with AI"}
           </Button>
@@ -284,7 +284,7 @@ export const PersonaForm = ({
       </CardHeader>
       {error && <div className="text-red-500 text-sm mb-4">{error}</div>}
       <CardContent className="flex-1 flex flex-col  gap-14 text-md items-center justify-center">
-        {progress ? (
+        {isExecuting ? (
           <div className="flex flex-col">
             {steps.map((step, index) => {
               if (step.status === "pending") return undefined;

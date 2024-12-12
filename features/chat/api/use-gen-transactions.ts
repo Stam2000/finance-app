@@ -50,6 +50,8 @@ export const useGenerateData = () => {
     }) => {
       const abortController = new AbortController();
       const baseURL = process.env.NEXT_PUBLIC_APP_URL;
+      onStarted?.();
+      onExecution?.();
 
       const response = await fetch(`${baseURL}/api/conversation/createProfil`, {
         method: "POST",
@@ -60,8 +62,8 @@ export const useGenerateData = () => {
         body: JSON.stringify(json),
         signal: abortController.signal,
       });
-      onExecution?.();
-      onStarted?.();
+      
+      
 
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -145,7 +147,6 @@ export const useGenerateData = () => {
                 break;
 
               case "complete":
-                onExecution?.();
                 toast.success("Transactions created");
                 onGeneratedPersonaId?.(eventData.data);
                 onProgress?.(eventData);
@@ -154,7 +155,6 @@ export const useGenerateData = () => {
                 break;
 
               case "error":
-                onExecution?.();
                 throw new Error(eventData.message);
 
               default:

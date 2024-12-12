@@ -392,7 +392,6 @@ const conversation = new Hono()
 
             let transactions = [];
 
-            for (let week = 0; week < 4; week++) {
               console.log(
                 `
 
@@ -481,7 +480,7 @@ const conversation = new Hono()
                     createSSEMessage("weekGen", {
                       step: `weekGen-${week + 1}`,
                       status: "running",
-                      message: `processing week ${week + 1}...`,
+                      message: `processing week ${week + 1}/4...`,
                     }),
                   );
 
