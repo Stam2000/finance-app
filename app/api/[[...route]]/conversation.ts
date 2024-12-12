@@ -392,6 +392,7 @@ const conversation = new Hono()
 
             let transactions = [];
 
+            for (let week = 0; week < 4; week++) {
               console.log(
                 `
 
