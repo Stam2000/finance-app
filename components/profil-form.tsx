@@ -222,7 +222,8 @@ export const PersonaForm = ({
             }),
           );
 
-          console.log();
+
+          console.log(event)
 
           setProgress(event);
         },
@@ -287,8 +288,6 @@ export const PersonaForm = ({
           <div className="flex flex-col">
             {steps.map((step, index) => {
               if (step.status === "pending") return undefined;
-
-              console.log(step);
 
               return (
                 <div
