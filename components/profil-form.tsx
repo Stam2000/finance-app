@@ -184,9 +184,7 @@ export const PersonaForm = ({
   });
 
   // State to handle loading and error states
-  const [loading, setLoading] = useState(false);
-
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<null|{step:string,status:string,message:string}>(null);
 
   // Function to handle AI generation and updating form values
   const handleGenerateWithAi = () => {
@@ -251,12 +249,8 @@ export const PersonaForm = ({
             status: "completed",
             message: "something went wrong  😫. please try again",
           };
-          setProgress(event);
-
-          console.log(event);
-          console.log(progress);
-
-          //TODO handle Error
+          setError(event)
+        //TODO handle Error
         },
       },
     );
@@ -282,11 +276,13 @@ export const PersonaForm = ({
           </Button>
         )}
       </CardHeader>
-      {error && <div className="text-red-500 text-sm mb-4">{error}</div>}
       <CardContent className="flex-1 flex flex-col  gap-14 text-md items-center justify-center">
         {isExecuting ? (
           <div className="flex flex-col">
-            {steps.map((step, index) => {
+            {steps.map((step, index) => { 
+
+              console.log(`#### current step`,step)
+
               if (step.status === "pending") return undefined;
 
               return (
@@ -294,13 +290,17 @@ export const PersonaForm = ({
                   key={index}
                   className="flex items-center justify-center gap-2"
                 >
-                  <span className="text-slate-600">{step.message}</span>
-                  <span>
-                    {step.status === "running" && (
-                      <LoaderPinwheel className="animate-spin" />
-                    )}
-                    {step.status === "completed" && <Check />}
-                  </span>
+                  {error ? <div className="text-red-500 text-sm mb-4">{error.message}</div> :
+                  <>
+                    <span className="text-slate-600">{step.message}</span>
+                      <span>
+                        {step.status === "running" && (
+                          <LoaderPinwheel className="animate-spin" />
+                        )}
+                        {step.status === "completed" && <Check />}
+                      </span>
+                  </>
+                  }
                 </div>
               );
             })}

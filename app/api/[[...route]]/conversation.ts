@@ -393,16 +393,7 @@ const conversation = new Hono()
             let transactions = [];
 
             for (let week = 0; week < 4; week++) {
-              console.log(
-                `
 
-    ############
-    current week 
-    ############
-
-    `,
-                week,
-              );
               let succes: boolean = false;
 
               const weekStartDate = addDays(oneMonthsBefore, week * 7);
@@ -412,34 +403,13 @@ const conversation = new Hono()
               const weekStartDateStr = format(weekStartDate, "yyyy-MM-dd");
               const weekEndDateStr = format(weekEndDate, "yyyy-MM-dd");
 
-              console.log(`
-    
-    ############
-    weekStartDate:
-    -${weekStartDateStr}
-    ############
 
-    ############
-    weekEndDate:
-    -${weekEndDateStr}
-    ############
-
-    `);
 
               let attempts = 0;
 
               const maxAttempts = 5;
               while (!succes && attempts < maxAttempts) {
-                console.log(`
 
-      ############
-        attempt:
-        -${attempts + 1}
-        week:
-        -${week + 1}
-      ############
-  
-      `);
                 setTimeout(() => {
                   attempts++;
                 }, 3000);
@@ -546,42 +516,6 @@ const conversation = new Hono()
                       new AIMessage(JSON.stringify(detailedWeekData)),
                     );
                   }
-
-                  console.log(
-                    `
-
-  ######### Basic WEEK #########
-  ############
-  weekStartDate:
-  -${weekStartDateStr}
-  ############
-
-  ############
-  weekEndDate:
-  -${weekEndDateStr}
-  ############
-
-  `,
-                    weekData,
-                  );
-
-                  console.log(
-                    `
-
-  ######### Detailled WEEK #########
-  ############
-  weekStartDate:
-  -${weekStartDateStr}
-  ############
-
-  ############
-  weekEndDate:
-  -${weekEndDateStr}
-  ############
-
-  `,
-                    detailedWeekData,
-                  );
 
                   transactions.push(detailedWeekData);
 
