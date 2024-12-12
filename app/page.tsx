@@ -517,7 +517,7 @@ const Page = () => {
       <div
         className={`w-[55%] ${generatedData ? "overflow-hidden" : "overflow-y-auto"} h-full pt-0 p-10 flex flex-col gap-4 `}
       >
-        <div className="">
+        <motion.div initial={{opacity:0}} animate={{opacity:1}}  className="">
           <div className="flex items-center mt-2 lg:mt-4 gap-2 ">
             <span className="">
               <img
@@ -558,7 +558,7 @@ const Page = () => {
               </p>
             </div>
           )}
-        </div>
+        </motion.div>
 
         {generatedData ? (
           <div className="overflow-y-auto flex-1 scrollbar-none ">
