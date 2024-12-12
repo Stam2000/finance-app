@@ -34,7 +34,7 @@ const model2: any = new ChatOpenAI({
 
 const modelMistral: any = new ChatMistralAI({
   model: "mistral-large-latest",
-  temperature: 0.5,
+  temperature: 0.7,
   maxRetries: 2,
 });
 
