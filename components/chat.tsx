@@ -358,7 +358,7 @@ export const Chat = () => {
               />
             </Button>
 
-            <div className="absolute left-32 bg-white px-3 rounded-md max-h-[70px] overflow-y-auto">
+            <div className="absolute left-20 lg:left-32 bg-white px-3 rounded-md max-h-[70px] overflow-y-auto">
               {fileNames.map((name, index) => {
                 return (
                   <div
