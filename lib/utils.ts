@@ -245,7 +245,7 @@ export const sendAiMessage = async ({
     .catch(
       (err) => {
         updateLastMessage(
-          "There was a problem completing your request. Please try again or report the error",
+          "There was a problem completing your request. Please try again or report the error  manuel@sopmauel.com / sopemmanuel@gmail.com",
         );
         setIsLoading();
       },

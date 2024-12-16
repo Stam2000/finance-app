@@ -1,13 +1,13 @@
 "use client";
 
 import { Header } from "@/components/header";
-import { Button } from "@/components/ui/button";
-import React from "react";
+import React, { useEffect } from "react";
 import { useOpenChat } from "@/features/chat/hook/use-open-AIchat";
 import { OverviewWeekFinanceDialog } from "@/features/chat/component/week-review-overview-dialog";
 import { MessagesSquare } from "lucide-react";
-import { AnimatePresence, motion, Variants } from "framer-motion";
+import {  motion } from "framer-motion";
 import Chat from "@/components/chat";
+import { useState } from "react";
 
 type Props = {
   children: React.ReactNode;
@@ -15,6 +15,14 @@ type Props = {
 
 export default function DashboardLayout({ children }: Props) {
   const { chatOpen, toggleChatOpen } = useOpenChat();
+  const [chatKey, setChatKey] = useState<number>(0);
+
+  useEffect(()=>{
+    setChatKey(Date.now());
+    if (chatOpen) {
+      toggleChatOpen();
+    }
+  },[])
 
   return (
     <motion.div animate={chatOpen ? "open" : "close"}>
@@ -28,7 +36,7 @@ export default function DashboardLayout({ children }: Props) {
       >
         {children}
       </motion.main>
-      <Chat />
+      <Chat key={chatKey} />
       <motion.button
         initial={false}
         animate={{ scale: chatOpen ? 0 : [1.1, 1], opacity: chatOpen ? 0 : 1 }}

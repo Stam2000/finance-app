@@ -53,6 +53,9 @@ export const Chat = () => {
   const chat = useRef<HTMLDivElement>(null);
   const genFollowUpQ = useGenFollowUpQ();
 
+  console.log(personaInfo)
+  console.log(personaDes)
+
   let perInfo = JSON.parse(personaInfo);
   perInfo = { name: perInfo.name, Description: perInfo.description };
   perInfo = JSON.stringify(perInfo);
@@ -102,6 +105,7 @@ export const Chat = () => {
   };
 
   const handleSubmit = (e?: React.FormEvent<HTMLFormElement>) => {
+
     if (e) e.preventDefault();
     setFilenames([]);
     sendAiMessage({
@@ -115,6 +119,7 @@ export const Chat = () => {
       personaId,
       personaInfo: perInfo,
     });
+
   };
 
   const handleOnchange = (
@@ -135,6 +140,7 @@ export const Chat = () => {
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       setFilenames([]);
@@ -150,8 +156,10 @@ export const Chat = () => {
         personaInfo,
       });
     }
+
   };
   const handleSubmitButton = (message: string) => {
+ 
     sendAiMessage({
       threadId,
       setIsLoading,
@@ -164,7 +172,9 @@ export const Chat = () => {
       personaId,
       personaInfo,
     });
+
   };
+ 
 
   const handleRemoveFile = (name: string) => {
     removeFile(name);
@@ -367,11 +377,11 @@ export const Chat = () => {
             <button
               type="submit"
               className={`flex shadow-lg items-center gap-2 ${
-                isSubmitDisabled
+                isSubmitDisabled || isloading
                   ? "bg-gray-300 cursor-not-allowed"
                   : "hover:bg-black/50% bg-black cursor-pointer"
               } text-white py-2 px-4 rounded-sm`}
-              disabled={isSubmitDisabled}
+              disabled={isSubmitDisabled || isloading}
             >
               Send <Send className="size-4" />
             </button>

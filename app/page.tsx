@@ -156,8 +156,9 @@ const CardDisplay = ({
   const router = useRouter();
 
   const handleClick = (persona: Persona) => {
-    setPersonaInfo(JSON.stringify(persona));
-    setPersonaDes(persona.fullDesc);
+    const {fullDesc,image,...personaEssential} = persona
+    setPersonaInfo(JSON.stringify(personaEssential));
+    setPersonaDes(fullDesc);
     localStorage.setItem("selectedPersona", persona.id);
     router.push("/dashboard");
   };
