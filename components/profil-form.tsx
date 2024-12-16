@@ -820,7 +820,7 @@ export const PersonaForm = ({
           </Form>
         )}
 
-        {steps[3].status === "completed" && (
+        {steps[7].status === "completed" && (
           <CardFooter className="flex items-center justify-center">
             <Button
               onClick={() => router.push("/dashboard")}
