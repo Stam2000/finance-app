@@ -347,7 +347,6 @@ const parentVariantLeft = {
 
 const Page = () => {
   const [generatedData, setGeneratedData] = useState<string>(``);
-  const router = useRouter();
   const isMobile = useMediaQuery({ maxWidth: 768 });
   const [openForm, setOpenForm] = useState<boolean>(false);
   const [isDisabled, setIsDisabled] = useState<boolean>(false);

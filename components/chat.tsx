@@ -7,8 +7,6 @@ import { Paperclip, CircleX, Grip } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { Avatar } from "@/components/ui/avatar";
 import { useLayoutEffect } from "react";
-/* import DOMPurify from "dompurify" */
-
 import { Bot } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useOpenChat } from "@/features/chat/hook/use-open-AIchat";
@@ -19,7 +17,7 @@ import MessageLoading from "./message-loading";
 import MarkdownTypewriter from "./markdown-typer";
 import { ListRestart } from "lucide-react";
 import { useGenFollowUpQ } from "@/features/chat/api/use-follow-up";
-import { Description } from "@radix-ui/react-dialog";
+
 
 type user = "AI" | "user";
 interface Message {
