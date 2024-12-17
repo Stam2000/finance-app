@@ -27,7 +27,8 @@ interface Message {
 
 export const Chat = () => {
   const { chatOpen, toggleChatOpen } = useOpenChat();
-  const personaId = localStorage.getItem("selectedPersona") || "testData";
+  const [personaId,setPersonaId] = useState("testData")
+
   const {
     personaDes,
     setFollowQ,
@@ -101,6 +102,10 @@ export const Chat = () => {
       },
     );
   };
+
+  useEffect(() => {
+    setPersonaId( localStorage.getItem("selectedPersona") || "testData")
+  }, [])
 
   const handleSubmit = (e?: React.FormEvent<HTMLFormElement>) => {
 
