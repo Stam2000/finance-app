@@ -9,7 +9,7 @@ import axios from "axios";
 import { AssistantTool } from "openai/resources/beta/assistants";
 import { convertAmountFormMiliunits, formatCurrency } from "../utils";
 
-const llm: RunnableLike = new ChatOpenAI({
+const llm: RunnableLike = new ChatOpenAI({  
   model: "gpt-4o-mini",
 });
 

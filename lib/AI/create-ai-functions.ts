@@ -19,6 +19,9 @@ type TransactionRequest = (TransactionCreate & {
 })[];
 
 
+export const openai = new OpenAI();
+
+
 const createOneTransactionDef = async (input: string) => {
   let json: TransactionCreate = await JSON.parse(input);
   try {
